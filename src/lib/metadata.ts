@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { profile } from "@/content/profile";
 import { siteLastUpdated } from "@/content/site-metadata";
 import { supportedLocales, type Locale } from "@/i18n/locales";
+import { localize } from "@/i18n/localize";
 import type { CalendarDate } from "@/types/content";
 
 import { getAllProjects } from "./projects";
@@ -27,6 +28,11 @@ export function localizePath(
 /** Absolute URL on the site's domain (see site-config.ts), for the sitemap and structured data. */
 export function toAbsoluteUrl(path: string): string {
   return new URL(path, siteUrl).href;
+}
+
+/** Home page title for search results and link previews: the name and the role. */
+export function buildHomeTitle(locale: Locale): string {
+  return `${profile.displayName} | ${localize(profile.role, locale)}`;
 }
 
 /** The home page lists every project, so it changes when the site content or any project does. */
