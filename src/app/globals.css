@@ -105,15 +105,16 @@
 
 /* 5. Fonts. `inline` makes utilities use the next/font variables directly, so they
  * resolve on whatever element next/font's `.variable` class is on.
- * next/font name (set in src/app/fonts.ts): --font-archivo.
+ * next/font name (set in src/app/fonts.ts): --font-atkinson.
+ * Text and headings share the family; headings get their hierarchy from size and weight.
  * Code uses the system monospace font, so it downloads nothing.
  * Never name a next/font variable --font-sans/--font-mono: that clashes with these tokens.
  * The fallback inside var() keeps the stack valid if a font variable is missing. */
 @theme inline {
   --font-sans:
-    var(--font-archivo, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+    var(--font-atkinson, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-archivo, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+    var(--font-atkinson, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 

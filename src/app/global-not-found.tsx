@@ -5,7 +5,7 @@ import { profile } from "@/content/profile";
 import { englishDictionary } from "@/i18n/dictionaries/english";
 import { spanishDictionary } from "@/i18n/dictionaries/spanish";
 
-import { archivo } from "./fonts";
+import { atkinsonHyperlegibleNext } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
  */
 export default function GlobalNotFound() {
   return (
-    <html lang="es" className={archivo.variable}>
+    <html lang="es" className={atkinsonHyperlegibleNext.variable}>
       <body>
         <main id="main-content" tabIndex={-1} className="focus:outline-none">
           <p>{profile.displayName}</p>

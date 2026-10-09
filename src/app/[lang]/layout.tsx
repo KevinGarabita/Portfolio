@@ -9,7 +9,7 @@ import { localize } from "@/i18n/localize";
 import { getCurrentLocale } from "@/i18n/request-locale";
 import { siteUrl } from "@/lib/site-config";
 
-import { archivo } from "../fonts";
+import { atkinsonHyperlegibleNext } from "../fonts";
 
 import "../globals.css";
 
@@ -44,7 +44,7 @@ export default async function LocaleRootLayout({
   const locale = await getCurrentLocale();
 
   return (
-    <html lang={locale} className={archivo.variable}>
+    <html lang={locale} className={atkinsonHyperlegibleNext.variable}>
       <body>
         <SkipToContentLink />
         <SiteHeader />

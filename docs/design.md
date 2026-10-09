@@ -42,9 +42,9 @@ Los componentes usan los nombres de función, nunca los colores crudos. El tema 
 - Escala fluida de 360 a 1440 px de ancho: `text-small` (14→15 px), `text-base` (16→18), `text-subtitle` (19→24), `text-title` (26→40) y `text-display` (40→100). Pocos pasos y un salto grande entre el título principal y el texto.
 - El tamaño de texto corrido se llama `base` y no `body`, porque `text-body` ya es el color del texto.
 - Familias: `font-sans` para texto, `font-display` para títulos y `font-mono` (la monoespaciada del sistema, sin descarga) para código.
-- **Pendiente de elegir** en `/es/design-preview`:
-  - **Opción A, Archivo:** una sola familia con eje de ancho; los títulos van más anchos (`font-stretch-semi-expanded`) y el texto a ancho normal. Tono técnico y firme. 88 KB.
-  - **Opción B, Atkinson Hyperlegible Next:** del Braille Institute, diseñada para máxima legibilidad (la I con remates, el cero tachado). 33 KB, pero Next 16.4 no tiene sus métricas de respaldo, así que puede mover un poco el texto al cargar.
+- **Atkinson Hyperlegible Next** para texto y títulos, elegida por Kevin. Es del Braille Institute y está diseñada para que cada letra se distinga a primera vista (la I con remates, el cero tachado): pone la legibilidad por delante del estilo. Es una sola familia variable (pesos 200 a 800) y pesa unos 33 KB.
+- Los títulos se distinguen por tamaño y peso (700 a 800), sin cambiar de familia ni de ancho.
+- Riesgo conocido: Next 16.4 no tiene las métricas de respaldo de esta fuente (`adjustFontFallback: false` en `src/app/fonts.ts`), así que el texto puede moverse un poco cuando la fuente termina de cargar.
 
 ## Radios, movimiento y foco
 
