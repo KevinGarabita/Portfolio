@@ -1,3 +1,4 @@
+import type { TechnologyLogoId } from "@/content/technology-logos";
 import type { Locale } from "@/i18n/locales";
 
 /** Text written in every supported language. */
@@ -26,8 +27,10 @@ export interface Profile {
   /** Legal full name, used in structured data. */
   fullName: string;
   role: LocalizedText;
-  /** One concrete sentence for the hero. */
-  headline: LocalizedText;
+  /** Titles that rotate in the hero, in order. The longest one reserves the space. */
+  heroTitles: string[];
+  /** Short line under the hero title. */
+  heroSubtitle: LocalizedText;
   /** Paragraphs for the "About" section. */
   about: LocalizedText[];
   location: {
@@ -46,8 +49,12 @@ export interface Profile {
     display: string;
     /** Number in E.164 format, used for tel: links. */
     international: string;
-    /** Unknown until confirmed; controls whether a WhatsApp link is shown. */
-    hasWhatsApp?: boolean;
+  };
+  whatsApp: {
+    /** Digits only, with country code and no "+", as wa.me expects. */
+    number: string;
+    /** Message pre-filled in the chat. */
+    prefilledMessage: LocalizedText;
   };
   socialProfiles: SocialProfile[];
   /** Public paths to the downloadable CV, one per language. */
@@ -76,13 +83,51 @@ export interface Education {
   expectedGraduation?: YearMonth;
 }
 
+/**
+ * One entry of the CV skills list. A tool carries its logo(s) and is shown with them;
+ * an entry without logos is a skill or concept (REST APIs, webhooks...) and is shown
+ * as a text tag.
+ */
+export interface SkillItem {
+  name: LocalizedText;
+  logos?: TechnologyLogoId[];
+}
+
 export interface SkillGroup {
   id: string;
   title: LocalizedText;
-  items: LocalizedText[];
+  items: SkillItem[];
 }
 
 export type ProjectStatus = "in-production" | "in-development";
+
+/** Groups projects on the site: freelance work or work done at Kobler y Asociados. */
+export type ProjectCategory = "freelance" | "kobler";
+
+/** A screenshot stored under public/images/projects/<slug>/. */
+export interface ProjectImage {
+  /** Public path, e.g. "/images/projects/field-report-manager/dashboard.webp". */
+  src: string;
+  alt: LocalizedText;
+  width: number;
+  height: number;
+  /** Which viewport the screenshot shows. */
+  viewport: "desktop" | "mobile";
+}
+
+export interface ProjectLink {
+  label: LocalizedText;
+  url: string;
+  kind: "live-site" | "repository" | "other";
+}
+
+/** One step of an automation flow, drawn as a simple diagram (no editor screenshots). */
+export interface FlowStep {
+  /** What happens in this step, in plain language. */
+  label: LocalizedText;
+  /** Tool or service involved, e.g. "WhatsApp", "GoHighLevel", "OpenAI". */
+  tool?: string;
+}
 
 export type TeamSetup = "individual" | "team";
 
@@ -91,6 +136,7 @@ export interface Project {
   slug: string;
   name: LocalizedText;
   client: string;
+  category: ProjectCategory;
   /** Where the work happened, e.g. "Freelance" or the employer's name. */
   context: LocalizedText;
   status?: ProjectStatus;
@@ -106,11 +152,17 @@ export interface Project {
   solution: LocalizedText;
   role: LocalizedText;
   results: LocalizedText[];
-  /** Facts taken word for word from the CV. */
+  /** 3 to 5 key points, from the CV or from the project's own documentation. */
   highlights: LocalizedText[];
   /** Main technologies; integrations are listed separately. */
   stack: string[];
   integrations: string[];
+  /** Screenshots for the card and the gallery; empty when there are none yet. */
+  images: ProjectImage[];
+  /** Public links only (never internal client systems). */
+  links: ProjectLink[];
+  /** Automation flows: steps for a simple diagram. */
+  flowDiagram?: FlowStep[];
   /** Optional details that add credibility when the information exists. */
   decisions?: LocalizedText[];
   failureHandling?: LocalizedText[];

@@ -3,13 +3,16 @@ import type { Metadata, Viewport } from "next";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipToContentLink } from "@/components/layout/skip-to-content-link";
+import { PageMotion } from "@/components/motion/page-motion";
 import { profile } from "@/content/profile";
 import { supportedLocales } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale } from "@/i18n/request-locale";
+import { brandColors } from "@/lib/brand-colors";
+import { buildBaseOpenGraph } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site-config";
 
-import { archivo } from "../fonts";
+import { atkinsonHyperlegibleNext } from "../fonts";
 
 import "../globals.css";
 
@@ -20,11 +23,14 @@ export function generateStaticParams() {
   return supportedLocales.map((locale) => ({ lang: locale }));
 }
 
-/** Tells the browser both color schemes are designed, so it paints the right background before CSS loads. */
+/** The site has one dark theme: the browser paints a dark background before CSS loads. */
 export const viewport: Viewport = {
-  colorScheme: "light dark",
+  colorScheme: "dark",
+  // Tints the mobile browser bar with the page background (the `page` token in globals.css).
+  themeColor: brandColors.blackDeep,
 };
 
+/** Defaults for every page. Pages replace openGraph and twitter as a whole (lib/metadata.ts). */
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getCurrentLocale();
 
@@ -35,6 +41,8 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${profile.displayName}`,
     },
     description: localize(profile.role, locale),
+    openGraph: buildBaseOpenGraph(locale),
+    twitter: { card: "summary_large_image" },
   };
 }
 
@@ -44,8 +52,15 @@ export default async function LocaleRootLayout({
   const locale = await getCurrentLocale();
 
   return (
-    <html lang={locale} className={archivo.variable}>
+    <html
+      lang={locale}
+      className={atkinsonHyperlegibleNext.variable}
+      // Lets Next.js turn smooth scrolling off during route changes (globals.css turns it on).
+      data-scroll-behavior="smooth"
+    >
       <body>
+        <div aria-hidden="true" className="site-backdrop" />
+        <PageMotion />
         <SkipToContentLink />
         <SiteHeader />
         <main id="main-content" tabIndex={-1} className="focus:outline-none">
