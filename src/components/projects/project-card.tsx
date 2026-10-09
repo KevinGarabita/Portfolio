@@ -17,7 +17,8 @@ interface ProjectCardProps {
 /**
  * The project name is the only link. Its ::after covers the whole card ("stretched link"),
  * so the card is clickable without nesting interactive elements; nothing else inside
- * the card may be a link or a button.
+ * the card may be a link or a button. It keeps the heading colour (the underline marks
+ * it as a link), so the dark theme does not turn every project title orange.
  */
 function ProjectNameLink({
   project,
@@ -26,7 +27,7 @@ function ProjectNameLink({
   return (
     <Link
       href={`/${locale}/projects/${project.slug}`}
-      className="after:absolute after:inset-0"
+      className="text-heading after:absolute after:inset-0"
     >
       {localize(project.name, locale)}
     </Link>

@@ -73,7 +73,7 @@ function NeighborProjectLink({
       <span className="block text-small text-muted">
         {dictionary.projects.neighborNavigation[direction]}
       </span>
-      <span className="mt-1 block font-display text-subtitle font-bold underline decoration-1 underline-offset-[0.2em] group-hover:decoration-2">
+      <span className="mt-1 block font-display text-subtitle font-bold text-heading underline decoration-1 underline-offset-[0.2em] group-hover:decoration-2">
         {localize(project.name, locale)}
       </span>
     </Link>
