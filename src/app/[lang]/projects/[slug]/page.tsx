@@ -2,18 +2,33 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { FlowDiagram } from "@/components/projects/flow-diagram";
 import { ProjectFacts } from "@/components/projects/project-facts";
 import {
+  ProjectGallery,
+  type GalleryLabels,
+} from "@/components/projects/project-gallery";
+import { ProjectStatus } from "@/components/projects/project-status";
+import {
+  ProjectKeyPoints,
   ProjectStoryList,
   ProjectStorySection,
 } from "@/components/projects/project-story-section";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChatBubbleIcon,
+  ExternalLinkIcon,
+  MailIcon,
+} from "@/components/ui/icons";
 import { profile } from "@/content/profile";
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
+import { joinClassNames } from "@/lib/class-names";
 import { getHomeSectionHref, homeSectionIds } from "@/lib/home-sections";
 import { buildPageMetadata } from "@/lib/metadata";
 import {
@@ -21,6 +36,7 @@ import {
   getNeighborProjects,
   getProjectBySlug,
 } from "@/lib/projects";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import type { LocalizedText, Project } from "@/types/content";
 
 /**
@@ -59,23 +75,35 @@ interface NeighborProjectLinkProps {
   dictionary: Dictionary;
 }
 
-/** Previous/next case study: a small label above the project name, both inside one link. */
+/** Previous/next case study: a panel with a small label above the project name, all one link. */
 function NeighborProjectLink({
   project,
   direction,
   locale,
   dictionary,
 }: NeighborProjectLinkProps) {
+  const isPrevious = direction === "previous";
+  const DirectionIcon = isPrevious ? ArrowLeftIcon : ArrowRightIcon;
+
   return (
     <Link
       href={`/${locale}/projects/${project.slug}`}
-      rel={direction === "previous" ? "prev" : "next"}
-      className="group block py-6 no-underline"
+      rel={isPrevious ? "prev" : "next"}
+      className={joinClassNames(
+        "project-card hover-glow gradient-ring group flex h-full flex-col gap-2 rounded-section border border-hairline bg-raised p-6 no-underline",
+        !isPrevious && "sm:items-end sm:text-right",
+      )}
     >
-      <span className="block text-small text-muted">
+      <span className="inline-flex items-center gap-2 text-small text-muted">
+        {isPrevious ? (
+          <DirectionIcon className="project-card-arrow size-4 text-accent" />
+        ) : null}
         {dictionary.projects.neighborNavigation[direction]}
+        {isPrevious ? null : (
+          <DirectionIcon className="project-card-arrow size-4 text-accent" />
+        )}
       </span>
-      <span className="mt-1 block font-display text-subtitle font-bold text-heading underline decoration-1 underline-offset-[0.2em] group-hover:decoration-2">
+      <span className="font-display text-subtitle font-bold text-heading underline decoration-1 underline-offset-[0.2em] group-hover:decoration-2">
         {localize(project.name, locale)}
       </span>
     </Link>
@@ -83,8 +111,10 @@ function NeighborProjectLink({
 }
 
 /**
- * Case study. Small screens: title, facts, story. Large screens: the story in 7 of 12
- * columns and the facts in a sticky column on the right.
+ * Case study: header (category, status, title, summary, key facts), screenshots, key
+ * points, the automation flow, then the story (problem, solution, decisions, failure
+ * handling, role, results, next steps), public links, the confidentiality note and the
+ * previous/next projects. Everything after the header fades in on scroll.
  */
 export default async function ProjectPage({
   params,
@@ -102,117 +132,225 @@ export default async function ProjectPage({
   const localizeEach = (texts: LocalizedText[]) =>
     texts.map((text) => localize(text, locale));
 
+  const galleryImages = project.images.map((image) => ({
+    src: image.src,
+    alt: localize(image.alt, locale),
+    width: image.width,
+    height: image.height,
+    viewport: image.viewport,
+  }));
+  const galleryLabels: GalleryLabels = {
+    enlarge: projectTexts.gallery.enlarge,
+    dialogLabel: projectTexts.gallery.dialogLabel,
+    close: projectTexts.gallery.close,
+    previous: projectTexts.gallery.previous,
+    next: projectTexts.gallery.next,
+    positions: galleryImages.map((_, index) =>
+      projectTexts.gallery.position(index + 1, galleryImages.length),
+    ),
+  };
+
   return (
-    <Container className="pt-4 pb-20 lg:pt-8 lg:pb-28">
-      <article className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-16">
-        <header className="lg:col-span-10">
-          <p className="text-small">
-            <Link
-              href={getHomeSectionHref(locale, homeSectionIds.projects)}
-              className="inline-block py-2"
-            >
-              {projectTexts.backToProjects}
-            </Link>
-          </p>
-          <h1 className="mt-6 font-display text-headline font-extrabold lg:mt-10">
-            {projectName}
-          </h1>
-          <p className="mt-6 max-w-prose text-subtitle">
-            {localize(project.summary, locale)}
-          </p>
+    <Container className="pt-6 pb-20 lg:pt-10 lg:pb-28">
+      <article>
+        <header className="grid gap-10 pb-12 lg:grid-cols-12 lg:gap-x-10 lg:pb-16">
+          <div className="lg:col-span-8">
+            <p className="entrance text-small [--entrance-order:0]">
+              <Link
+                href={getHomeSectionHref(locale, homeSectionIds.projects)}
+                className="inline-flex min-h-11 items-center gap-2 font-bold"
+              >
+                <ArrowLeftIcon className="size-4" />
+                {projectTexts.backToProjects}
+              </Link>
+            </p>
+            <div className="entrance mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
+              <p className="font-mono text-small font-bold tracking-widest text-accent uppercase">
+                {projectTexts.category[project.category]}
+              </p>
+              {project.status ? (
+                <ProjectStatus
+                  status={project.status}
+                  statusNote={project.statusNote}
+                  locale={locale}
+                  dictionary={dictionary}
+                />
+              ) : null}
+            </div>
+            <h1 className="entrance mt-4 font-display text-headline font-extrabold [--entrance-order:2]">
+              {projectName}
+            </h1>
+            <p className="entrance mt-6 max-w-prose text-subtitle [--entrance-order:3]">
+              {localize(project.summary, locale)}
+            </p>
+          </div>
+
+          <div className="entrance [--entrance-order:4] lg:col-span-4 lg:self-end">
+            <ProjectFacts
+              project={project}
+              locale={locale}
+              dictionary={dictionary}
+            />
+          </div>
         </header>
 
-        <div className="lg:sticky lg:top-10 lg:col-span-4 lg:col-start-9 lg:row-start-2 lg:self-start">
-          <ProjectFacts
-            project={project}
-            locale={locale}
-            dictionary={dictionary}
-          />
-        </div>
+        {galleryImages.length > 0 ? (
+          <section
+            aria-labelledby="gallery-title"
+            data-reveal
+            className="pb-12 lg:pb-16"
+          >
+            <h2 id="gallery-title" className="sr-only">
+              {sectionTitles.gallery}
+            </h2>
+            <ProjectGallery images={galleryImages} labels={galleryLabels} />
+          </section>
+        ) : null}
 
-        <div className="flex flex-col gap-12 lg:col-span-7 lg:col-start-1 lg:row-start-2">
-          <ProjectStorySection id="problem" title={sectionTitles.problem}>
-            <p>{localize(project.problem, locale)}</p>
-          </ProjectStorySection>
+        <ProjectStorySection id="highlights" title={sectionTitles.highlights}>
+          <ProjectKeyPoints items={localizeEach(project.highlights)} />
+        </ProjectStorySection>
 
-          <ProjectStorySection id="solution" title={sectionTitles.solution}>
-            <p>{localize(project.solution, locale)}</p>
-            <ProjectStoryList items={localizeEach(project.highlights)} />
-          </ProjectStorySection>
-
-          {project.decisions?.length ? (
-            <ProjectStorySection id="decisions" title={sectionTitles.decisions}>
-              <ProjectStoryList items={localizeEach(project.decisions)} />
-            </ProjectStorySection>
-          ) : null}
-
-          {project.failureHandling?.length ? (
-            <ProjectStorySection
-              id="failure-handling"
-              title={sectionTitles.failureHandling}
+        {project.flowDiagram?.length ? (
+          <section
+            aria-labelledby="flow-diagram-title"
+            data-reveal
+            className="border-t border-hairline py-10 lg:py-14"
+          >
+            <h2
+              id="flow-diagram-title"
+              className="font-display text-title font-bold"
             >
-              <ProjectStoryList items={localizeEach(project.failureHandling)} />
-            </ProjectStorySection>
-          ) : null}
-
-          <ProjectStorySection id="role" title={sectionTitles.role}>
-            <p>{localize(project.role, locale)}</p>
-          </ProjectStorySection>
-
-          <ProjectStorySection id="results" title={sectionTitles.results}>
-            <ProjectStoryList items={localizeEach(project.results)} />
-          </ProjectStorySection>
-
-          {project.nextSteps ? (
-            <ProjectStorySection
-              id="next-steps"
-              title={sectionTitles.nextSteps}
-            >
-              <p>{localize(project.nextSteps, locale)}</p>
-            </ProjectStorySection>
-          ) : null}
-
-          <div className="max-w-prose border border-hairline bg-raised p-6">
-            <p>{projectTexts.confidentialityNote}</p>
-            <div className="mt-4">
-              <ButtonLink
-                variant="secondary"
-                href={`mailto:${profile.email}?subject=${encodeURIComponent(projectName)}`}
-              >
-                {projectTexts.requestDetails}
-              </ButtonLink>
+              {sectionTitles.flowDiagram}
+            </h2>
+            <div className="mt-8">
+              <FlowDiagram
+                steps={project.flowDiagram}
+                locale={locale}
+                toolLabel={projectTexts.flowStepTool}
+              />
             </div>
+          </section>
+        ) : null}
+
+        <ProjectStorySection id="problem" title={sectionTitles.problem}>
+          <p className="max-w-prose">{localize(project.problem, locale)}</p>
+        </ProjectStorySection>
+
+        <ProjectStorySection id="solution" title={sectionTitles.solution}>
+          <p className="max-w-prose">{localize(project.solution, locale)}</p>
+        </ProjectStorySection>
+
+        {project.decisions?.length ? (
+          <ProjectStorySection id="decisions" title={sectionTitles.decisions}>
+            <ProjectStoryList items={localizeEach(project.decisions)} />
+          </ProjectStorySection>
+        ) : null}
+
+        {project.failureHandling?.length ? (
+          <ProjectStorySection
+            id="failure-handling"
+            title={sectionTitles.failureHandling}
+          >
+            <ProjectStoryList items={localizeEach(project.failureHandling)} />
+          </ProjectStorySection>
+        ) : null}
+
+        <ProjectStorySection id="role" title={sectionTitles.role}>
+          <p className="max-w-prose">{localize(project.role, locale)}</p>
+        </ProjectStorySection>
+
+        <ProjectStorySection id="results" title={sectionTitles.results}>
+          <ProjectStoryList items={localizeEach(project.results)} />
+        </ProjectStorySection>
+
+        {project.nextSteps ? (
+          <ProjectStorySection id="next-steps" title={sectionTitles.nextSteps}>
+            <p className="max-w-prose">{localize(project.nextSteps, locale)}</p>
+          </ProjectStorySection>
+        ) : null}
+
+        {project.links.length > 0 ? (
+          <ProjectStorySection id="links" title={sectionTitles.links}>
+            <ul className="flex flex-wrap gap-3">
+              {project.links.map((projectLink) => (
+                <li key={projectLink.url}>
+                  <ButtonLink
+                    href={projectLink.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                    trailingIcon={
+                      <ExternalLinkIcon className="size-4 text-accent" />
+                    }
+                  >
+                    {localize(projectLink.label, locale)}
+                    <span className="sr-only">
+                      {" "}
+                      ({dictionary.opensInNewTab})
+                    </span>
+                  </ButtonLink>
+                </li>
+              ))}
+            </ul>
+          </ProjectStorySection>
+        ) : null}
+
+        <div
+          data-reveal
+          className="gradient-ring mt-4 rounded-section border border-transparent bg-raised p-6 sm:p-8"
+        >
+          <p className="max-w-prose">{projectTexts.confidentialityNote}</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <ButtonLink
+              variant="secondary"
+              href={`mailto:${profile.email}?subject=${encodeURIComponent(projectName)}`}
+              leadingIcon={<MailIcon className="text-accent" />}
+            >
+              {projectTexts.requestDetails}
+            </ButtonLink>
+            <ButtonLink
+              variant="secondary"
+              href={buildWhatsAppUrl(locale)}
+              target="_blank"
+              rel="noopener noreferrer"
+              leadingIcon={<ChatBubbleIcon className="text-accent" />}
+            >
+              {dictionary.hero.writeOnWhatsApp}
+              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+            </ButtonLink>
           </div>
         </div>
-
-        <nav
-          aria-label={projectTexts.neighborNavigation.label}
-          className="lg:col-span-12 lg:row-start-3"
-        >
-          <ul className="grid border-t border-hairline sm:grid-cols-2 sm:gap-x-10">
-            {previousProject ? (
-              <li>
-                <NeighborProjectLink
-                  project={previousProject}
-                  direction="previous"
-                  locale={locale}
-                  dictionary={dictionary}
-                />
-              </li>
-            ) : null}
-            {nextProject ? (
-              <li className="sm:col-start-2 sm:text-right">
-                <NeighborProjectLink
-                  project={nextProject}
-                  direction="next"
-                  locale={locale}
-                  dictionary={dictionary}
-                />
-              </li>
-            ) : null}
-          </ul>
-        </nav>
       </article>
+
+      <nav
+        aria-label={projectTexts.neighborNavigation.label}
+        data-reveal
+        className="mt-16 lg:mt-20"
+      >
+        <ul className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+          {previousProject ? (
+            <li>
+              <NeighborProjectLink
+                project={previousProject}
+                direction="previous"
+                locale={locale}
+                dictionary={dictionary}
+              />
+            </li>
+          ) : null}
+          {nextProject ? (
+            <li className="sm:col-start-2">
+              <NeighborProjectLink
+                project={nextProject}
+                direction="next"
+                locale={locale}
+                dictionary={dictionary}
+              />
+            </li>
+          ) : null}
+        </ul>
+      </nav>
     </Container>
   );
 }

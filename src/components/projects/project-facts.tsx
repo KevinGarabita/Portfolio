@@ -7,8 +7,6 @@ import { formatDateRange } from "@/lib/format-date";
 import { getProjectTechnologies } from "@/lib/projects";
 import type { Project } from "@/types/content";
 
-import { ProjectStatus } from "./project-status";
-
 interface ProjectFactsProps {
   project: Project;
   locale: Locale;
@@ -17,14 +15,17 @@ interface ProjectFactsProps {
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 border-t border-hairline py-3 lg:grid-cols-1 lg:gap-y-1">
+    <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 border-t border-hairline py-3 first:border-t-0 first:pt-0 last:pb-0">
       <dt className="text-small text-muted">{label}</dt>
       <dd>{children}</dd>
     </div>
   );
 }
 
-/** Key facts of a case study as a definition list: client, context, period, status and technologies. */
+/**
+ * Key facts of a case study as a definition list in a panel: client, context, period
+ * and technologies. The status is shown above the title, so it is not repeated here.
+ */
 export function ProjectFacts({
   project,
   locale,
@@ -33,7 +34,7 @@ export function ProjectFacts({
   const labels = dictionary.projects.facts;
 
   return (
-    <dl className="border-b border-hairline">
+    <dl className="rounded-section border border-hairline bg-raised p-6">
       <Fact label={labels.client}>{project.client}</Fact>
 
       <Fact label={labels.context}>
@@ -48,17 +49,6 @@ export function ProjectFacts({
             locale,
             dictionary.experience.present,
           )}
-        </Fact>
-      ) : null}
-
-      {project.status ? (
-        <Fact label={labels.status}>
-          <ProjectStatus
-            status={project.status}
-            statusNote={project.statusNote}
-            locale={locale}
-            dictionary={dictionary}
-          />
         </Fact>
       ) : null}
 
