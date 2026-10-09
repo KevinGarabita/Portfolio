@@ -25,11 +25,11 @@ Sitio personal bilingüe (español e inglés) hecho con Next.js 16 (App Router),
 
 Copia `.env.example` a `.env.local` para desarrollo local. Solo hay que configurar una variable; las otras las define Vercel:
 
-| Variable                        | Para qué sirve                                                                                          | Dónde configurarla                               |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `NEXT_PUBLIC_SITE_URL`          | URL base del sitio (`metadataBase`, canonical, hreflang, sitemap y datos estructurados). Sin `/` final. | Vercel, entorno Production, cuando haya dominio. |
-| `VERCEL_PROJECT_PRODUCTION_URL` | Dominio de producción sin esquema; respaldo cuando `NEXT_PUBLIC_SITE_URL` está vacía.                   | Nadie: la define Vercel.                         |
-| `VERCEL_ENV`                    | Entorno del despliegue. En producción el build falla si queda algún `[PLACEHOLDER]`.                    | Nadie: la define Vercel.                         |
+| Variable                        | Para qué sirve                                                                                                                               | Dónde configurarla                                                                 |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`          | URL base del sitio (`metadataBase`, imágenes para compartir, canonical, hreflang, sitemap, robots.txt y datos estructurados). Sin `/` final. | Vercel, entorno Production, con el dominio principal; después, volver a desplegar. |
+| `VERCEL_PROJECT_PRODUCTION_URL` | Dominio de producción sin esquema; respaldo cuando `NEXT_PUBLIC_SITE_URL` está vacía.                                                        | Nadie: la define Vercel.                                                           |
+| `VERCEL_ENV`                    | Entorno del despliegue. En producción el build falla si queda algún `[PLACEHOLDER]`.                                                         | Nadie: la define Vercel.                                                           |
 
 Si está vacía, el sitio usa la URL de producción que expone Vercel o, en local, `http://localhost:3000`.
 
@@ -38,31 +38,45 @@ Si está vacía, el sitio usa la URL de producción que expone Vercel o, en loca
 ```
 src/
   app/
-    [lang]/              layout raíz por idioma (/es, /en) y páginas
+    [lang]/              layout raíz por idioma (/es, /en), páginas e imágenes para compartir (opengraph-image)
     global-not-found.tsx 404 bilingüe para cualquier URL que no existe
     globals.css          Tailwind y tokens de diseño
+    sitemap.ts           /sitemap.xml
+    robots.ts            /robots.txt
+    icon.svg             monograma KG (también apple-icon.png y favicon.ico)
   proxy.ts               redirige / y rutas sin idioma según el navegador
+  assets/fonts/          Atkinson Hyperlegible Next (TTF y licencia OFL) para las imágenes para compartir
   components/
     layout/              header, footer, selector de idioma, enlace "saltar al contenido"
     sections/            secciones de la home
     projects/            piezas de los casos de estudio
     ui/                  piezas base: contenedor, sección, botón, etiqueta
-  content/               datos del sitio (perfil, proyectos, experiencia, formación, habilidades)
+    seo/                 datos estructurados (JSON-LD) y diseño de las imágenes para compartir
+  content/               datos del sitio (perfil, proyectos, experiencia, formación, habilidades, textos SEO)
   i18n/                  idiomas, diccionarios de interfaz y negociación de idioma
-  lib/                   utilidades: URL del sitio, metadatos, fechas, consultas de proyectos, anclas de la home
+  lib/                   utilidades: URL del sitio, metadatos, datos estructurados, fechas, proyectos, anclas de la home
   types/                 tipos del contenido
 public/cv/               CV descargable en español e inglés
-public/images/           foto de Kevin
-docs/                    decisiones técnicas y de diseño
+public/images/           foto de perfil
+docs/                    decisiones técnicas y de diseño, guía de publicación
 ```
 
 ## Cómo agregar un proyecto
 
 1. Agrega un objeto al arreglo de `src/content/projects.ts`. TypeScript te marca cualquier campo que falte (el tipo `Project` está en `src/types/content.ts`).
 2. Escribe cada texto en los dos idiomas: `{ es: "...", en: "..." }`.
-3. Corre `npm run check`.
+3. Pon en `lastUpdated` la fecha del cambio (`"AAAA-MM-DD"`); el sitemap la usa como fecha de modificación.
+4. Corre `npm run check`.
 
-No hace falta tocar componentes: la tarjeta en la home y la página `/[lang]/projects/[slug]` se generan desde los datos.
+No hace falta tocar componentes: la tarjeta en la home, la página `/[lang]/projects/[slug]`, su imagen para compartir y su entrada en el sitemap se generan desde los datos.
+
+Si cambias el perfil, la experiencia, la formación o las habilidades, actualiza también `siteLastUpdated` en `src/content/site-metadata.ts`.
+
+## SEO
+
+- Título, descripción, canonical, `hreflang`, Open Graph y tarjeta de X de cada página salen de `buildPageMetadata` (`src/lib/metadata.ts`). La descripción de la home está en `src/content/site-metadata.ts`; la de cada proyecto es su `summary`.
+- Las imágenes para compartir (1200×630) se generan en el build desde los datos, una por idioma y proyecto.
+- La home lleva datos estructurados (`ProfilePage` y `Person`) armados en `src/lib/structured-data.ts`.
 
 ## Idiomas
 
@@ -79,4 +93,4 @@ Los textos que todavía necesitan información real llevan la marca `[PLACEHOLDE
 - `main` es producción y `dev` la rama base.
 - Cada cambio va en su propia rama desde `dev` (`feat/...`, `fix/...`, `chore/...`), con commits en formato Conventional Commits, y entra a `dev` por pull request con su preview de Vercel.
 
-Las decisiones técnicas y sus razones están en [docs/decisions.md](docs/decisions.md).
+Las decisiones técnicas y sus razones están en [docs/decisions.md](docs/decisions.md). Los pasos para publicar en Vercel y conectar el dominio están en [docs/deployment.md](docs/deployment.md).
