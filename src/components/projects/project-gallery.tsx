@@ -129,7 +129,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                   index === 0 && image.viewport === "desktop"
                     ? "h-auto"
                     : image.viewport === "mobile"
-                      ? "aspect-9/19 object-cover object-top"
+                      ? "aspect-9/16 object-cover object-top"
                       : "aspect-16/10 object-cover object-top",
                 )}
               />
@@ -148,7 +148,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
       <dialog
         ref={dialogRef}
         aria-label={labels.dialogLabel}
-        className="m-0 size-full max-h-none max-w-none bg-transparent p-0 text-body backdrop:bg-page/95"
+        className="m-0 size-full max-h-none max-w-none bg-transparent p-0 text-body backdrop:bg-page/95 backdrop:backdrop-blur-sm"
       >
         {openImage && openIndex !== null ? (
           <div className="flex size-full flex-col gap-4 p-4 sm:p-6">
@@ -186,17 +186,17 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                 <button
                   type="button"
                   onClick={() => showRelative(-1)}
-                  className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border border-control-border bg-raised px-4 font-bold text-heading transition-colors hover:bg-raised-strong"
+                  className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-control border border-control-border bg-raised px-4 font-bold text-heading transition-colors hover:bg-raised-strong"
                 >
                   <ChevronLeftIcon />
-                  {labels.previous}
+                  <span className="max-sm:sr-only">{labels.previous}</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => showRelative(1)}
-                  className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border border-control-border bg-raised px-4 font-bold text-heading transition-colors hover:bg-raised-strong"
+                  className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-control border border-control-border bg-raised px-4 font-bold text-heading transition-colors hover:bg-raised-strong"
                 >
-                  {labels.next}
+                  <span className="max-sm:sr-only">{labels.next}</span>
                   <ChevronRightIcon />
                 </button>
               </div>

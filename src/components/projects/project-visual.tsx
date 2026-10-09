@@ -21,7 +21,8 @@ interface ProjectVisualProps {
  *   from the top; phone screenshots are shown whole);
  * - otherwise the tools of its automation flow, when it has one;
  * - otherwise an icon (an automation for Kobler work, a web application for the rest).
- * Never a made-up screenshot.
+ * Never a made-up screenshot. It fills the card's media frame (absolutely positioned),
+ * so a tall phone screenshot never stretches the card.
  */
 export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
   const [firstImage] = project.images;
@@ -36,7 +37,7 @@ export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
         height={firstImage.height}
         sizes={sizes}
         className={joinClassNames(
-          "size-full",
+          "absolute inset-0 size-full",
           isPhoneScreenshot ? "object-contain p-4" : "object-cover object-top",
         )}
       />
@@ -49,7 +50,7 @@ export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
   return (
     <div
       aria-hidden="true"
-      className="relative flex size-full flex-col items-center justify-center gap-5 bg-[radial-gradient(60%_70%_at_50%_45%,var(--tint-accent),transparent)]"
+      className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-[radial-gradient(60%_70%_at_50%_45%,var(--tint-accent),transparent)]"
     >
       <span className="grid-texture grid-texture-centered absolute inset-0" />
       <span className="gradient-ring relative flex size-20 items-center justify-center rounded-section border border-transparent bg-page shadow-(--glow-accent-soft) [--ring-opacity:1]">
