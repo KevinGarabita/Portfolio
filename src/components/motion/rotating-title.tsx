@@ -5,9 +5,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { joinClassNames } from "@/lib/class-names";
 import {
   getServerMotionSnapshot,
-  isMotionPaused,
   prefersReducedMotion,
-  subscribeToMotionPause,
   subscribeToReducedMotion,
 } from "@/lib/motion-preference";
 
@@ -35,8 +33,7 @@ interface RotationState {
  *   so the box always has the size of the largest one.
  * - Screen readers: hidden (aria-hidden). The heading around it carries every title
  *   as static text, so nothing is announced on each change.
- * - Reduced motion shows the first title and never rotates; the hero's pause button
- *   stops it where it is.
+ * - Reduced motion shows the first title and never rotates.
  */
 export function RotatingTitle({
   titles,
@@ -48,16 +45,11 @@ export function RotatingTitle({
     prefersReducedMotion,
     getServerMotionSnapshot,
   );
-  const isPaused = useSyncExternalStore(
-    subscribeToMotionPause,
-    isMotionPaused,
-    getServerMotionSnapshot,
-  );
   const [rotation, setRotation] = useState<RotationState>({
     activeIndex: 0,
     leavingIndex: null,
   });
-  const canRotate = titles.length > 1 && !isReducedMotion && !isPaused;
+  const canRotate = titles.length > 1 && !isReducedMotion;
 
   useEffect(() => {
     if (!canRotate) return;

@@ -50,7 +50,7 @@ src/
     layout/              header, footer, selector de idioma, enlace "saltar al contenido"
     sections/            secciones de la home
     projects/            tarjetas, galería, diagrama de flujo y piezas de los casos de estudio
-    motion/              aparición al hacer scroll, título que rota y botón para pausar animaciones
+    motion/              aparición al hacer scroll y título que rota
     ui/                  piezas base: contenedor, sección, botón, etiqueta, íconos, monograma
     seo/                 datos estructurados (JSON-LD) y diseño de las imágenes para compartir
   content/               datos del sitio (perfil, proyectos, experiencia, formación, habilidades, textos SEO)

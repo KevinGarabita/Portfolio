@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { MotionToggle } from "@/components/motion/motion-toggle";
 import { RotatingTitle } from "@/components/motion/rotating-title";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SocialIconLink } from "@/components/ui/social-icon-link";
@@ -50,7 +49,7 @@ const floatingTechnologies = [
  *
  * Text: location, then the h1 (the name, plus every title as static text for screen
  * readers), the rotating title (visual only), the subtitle and two calls to action:
- * the projects and WhatsApp. CV, profiles and the motion pause button sit below.
+ * the projects and WhatsApp. The CV and the profiles sit below.
  *
  * Photo: Kevin's cut-out portrait in front of an orange-to-red circle, with an orbit
  * ring and three floating chips. The photo is the LCP element: it is preloaded and
@@ -147,7 +146,6 @@ export async function HeroSection() {
                 </ul>
               </li>
             </ul>
-            <MotionToggle label={dictionary.hero.pauseAnimations} />
           </div>
         </div>
 

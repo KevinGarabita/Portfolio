@@ -189,22 +189,6 @@ export function MapPinIcon({ className }: IconProps) {
   );
 }
 
-export function PauseIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <path d="M9 6v12M15 6v12" />
-    </Icon>
-  );
-}
-
-export function PlayIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <path d="M8 5.5v13l10-6.5-10-6.5Z" />
-    </Icon>
-  );
-}
-
 export function CloseIcon({ className }: IconProps) {
   return (
     <Icon className={className}>
