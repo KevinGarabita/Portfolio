@@ -67,7 +67,7 @@ No hace falta tocar componentes: la tarjeta en la home y la página `/[lang]/pro
 
 ## Contenido pendiente
 
-Los textos que todavía necesitan información real llevan la marca `[PLACEHOLDER]` y dicen qué falta. Ninguno debe llegar a producción: búscalos antes de publicar.
+Los textos que todavía necesitan información real llevan la marca `[PLACEHOLDER]` y dicen qué falta. Ninguno puede llegar a producción: el build de producción en Vercel falla mientras quede alguno.
 
 ## Flujo de trabajo
 
