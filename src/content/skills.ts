@@ -1,22 +1,32 @@
 import { sameInEveryLanguage } from "@/i18n/localize";
 import type { SkillGroup } from "@/types/content";
 
-/** Skills list. Source: the "Habilidades técnicas" section of Kevin's CV, in its order. */
+/**
+ * Skills list. Source: the "Habilidades técnicas" section of Kevin's CV, in its order.
+ * Tools carry their logos (see technology-logos.ts); the rest are shown as text.
+ */
 export const skillGroups: SkillGroup[] = [
   {
     id: "backend",
     title: sameInEveryLanguage("Backend"),
     items: [
-      sameInEveryLanguage("Python (FastAPI)"),
-      { es: "APIs REST", en: "REST APIs" },
-      sameInEveryLanguage("webhooks"),
       {
-        es: "autenticación y acceso por roles (Supabase Auth)",
-        en: "authentication and role-based access (Supabase Auth)",
+        name: sameInEveryLanguage("Python (FastAPI)"),
+        logos: ["python", "fastapi"],
+      },
+      { name: { es: "APIs REST", en: "REST APIs" } },
+      { name: sameInEveryLanguage("webhooks") },
+      {
+        name: {
+          es: "autenticación y acceso por roles (Supabase Auth)",
+          en: "authentication and role-based access (Supabase Auth)",
+        },
       },
       {
-        es: "generación de PDF y exportación a Excel",
-        en: "PDF generation and Excel export",
+        name: {
+          es: "generación de PDF y exportación a Excel",
+          en: "PDF generation and Excel export",
+        },
       },
     ],
   },
@@ -24,59 +34,71 @@ export const skillGroups: SkillGroup[] = [
     id: "ai-and-automation",
     title: { es: "IA y automatización", en: "AI & Automation" },
     items: [
-      sameInEveryLanguage("n8n"),
-      sameInEveryLanguage("OpenAI API"),
+      { name: sameInEveryLanguage("n8n"), logos: ["n8n"] },
+      { name: sameInEveryLanguage("OpenAI API"), logos: ["openai"] },
       {
-        es: "agentes con tool/function calling",
-        en: "agents with tool/function calling",
+        name: {
+          es: "agentes con tool/function calling",
+          en: "agents with tool/function calling",
+        },
       },
       {
-        es: "extracción de datos de documentos con IA",
-        en: "AI-based document data extraction",
+        name: {
+          es: "extracción de datos de documentos con IA",
+          en: "AI-based document data extraction",
+        },
       },
-      sameInEveryLanguage("Ollama"),
+      { name: sameInEveryLanguage("Ollama"), logos: ["ollama"] },
     ],
   },
   {
     id: "frontend-and-data",
     title: { es: "Frontend y datos", en: "Frontend & Data" },
     items: [
-      sameInEveryLanguage("React"),
-      sameInEveryLanguage("TypeScript"),
-      sameInEveryLanguage("JavaScript"),
-      sameInEveryLanguage("PostgreSQL (Supabase)"),
-      sameInEveryLanguage("MySQL"),
+      { name: sameInEveryLanguage("React"), logos: ["react"] },
+      { name: sameInEveryLanguage("TypeScript"), logos: ["typescript"] },
+      { name: sameInEveryLanguage("JavaScript"), logos: ["javascript"] },
+      {
+        name: sameInEveryLanguage("PostgreSQL (Supabase)"),
+        logos: ["postgresql", "supabase"],
+      },
+      { name: sameInEveryLanguage("MySQL"), logos: ["mysql"] },
     ],
   },
   {
     id: "integrations",
     title: { es: "Integraciones", en: "Integrations" },
     items: [
-      sameInEveryLanguage("GoHighLevel (CRM)"),
-      sameInEveryLanguage("WhatsApp Cloud API (Meta)"),
-      sameInEveryLanguage("Zoom"),
-      sameInEveryLanguage("WooCommerce"),
-      sameInEveryLanguage("Google Maps"),
+      { name: sameInEveryLanguage("GoHighLevel (CRM)"), logos: ["crm"] },
+      {
+        name: sameInEveryLanguage("WhatsApp Cloud API (Meta)"),
+        logos: ["whatsapp"],
+      },
+      { name: sameInEveryLanguage("Zoom"), logos: ["zoom"] },
+      { name: sameInEveryLanguage("WooCommerce"), logos: ["woocommerce"] },
+      { name: sameInEveryLanguage("Google Maps"), logos: ["googleMaps"] },
     ],
   },
   {
     id: "tools",
     title: { es: "Herramientas", en: "Tools" },
     items: [
-      sameInEveryLanguage("Git / GitHub"),
-      sameInEveryLanguage("Docker"),
-      sameInEveryLanguage("Render"),
-      sameInEveryLanguage("Claude Code"),
+      { name: sameInEveryLanguage("Git / GitHub"), logos: ["git", "github"] },
+      { name: sameInEveryLanguage("Docker"), logos: ["docker"] },
+      { name: sameInEveryLanguage("Render"), logos: ["render"] },
+      { name: sameInEveryLanguage("Claude Code"), logos: ["claude"] },
     ],
   },
   {
     id: "languages",
     title: { es: "Idiomas", en: "Languages" },
     items: [
-      { es: "Español nativo", en: "Native Spanish" },
+      { name: { es: "Español nativo", en: "Native Spanish" } },
       {
-        es: "inglés intermedio (leo documentación técnica sin dificultad, conversación en desarrollo)",
-        en: "Intermediate English (B1) — I read technical documentation without difficulty, conversational skills in progress",
+        name: {
+          es: "inglés intermedio (leo documentación técnica sin dificultad, conversación en desarrollo)",
+          en: "Intermediate English (B1) — I read technical documentation without difficulty, conversational skills in progress",
+        },
       },
     ],
   },

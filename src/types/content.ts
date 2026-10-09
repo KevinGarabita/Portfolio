@@ -1,3 +1,4 @@
+import type { TechnologyLogoId } from "@/content/technology-logos";
 import type { Locale } from "@/i18n/locales";
 
 /** Text written in every supported language. */
@@ -82,10 +83,20 @@ export interface Education {
   expectedGraduation?: YearMonth;
 }
 
+/**
+ * One entry of the CV skills list. A tool carries its logo(s) and is shown with them;
+ * an entry without logos is a skill or concept (REST APIs, webhooks...) and is shown
+ * as a text tag.
+ */
+export interface SkillItem {
+  name: LocalizedText;
+  logos?: TechnologyLogoId[];
+}
+
 export interface SkillGroup {
   id: string;
   title: LocalizedText;
-  items: LocalizedText[];
+  items: SkillItem[];
 }
 
 export type ProjectStatus = "in-production" | "in-development";

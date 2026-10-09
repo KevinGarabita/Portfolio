@@ -127,7 +127,9 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
     ...(finishedStudies.length > 0 ? { alumniOf: finishedStudies } : {}),
     knowsAbout: skillGroups
       .filter((group) => !nonTechnicalSkillGroupIds.has(group.id))
-      .flatMap((group) => group.items.map((item) => localize(item, locale))),
+      .flatMap((group) =>
+        group.items.map((item) => localize(item.name, locale)),
+      ),
     // The "languages" skill group: native Spanish and intermediate English.
     knowsLanguage: ["es", "en"],
   };
