@@ -3,10 +3,11 @@ import Image from "next/image";
 import { MotionToggle } from "@/components/motion/motion-toggle";
 import { RotatingTitle } from "@/components/motion/rotating-title";
 import { ButtonLink } from "@/components/ui/button-link";
+import { SocialIconLink } from "@/components/ui/social-icon-link";
 import { Container } from "@/components/ui/container";
 import {
   ArrowDownIcon,
-  ChatBubbleIcon,
+  WhatsAppLogoIcon,
   MapPinIcon,
 } from "@/components/ui/icons";
 import { profile } from "@/content/profile";
@@ -109,7 +110,7 @@ export async function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               variant="secondary"
-              leadingIcon={<ChatBubbleIcon className="text-accent" />}
+              leadingIcon={<WhatsAppLogoIcon className="text-accent" />}
             >
               {dictionary.hero.writeOnWhatsApp}
               <span className="sr-only"> ({dictionary.opensInNewTab})</span>
@@ -117,7 +118,7 @@ export async function HeroSection() {
           </div>
 
           <div className="entrance mt-6 flex flex-wrap items-center gap-x-6 gap-y-1 text-small [--entrance-order:5]">
-            <ul className="flex flex-wrap gap-x-5">
+            <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <li>
                 <a
                   href={profile.resumeFiles[locale]}
@@ -129,17 +130,20 @@ export async function HeroSection() {
                   {dictionary.resume.download}
                 </a>
               </li>
-              {profile.socialProfiles.map((socialProfile) => (
-                <li key={socialProfile.network}>
-                  <a
-                    href={socialProfile.url}
-                    rel="me"
-                    className="inline-flex min-h-11 items-center font-bold"
-                  >
-                    {socialNetworkNames[socialProfile.network]}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <ul className="flex gap-3">
+                  {profile.socialProfiles.map((socialProfile) => (
+                    <li key={socialProfile.network}>
+                      <SocialIconLink
+                        network={socialProfile.network}
+                        href={socialProfile.url}
+                        label={socialNetworkNames[socialProfile.network]}
+                        rel="me"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </li>
             </ul>
             <MotionToggle label={dictionary.hero.pauseAnimations} />
           </div>

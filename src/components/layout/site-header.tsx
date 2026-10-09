@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BrandMark } from "@/components/ui/brand-mark";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
-import { ChatBubbleIcon } from "@/components/ui/icons";
+import { WhatsAppLogoIcon } from "@/components/ui/icons";
 import { profile } from "@/content/profile";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { getHomeSectionHref, homeSectionIds } from "@/lib/home-sections";
@@ -67,7 +67,7 @@ export async function SiteHeader() {
               rel="noopener noreferrer"
               variant="secondary"
               size="compact"
-              leadingIcon={<ChatBubbleIcon className="text-accent" />}
+              leadingIcon={<WhatsAppLogoIcon className="text-accent" />}
               className="max-sm:min-w-10 max-sm:gap-0 max-sm:px-2.5"
             >
               <span className="sr-only sm:not-sr-only">

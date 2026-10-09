@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 
 import { ButtonLink } from "@/components/ui/button-link";
-import { ChatBubbleIcon, MailIcon } from "@/components/ui/icons";
+import { WhatsAppLogoIcon, MailIcon } from "@/components/ui/icons";
 import { PageSection } from "@/components/ui/page-section";
+import { SocialNetworkLogo } from "@/components/ui/social-icon-link";
 import { profile } from "@/content/profile";
 import { supportedLocales } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
@@ -71,7 +72,7 @@ export async function ContactSection() {
             href={whatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
-            leadingIcon={<ChatBubbleIcon />}
+            leadingIcon={<WhatsAppLogoIcon />}
           >
             {dictionary.hero.writeOnWhatsApp}
             <span className="sr-only"> ({dictionary.opensInNewTab})</span>
@@ -101,8 +102,9 @@ export async function ContactSection() {
                   href={whatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block py-1"
+                  className="inline-flex items-center gap-2 py-1"
                 >
+                  <WhatsAppLogoIcon />
                   {labels.whatsApp}
                   <span className="sr-only"> ({dictionary.opensInNewTab})</span>
                 </a>
@@ -154,8 +156,9 @@ export async function ContactSection() {
                   <a
                     href={socialProfile.url}
                     rel="me"
-                    className="inline-block py-1"
+                    className="inline-flex items-center gap-2 py-1"
                   >
+                    <SocialNetworkLogo network={socialProfile.network} />
                     {socialNetworkNames[socialProfile.network]}
                   </a>
                 </li>

@@ -1,5 +1,6 @@
 import { BrandMark } from "@/components/ui/brand-mark";
 import { Container } from "@/components/ui/container";
+import { SocialIconLink } from "@/components/ui/social-icon-link";
 import { profile } from "@/content/profile";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
@@ -25,30 +26,26 @@ export async function SiteFooter() {
             </span>
           </p>
         </div>
-        <ul className="flex flex-wrap gap-x-6">
+        <ul className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <li>
-            <a
+            <SocialIconLink
+              network="whatsapp"
               href={buildWhatsAppUrl(locale)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block py-2"
-            >
-              {dictionary.contact.whatsApp}
-              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-            </a>
+              label={dictionary.contact.whatsApp}
+              opensInNewTabText={dictionary.opensInNewTab}
+            />
           </li>
           {profile.socialProfiles.map((socialProfile) => (
             <li key={socialProfile.network}>
-              <a
+              <SocialIconLink
+                network={socialProfile.network}
                 href={socialProfile.url}
+                label={socialNetworkNames[socialProfile.network]}
                 rel="me"
-                className="inline-block py-2"
-              >
-                {socialNetworkNames[socialProfile.network]}
-              </a>
+              />
             </li>
           ))}
-          <li>
+          <li className="ml-3">
             <a
               href={profile.resumeFiles[locale]}
               download

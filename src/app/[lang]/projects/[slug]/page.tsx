@@ -19,7 +19,7 @@ import { Container } from "@/components/ui/container";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  ChatBubbleIcon,
+  WhatsAppLogoIcon,
   ExternalLinkIcon,
   MailIcon,
 } from "@/components/ui/icons";
@@ -314,7 +314,7 @@ export default async function ProjectPage({
               href={buildWhatsAppUrl(locale)}
               target="_blank"
               rel="noopener noreferrer"
-              leadingIcon={<ChatBubbleIcon className="text-accent" />}
+              leadingIcon={<WhatsAppLogoIcon className="text-accent" />}
             >
               {dictionary.hero.writeOnWhatsApp}
               <span className="sr-only"> ({dictionary.opensInNewTab})</span>
