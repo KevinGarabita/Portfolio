@@ -1,10 +1,8 @@
-import {
-  getProjectCardLayouts,
-  ProjectCard,
-} from "@/components/projects/project-card";
+import type { CSSProperties } from "react";
+
+import { ProjectCard } from "@/components/projects/project-card";
 import { PageSection } from "@/components/ui/page-section";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
-import { joinClassNames } from "@/lib/class-names";
 import { homeSectionIds } from "@/lib/home-sections";
 import { getAllProjects } from "@/lib/projects";
 import type { ProjectCategory } from "@/types/content";
@@ -13,9 +11,9 @@ import type { ProjectCategory } from "@/types/content";
 const categoryOrder: ProjectCategory[] = ["freelance", "kobler"];
 
 /**
- * Projects in two groups (freelance, Kobler), each a grid of cards: two per row from
- * md up, with featured projects (and a card left alone in its row) at full width.
- * Each card fades in on its own as it scrolls into view.
+ * Projects in two groups (freelance, Kobler), each a grid of compact cards in columns:
+ * one on phones, two from sm, three from lg. Each card fades in on its own as it
+ * scrolls into view, staggered along its row.
  */
 export async function ProjectsSection() {
   const locale = await getCurrentLocale();
@@ -39,7 +37,6 @@ export async function ProjectsSection() {
       <div className="flex flex-col gap-16 lg:gap-24">
         {projectGroups.map((group) => {
           const groupTitleId = `projects-${group.category}-title`;
-          const cardLayouts = getProjectCardLayouts(group.projects);
 
           return (
             <section key={group.category} aria-labelledby={groupTitleId}>
@@ -54,27 +51,20 @@ export async function ProjectsSection() {
                 />
                 {dictionary.projects.groups[group.category]}
               </h3>
-              <ul className="grid gap-6 md:grid-cols-2 lg:gap-8">
-                {group.projects.map((project, index) => {
-                  const layout = cardLayouts.get(project.slug) ?? "stacked";
-                  return (
-                    <li
-                      key={project.slug}
-                      data-reveal
-                      className={joinClassNames(
-                        layout === "wide" && "md:col-span-2",
-                        index % 2 === 1 && "md:[--reveal-order:1]",
-                      )}
-                    >
-                      <ProjectCard
-                        project={project}
-                        locale={locale}
-                        dictionary={dictionary}
-                        layout={layout}
-                      />
-                    </li>
-                  );
-                })}
+              <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+                {group.projects.map((project, index) => (
+                  <li
+                    key={project.slug}
+                    data-reveal
+                    style={{ "--reveal-order": index % 3 } as CSSProperties}
+                  >
+                    <ProjectCard
+                      project={project}
+                      locale={locale}
+                      dictionary={dictionary}
+                    />
+                  </li>
+                ))}
               </ul>
             </section>
           );

@@ -38,6 +38,7 @@ export const spanishDictionary = {
       kobler: "Proyecto en Kobler",
     },
     viewCaseStudy: "Ver caso de estudio",
+    moreTechnologies: (count: number) => `y ${count} más`,
     status: {
       "in-production": "En producción",
       "in-development": "En desarrollo",
