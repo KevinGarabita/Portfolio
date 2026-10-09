@@ -20,6 +20,10 @@ export const englishDictionary: Dictionary = {
   },
   resume: {
     download: "Download résumé (PDF)",
+    inLanguage: {
+      es: "Résumé in Spanish (PDF)",
+      en: "Résumé in English (PDF)",
+    },
   },
   projects: {
     sectionTitle: "Projects",
@@ -76,7 +80,14 @@ export const englishDictionary: Dictionary = {
     sectionTitle: "Contact",
     email: "Email",
     phone: "Phone",
-    downloadResume: "Download résumé",
+    whatsApp: "WhatsApp",
+    location: "Location",
+    workMode: "Work mode",
+    availability: "Availability",
+    timeZoneNote: (city: string, utcOffset: string) =>
+      `(${city} time, ${utcOffset})`,
+    resume: "Résumé",
+    profiles: "Profiles",
   },
   notFound: {
     title: "Page not found",

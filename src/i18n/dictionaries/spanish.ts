@@ -18,6 +18,10 @@ export const spanishDictionary = {
   },
   resume: {
     download: "Descargar CV (PDF)",
+    inLanguage: {
+      es: "CV en español (PDF)",
+      en: "CV en inglés (PDF)",
+    },
   },
   projects: {
     sectionTitle: "Proyectos",
@@ -74,7 +78,14 @@ export const spanishDictionary = {
     sectionTitle: "Contacto",
     email: "Correo",
     phone: "Teléfono",
-    downloadResume: "Descargar CV",
+    whatsApp: "WhatsApp",
+    location: "Ubicación",
+    workMode: "Modalidad",
+    availability: "Disponibilidad",
+    timeZoneNote: (city: string, utcOffset: string) =>
+      `(hora de ${city}, ${utcOffset})`,
+    resume: "CV",
+    profiles: "Perfiles",
   },
   notFound: {
     title: "Página no encontrada",

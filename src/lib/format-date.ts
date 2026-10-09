@@ -17,6 +17,20 @@ export function formatYearMonth(yearMonth: YearMonth, locale: Locale): string {
   }).format(new Date(Date.UTC(year, month - 1, 1)));
 }
 
+/**
+ * UTC offset of an IANA time zone on a given day: "America/Merida" → "UTC−6", with a true
+ * minus sign. Static pages compute it at build time, which is fine for zones without
+ * daylight saving time, such as Mérida's.
+ */
+export function formatUtcOffset(timeZone: string, date = new Date()): string {
+  const offsetName =
+    new Intl.DateTimeFormat("en-US", { timeZone, timeZoneName: "shortOffset" })
+      .formatToParts(date)
+      .find((part) => part.type === "timeZoneName")?.value ?? "GMT";
+
+  return offsetName.replace("GMT", "UTC").replace("-", "−");
+}
+
 /** "diciembre de 2025 – agosto de 2026", or "agosto de 2023 – actualidad" when still ongoing. */
 export function formatDateRange(
   range: DateRange,
