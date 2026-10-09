@@ -41,7 +41,7 @@ export async function HeroSection() {
             {localize(profile.role, locale)}
           </p>
           <p className="mt-4 max-w-prose">
-            {localize(profile.headline, locale)}
+            {localize(profile.heroSubtitle, locale)}
           </p>
         </div>
 

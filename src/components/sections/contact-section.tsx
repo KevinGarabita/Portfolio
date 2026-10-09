@@ -9,6 +9,7 @@ import { joinClassNames } from "@/lib/class-names";
 import { formatUtcOffset } from "@/lib/format-date";
 import { homeSectionIds } from "@/lib/home-sections";
 import { socialNetworkNames } from "@/lib/social-networks";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 interface ContactDetailProps {
   label: string;
@@ -78,16 +79,11 @@ export async function ContactSection() {
                 {phone.display}
               </a>
             </li>
-            {phone.hasWhatsApp === true ? (
-              <li>
-                <a
-                  href={`https://wa.me/${phone.international.replace(/\D/g, "")}`}
-                  className="inline-block py-1"
-                >
-                  {labels.whatsApp}
-                </a>
-              </li>
-            ) : null}
+            <li>
+              <a href={buildWhatsAppUrl(locale)} className="inline-block py-1">
+                {labels.whatsApp}
+              </a>
+            </li>
           </ul>
         </ContactDetail>
 

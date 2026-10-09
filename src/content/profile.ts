@@ -1,7 +1,5 @@
 import type { Profile } from "@/types/content";
 
-import { placeholderText } from "./placeholder";
-
 /** Personal data. Source: Kevin's CV (Spanish and English versions) and his answers. */
 export const profile: Profile = {
   displayName: "Kevin Garabita",
@@ -10,9 +8,11 @@ export const profile: Profile = {
     es: "Desarrollador Backend, IA y Automatización",
     en: "Backend, AI & Automation Developer",
   },
-  headline: placeholderText(
-    "Frase del hero. Se redacta en la fase 3 solo con datos del CV y se aprueba en el preview.",
-  ),
+  heroTitles: ["Software Engineer", "Automation Engineer"],
+  heroSubtitle: {
+    es: "Desarrollo backend, agentes de IA y automatizaciones con FastAPI, n8n y la API de OpenAI.",
+    en: "Backend development, AI agents and automations with FastAPI, n8n and the OpenAI API.",
+  },
   about: [
     {
       es: "Estudiante de séptimo semestre de Ingeniería en Desarrollo de Tecnologías y Software. Durante nueve meses desarrollé agentes conversacionales y automatizaciones en n8n con la API de OpenAI para cinco clientes, integrando GoHighLevel, WhatsApp, Zoom y WooCommerce vía APIs REST y webhooks, y me hice cargo del monitoreo y la corrección de fallas en producción. En paralelo construyo aplicaciones web con FastAPI, React, TypeScript y Supabase; una está en producción con usuarios reales.",
@@ -35,6 +35,13 @@ export const profile: Profile = {
   phone: {
     display: "+52 938 389 4199",
     international: "+529383894199",
+  },
+  whatsApp: {
+    number: "529383894199",
+    prefilledMessage: {
+      es: "Hola Kevin, vi tu portafolio y me gustaría platicar contigo.",
+      en: "Hi Kevin, I saw your portfolio and would like to talk with you.",
+    },
   },
   socialProfiles: [
     { network: "linkedin", url: "https://www.linkedin.com/in/kevingarabita/" },
