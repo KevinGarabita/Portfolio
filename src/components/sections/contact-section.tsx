@@ -43,6 +43,8 @@ export async function ContactSection() {
     ...supportedLocales.filter((resumeLocale) => resumeLocale !== locale),
   ];
   const whatsAppUrl = buildWhatsAppUrl(locale);
+  // Lets the large address break before the @, never inside the domain.
+  const [emailUser, emailDomain] = profile.email.split("@");
 
   return (
     <PageSection
@@ -50,7 +52,7 @@ export async function ContactSection() {
       title={labels.sectionTitle}
       spacing="spacious"
     >
-      <div className="gradient-ring rounded-section border border-transparent bg-raised p-6 sm:p-10 lg:p-14">
+      <div className="gradient-ring rounded-section border border-transparent bg-raised p-4 min-[22.5rem]:p-6 sm:p-10 lg:p-14">
         {/* The glow is clipped by its own box, so the panel can keep its gradient ring. */}
         <div
           aria-hidden="true"
@@ -64,7 +66,8 @@ export async function ContactSection() {
           href={`mailto:${profile.email}`}
           className="mt-2 inline-block font-display text-subtitle font-extrabold wrap-anywhere sm:text-title lg:text-headline"
         >
-          {profile.email}
+          {emailUser}
+          <wbr />@{emailDomain}
         </a>
 
         <div className="mt-8 flex flex-wrap gap-3">
@@ -74,6 +77,7 @@ export async function ContactSection() {
             rel="noopener noreferrer"
             variant="whatsapp"
             leadingIcon={<WhatsAppLogoIcon />}
+            className="max-[22.5rem]:px-4"
           >
             {dictionary.hero.writeOnWhatsApp}
             <span className="sr-only"> ({dictionary.opensInNewTab})</span>
@@ -93,7 +97,7 @@ export async function ContactSection() {
               <li>
                 <a
                   href={`tel:${phone.international}`}
-                  className="inline-block py-1"
+                  className="inline-flex min-h-11 items-center"
                 >
                   {phone.display}
                 </a>
@@ -103,7 +107,7 @@ export async function ContactSection() {
                   href={whatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 py-1"
+                  className="inline-flex min-h-11 items-center gap-2"
                 >
                   <WhatsAppLogoIcon colors="brand" />
                   {labels.whatsApp}
@@ -141,7 +145,7 @@ export async function ContactSection() {
                     download
                     hrefLang={resumeLocale}
                     type="application/pdf"
-                    className="inline-block py-1"
+                    className="inline-flex min-h-11 items-center"
                   >
                     {dictionary.resume.inLanguage[resumeLocale]}
                   </a>
@@ -157,7 +161,7 @@ export async function ContactSection() {
                   <a
                     href={socialProfile.url}
                     rel="me"
-                    className="inline-flex items-center gap-2 py-1"
+                    className="inline-flex min-h-11 items-center gap-2"
                   >
                     <SocialNetworkLogo network={socialProfile.network} />
                     {socialNetworkNames[socialProfile.network]}

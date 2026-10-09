@@ -43,7 +43,7 @@ export async function ExperienceSection() {
                 />
                 <article className="grid gap-4 lg:grid-cols-12 lg:gap-10">
                   <div className="lg:col-span-3">
-                    <p className="font-mono text-small font-bold text-accent">
+                    <p className="font-mono text-small font-bold text-balance text-accent">
                       {formatDateRange(
                         job.period,
                         locale,

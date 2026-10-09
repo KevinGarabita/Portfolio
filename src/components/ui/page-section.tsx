@@ -14,6 +14,16 @@ const spacingClassNames: Record<SectionSpacing, string> = {
   compact: "py-12 lg:py-20",
 };
 
+/**
+ * Anchor links land on the heading, not on the empty top padding: the scroll margin
+ * cancels all but 1rem of it.
+ */
+const scrollMarginClassNames: Record<SectionSpacing, string> = {
+  spacious: "-scroll-mt-16 lg:-scroll-mt-24",
+  regular: "-scroll-mt-12 lg:-scroll-mt-20",
+  compact: "-scroll-mt-8 lg:-scroll-mt-16",
+};
+
 interface PageSectionProps {
   id: HomeSectionId;
   title: string;
@@ -47,7 +57,11 @@ export function PageSection({
   const titleId = `${id}-title`;
 
   return (
-    <section id={id} aria-labelledby={titleId}>
+    <section
+      id={id}
+      aria-labelledby={titleId}
+      className={scrollMarginClassNames[spacing]}
+    >
       <Container className={spacingClassNames[spacing]}>
         <div data-reveal className="mb-10 flex items-end gap-6 lg:mb-14">
           <h2

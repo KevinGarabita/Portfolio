@@ -34,13 +34,13 @@ const floatingTechnologies = [
   {
     name: "n8n",
     placement:
-      "top-[8%] -right-[14%] [--entrance-order:5] sm:top-[14%] sm:-right-[4%]",
+      "top-[8%] -right-[14%] [--entrance-order:5] sm:top-[14%] sm:-right-[4%] md:right-0",
     floatDelay: "[--float-delay:-2.4s]",
   },
   {
     name: "OpenAI API",
     placement:
-      "bottom-[10%] -right-[22%] [--entrance-order:6] sm:bottom-[14%] sm:-right-[10%]",
+      "bottom-[10%] -right-[22%] [--entrance-order:6] sm:bottom-[14%] sm:-right-[10%] md:-right-[3%]",
     floatDelay: "[--float-delay:-4.8s]",
   },
 ];
@@ -55,7 +55,9 @@ const floatingTechnologies = [
  * Photo: Kevin's cut-out portrait in front of an orange-to-red circle, with an orbit
  * ring and three floating chips. The photo is the LCP element: it is preloaded and
  * never fades in (only the decoration does). The text comes first in the HTML; on
- * phones the photo is placed above it visually.
+ * phones the photo is placed above it visually (not on short screens, where the text
+ * would fall below the fold). On phones each title takes one word per line, so both
+ * titles have the same height and the subtitle never jumps.
  */
 export async function HeroSection() {
   const locale = await getCurrentLocale();
@@ -72,7 +74,7 @@ export async function HeroSection() {
         className="grid-texture absolute inset-x-0 -top-(--header-height) bottom-0 -z-10"
       />
 
-      <Container className="grid items-center gap-y-8 pt-6 pb-16 md:grid-cols-12 md:gap-x-8 md:pt-10 lg:min-h-[calc(100svh-var(--header-height))] lg:gap-x-12 lg:py-12">
+      <Container className="grid items-center gap-y-8 pt-6 pb-16 md:grid-cols-12 md:gap-x-8 md:pt-10 lg:min-h-[min(calc(100svh-var(--header-height)),52rem)] lg:gap-x-12 lg:py-12 short:pt-4">
         <div className="md:col-span-7">
           <p className="entrance inline-flex items-center gap-2 rounded-tag border border-hairline bg-raised px-3 py-1.5 text-small text-muted [--entrance-order:0]">
             <MapPinIcon className="size-4 text-accent" />
@@ -90,7 +92,7 @@ export async function HeroSection() {
             <RotatingTitle
               titles={profile.heroTitles}
               className="entrance mt-2 text-display font-extrabold [--entrance-order:2]"
-              titleClassName="text-gradient-brand pb-[0.08em]"
+              titleClassName="text-gradient-brand pb-[0.08em] max-sm:w-min"
             />
           </h1>
 
@@ -149,7 +151,7 @@ export async function HeroSection() {
           </div>
         </div>
 
-        <div className="order-first mx-auto w-full max-w-60 sm:max-w-80 md:order-0 md:col-span-5 md:max-w-none">
+        <div className="order-first mx-auto w-full max-w-52 min-[22.5rem]:max-w-60 sm:max-w-80 md:order-0 md:col-span-5 md:max-w-none short:order-0 short:max-w-48">
           <div className="relative aspect-900/1024">
             {/* Soft glow and orbit ring, centred on the circle. */}
             <div
@@ -176,7 +178,7 @@ export async function HeroSection() {
                 src={kevinGarabitaCutout}
                 alt={dictionary.hero.photoAlt}
                 preload
-                sizes="(min-width: 1280px) 30rem, (min-width: 768px) 40vw, (min-width: 640px) 20rem, 16rem"
+                sizes="(min-width: 1800px) 34rem, (min-width: 1280px) 30rem, (min-width: 768px) 40vw, (min-width: 640px) 20rem, 16rem"
                 className="hero-photo entrance-lift absolute inset-0 size-full"
               />
             </div>

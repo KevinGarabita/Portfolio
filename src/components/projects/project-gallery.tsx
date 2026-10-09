@@ -111,7 +111,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
               }}
               type="button"
               onClick={() => openAt(index)}
-              className="group relative block w-full cursor-zoom-in overflow-hidden rounded-media border border-hairline bg-raised"
+              className="group relative block h-full w-full cursor-zoom-in overflow-hidden rounded-media border border-hairline bg-raised"
             >
               <span className="sr-only">{labels.enlarge}: </span>
               <Image
@@ -130,15 +130,18 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                     ? "h-auto"
                     : image.viewport === "mobile"
                       ? "aspect-9/16 object-cover object-top"
-                      : "aspect-16/10 object-cover object-top",
+                      : "aspect-16/10 object-cover object-top sm:aspect-auto sm:h-full",
                 )}
               />
               <span
                 aria-hidden="true"
-                className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-tag border border-hairline bg-page px-3 py-1 text-small font-bold text-heading opacity-90 transition-opacity group-hover:opacity-100"
+                className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-tag border border-hairline bg-page px-2 py-1 text-small font-bold text-heading opacity-90 transition-opacity group-hover:opacity-100 sm:px-3"
               >
                 <ExpandIcon className="size-4 text-accent" />
-                {labels.enlarge}
+                {/* Only the large thumbnail spells it out; on small ones it would hide the shot. */}
+                <span className={index === 0 ? undefined : "hidden xl:inline"}>
+                  {labels.enlarge}
+                </span>
               </span>
             </button>
           </li>
@@ -151,7 +154,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
         className="m-0 size-full max-h-none max-w-none bg-transparent p-0 text-body backdrop:bg-page/95 backdrop:backdrop-blur-sm"
       >
         {openImage && openIndex !== null ? (
-          <div className="flex size-full flex-col gap-4 p-4 sm:p-6">
+          <div className="relative flex size-full flex-col gap-4 p-4 sm:p-6 short:gap-2 short:p-3">
             <div className="flex items-center justify-between gap-4">
               <p aria-live="polite" className="text-small text-muted">
                 {labels.positions[openIndex]}
@@ -174,29 +177,38 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                 width={openImage.width}
                 height={openImage.height}
                 sizes="100vw"
+                style={{
+                  maxWidth: openImage.width,
+                  maxHeight: openImage.height,
+                }}
                 className="min-h-0 w-auto max-w-full flex-1 object-contain"
               />
-              <figcaption className="max-w-prose text-center text-small text-muted">
+              <figcaption className="max-w-prose text-center text-small text-muted short:sr-only">
                 {openImage.alt}
               </figcaption>
             </figure>
 
             {hasSeveralImages ? (
-              <div className="flex items-center justify-center gap-3">
+              // On short screens the buttons sit on the image edges to leave it the full height.
+              <div className="flex items-center justify-center gap-3 short:pointer-events-none short:absolute short:inset-x-3 short:top-1/2 short:-translate-y-1/2 short:justify-between">
                 <button
                   type="button"
                   onClick={() => showRelative(-1)}
-                  className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-control border border-control-border bg-raised px-4 font-bold text-heading transition-colors hover:bg-raised-strong"
+                  className="pointer-events-auto inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-control border border-control-border bg-raised px-4 font-bold text-heading transition-colors hover:bg-raised-strong short:px-0"
                 >
                   <ChevronLeftIcon />
-                  <span className="max-sm:sr-only">{labels.previous}</span>
+                  <span className="max-sm:sr-only short:sr-only">
+                    {labels.previous}
+                  </span>
                 </button>
                 <button
                   type="button"
                   onClick={() => showRelative(1)}
-                  className="inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-control border border-control-border bg-raised px-4 font-bold text-heading transition-colors hover:bg-raised-strong"
+                  className="pointer-events-auto inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-control border border-control-border bg-raised px-4 font-bold text-heading transition-colors hover:bg-raised-strong short:px-0"
                 >
-                  <span className="max-sm:sr-only">{labels.next}</span>
+                  <span className="max-sm:sr-only short:sr-only">
+                    {labels.next}
+                  </span>
                   <ChevronRightIcon />
                 </button>
               </div>

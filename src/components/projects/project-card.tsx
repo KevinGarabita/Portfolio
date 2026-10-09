@@ -22,7 +22,7 @@ const visibleTechnologyCount = 5;
 
 /** One column on phones, two from sm, three from lg (see ProjectsSection). */
 const mediaSizes =
-  "(min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
+  "(min-width: 1800px) 440px, (min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
 
 /**
  * A compact project card for the home page grid: media on top, then status, name,
@@ -40,7 +40,7 @@ export function ProjectCard({ project, locale, dictionary }: ProjectCardProps) {
 
   return (
     <article className="project-card hover-glow gradient-ring flex h-full flex-col rounded-section border border-hairline bg-raised">
-      <div className="project-card-media relative aspect-16/10 overflow-hidden rounded-t-section border-b border-hairline bg-raised-strong">
+      <div className="project-card-media @container relative aspect-16/10 overflow-hidden rounded-t-section border-b border-hairline bg-raised-strong">
         <ProjectVisual project={project} locale={locale} sizes={mediaSizes} />
       </div>
 
@@ -51,10 +51,11 @@ export function ProjectCard({ project, locale, dictionary }: ProjectCardProps) {
             statusNote={project.statusNote}
             locale={locale}
             dictionary={dictionary}
+            stacked
           />
         ) : null}
 
-        <h4 className="font-display text-subtitle font-bold">
+        <h4 className="font-display text-subtitle font-bold text-pretty">
           <Link
             href={`/${locale}/projects/${project.slug}`}
             className="text-heading no-underline after:absolute after:inset-0 after:z-(--layer-raised) after:rounded-section hover:underline"

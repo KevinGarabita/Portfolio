@@ -298,7 +298,7 @@ export default async function ProjectPage({
 
         <div
           data-reveal
-          className="gradient-ring mt-4 rounded-section border border-transparent bg-raised p-6 sm:p-8"
+          className="gradient-ring mt-4 rounded-section border border-transparent bg-raised p-4 min-[22.5rem]:p-6 sm:p-8"
         >
           <p className="max-w-prose">{projectTexts.confidentialityNote}</p>
           <div className="mt-6 flex flex-wrap gap-3">
@@ -311,6 +311,7 @@ export default async function ProjectPage({
             </ButtonLink>
             <ButtonLink
               variant="whatsapp"
+              className="max-[22.5rem]:px-4"
               href={buildWhatsAppUrl(locale)}
               target="_blank"
               rel="noopener noreferrer"

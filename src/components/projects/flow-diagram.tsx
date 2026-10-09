@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-
 import { ArrowRightIcon } from "@/components/ui/icons";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
@@ -15,22 +13,22 @@ interface FlowDiagramProps {
 
 /**
  * An automation flow as numbered steps, each with the tool involved. A real ordered
- * list, so screen readers get the order and the count. Vertical on small screens and
- * one horizontal row from lg up; the connecting line is drawn in CSS (.flow-step).
+ * list, so screen readers get the order and the count. Vertical up to laptops and
+ * one horizontal row from xl up; the connecting line is drawn in CSS (.flow-step).
  */
 export function FlowDiagram({ steps, locale, toolLabel }: FlowDiagramProps) {
   return (
-    <ol className="grid gap-4 lg:auto-cols-fr lg:grid-flow-col lg:gap-8">
+    <ol className="grid gap-4 xl:auto-cols-fr xl:grid-flow-col xl:gap-8">
       {steps.map((step, index) => (
         <li
           key={step.label.es}
-          className="flow-step flex gap-4 lg:flex-col lg:gap-4"
+          className="flow-step flex gap-4 xl:flex-col xl:gap-4"
         >
           <span className="relative z-(--layer-raised) flex size-10 shrink-0 items-center justify-center rounded-full bg-accent font-bold text-on-accent ring-4 ring-page">
             {index + 1}
           </span>
           <div className="min-w-0 flex-1 rounded-media border border-hairline bg-raised p-4">
-            <p className="font-bold text-heading">
+            <p className="font-bold wrap-break-word hyphens-auto text-heading">
               {localize(step.label, locale)}
             </p>
             {step.tool ? (
@@ -74,12 +72,16 @@ export function FlowPreview({ steps, className }: FlowPreviewProps) {
       )}
     >
       {tools.map((tool, index) => (
-        <Fragment key={tool}>
+        // Arrow and tool never split, so a line cannot end with an arrow.
+        <span
+          key={tool}
+          className="inline-flex items-center gap-2 whitespace-nowrap"
+        >
           {index > 0 ? <ArrowRightIcon className="size-4 text-accent" /> : null}
           <span className="rounded-tag border border-hairline bg-page px-3 py-1.5 font-mono text-small text-heading">
             {tool}
           </span>
-        </Fragment>
+        </span>
       ))}
     </div>
   );

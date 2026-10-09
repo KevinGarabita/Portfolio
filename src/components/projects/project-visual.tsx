@@ -21,7 +21,9 @@ interface ProjectVisualProps {
  *   from the top; phone screenshots are shown whole);
  * - otherwise the tools of its automation flow, when it has one;
  * - otherwise an icon (an automation for Kobler work, a web application for the rest).
- * Never a made-up screenshot. It fills the card's media frame (absolutely positioned),
+ * Never a made-up screenshot. The icon shrinks on narrow cards and, when a flow
+ * follows, is dropped below 20rem so the flow always fits (container query on the frame).
+ * It fills the card's media frame (absolutely positioned),
  * so a tall phone screenshot never stretches the card.
  */
 export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
@@ -50,11 +52,16 @@ export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-[radial-gradient(60%_70%_at_50%_45%,var(--tint-accent),transparent)]"
+      className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[radial-gradient(60%_70%_at_50%_45%,var(--tint-accent),transparent)]"
     >
       <span className="grid-texture grid-texture-centered absolute inset-0" />
-      <span className="gradient-ring relative flex size-20 items-center justify-center rounded-section border border-transparent bg-page shadow-(--glow-accent-soft) [--ring-opacity:1]">
-        <VisualIcon className="size-10 text-accent" />
+      <span
+        className={joinClassNames(
+          "gradient-ring relative flex size-14 shrink-0 items-center justify-center rounded-section border border-transparent bg-page shadow-(--glow-accent-soft) [--ring-opacity:1] @min-[22rem]:size-20",
+          project.flowDiagram?.length ? "@max-[20rem]:hidden" : undefined,
+        )}
+      >
+        <VisualIcon className="size-7 text-accent @min-[22rem]:size-10" />
       </span>
       {project.flowDiagram?.length ? (
         <FlowPreview steps={project.flowDiagram} className="relative" />

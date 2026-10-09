@@ -61,7 +61,7 @@ export function ProjectKeyPoints({ items }: { items: string[] }) {
       {items.map((item, index) => (
         <li
           key={item}
-          className="rounded-section border border-hairline bg-raised p-6"
+          className="rounded-section border border-hairline bg-raised p-6 sm:last:odd:col-span-2"
         >
           <span
             aria-hidden="true"

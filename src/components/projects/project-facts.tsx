@@ -15,9 +15,9 @@ interface ProjectFactsProps {
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 border-t border-hairline py-3 first:border-t-0 first:pt-0 last:pb-0">
+    <div className="grid gap-x-4 gap-y-1 border-t border-hairline py-3 first:border-t-0 first:pt-0 last:pb-0 @md:grid-cols-[7rem_minmax(0,1fr)]">
       <dt className="text-small text-muted">{label}</dt>
-      <dd>{children}</dd>
+      <dd className="wrap-break-word">{children}</dd>
     </div>
   );
 }
@@ -34,7 +34,7 @@ export function ProjectFacts({
   const labels = dictionary.projects.facts;
 
   return (
-    <dl className="rounded-section border border-hairline bg-raised p-6">
+    <dl className="@container rounded-section border border-hairline bg-raised p-6">
       <Fact label={labels.client}>{project.client}</Fact>
 
       <Fact label={labels.context}>

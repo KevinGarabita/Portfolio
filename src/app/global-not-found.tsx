@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata, Viewport } from "next";
 
 import { BrandMark } from "@/components/ui/brand-mark";
@@ -72,40 +73,51 @@ export default function GlobalNotFound() {
     >
       <body>
         <div aria-hidden="true" className="site-backdrop" />
-        <main id="main-content" tabIndex={-1} className="focus:outline-none">
-          <Container className="pb-20 lg:pb-28">
-            <p className="flex items-center gap-3 border-b border-hairline py-4 font-display text-subtitle font-extrabold text-heading">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex min-h-svh flex-col focus:outline-none"
+        >
+          <Container className="flex flex-1 flex-col pb-20 lg:pb-28">
+            {/* "/" goes to the visitor's language (negotiated by the proxy). */}
+            <Link
+              href="/"
+              className="flex items-center gap-3 self-start border-b border-hairline py-4 font-display text-subtitle font-extrabold text-heading no-underline"
+            >
               <BrandMark />
               {profile.displayName}
-            </p>
-            <p
-              aria-hidden="true"
-              className="entrance mt-12 font-display text-giant font-extrabold lg:mt-16"
-            >
-              <span className="text-gradient-brand">404</span>
-            </p>
-            <div className="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-2 lg:gap-x-10">
-              <section
-                aria-labelledby="not-found-title-es"
-                className="entrance [--entrance-order:1]"
+            </Link>
+            {/* Centred vertically on tall screens. */}
+            <div className="my-auto">
+              <p
+                aria-hidden="true"
+                className="entrance mt-12 font-display text-giant font-extrabold lg:mt-16"
               >
-                <NotFoundMessage
-                  locale="es"
-                  dictionary={spanishDictionary}
-                  headingLevel="h1"
-                />
-              </section>
-              <section
-                lang="en"
-                aria-labelledby="not-found-title-en"
-                className="entrance border-t border-hairline pt-12 [--entrance-order:2] lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10"
-              >
-                <NotFoundMessage
-                  locale="en"
-                  dictionary={englishDictionary}
-                  headingLevel="h2"
-                />
-              </section>
+                <span className="text-gradient-brand">404</span>
+              </p>
+              <div className="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-2 lg:gap-x-10">
+                <section
+                  aria-labelledby="not-found-title-es"
+                  className="entrance [--entrance-order:1]"
+                >
+                  <NotFoundMessage
+                    locale="es"
+                    dictionary={spanishDictionary}
+                    headingLevel="h1"
+                  />
+                </section>
+                <section
+                  lang="en"
+                  aria-labelledby="not-found-title-en"
+                  className="entrance border-t border-hairline pt-12 [--entrance-order:2] lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10"
+                >
+                  <NotFoundMessage
+                    locale="en"
+                    dictionary={englishDictionary}
+                    headingLevel="h2"
+                  />
+                </section>
+              </div>
             </div>
           </Container>
         </main>

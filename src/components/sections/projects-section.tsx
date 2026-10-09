@@ -53,9 +53,11 @@ export async function ProjectsSection() {
               </h3>
               <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
                 {group.projects.map((project, index) => (
+                  // Two columns: an odd last card is centred under the pair.
                   <li
                     key={project.slug}
                     data-reveal
+                    className="sm:max-lg:last:odd:col-span-2 sm:max-lg:last:odd:mx-auto sm:max-lg:last:odd:w-[calc(50%-0.625rem)]"
                     style={{ "--reveal-order": index % 3 } as CSSProperties}
                   >
                     <ProjectCard

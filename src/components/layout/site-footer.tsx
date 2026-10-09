@@ -51,7 +51,7 @@ export async function SiteFooter() {
               download
               hrefLang={locale}
               type="application/pdf"
-              className="inline-block py-2"
+              className="inline-flex min-h-11 items-center"
             >
               {dictionary.resume.download}
             </a>

@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Short viewports: phones in landscape, laptops at 200% zoom. */
+@custom-variant short (@media (max-height: 30rem));
+
 /*
  * Design tokens - read top to bottom:
  *   1. Resets: Tailwind's stock palette, type scale, radii and shadows are removed,
@@ -204,12 +207,12 @@
     --layer-header: 40;
     --layer-skip-link: 60;
 
-    /* Height of the sticky header: two rows below the lg breakpoint, one from there up.
+    /* Height of the sticky header: two rows below 52rem, one from there up.
      * scroll-padding-top uses it so anchors and focused elements never hide under the
      * header (WCAG 2.4.11). */
     --header-height: 6.25rem;
 
-    @media (width >= 64rem) {
+    @media (width >= 52rem) {
       --header-height: 4.5rem;
     }
   }
@@ -217,6 +220,30 @@
   html {
     color-scheme: dark;
     scroll-padding-top: calc(var(--header-height) + 1rem);
+  }
+
+  /* On short screens (phones in landscape, 200% zoom) the header scrolls away. */
+  @media (max-height: 30rem) {
+    html {
+      scroll-padding-top: 1rem;
+    }
+  }
+
+  /* The fluid display size follows the width; in landscape on a phone that leaves no
+   * room for the subtitle and buttons, so it follows the height there. */
+  @media (orientation: landscape) and (max-height: 30rem) {
+    :root {
+      --text-display: clamp(2.5rem, 12svh, 3.25rem);
+    }
+  }
+
+  /* Large monitors (from 1800px): one more type step, matching the wider container. */
+  @media (width >= 112.5rem) {
+    :root {
+      --text-base: 1.1875rem;
+      --text-headline: 4.5rem;
+      --text-display: 7rem;
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -447,7 +474,6 @@
     transition: transform var(--duration-moderate) var(--ease-emphasized);
   }
 
-  .project-card:hover,
   .project-card:focus-within {
     --ring-opacity: 1;
     --glow-opacity: 1;
@@ -458,7 +484,6 @@
     transition: transform var(--duration-slow) var(--ease-emphasized);
   }
 
-  .project-card:hover .project-card-media > :is(img, svg, div),
   .project-card:focus-within .project-card-media > :is(img, svg, div) {
     transform: scale(1.04);
   }
@@ -467,9 +492,25 @@
     transition: transform var(--duration-moderate) var(--ease-emphasized);
   }
 
-  .project-card:hover .project-card-arrow,
   .project-card:focus-within .project-card-arrow {
     transform: translate3d(0.25rem, 0, 0);
+  }
+
+  /* Hover only where the pointer can hover, so effects don't stick after a tap. */
+  @media (hover: hover) {
+    .project-card:hover {
+      --ring-opacity: 1;
+      --glow-opacity: 1;
+      transform: translate3d(0, -0.375rem, 0);
+    }
+
+    .project-card:hover .project-card-media > :is(img, svg, div) {
+      transform: scale(1.04);
+    }
+
+    .project-card:hover .project-card-arrow {
+      transform: translate3d(0.25rem, 0, 0);
+    }
   }
 
   /* Buttons: a small lift, the glow layer, and the icon nudging forward. */
@@ -479,9 +520,15 @@
       background-color var(--duration-quick) var(--ease-standard);
   }
 
-  .button-motion:hover {
-    --glow-opacity: 1;
-    transform: translate3d(0, -0.125rem, 0);
+  @media (hover: hover) {
+    .button-motion:hover {
+      --glow-opacity: 1;
+      transform: translate3d(0, -0.125rem, 0);
+    }
+
+    .button-motion:hover .button-icon {
+      transform: translate3d(0.1875rem, 0, 0);
+    }
   }
 
   .button-motion:active {
@@ -490,10 +537,6 @@
 
   .button-motion .button-icon {
     transition: transform var(--duration-moderate) var(--ease-emphasized);
-  }
-
-  .button-motion:hover .button-icon {
-    transform: translate3d(0.1875rem, 0, 0);
   }
 
   /* Navigation links: an underline that grows from the left, drawn with transform. */
@@ -516,9 +559,14 @@
     transition: transform var(--duration-moderate) var(--ease-emphasized);
   }
 
-  .nav-link:hover::after,
   .nav-link:focus-visible::after {
     transform: scaleX(1);
+  }
+
+  @media (hover: hover) {
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
   }
 
   /* Sticky header. Without JavaScript it always shows its solid state; the client
@@ -527,6 +575,13 @@
     position: sticky;
     top: 0;
     z-index: var(--layer-header);
+  }
+
+  /* On short screens a sticky header would cover a quarter of the view. */
+  @media (max-height: 30rem) {
+    .site-header {
+      position: relative;
+    }
   }
 
   .site-header::before {
@@ -605,7 +660,7 @@
     );
   }
 
-  @media (width >= 64rem) {
+  @media (width >= 80rem) {
     .flow-step:not(:last-child)::after {
       top: calc(1.25rem - 1px);
       right: -2rem;

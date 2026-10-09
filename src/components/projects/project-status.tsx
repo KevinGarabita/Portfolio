@@ -6,6 +6,8 @@ import type { Project, ProjectStatus as Status } from "@/types/content";
 
 interface ProjectStatusProps {
   status: Status;
+  /** Note always under the tag, so cards in a row keep their titles aligned. */
+  stacked?: boolean;
   statusNote?: Project["statusNote"];
   locale: Locale;
   dictionary: Dictionary;
@@ -20,9 +22,16 @@ export function ProjectStatus({
   statusNote,
   locale,
   dictionary,
+  stacked = false,
 }: ProjectStatusProps) {
   return (
-    <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1">
+    <span
+      className={
+        stacked
+          ? "inline-flex flex-col items-start gap-y-1"
+          : "inline-flex flex-wrap items-center gap-x-2 gap-y-1"
+      }
+    >
       <Tag tone={status === "in-production" ? "accent" : "quiet"}>
         {dictionary.projects.status[status]}
       </Tag>
