@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -9,6 +9,8 @@ import { localize } from "@/i18n/localize";
 import { getCurrentLocale } from "@/i18n/request-locale";
 import { siteUrl } from "@/lib/site-config";
 
+import { archivo } from "../fonts";
+
 import "../globals.css";
 
 /** Only /es and /en exist; any other first segment falls through to app/global-not-found.tsx. */
@@ -17,6 +19,11 @@ export const dynamicParams = false;
 export function generateStaticParams() {
   return supportedLocales.map((locale) => ({ lang: locale }));
 }
+
+/** Tells the browser both color schemes are designed, so it paints the right background before CSS loads. */
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getCurrentLocale();
@@ -37,7 +44,7 @@ export default async function LocaleRootLayout({
   const locale = await getCurrentLocale();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={archivo.variable}>
       <body>
         <SkipToContentLink />
         <SiteHeader />
