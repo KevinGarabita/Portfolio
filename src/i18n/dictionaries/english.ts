@@ -23,7 +23,6 @@ export const englishDictionary: Dictionary = {
   },
   projects: {
     sectionTitle: "Projects",
-    viewCaseStudy: "View case study",
     status: {
       "in-production": "In production",
       "in-development": "In development",
@@ -37,15 +36,26 @@ export const englishDictionary: Dictionary = {
       context: "Context",
       period: "Period",
       status: "Status",
-      stack: "Stack",
+      technologies: "Technologies",
     },
     sections: {
       problem: "Problem",
       solution: "Solution",
+      decisions: "Technical decisions",
+      failureHandling: "Failure handling",
       role: "My role",
       results: "Results",
+      nextSteps: "Next steps",
     },
     backToProjects: "Back to projects",
+    confidentialityNote:
+      "Code kept private due to client confidentiality; screenshots, architecture, and a demo available upon request.",
+    requestDetails: "Request by email",
+    neighborNavigation: {
+      label: "More projects",
+      previous: "Previous project",
+      next: "Next project",
+    },
   },
   experience: {
     sectionTitle: "Experience",

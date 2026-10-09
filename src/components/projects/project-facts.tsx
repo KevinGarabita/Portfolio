@@ -1,8 +1,13 @@
+import type { ReactNode } from "react";
+
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
+import { formatDateRange } from "@/lib/format-date";
 import { getProjectTechnologies } from "@/lib/projects";
 import type { Project } from "@/types/content";
+
+import { ProjectStatus } from "./project-status";
 
 interface ProjectFactsProps {
   project: Project;
@@ -10,7 +15,16 @@ interface ProjectFactsProps {
   dictionary: Dictionary;
 }
 
-/** Key facts of a case study as a definition list: client, context, status and stack. */
+function Fact({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-x-4 border-t border-hairline py-3 lg:grid-cols-1 lg:gap-y-1">
+      <dt className="text-small text-muted">{label}</dt>
+      <dd>{children}</dd>
+    </div>
+  );
+}
+
+/** Key facts of a case study as a definition list: client, context, period, status and technologies. */
 export function ProjectFacts({
   project,
   locale,
@@ -19,30 +33,38 @@ export function ProjectFacts({
   const labels = dictionary.projects.facts;
 
   return (
-    <dl>
-      <dt>{labels.client}</dt>
-      <dd>{project.client}</dd>
+    <dl className="border-b border-hairline">
+      <Fact label={labels.client}>{project.client}</Fact>
 
-      <dt>{labels.context}</dt>
-      <dd>
+      <Fact label={labels.context}>
         {localize(project.context, locale)} ·{" "}
         {dictionary.projects.teamSetup[project.teamSetup]}
-      </dd>
+      </Fact>
 
-      {project.status ? (
-        <>
-          <dt>{labels.status}</dt>
-          <dd>
-            {dictionary.projects.status[project.status]}
-            {project.statusNote
-              ? ` · ${localize(project.statusNote, locale)}`
-              : null}
-          </dd>
-        </>
+      {project.period ? (
+        <Fact label={labels.period}>
+          {formatDateRange(
+            project.period,
+            locale,
+            dictionary.experience.present,
+          )}
+        </Fact>
       ) : null}
 
-      <dt>{labels.stack}</dt>
-      <dd>{getProjectTechnologies(project).join(", ")}</dd>
+      {project.status ? (
+        <Fact label={labels.status}>
+          <ProjectStatus
+            status={project.status}
+            statusNote={project.statusNote}
+            locale={locale}
+            dictionary={dictionary}
+          />
+        </Fact>
+      ) : null}
+
+      <Fact label={labels.technologies}>
+        {getProjectTechnologies(project).join(", ")}
+      </Fact>
     </dl>
   );
 }

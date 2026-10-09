@@ -21,7 +21,6 @@ export const spanishDictionary = {
   },
   projects: {
     sectionTitle: "Proyectos",
-    viewCaseStudy: "Ver caso",
     status: {
       "in-production": "En producción",
       "in-development": "En desarrollo",
@@ -35,15 +34,26 @@ export const spanishDictionary = {
       context: "Contexto",
       period: "Periodo",
       status: "Estado",
-      stack: "Stack",
+      technologies: "Tecnologías",
     },
     sections: {
       problem: "Problema",
       solution: "Solución",
+      decisions: "Decisiones técnicas",
+      failureHandling: "Manejo de fallas",
       role: "Mi rol",
       results: "Resultado",
+      nextSteps: "Siguientes pasos",
     },
     backToProjects: "Volver a proyectos",
+    confidentialityNote:
+      "Código privado por confidencialidad con los clientes; capturas, arquitectura y demostración disponibles a solicitud.",
+    requestDetails: "Solicitar por correo",
+    neighborNavigation: {
+      label: "Más proyectos",
+      previous: "Proyecto anterior",
+      next: "Proyecto siguiente",
+    },
   },
   experience: {
     sectionTitle: "Experiencia",
