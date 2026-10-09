@@ -21,7 +21,7 @@ export default function GlobalNotFound() {
   return (
     <html lang="es" className={archivo.variable}>
       <body>
-        <main id="main-content">
+        <main id="main-content" tabIndex={-1} className="focus:outline-none">
           <p>{profile.displayName}</p>
           <section aria-labelledby="not-found-title-es">
             <h1 id="not-found-title-es">{spanishDictionary.notFound.title}</h1>

@@ -48,7 +48,9 @@ export default async function LocaleRootLayout({
       <body>
         <SkipToContentLink />
         <SiteHeader />
-        <main id="main-content">{children}</main>
+        <main id="main-content" tabIndex={-1} className="focus:outline-none">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>
