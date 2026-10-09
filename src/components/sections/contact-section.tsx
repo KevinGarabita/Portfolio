@@ -36,9 +36,9 @@ function ContactDetail({
 }
 
 /**
- * The site's one ink block. Email first and largest, then phone, place, work mode,
- * availability with its time zone, the CV in both languages and the profiles.
- * WhatsApp appears only once Kevin confirms the number uses it.
+ * The site's one ink block. Email first and largest, then three pairs on wider screens:
+ * phone and place, work mode and availability (with its time zone), CV and profiles.
+ * The WhatsApp link appears only once Kevin confirms the number uses it.
  */
 export async function ContactSection() {
   const locale = await getCurrentLocale();
@@ -69,21 +69,27 @@ export async function ContactSection() {
         </ContactDetail>
 
         <ContactDetail label={labels.phone}>
-          <a href={`tel:${phone.international}`} className="inline-block py-1">
-            {phone.display}
-          </a>
+          <ul>
+            <li>
+              <a
+                href={`tel:${phone.international}`}
+                className="inline-block py-1"
+              >
+                {phone.display}
+              </a>
+            </li>
+            {phone.hasWhatsApp === true ? (
+              <li>
+                <a
+                  href={`https://wa.me/${phone.international.replace(/\D/g, "")}`}
+                  className="inline-block py-1"
+                >
+                  {labels.whatsApp}
+                </a>
+              </li>
+            ) : null}
+          </ul>
         </ContactDetail>
-
-        {phone.hasWhatsApp === true ? (
-          <ContactDetail label={labels.whatsApp}>
-            <a
-              href={`https://wa.me/${phone.international.replace(/\D/g, "")}`}
-              className="inline-block py-1"
-            >
-              {phone.display}
-            </a>
-          </ContactDetail>
-        ) : null}
 
         <ContactDetail label={labels.location}>
           {location.city}, {location.region},{" "}
@@ -94,7 +100,7 @@ export async function ContactSection() {
           {localize(profile.workMode, locale)}
         </ContactDetail>
 
-        <ContactDetail label={labels.availability} isWide>
+        <ContactDetail label={labels.availability}>
           {localize(profile.availability, locale)}{" "}
           <span className="text-muted">
             {labels.timeZoneNote(
