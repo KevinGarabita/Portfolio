@@ -72,6 +72,7 @@ export async function ContactSection() {
             href={whatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
+            variant="whatsapp"
             leadingIcon={<WhatsAppLogoIcon />}
           >
             {dictionary.hero.writeOnWhatsApp}
@@ -104,7 +105,7 @@ export async function ContactSection() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 py-1"
                 >
-                  <WhatsAppLogoIcon />
+                  <WhatsAppLogoIcon colors="brand" />
                   {labels.whatsApp}
                   <span className="sr-only"> ({dictionary.opensInNewTab})</span>
                 </a>

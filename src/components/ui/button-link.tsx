@@ -6,8 +6,9 @@ import { joinClassNames } from "@/lib/class-names";
 /**
  * Primary: orange fill with black text (white on orange fails contrast).
  * Secondary: a dark button with the orange-to-red gradient ring.
+ * WhatsApp: WhatsApp's official green with black text (white on that green fails contrast).
  */
-type ButtonVariant = "primary" | "secondary";
+type ButtonVariant = "primary" | "secondary" | "whatsapp";
 
 /** Regular: 48 px tall. Compact: 40 px, for the header. */
 type ButtonSize = "regular" | "compact";
@@ -17,6 +18,8 @@ const variantClassNames: Record<ButtonVariant, string> = {
     "border border-transparent bg-accent text-on-accent hover:bg-accent-hover",
   secondary:
     "gradient-ring border border-transparent bg-raised text-heading hover:bg-raised-strong",
+  whatsapp:
+    "glow-whatsapp border border-transparent bg-whatsapp text-on-whatsapp hover:bg-whatsapp-hover",
 };
 
 const sizeClassNames: Record<ButtonSize, string> = {

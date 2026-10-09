@@ -67,7 +67,7 @@ export async function SiteHeader() {
               rel="noopener noreferrer"
               variant="secondary"
               size="compact"
-              leadingIcon={<WhatsAppLogoIcon className="text-accent" />}
+              leadingIcon={<WhatsAppLogoIcon colors="brand" />}
               className="max-sm:min-w-10 max-sm:gap-0 max-sm:px-2.5"
             >
               <span className="sr-only sm:not-sr-only">

@@ -310,11 +310,11 @@ export default async function ProjectPage({
               {projectTexts.requestDetails}
             </ButtonLink>
             <ButtonLink
-              variant="secondary"
+              variant="whatsapp"
               href={buildWhatsAppUrl(locale)}
               target="_blank"
               rel="noopener noreferrer"
-              leadingIcon={<WhatsAppLogoIcon className="text-accent" />}
+              leadingIcon={<WhatsAppLogoIcon />}
             >
               {dictionary.hero.writeOnWhatsApp}
               <span className="sr-only"> ({dictionary.opensInNewTab})</span>

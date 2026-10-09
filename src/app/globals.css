@@ -44,6 +44,11 @@
   --color-orange-light: #ff8a3d; /* hover of the orange fill, black text 8.44:1 */
   --color-red-signal: #e5252a; /* secondary accent: gradients, glows, details */
 
+  /* Brand colours of the social networks, used only for their logos and the WhatsApp button. */
+  --color-whatsapp-green: #25d366; /* WhatsApp's official green; ink text on it 9.98:1 */
+  --color-whatsapp-green-light: #4ae082; /* hover of the WhatsApp button */
+  --color-linkedin-blue: #0a66c2; /* LinkedIn's official blue; 3.48:1 on the page (logo only) */
+
   /* 3. Roles ------------------------------------------------------------------- */
   --color-page: var(--color-black-deep); /* page background */
   --color-raised: var(--color-black-surface); /* cards and panels */
@@ -69,6 +74,17 @@
   --color-on-accent: var(--color-black-deep); /* text on the orange fill */
   --color-link: var(--color-orange-vibrant); /* links are always underlined */
   --color-focus: var(--color-orange-vibrant); /* keyboard focus ring */
+  --color-whatsapp: var(
+    --color-whatsapp-green
+  ); /* WhatsApp button fill and logo */
+  --color-whatsapp-hover: var(
+    --color-whatsapp-green-light
+  ); /* hover of that fill */
+  --color-on-whatsapp: var(--color-black-deep); /* text on the WhatsApp green */
+  --color-linkedin: var(--color-linkedin-blue); /* LinkedIn logo */
+  --color-github: var(
+    --color-white-warm
+  ); /* GitHub logo: its white version, for dark backgrounds */
 
   /* 4a. Fluid type: 360px -> 1440px viewport. max <= 2.5x min keeps 200% zoom (WCAG 1.4.4) working.
    * The body size is named "base", not "body": text-body is already the body COLOUR and a
@@ -417,6 +433,12 @@
     opacity: var(--glow-opacity, 0);
     transition: opacity var(--duration-moderate) var(--ease-standard);
     pointer-events: none;
+  }
+
+  /* WhatsApp button: the hover glow is green instead of orange. */
+  .glow-whatsapp {
+    --glow-accent: 0 0.75rem 2rem -0.75rem
+      color-mix(in srgb, var(--color-whatsapp) 60%, transparent);
   }
 
   /* Project cards: lift, gradient ring and glow on hover or keyboard focus. */

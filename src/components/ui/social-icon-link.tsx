@@ -4,7 +4,10 @@ export type SocialNetwork = "github" | "linkedin" | "whatsapp";
 
 const logosByNetwork: Record<
   SocialNetwork,
-  (props: { className?: string }) => React.JSX.Element
+  (props: {
+    className?: string;
+    colors?: "inherit" | "brand";
+  }) => React.JSX.Element
 > = {
   github: GitHubLogoIcon,
   linkedin: LinkedInLogoIcon,
@@ -14,15 +17,18 @@ const logosByNetwork: Record<
 interface SocialNetworkLogoProps {
   network: SocialNetwork;
   className?: string;
+  /** "brand" (default) shows the network's own colours. */
+  colors?: "inherit" | "brand";
 }
 
-/** The official logo of a network, in the current text colour. Decorative. */
+/** The official logo of a network, in its own colours by default. Decorative. */
 export function SocialNetworkLogo({
   network,
   className,
+  colors = "brand",
 }: SocialNetworkLogoProps) {
   const Logo = logosByNetwork[network];
-  return <Logo className={className} />;
+  return <Logo className={className} colors={colors} />;
 }
 
 interface SocialIconLinkProps {
@@ -36,8 +42,8 @@ interface SocialIconLinkProps {
 }
 
 /**
- * Round, logo-only link (44 px target). The logo turns orange and lifts slightly on
- * hover; only transform is animated.
+ * Round, logo-only link (44 px target) with the network's logo in its own colours.
+ * On hover the ring turns orange and the button lifts slightly; only transform is animated.
  */
 export function SocialIconLink({
   network,
@@ -54,7 +60,7 @@ export function SocialIconLink({
       target={opensInNewTab ? "_blank" : undefined}
       rel={opensInNewTab ? "noopener noreferrer" : rel}
       title={label}
-      className="inline-flex size-11 items-center justify-center rounded-full border border-control-border text-heading no-underline transition-transform hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+      className="inline-flex size-11 items-center justify-center rounded-full border border-control-border bg-raised no-underline transition-transform hover:-translate-y-0.5 hover:border-accent"
     >
       <SocialNetworkLogo network={network} />
       <span className="sr-only">

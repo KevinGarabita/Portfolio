@@ -109,8 +109,8 @@ export async function HeroSection() {
               href={buildWhatsAppUrl(locale)}
               target="_blank"
               rel="noopener noreferrer"
-              variant="secondary"
-              leadingIcon={<WhatsAppLogoIcon className="text-accent" />}
+              variant="whatsapp"
+              leadingIcon={<WhatsAppLogoIcon />}
             >
               {dictionary.hero.writeOnWhatsApp}
               <span className="sr-only"> ({dictionary.opensInNewTab})</span>
