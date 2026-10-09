@@ -24,6 +24,11 @@ export function generateStaticParams() {
 /** Tells the browser both color schemes are designed, so it paints the right background before CSS loads. */
 export const viewport: Viewport = {
   colorScheme: "light dark",
+  // Tints the mobile browser bar with the `page` color token of each scheme (globals.css).
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f9f7f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#15110e" },
+  ],
 };
 
 /** Defaults for every page. Pages replace openGraph and twitter as a whole (lib/metadata.ts). */
