@@ -3,22 +3,26 @@ import { join } from "node:path";
 
 import type { ImageResponse } from "next/og";
 
+import { brandColors } from "@/lib/brand-colors";
+
 /**
  * Shared layout of the generated link-preview images (app/[lang]/opengraph-image.tsx and
  * app/[lang]/projects/[slug]/opengraph-image.tsx). next/og only understands flexbox and
- * inline styles, so the design tokens are repeated here as plain values: ink background,
- * off-white text and one solid orange block. No gradients and no photo: with the photo
- * the PNG weighed 470-600 KB, and WhatsApp tends to drop preview images over ~300 KB.
- * Text only, each image is about 50 KB.
+ * inline styles and cannot read CSS variables, so the palette comes from
+ * lib/brand-colors.ts: deep black background, warm white text, the orange-to-red
+ * gradient on the monogram and a thin bar at the top. No photo: with the photo the PNG
+ * weighed 470-600 KB, and WhatsApp tends to drop preview images over ~300 KB.
  */
 
 const colors = {
-  ink: "#15110e",
-  heading: "#f9f7f5",
-  body: "#e3dfdc",
-  muted: "#b2aca7",
-  accent: "#e9894b",
+  page: brandColors.blackDeep,
+  heading: brandColors.whiteWarm,
+  body: brandColors.whiteWarm,
+  muted: brandColors.grayText,
+  onAccent: brandColors.blackDeep,
 };
+
+const brandGradient = `linear-gradient(135deg, ${brandColors.orangeVibrant}, ${brandColors.redSignal})`;
 
 const fontFamily = "Atkinson Hyperlegible Next";
 
@@ -48,7 +52,7 @@ export const openGraphImageOptions: ConstructorParameters<
   ],
 };
 
-/** Orange square with the "KG" monogram, the same mark as the favicon. */
+/** The "KG" monogram on the brand gradient, the same mark as the favicon. */
 function Monogram({ size }: { size: number }) {
   return (
     <div
@@ -58,8 +62,9 @@ function Monogram({ size }: { size: number }) {
         justifyContent: "center",
         width: size,
         height: size,
-        backgroundColor: colors.accent,
-        color: colors.ink,
+        borderRadius: Math.round(size * 0.22),
+        backgroundImage: brandGradient,
+        color: colors.onAccent,
         fontSize: Math.round(size * 0.46),
         fontWeight: 700,
       }}
@@ -95,10 +100,22 @@ export function OpenGraphCard({
         width: "100%",
         height: "100%",
         padding: "72px 80px",
-        backgroundColor: colors.ink,
+        backgroundColor: colors.page,
+        // A faint orange glow in the top-right corner, like the site's background.
+        backgroundImage: `radial-gradient(circle at 100% 0%, ${brandColors.orangeVibrant}33, transparent 55%)`,
         fontFamily,
       }}
     >
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: 10,
+          backgroundImage: brandGradient,
+        }}
+      />
       <div style={{ display: "flex", alignItems: "center" }}>
         <Monogram size={eyebrow ? 64 : 88} />
         {eyebrow ? (
