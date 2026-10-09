@@ -155,7 +155,7 @@ export default async function ProjectPage({
       <article>
         <header className="grid gap-10 pb-12 lg:grid-cols-12 lg:gap-x-10 lg:pb-16">
           <div className="lg:col-span-8">
-            <p className="entrance text-small [--entrance-order:0]">
+            <p className="entrance-slide text-small [--entrance-order:0]">
               <Link
                 href={getHomeSectionHref(locale, homeSectionIds.projects)}
                 className="inline-flex min-h-11 items-center gap-2 font-bold"
@@ -164,7 +164,7 @@ export default async function ProjectPage({
                 {projectTexts.backToProjects}
               </Link>
             </p>
-            <div className="entrance mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
+            <div className="entrance-slide mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
               <p className="font-mono text-small font-bold tracking-widest text-accent uppercase">
                 {projectTexts.category[project.category]}
               </p>
@@ -177,15 +177,15 @@ export default async function ProjectPage({
                 />
               ) : null}
             </div>
-            <h1 className="entrance mt-4 font-display text-headline font-extrabold [--entrance-order:2]">
+            <h1 className="entrance-slide mt-4 font-display text-headline font-extrabold [--entrance-order:2]">
               {projectName}
             </h1>
-            <p className="entrance mt-6 max-w-prose text-subtitle [--entrance-order:3]">
+            <p className="entrance-slide mt-6 max-w-prose text-subtitle [--entrance-order:3]">
               {localize(project.summary, locale)}
             </p>
           </div>
 
-          <div className="entrance [--entrance-order:4] lg:col-span-4 lg:self-end">
+          <div className="entrance-slide [--entrance-order:4] lg:col-span-4 lg:self-end">
             <ProjectFacts
               project={project}
               locale={locale}

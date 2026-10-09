@@ -359,6 +359,13 @@
     animation: lift-in 900ms var(--ease-emphasized) both;
   }
 
+  /* Staggered entrance that only moves (no fade): for a page's main text, which must
+   * paint on the first frame because it can be the LCP element. */
+  .entrance-slide {
+    animation: lift-in var(--duration-slow) var(--ease-emphasized) both;
+    animation-delay: calc(var(--entrance-order, 0) * var(--stagger-step));
+  }
+
   /* Gentle up-and-down float for decorative chips. */
   .motion-float {
     animation: float 7s ease-in-out infinite;
