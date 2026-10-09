@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens - read top to bottom:
+ *   1. Resets: Tailwind's stock palette, type scale, radii and shadows are removed,
+ *      so only the tokens below can be used (bg-orange-500, text-xl, rounded-lg,
+ *      shadow-md... no longer exist).
+ *   2. Raw scale: the actual colours (brand orange, ink, warm neutrals). Prefer the
+ *      role tokens in components; the raw scale is here so the roles can point at it.
+ *   3. Roles: what a colour is FOR (page, body, muted, accent...). Light values live
+ *      in @theme; dark values switch automatically in the prefers-color-scheme block
+ *      inside @layer base. No toggle, no JS.
+ *   4. Type, radius and motion tokens.
+ *   5. Fonts: mapped to the CSS variables that next/font puts on <html>.
+ *   6. surface-inverse: one class for ink blocks that also fixes text/link/focus colours inside.
+ *   7. Base styles.
+ */
+
+@theme {
+  /* 1. Resets ---------------------------------------------------------------- */
+  --color-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial; /* separate namespace: --text-*: initial does not remove it */
+
+  /* 2. Raw scale --------------------------------------------------------------- */
+  --color-white: #ffffff;
+  --color-brand: #e9894b; /* oklch(0.721 0.140 51.6) approved main orange */
+  --color-brand-hover: #d4793d; /* oklch(0.666 0.136 51.6) same hue, one step darker */
+  --color-ink: #15110e; /* oklch(0.181 0.009 59.0) approved warm near-black */
+
+  /* Warm neutrals, hue anchored on the ink (~59deg), chroma 0.003-0.011. 950 = ink. */
+  --color-neutral-50: #f9f7f5; /* oklch(0.977 0.0034 67.8) light page, chroma <= 0.005 */
+  --color-neutral-100: #f1eeec; /* oklch(0.951 0.0042 56.4) */
+  --color-neutral-200: #e3dfdc; /* oklch(0.906 0.0060 59.6) */
+  --color-neutral-300: #cdc8c4; /* oklch(0.836 0.0079 61.4) */
+  --color-neutral-400: #b2aca7; /* oklch(0.748 0.0099 62.5) */
+  --color-neutral-500: #857f7a; /* oklch(0.600 0.0105 62.5) */
+  --color-neutral-600: #6a635f; /* oklch(0.505 0.0109 51.9) */
+  --color-neutral-700: #4d4844; /* oklch(0.405 0.0094 61.2) */
+  --color-neutral-800: #36302d; /* oklch(0.315 0.0102 48.4) */
+  --color-neutral-900: #231e1b; /* oklch(0.240 0.0096 53.0) */
+  --color-neutral-950: #15110e; /* = ink */
+
+  /* 3. Roles (LIGHT values; dark values are in @layer base below) ------------- */
+  --color-page: var(--color-neutral-50); /* page background */
+  --color-raised: var(--color-white); /* cards/panels that sit on the page */
+  --color-inverse: var(
+    --color-ink
+  ); /* contrasting ink block (use the surface-inverse class) */
+  --color-on-inverse: var(--color-neutral-50); /* text on an inverse block */
+  --color-body: var(--color-neutral-800); /* running text */
+  --color-heading: var(--color-ink); /* headings */
+  --color-muted: var(--color-neutral-600); /* secondary text: dates, captions */
+  --color-hairline: var(
+    --color-neutral-200
+  ); /* decorative dividers and card borders */
+  --color-control-border: var(
+    --color-neutral-500
+  ); /* input/button outlines (>= 3:1) */
+  --color-accent: var(--color-brand); /* orange FILL only (buttons, tags) */
+  --color-accent-hover: var(--color-brand-hover); /* hover state of that fill */
+  --color-on-accent: var(--color-ink); /* text on the orange fill */
+  --color-link: var(--color-ink); /* links are always underlined */
+  --color-focus: var(--color-ink); /* keyboard focus ring */
+
+  /* 4a. Fluid type: 360px -> 1440px viewport. max <= 2.5x min keeps 200% zoom (WCAG 1.4.4) working.
+   * The body size is named "base", not "body": text-body is already the body COLOUR and a
+   * --text-body size would be silently ignored by Tailwind (the colour wins). */
+  --text-small: clamp(
+    0.875rem,
+    0.8542rem + 0.0926vw,
+    0.9375rem
+  ); /* 14 -> 15px */
+  --text-small--line-height: 1.5;
+  --text-base: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem); /* 16 -> 18px */
+  --text-base--line-height: 1.6;
+  --text-subtitle: clamp(
+    1.1875rem,
+    1.0833rem + 0.463vw,
+    1.5rem
+  ); /* 19 -> 24px */
+  --text-subtitle--line-height: 1.3;
+  --text-title: clamp(1.625rem, 1.3333rem + 1.2963vw, 2.5rem); /* 26 -> 40px */
+  --text-title--line-height: 1.15;
+  --text-title--letter-spacing: -0.01em;
+  --text-display: clamp(2.5rem, 1.25rem + 5.5556vw, 6.25rem); /* 40 -> 100px */
+  --text-display--line-height: 1.05; /* not tighter: Spanish capitals carry accents (Á, É) */
+  --text-display--letter-spacing: -0.02em;
+
+  /* 4b. Radius by role */
+  --radius-section: 0; /* sections, cards, panels */
+  --radius-media: 0; /* images, video, embeds */
+  --radius-control: 0.25rem; /* buttons, inputs, selects */
+  --radius-tag: 9999px; /* tags/chips only */
+
+  /* 4c. Motion */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --default-transition-duration: 160ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* 5. Fonts. `inline` makes utilities use the next/font variables directly, so they
+ * resolve on whatever element next/font's `.variable` class is on.
+ * next/font name (set in src/app/fonts.ts): --font-archivo.
+ * Code uses the system monospace font, so it downloads nothing.
+ * Never name a next/font variable --font-sans/--font-mono: that clashes with these tokens.
+ * The fallback inside var() keeps the stack valid if a font variable is missing. */
+@theme inline {
+  --font-sans:
+    var(--font-archivo, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    var(--font-archivo, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* 6. Ink block. Use `surface-inverse` (not bare bg-inverse) on sections/cards: it sets the
+ * background and re-points text, muted, hairline, border, link and focus colours so
+ * everything inside stays readable in both schemes. */
+@utility surface-inverse {
+  --color-body: var(--color-neutral-200);
+  --color-heading: var(--color-neutral-50);
+  --color-muted: var(--color-neutral-300);
+  --color-hairline: var(--color-neutral-700);
+  --color-control-border: var(--color-neutral-500);
+  --color-link: var(--color-neutral-50);
+  --color-focus: var(--color-neutral-50);
+  background-color: var(--color-inverse);
+  color: var(--color-body);
+}
+
+/* 7. Base styles */
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+
+  /* Automatic dark theme: only role tokens change; components never need dark: variants. */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-page: var(--color-ink);
+      --color-raised: var(--color-neutral-900);
+      --color-inverse: var(
+        --color-neutral-800
+      ); /* stays dark: a lifted block, not a white slab */
+      --color-on-inverse: var(--color-neutral-50);
+      --color-body: var(--color-neutral-200);
+      --color-heading: var(--color-neutral-50);
+      --color-muted: var(--color-neutral-400);
+      --color-hairline: var(--color-neutral-800);
+      --color-control-border: var(--color-neutral-500);
+      --color-accent: var(--color-brand);
+      --color-accent-hover: var(--color-brand-hover);
+      --color-on-accent: var(--color-ink);
+      --color-link: var(--color-brand);
+      --color-focus: var(--color-brand);
+    }
+  }
+
+  /* text-base = font size, text-body = text colour */
+  body {
+    @apply bg-page font-sans text-base text-body;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-heading);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Borders default to the hairline colour instead of currentColor. */
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-hairline);
+  }
+
+  /* Links are always underlined; colour changes, the underline never disappears. */
+  a {
+    color: var(--color-link);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* 2px offset leaves a page-coloured gap between the ring and an orange fill. */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
