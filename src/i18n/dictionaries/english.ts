@@ -60,6 +60,7 @@ export const englishDictionary: Dictionary = {
   experience: {
     sectionTitle: "Experience",
     present: "present",
+    relatedProjects: "Case studies from this job",
   },
   education: {
     sectionTitle: "Education",

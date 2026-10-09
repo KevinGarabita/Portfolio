@@ -58,6 +58,7 @@ export const spanishDictionary = {
   experience: {
     sectionTitle: "Experiencia",
     present: "actualidad",
+    relatedProjects: "Casos de estudio de este trabajo",
   },
   education: {
     sectionTitle: "Formación",
