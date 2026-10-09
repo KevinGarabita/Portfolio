@@ -46,11 +46,13 @@ src/
     layout/              header, footer, selector de idioma, enlace "saltar al contenido"
     sections/            secciones de la home
     projects/            piezas de los casos de estudio
+    ui/                  piezas base: contenedor, sección, botón, etiqueta
   content/               datos del sitio (perfil, proyectos, experiencia, formación, habilidades)
   i18n/                  idiomas, diccionarios de interfaz y negociación de idioma
-  lib/                   utilidades: URL del sitio, metadatos, fechas, consultas de proyectos
+  lib/                   utilidades: URL del sitio, metadatos, fechas, consultas de proyectos, anclas de la home
   types/                 tipos del contenido
 public/cv/               CV descargable en español e inglés
+public/images/           foto de Kevin
 docs/                    decisiones técnicas y de diseño
 ```
 

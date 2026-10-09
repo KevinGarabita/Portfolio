@@ -47,6 +47,19 @@ Los componentes usan los nombres de función, nunca los colores crudos. El tema 
 - Los títulos se distinguen por tamaño y peso (700 a 800), sin cambiar de familia ni de ancho.
 - Riesgo conocido: Next 16.4 no tiene las métricas de respaldo de esta fuente (`adjustFontFallback: false` en `src/app/fonts.ts`), así que el texto puede moverse un poco cuando la fuente termina de cargar.
 
+## Composición
+
+- **Una sola estructura para las secciones de la home** (`PageSection`): en pantallas grandes, el título en una columna angosta a la izquierda (4 de 12 columnas, fijo mientras se recorre la sección) y el contenido a la derecha; en teléfono, uno debajo del otro. Las secciones se separan con una línea fina, no con tarjetas.
+- **Ritmo variable**: cada sección tiene el espacio vertical que pide su contenido (`spacious` para proyectos y contacto, `regular` para experiencia y sobre mí, `compact` para formación).
+- **Portada**: la foto es el elemento principal. En teléfono va primero, al 60 % del ancho y con la ubicación a su lado, para que el nombre, el rol y el botón principal quepan en la primera pantalla (390 × 844). En pantallas grandes ocupa 5 de 12 columnas (40 %) y el texto las otras 7, alineado con el borde inferior de la foto. Se recorta a 4:5, desplazada a la izquierda para dejar fuera la cortina.
+- **Un solo botón principal por vista**: "Ver proyectos" en la portada. Las demás acciones son enlaces de texto o botones secundarios.
+- **Naranja**: relleno del botón principal, etiqueta "En producción" y selección de texto; en tema oscuro, también los enlaces. Los títulos que son enlaces (nombres de proyecto) usan el color de título en ambos temas, para que el tema oscuro no pinte de naranja cada proyecto; el subrayado los sigue marcando como enlaces.
+- **Bloque oscuro**: solo la sección de contacto usa `surface-inverse`.
+- **Proyectos**: el destacado (`isFeatured`) va en un panel con sus resultados; los demás, en una lista con divisores. El nombre es el único enlace y cubre toda la tarjeta, así no hay elementos interactivos anidados.
+- **Caso de estudio**: título con `text-headline`, resumen, datos clave en una lista de definiciones (después del título en teléfono, en una columna fija a la derecha en pantallas grandes), la historia, la nota de confidencialidad con enlace de correo y la navegación al proyecto anterior y siguiente.
+- **Encabezado**: no se queda fijo al hacer scroll y tiene fondo sólido. En teléfono, el nombre y el idioma comparten la primera fila y los enlaces de sección pasan a la segunda, sin menú desplegable ni JavaScript.
+- **Enlaces subrayados** siempre, salvo el nombre del encabezado y los que tienen forma de botón.
+
 ## Radios, movimiento y foco
 
 - Radios por función: `rounded-section` y `rounded-media` en 0, `rounded-control` en 4 px y `rounded-tag` redondo solo para etiquetas.
