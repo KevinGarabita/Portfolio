@@ -15,7 +15,7 @@ import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { getHomeSectionHref, homeSectionIds } from "@/lib/home-sections";
-import { buildLanguageAlternates } from "@/lib/metadata";
+import { buildPageMetadata } from "@/lib/metadata";
 import {
   getAllProjects,
   getNeighborProjects,
@@ -43,11 +43,13 @@ export async function generateMetadata({
 
   const locale = await getCurrentLocale();
 
-  return {
+  return buildPageMetadata({
     title: localize(project.name, locale),
     description: localize(project.summary, locale),
-    alternates: buildLanguageAlternates(`/projects/${project.slug}`, locale),
-  };
+    pathWithoutLocale: `/projects/${project.slug}`,
+    locale,
+    type: "article",
+  });
 }
 
 interface NeighborProjectLinkProps {

@@ -7,6 +7,7 @@ import { profile } from "@/content/profile";
 import { supportedLocales } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale } from "@/i18n/request-locale";
+import { buildBaseOpenGraph } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site-config";
 
 import { atkinsonHyperlegibleNext } from "../fonts";
@@ -25,6 +26,7 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 };
 
+/** Defaults for every page. Pages replace openGraph and twitter as a whole (lib/metadata.ts). */
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getCurrentLocale();
 
@@ -35,6 +37,8 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${profile.displayName}`,
     },
     description: localize(profile.role, locale),
+    openGraph: buildBaseOpenGraph(locale),
+    twitter: { card: "summary_large_image" },
   };
 }
 
