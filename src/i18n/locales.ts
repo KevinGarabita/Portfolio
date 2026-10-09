@@ -8,3 +8,6 @@ export const fallbackLocale: Locale = "en";
 export function isSupportedLocale(value: string): value is Locale {
   return (supportedLocales as readonly string[]).includes(value);
 }
+
+/** Cookie set by the language switcher; the proxy prefers it over the browser language. */
+export const preferredLocaleCookieName = "preferred-locale";
