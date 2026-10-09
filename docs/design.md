@@ -60,7 +60,3 @@ Los componentes usan los nombres de función, nunca los colores crudos. El tema 
 - Botón secundario o campo: `border border-control-border rounded-control`.
 - Bloque oscuro: `surface-inverse` (ajusta también los colores de texto, enlaces y foco de su contenido).
 - Títulos: `font-display` con `text-display`, `text-title` o `text-subtitle`.
-
-## Página de revisión temporal
-
-`src/app/[lang]/design-preview/page.tsx` muestra la paleta, las dos tipografías y piezas de muestra para revisarlas en el preview de Vercel. No se indexa y responde 404 en producción. Se elimina en la fase 5, antes de publicar.
