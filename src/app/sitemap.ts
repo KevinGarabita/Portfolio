@@ -22,6 +22,7 @@ interface SitemapPage {
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages: SitemapPage[] = [
     { pathWithoutLocale: "/", lastModified: getHomeLastModified() },
+    { pathWithoutLocale: "/projects", lastModified: getHomeLastModified() },
     ...getAllProjects().map((project) => ({
       pathWithoutLocale: `/projects/${project.slug}`,
       lastModified: project.lastUpdated,

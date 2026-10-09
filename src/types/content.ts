@@ -131,20 +131,31 @@ export interface FlowStep {
 
 export type TeamSetup = "individual" | "team";
 
+/**
+ * How the code was written: "vibe-coded" (generated with AI under Kevin's direction) or
+ * "hand-coded". Shown as a badge; unset for automations built in n8n.
+ */
+export type BuildMethod = "vibe-coded" | "hand-coded";
+
+/** What the project is, for the filters on the projects page. */
+export type ProjectKind = "web-app" | "ai-automation";
+
 export interface Project {
   /** URL segment: /[lang]/projects/[slug]. Lowercase words joined by hyphens. */
   slug: string;
   name: LocalizedText;
   client: string;
   category: ProjectCategory;
+  kind: ProjectKind;
   /** Where the work happened, e.g. "Freelance" or the employer's name. */
   context: LocalizedText;
   status?: ProjectStatus;
   /** Extra status detail, e.g. "since July 2026" or the expected delivery date. */
   statusNote?: LocalizedText;
   period?: DateRange;
-  /** Featured projects get more space on the home page. */
+  /** Featured projects are the ones shown on the home page; the rest only on /projects. */
   isFeatured: boolean;
+  buildMethod?: BuildMethod;
   teamSetup: TeamSetup;
   /** One or two sentences for the project card. */
   summary: LocalizedText;

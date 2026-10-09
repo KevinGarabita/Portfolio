@@ -35,7 +35,10 @@ export function buildHomeTitle(locale: Locale): string {
   return `${profile.displayName} | ${localize(profile.role, locale)}`;
 }
 
-/** The home page lists every project, so it changes when the site content or any project does. */
+/**
+ * The home page and the projects page show the projects, so they change when the site
+ * content or any project does.
+ */
 export function getHomeLastModified(): CalendarDate {
   return getAllProjects().reduce<CalendarDate>(
     (latest, project) =>

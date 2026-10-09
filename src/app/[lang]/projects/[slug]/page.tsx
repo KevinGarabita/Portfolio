@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { FlowDiagram } from "@/components/projects/flow-diagram";
+import { ProjectBuildBadge } from "@/components/projects/project-build-badge";
 import { ProjectFacts } from "@/components/projects/project-facts";
 import {
   ProjectGallery,
@@ -29,7 +30,6 @@ import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { joinClassNames } from "@/lib/class-names";
-import { getHomeSectionHref, homeSectionIds } from "@/lib/home-sections";
 import { buildPageMetadata } from "@/lib/metadata";
 import {
   getAllProjects,
@@ -157,7 +157,7 @@ export default async function ProjectPage({
           <div className="lg:col-span-8">
             <p className="entrance-slide text-small [--entrance-order:0]">
               <Link
-                href={getHomeSectionHref(locale, homeSectionIds.projects)}
+                href={`/${locale}/projects`}
                 className="inline-flex min-h-11 items-center gap-2 font-bold"
               >
                 <ArrowLeftIcon className="size-4" />
@@ -173,6 +173,12 @@ export default async function ProjectPage({
                   status={project.status}
                   statusNote={project.statusNote}
                   locale={locale}
+                  dictionary={dictionary}
+                />
+              ) : null}
+              {project.buildMethod ? (
+                <ProjectBuildBadge
+                  buildMethod={project.buildMethod}
                   dictionary={dictionary}
                 />
               ) : null}

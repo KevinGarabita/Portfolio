@@ -197,6 +197,22 @@ export function CloseIcon({ className }: IconProps) {
   );
 }
 
+export function ChevronDownIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <path d="m6 9 6 6 6-6" />
+    </Icon>
+  );
+}
+
+export function CheckIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
+    </Icon>
+  );
+}
+
 export function ChevronLeftIcon({ className }: IconProps) {
   return (
     <Icon className={className}>
@@ -227,6 +243,16 @@ export function AppWindowIcon({ className }: IconProps) {
     <Icon className={className}>
       <rect x="3" y="4" width="18" height="16" rx="2" />
       <path d="M3 9h18M6.5 6.5h.01M9 6.5h.01M7 13h6M7 16h10" />
+    </Icon>
+  );
+}
+
+/** Four-point sparkle: marks AI-generated ("vibe coded") work. */
+export function SparklesIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z" />
+      <path d="M19 15.5l.8 1.7 1.7.8-1.7.8-.8 1.7-.8-1.7-1.7-.8 1.7-.8.8-1.7Z" />
     </Icon>
   );
 }

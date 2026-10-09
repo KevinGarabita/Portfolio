@@ -64,12 +64,12 @@ docs/                    decisiones técnicas y de diseño, guía de publicació
 
 ## Cómo agregar un proyecto
 
-1. Crea un archivo en `src/content/projects/` y agrégalo al arreglo de `src/content/projects/index.ts` (el orden ahí es el del sitio). TypeScript te marca cualquier campo que falte (el tipo `Project` está en `src/types/content.ts`). `category` decide el grupo en la home ("freelance" o "kobler"); las capturas van en `public/images/projects/<slug>/` y en `images`, y los flujos de automatización en `flowDiagram`.
+1. Crea un archivo en `src/content/projects/` y agrégalo al arreglo de `src/content/projects/index.ts` (el orden ahí es el del sitio). TypeScript te marca cualquier campo que falte (el tipo `Project` está en `src/types/content.ts`). `kind` ("web-app" o "ai-automation") alimenta el filtro "Tipo" de `/[lang]/projects`; `isFeatured: true` lo muestra también en la home; `buildMethod` ("vibe-coded" o "hand-coded") pone la etiqueta y el filtro de desarrollo; las capturas van en `public/images/projects/<slug>/` y en `images`, y los flujos de automatización en `flowDiagram`.
 2. Escribe cada texto en los dos idiomas: `{ es: "...", en: "..." }`.
 3. Pon en `lastUpdated` la fecha del cambio (`"AAAA-MM-DD"`); el sitemap la usa como fecha de modificación.
 4. Corre `npm run check`.
 
-No hace falta tocar componentes: la tarjeta en la home, la página `/[lang]/projects/[slug]`, su imagen para compartir y su entrada en el sitemap se generan desde los datos.
+No hace falta tocar componentes: la tarjeta en `/[lang]/projects` (y en la home si es destacado), los filtros, la página `/[lang]/projects/[slug]`, su imagen para compartir y su entrada en el sitemap se generan desde los datos.
 
 Si cambias el perfil, la experiencia, la formación o las habilidades, actualiza también `siteLastUpdated` en `src/content/site-metadata.ts`.
 

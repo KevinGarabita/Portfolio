@@ -15,7 +15,9 @@ export const controltecPestControlCrm: Project = {
     en: "Expected delivery: December 2026",
   },
   period: { start: "2026-07" },
-  isFeatured: false,
+  kind: "web-app",
+  isFeatured: true,
+  buildMethod: "vibe-coded",
   teamSetup: "individual",
   summary: {
     es: "CRM para una empresa de control de plagas. Los técnicos escanean el QR de cada estación y llenan el reporte en sitio, la oficina agenda y cotiza, y cada cliente consulta en un portal sus reportes firmados.",
