@@ -50,6 +50,10 @@ export const workExperience: WorkExperience[] = [
       koblerHighlights.lamauBeach,
       koblerHighlights.monitoring,
     ],
-    relatedProjectSlugs: ["motosureste-suzuki-agent", "neorgana-agent"],
+    relatedProjectSlugs: [
+      "motosureste-suzuki-agent",
+      "neorgana-agent",
+      "lamau-beach-automation",
+    ],
   },
 ];

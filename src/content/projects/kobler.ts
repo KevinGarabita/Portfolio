@@ -145,8 +145,8 @@ export const koblerProjects: Project[] = [
       en: "WhatsApp agent for a clinic: it replies to each patient in their language, picks the right consultant and sends that consultant's calendar to book a Zoom consultation. When the call ends, another flow updates the CRM and triggers the follow-up.",
     },
     problem: {
-      es: "Neorgana recibe mensajes de pacientes de varios países. Cada uno tiene que llegar al consultor que habla su idioma, atiende su región y conoce su padecimiento, y después de la consulta hay que darle seguimiento y enviarle una cotización.",
-      en: "Neorgana gets messages from patients in several countries. Each one has to reach the consultant who speaks their language, covers their region and handles their condition, and after the consultation someone has to follow up and send a quote.",
+      es: "Neorgana recibe mensajes de pacientes que escriben en distintos idiomas y desde distintas ubicaciones. Cada uno tiene que llegar al consultor que habla su idioma, atiende su región y conoce su padecimiento, y después de la consulta hay que darle seguimiento y enviarle una cotización.",
+      en: "Neorgana gets messages from patients who write in different languages and from different locations. Each one has to reach the consultant who speaks their language, covers their region and handles their condition, and after the consultation someone has to follow up and send a quote.",
     },
     solution: {
       es: "La solución son tres flujos en n8n conectados con GoHighLevel. El primero es el agente de WhatsApp: con un modelo de OpenAI conversa con el paciente, reúne su padecimiento, idioma y ubicación, y le envía el calendario del consultor que corresponde. El segundo se activa cuando el paciente agenda: crea la oportunidad en el CRM y la vincula con la reunión de Zoom. El tercero se activa cuando termina la videollamada: revisa si la consulta se realizó, mueve la oportunidad a la etapa correspondiente y dispara en GoHighLevel el seguimiento y la cotización.",
