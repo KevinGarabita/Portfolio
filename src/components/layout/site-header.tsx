@@ -23,11 +23,21 @@ export async function SiteHeader() {
   const dictionary = await getDictionary();
   const navigation = dictionary.siteNavigation;
 
+  // "Proyectos" opens the page with every project; the rest are home page sections.
   const navigationLinks = [
-    { sectionId: homeSectionIds.projects, label: navigation.projects },
-    { sectionId: homeSectionIds.experience, label: navigation.experience },
-    { sectionId: homeSectionIds.about, label: navigation.about },
-    { sectionId: homeSectionIds.contact, label: navigation.contact },
+    { href: `/${locale}/projects`, label: navigation.projects },
+    {
+      href: getHomeSectionHref(locale, homeSectionIds.experience),
+      label: navigation.experience,
+    },
+    {
+      href: getHomeSectionHref(locale, homeSectionIds.about),
+      label: navigation.about,
+    },
+    {
+      href: getHomeSectionHref(locale, homeSectionIds.contact),
+      label: navigation.contact,
+    },
   ];
 
   return (
@@ -48,9 +58,9 @@ export async function SiteHeader() {
           >
             <ul className="flex flex-wrap">
               {navigationLinks.map((navigationLink) => (
-                <li key={navigationLink.sectionId}>
+                <li key={navigationLink.href}>
                   <Link
-                    href={getHomeSectionHref(locale, navigationLink.sectionId)}
+                    href={navigationLink.href}
                     className="nav-link inline-flex min-h-11 items-center px-1 text-small font-bold text-muted transition-colors hover:text-heading min-[22.5rem]:px-2 lg:px-3"
                   >
                     {navigationLink.label}

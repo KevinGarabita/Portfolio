@@ -16,7 +16,7 @@
  *   6. Base styles: gradients, glows, layers, header height and element defaults.
  *   7. Components: the backdrop, entrance and scroll-reveal motion, gradient rings,
  *      hover glows and the flow diagram.
- *   8. Motion switches: the visitor's pause button and prefers-reduced-motion.
+ *   8. Reduced motion (prefers-reduced-motion).
  *
  * Contrast (WCAG 2.x, measured): text #f5f5f5 on page 18.15:1, muted #a3a3a3 7.84:1,
  * orange #ff6a00 on page 6.89:1, black text on orange 6.89:1. Red #e5252a reaches only
@@ -735,14 +735,8 @@
   }
 }
 
-/* 8. Motion switches. The visitor's "pause animations" button sets data-motion="paused"
- * on <html>: it stops the looping decoration (entrances still finish). Reduced motion
- * turns every animation and transition into an instant change and stops the loops. */
-html[data-motion="paused"] :is(.motion-float, .motion-orbit),
-html[data-motion="paused"] .site-backdrop::before {
-  animation-play-state: paused;
-}
-
+/* 8. Reduced motion turns every animation and transition into an instant change and
+ * stops the loops. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

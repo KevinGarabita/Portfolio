@@ -189,26 +189,26 @@ export function MapPinIcon({ className }: IconProps) {
   );
 }
 
-export function PauseIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <path d="M9 6v12M15 6v12" />
-    </Icon>
-  );
-}
-
-export function PlayIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <path d="M8 5.5v13l10-6.5-10-6.5Z" />
-    </Icon>
-  );
-}
-
 export function CloseIcon({ className }: IconProps) {
   return (
     <Icon className={className}>
       <path d="M6 6l12 12M18 6 6 18" />
+    </Icon>
+  );
+}
+
+export function ChevronDownIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <path d="m6 9 6 6 6-6" />
+    </Icon>
+  );
+}
+
+export function CheckIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
     </Icon>
   );
 }
@@ -243,6 +243,16 @@ export function AppWindowIcon({ className }: IconProps) {
     <Icon className={className}>
       <rect x="3" y="4" width="18" height="16" rx="2" />
       <path d="M3 9h18M6.5 6.5h.01M9 6.5h.01M7 13h6M7 16h10" />
+    </Icon>
+  );
+}
+
+/** Four-point sparkle: marks AI-generated ("vibe coded") work. */
+export function SparklesIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z" />
+      <path d="M19 15.5l.8 1.7 1.7.8-1.7.8-.8 1.7-.8-1.7-1.7-.8 1.7-.8.8-1.7Z" />
     </Icon>
   );
 }

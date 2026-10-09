@@ -18,7 +18,6 @@ export const spanishDictionary = {
     photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
     viewProjects: "Ver proyectos",
     writeOnWhatsApp: "Escríbeme por WhatsApp",
-    pauseAnimations: "Pausar animaciones",
   },
   resume: {
     download: "Descargar CV (PDF)",
@@ -28,10 +27,38 @@ export const spanishDictionary = {
     },
   },
   projects: {
-    sectionTitle: "Proyectos",
-    groups: {
-      freelance: "Proyectos freelance",
-      kobler: "Proyectos en Kobler",
+    sectionTitle: "Proyectos destacados",
+    viewAll: (count: number) => `Ver todos los proyectos (${count})`,
+    allProjectsPage: {
+      title: "Proyectos",
+      description:
+        "Aplicaciones web freelance y agentes de IA con automatizaciones en n8n hechos en Kobler y Asociados.",
+    },
+    buildMethod: {
+      "vibe-coded": {
+        label: "Vibe coded",
+        description:
+          "Hecho con vibe coding: código generado con IA bajo mi dirección.",
+      },
+      "hand-coded": {
+        label: "Hecho a mano",
+        description: "Código escrito a mano.",
+      },
+    },
+    filters: {
+      label: "Filtrar proyectos",
+      kind: "Tipo",
+      technology: "Tecnología",
+      buildMethod: "Desarrollo",
+      all: "Todos",
+      kinds: {
+        "web-app": "Aplicaciones web",
+        "ai-automation": "Agentes de IA y automatización",
+      },
+      resultsOne: "1 proyecto",
+      resultsMany: "{count} proyectos",
+      empty: "Ningún proyecto coincide con estos filtros.",
+      clear: "Quitar filtros",
     },
     category: {
       freelance: "Proyecto freelance",

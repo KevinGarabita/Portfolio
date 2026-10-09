@@ -20,7 +20,6 @@ export const englishDictionary: Dictionary = {
     photoAlt: "Kevin Garabita, backend, AI and automation developer",
     viewProjects: "View projects",
     writeOnWhatsApp: "Message me on WhatsApp",
-    pauseAnimations: "Pause animations",
   },
   resume: {
     download: "Download résumé (PDF)",
@@ -30,10 +29,38 @@ export const englishDictionary: Dictionary = {
     },
   },
   projects: {
-    sectionTitle: "Projects",
-    groups: {
-      freelance: "Freelance projects",
-      kobler: "Projects at Kobler",
+    sectionTitle: "Featured projects",
+    viewAll: (count: number) => `View all projects (${count})`,
+    allProjectsPage: {
+      title: "Projects",
+      description:
+        "Freelance web applications, and AI agents with n8n automations built at Kobler y Asociados.",
+    },
+    buildMethod: {
+      "vibe-coded": {
+        label: "Vibe coded",
+        description:
+          "Built with vibe coding: AI-generated code under my direction.",
+      },
+      "hand-coded": {
+        label: "Hand-coded",
+        description: "Code written by hand.",
+      },
+    },
+    filters: {
+      label: "Filter projects",
+      kind: "Type",
+      technology: "Technology",
+      buildMethod: "Development",
+      all: "All",
+      kinds: {
+        "web-app": "Web applications",
+        "ai-automation": "AI agents and automation",
+      },
+      resultsOne: "1 project",
+      resultsMany: "{count} projects",
+      empty: "No project matches these filters.",
+      clear: "Clear filters",
     },
     category: {
       freelance: "Freelance project",

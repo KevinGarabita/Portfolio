@@ -3,8 +3,6 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-import { restoreMotionPause } from "@/lib/motion-preference";
-
 const pendingRevealSelector = "[data-reveal]:not([data-revealed])";
 const revealReadyClassName = "js-reveal-ready";
 
@@ -15,21 +13,16 @@ function markRevealed(element: Element): void {
 /**
  * Page-wide motion setup, rendered once in the layout. It renders nothing.
  *
- * 1. Restores the visitor's "pause animations" choice from an earlier visit.
- * 2. Scroll reveal: elements marked data-reveal fade and rise in when they enter the
- *    viewport. Progressive enhancement: the content is visible in the HTML; this first
- *    marks everything already on screen (or above it) as revealed and only then adds
- *    .js-reveal-ready to <html>, which is what lets the CSS hide the rest. Without
- *    JavaScript, or with reduced motion (globals.css), nothing is ever hidden.
+ * Scroll reveal: elements marked data-reveal fade and rise in when they enter the
+ * viewport. Progressive enhancement: the content is visible in the HTML; this first
+ * marks everything already on screen (or above it) as revealed and only then adds
+ * .js-reveal-ready to <html>, which is what lets the CSS hide the rest. Without
+ * JavaScript, or with reduced motion (globals.css), nothing is ever hidden.
  *
  * It runs again on every client-side navigation, for the new page's elements.
  */
 export function PageMotion() {
   const pathname = usePathname();
-
-  useEffect(() => {
-    restoreMotionPause();
-  }, []);
 
   useEffect(() => {
     const pendingElements = Array.from(

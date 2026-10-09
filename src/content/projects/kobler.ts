@@ -17,7 +17,8 @@ export const koblerProjects: Project[] = [
     client: "Motosureste Suzuki",
     category: "kobler",
     context: { es: "Kobler y Asociados", en: "Kobler y Asociados" },
-    isFeatured: false,
+    kind: "ai-automation",
+    isFeatured: true,
     teamSetup: "team",
     summary: {
       es: "Agente de WhatsApp que atiende a quien busca una moto Suzuki: responde con el catálogo de la tienda, genera la cotización y pasa a un asesor a quien quiere financiamiento. Un segundo flujo lee el PDF de existencias y actualiza el stock de la tienda en línea.",
@@ -138,6 +139,7 @@ export const koblerProjects: Project[] = [
     client: "Neorgana",
     category: "kobler",
     context: { es: "Kobler y Asociados", en: "Kobler y Asociados" },
+    kind: "ai-automation",
     isFeatured: false,
     teamSetup: "team",
     summary: {
@@ -264,6 +266,7 @@ export const koblerProjects: Project[] = [
     client: "Lamau Beach",
     category: "kobler",
     context: { es: "Kobler y Asociados", en: "Kobler y Asociados" },
+    kind: "ai-automation",
     isFeatured: false,
     teamSetup: "team",
     summary: {
