@@ -1,0 +1,12 @@
+# Same line endings on Windows, macOS, Linux and Vercel builds.
+* text=auto eol=lf
+
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.ttf binary
+*.woff2 binary
