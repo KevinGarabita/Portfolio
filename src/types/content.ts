@@ -84,13 +84,13 @@ export interface Education {
 }
 
 /**
- * One entry of the CV skills list. A tool carries its logo(s) and is shown with them;
- * an entry without logos is a skill or concept (REST APIs, webhooks...) and is shown
- * as a text tag.
+ * One entry of the CV skills list. A tool has a logo and is shown on the page; an
+ * entry without one is a skill or concept (REST APIs, webhooks...) kept only for the
+ * structured data.
  */
 export interface SkillItem {
   name: LocalizedText;
-  logos?: TechnologyLogoId[];
+  logo?: TechnologyLogoId;
 }
 
 export interface SkillGroup {

@@ -2,18 +2,21 @@ import { sameInEveryLanguage } from "@/i18n/localize";
 import type { SkillGroup } from "@/types/content";
 
 /**
- * Skills list. Source: the "Habilidades técnicas" section of Kevin's CV, in its order.
- * Tools carry their logos (see technology-logos.ts); the rest are shown as text.
+ * Skills list. Source: the "Habilidades técnicas" section of Kevin's CV, with the
+ * changes he asked for: one tool per entry, the databases under Backend, and Material UI.
+ * The page shows the tools (logo and name). Entries without a logo (REST APIs,
+ * webhooks...) are not shown; they only feed the structured data (knowsAbout).
  */
 export const skillGroups: SkillGroup[] = [
   {
     id: "backend",
     title: sameInEveryLanguage("Backend"),
     items: [
-      {
-        name: sameInEveryLanguage("Python (FastAPI)"),
-        logos: ["python", "fastapi"],
-      },
+      { name: sameInEveryLanguage("Python"), logo: "python" },
+      { name: sameInEveryLanguage("FastAPI"), logo: "fastapi" },
+      { name: sameInEveryLanguage("Supabase"), logo: "supabase" },
+      { name: sameInEveryLanguage("PostgreSQL"), logo: "postgresql" },
+      { name: sameInEveryLanguage("MySQL"), logo: "mysql" },
       { name: { es: "APIs REST", en: "REST APIs" } },
       { name: sameInEveryLanguage("webhooks") },
       {
@@ -34,8 +37,9 @@ export const skillGroups: SkillGroup[] = [
     id: "ai-and-automation",
     title: { es: "IA y automatización", en: "AI & Automation" },
     items: [
-      { name: sameInEveryLanguage("n8n"), logos: ["n8n"] },
-      { name: sameInEveryLanguage("OpenAI API"), logos: ["openai"] },
+      { name: sameInEveryLanguage("n8n"), logo: "n8n" },
+      { name: sameInEveryLanguage("OpenAI API"), logo: "openai" },
+      { name: sameInEveryLanguage("Ollama"), logo: "ollama" },
       {
         name: {
           es: "agentes con tool/function calling",
@@ -48,45 +52,38 @@ export const skillGroups: SkillGroup[] = [
           en: "AI-based document data extraction",
         },
       },
-      { name: sameInEveryLanguage("Ollama"), logos: ["ollama"] },
     ],
   },
   {
-    id: "frontend-and-data",
-    title: { es: "Frontend y datos", en: "Frontend & Data" },
+    id: "frontend",
+    title: sameInEveryLanguage("Frontend"),
     items: [
-      { name: sameInEveryLanguage("React"), logos: ["react"] },
-      { name: sameInEveryLanguage("TypeScript"), logos: ["typescript"] },
-      { name: sameInEveryLanguage("JavaScript"), logos: ["javascript"] },
-      {
-        name: sameInEveryLanguage("PostgreSQL (Supabase)"),
-        logos: ["postgresql", "supabase"],
-      },
-      { name: sameInEveryLanguage("MySQL"), logos: ["mysql"] },
+      { name: sameInEveryLanguage("React"), logo: "react" },
+      { name: sameInEveryLanguage("TypeScript"), logo: "typescript" },
+      { name: sameInEveryLanguage("JavaScript"), logo: "javascript" },
+      { name: sameInEveryLanguage("Material UI"), logo: "materialUi" },
     ],
   },
   {
     id: "integrations",
     title: { es: "Integraciones", en: "Integrations" },
     items: [
-      { name: sameInEveryLanguage("GoHighLevel (CRM)"), logos: ["crm"] },
-      {
-        name: sameInEveryLanguage("WhatsApp Cloud API (Meta)"),
-        logos: ["whatsapp"],
-      },
-      { name: sameInEveryLanguage("Zoom"), logos: ["zoom"] },
-      { name: sameInEveryLanguage("WooCommerce"), logos: ["woocommerce"] },
-      { name: sameInEveryLanguage("Google Maps"), logos: ["googleMaps"] },
+      { name: sameInEveryLanguage("GoHighLevel"), logo: "highlevel" },
+      { name: sameInEveryLanguage("WhatsApp Cloud API"), logo: "whatsapp" },
+      { name: sameInEveryLanguage("Zoom"), logo: "zoom" },
+      { name: sameInEveryLanguage("WooCommerce"), logo: "woocommerce" },
+      { name: sameInEveryLanguage("Google Maps"), logo: "googleMaps" },
     ],
   },
   {
     id: "tools",
     title: { es: "Herramientas", en: "Tools" },
     items: [
-      { name: sameInEveryLanguage("Git / GitHub"), logos: ["git", "github"] },
-      { name: sameInEveryLanguage("Docker"), logos: ["docker"] },
-      { name: sameInEveryLanguage("Render"), logos: ["render"] },
-      { name: sameInEveryLanguage("Claude Code"), logos: ["claude"] },
+      { name: sameInEveryLanguage("Git"), logo: "git" },
+      { name: sameInEveryLanguage("GitHub"), logo: "github" },
+      { name: sameInEveryLanguage("Docker"), logo: "docker" },
+      { name: sameInEveryLanguage("Render"), logo: "render" },
+      { name: sameInEveryLanguage("Claude Code"), logo: "claude" },
     ],
   },
   {

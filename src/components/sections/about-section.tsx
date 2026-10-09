@@ -32,8 +32,8 @@ function getSkillCardSpan(index: number, count: number): string {
 /**
  * Two rows. First, the CV paragraph at reading size beside a short card of quick facts
  * (location and work mode, focus, languages). Then the technical skills as a grid of
- * cards, one per CV group (one column on phones, two from sm, three from lg): the tools
- * with their logo and name, then the other skills as a short list.
+ * cards, one per CV group (one column on phones, two from sm, three from lg): each tool
+ * with its logo and name.
  */
 export async function AboutSection() {
   const locale = await getCurrentLocale();
@@ -86,8 +86,10 @@ export async function AboutSection() {
       </h3>
       <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-6 lg:gap-5">
         {technicalSkillGroups.map((group, index) => {
-          const tools = group.items.filter((item) => item.logos?.length);
-          const concepts = group.items.filter((item) => !item.logos?.length);
+          // Only tools are shown; entries without a logo stay in the structured data.
+          const tools = group.items.flatMap((item) =>
+            item.logo ? [{ name: item.name, logo: item.logo }] : [],
+          );
 
           return (
             <li
@@ -100,38 +102,19 @@ export async function AboutSection() {
               <h4 className="font-display text-base font-bold text-heading">
                 {localize(group.title, locale)}
               </h4>
-              {tools.length > 0 ? (
-                <ul className="mt-4 grid gap-2 @[17rem]:grid-cols-2 @[34rem]:grid-cols-3">
-                  {tools.map((tool) => (
-                    <li
-                      key={tool.name.es}
-                      className="flex min-h-12 items-center gap-3 rounded-media border border-hairline bg-page px-3 py-2"
-                    >
-                      <span className="flex shrink-0 gap-1">
-                        {tool.logos?.map((logo) => (
-                          <TechnologyLogo key={logo} logo={logo} />
-                        ))}
-                      </span>
-                      <span className="text-small leading-snug font-bold text-heading">
-                        {localize(tool.name, locale)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-              {concepts.length > 0 ? (
-                <ul className="mt-4 flex flex-col gap-2 text-small text-muted">
-                  {concepts.map((concept) => (
-                    <li key={concept.name.es} className="flex gap-2.5">
-                      <span
-                        aria-hidden="true"
-                        className="mt-[0.55em] size-1.5 shrink-0 rotate-45 bg-accent"
-                      />
-                      {localize(concept.name, locale)}
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
+              <ul className="mt-4 grid gap-2 @[17rem]:grid-cols-2 @[34rem]:grid-cols-3">
+                {tools.map((tool) => (
+                  <li
+                    key={tool.logo}
+                    className="flex min-h-12 items-center gap-3 rounded-media border border-hairline bg-page px-3 py-2"
+                  >
+                    <TechnologyLogo logo={tool.logo} />
+                    <span className="text-small leading-snug font-bold text-heading">
+                      {localize(tool.name, locale)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </li>
           );
         })}
