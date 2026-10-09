@@ -8,7 +8,7 @@ import type { ImageResponse } from "next/og";
  * app/[lang]/projects/[slug]/opengraph-image.tsx). next/og only understands flexbox and
  * inline styles, so the design tokens are repeated here as plain values: ink background,
  * off-white text and one solid orange block. No gradients and no photo: with the photo
- * the PNG weighed 470-600 KB, over the roughly 300 KB WhatsApp shows in link previews.
+ * the PNG weighed 470-600 KB, and WhatsApp tends to drop preview images over ~300 KB.
  * Text only, each image is about 50 KB.
  */
 
