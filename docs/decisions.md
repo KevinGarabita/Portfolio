@@ -14,7 +14,7 @@ Cada decisión lleva su razón, para poder revisarla cuando cambien las herramie
 
 - Todas las páginas cuelgan de `app/[lang]`, así cada página tiene su `<html lang>` correcto y se genera como HTML estático para los dos idiomas.
 - `proxy.ts` (antes `middleware.ts`) redirige `/` y cualquier ruta sin idioma según el encabezado `Accept-Language`, con código 307 y `Vary: Accept-Language`. Si el navegador no prefiere español ni inglés, se usa inglés.
-- El idioma de la petición se lee con `next/root-params`, sin pasarlo de componente en componente.
+- El idioma de la petición se lee con `next/root-params` en el layout, las páginas y las secciones. Los componentes pequeños de presentación (`ProjectCard`, `ProjectFacts`) lo reciben por props junto con el diccionario, y el selector de idioma también, porque es un Client Component y no puede leer `next/root-params`.
 
 ## Páginas 404 y Cache Components
 

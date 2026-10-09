@@ -15,6 +15,7 @@ Sitio personal bilingüe (español e inglés) hecho con Next.js 16 (App Router),
 | `npm run build`        | Build de producción.                                              |
 | `npm run start`        | Sirve el build de producción.                                     |
 | `npm run lint`         | ESLint; falla con cualquier advertencia.                          |
+| `npm run lint:fix`     | Corrige con ESLint lo que se pueda arreglar automáticamente.      |
 | `npm run typecheck`    | Genera los tipos de rutas y revisa TypeScript.                    |
 | `npm run format`       | Formatea el código con Prettier.                                  |
 | `npm run format:check` | Revisa el formato sin modificar archivos.                         |
@@ -22,11 +23,13 @@ Sitio personal bilingüe (español e inglés) hecho con Next.js 16 (App Router),
 
 ## Variables de entorno
 
-Copia `.env.example` a `.env.local` para desarrollo local. La única variable es:
+Copia `.env.example` a `.env.local` para desarrollo local. Solo hay que configurar una variable; las otras las define Vercel:
 
-| Variable               | Para qué sirve                                                                                          | Dónde configurarla                               |
-| ---------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `NEXT_PUBLIC_SITE_URL` | URL base del sitio (`metadataBase`, canonical, hreflang, sitemap y datos estructurados). Sin `/` final. | Vercel, entorno Production, cuando haya dominio. |
+| Variable                        | Para qué sirve                                                                                          | Dónde configurarla                               |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `NEXT_PUBLIC_SITE_URL`          | URL base del sitio (`metadataBase`, canonical, hreflang, sitemap y datos estructurados). Sin `/` final. | Vercel, entorno Production, cuando haya dominio. |
+| `VERCEL_PROJECT_PRODUCTION_URL` | Dominio de producción sin esquema; respaldo cuando `NEXT_PUBLIC_SITE_URL` está vacía.                   | Nadie: la define Vercel.                         |
+| `VERCEL_ENV`                    | Entorno del despliegue. En producción el build falla si queda algún `[PLACEHOLDER]`.                    | Nadie: la define Vercel.                         |
 
 Si está vacía, el sitio usa la URL de producción que expone Vercel o, en local, `http://localhost:3000`.
 
