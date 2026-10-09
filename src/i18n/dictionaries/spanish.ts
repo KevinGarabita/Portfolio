@@ -10,7 +10,6 @@ export const spanishDictionary = {
   },
   languageSwitcher: {
     label: "Idioma",
-    currentLanguage: "Español",
     otherLanguage: "English",
   },
   projects: {

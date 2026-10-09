@@ -59,6 +59,7 @@ export function LanguageSwitcher({
         hrefLang={otherLocale}
         lang={otherLocale}
         onClick={switchLanguage}
+        className="inline-block py-2"
       >
         {otherLanguageName}
       </Link>

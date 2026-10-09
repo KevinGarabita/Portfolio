@@ -12,7 +12,6 @@ export const englishDictionary: Dictionary = {
   },
   languageSwitcher: {
     label: "Language",
-    currentLanguage: "English",
     otherLanguage: "Español",
   },
   projects: {
