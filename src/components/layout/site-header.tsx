@@ -1,15 +1,22 @@
 import Link from "next/link";
 
+import { BrandMark } from "@/components/ui/brand-mark";
+import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
+import { ChatBubbleIcon } from "@/components/ui/icons";
 import { profile } from "@/content/profile";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { getHomeSectionHref, homeSectionIds } from "@/lib/home-sections";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 import { LanguageSwitcher } from "./language-switcher";
+import { SiteHeaderFrame } from "./site-header-frame";
 
 /**
- * Name, section links and language switch. On phones the name and the language share
- * the first row and the section links wrap onto a second one, so nothing scrolls sideways.
+ * Sticky header: monogram and name, section links, WhatsApp and the language switch.
+ * Below lg the name, WhatsApp and the language share the first row and the section
+ * links wrap onto a second one, so nothing scrolls sideways and no menu is needed.
+ * Its height is --header-height in globals.css (used by scroll-padding-top).
  */
 export async function SiteHeader() {
   const locale = await getCurrentLocale();
@@ -24,26 +31,27 @@ export async function SiteHeader() {
   ];
 
   return (
-    <header className="bg-page">
+    <SiteHeaderFrame>
       <Container>
-        <div className="flex flex-wrap items-center gap-x-8 border-b border-hairline py-2 sm:py-3">
+        <div className="site-header-row relative flex flex-wrap items-center gap-x-3 pt-2 lg:h-18 lg:flex-nowrap lg:gap-x-6 lg:pt-0">
           <Link
             href={`/${locale}`}
-            className="py-2 font-display text-subtitle font-extrabold text-heading no-underline"
+            className="flex min-h-12 items-center gap-3 font-display text-subtitle font-extrabold text-heading no-underline"
           >
+            <BrandMark className="site-header-mark" />
             {profile.displayName}
           </Link>
 
           <nav
             aria-label={navigation.label}
-            className="order-last w-full sm:order-0 sm:ml-auto sm:w-auto"
+            className="order-last -mx-2 w-[calc(100%+1rem)] lg:order-0 lg:mx-0 lg:ml-auto lg:w-auto"
           >
-            <ul className="-ml-2 flex flex-wrap text-small sm:ml-0">
+            <ul className="flex flex-wrap">
               {navigationLinks.map((navigationLink) => (
                 <li key={navigationLink.sectionId}>
                   <Link
                     href={getHomeSectionHref(locale, navigationLink.sectionId)}
-                    className="inline-block px-2 py-2"
+                    className="nav-link inline-flex min-h-11 items-center px-2 text-small font-bold text-muted transition-colors hover:text-heading lg:px-3"
                   >
                     {navigationLink.label}
                   </Link>
@@ -52,7 +60,21 @@ export async function SiteHeader() {
             </ul>
           </nav>
 
-          <div className="ml-auto text-small sm:ml-0 sm:border-l sm:border-hairline sm:pl-6">
+          <div className="ml-auto flex items-center gap-1 sm:gap-3 lg:ml-0">
+            <ButtonLink
+              href={buildWhatsAppUrl(locale)}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+              size="compact"
+              leadingIcon={<ChatBubbleIcon className="text-accent" />}
+              className="max-sm:min-w-10 max-sm:gap-0 max-sm:px-2.5"
+            >
+              <span className="sr-only sm:not-sr-only">
+                {dictionary.contact.whatsApp}
+              </span>
+              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+            </ButtonLink>
             <LanguageSwitcher
               currentLocale={locale}
               label={dictionary.languageSwitcher.label}
@@ -61,6 +83,6 @@ export async function SiteHeader() {
           </div>
         </div>
       </Container>
-    </header>
+    </SiteHeaderFrame>
   );
 }
