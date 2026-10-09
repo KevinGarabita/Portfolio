@@ -326,6 +326,11 @@
     mask-image: linear-gradient(to bottom, black 78%, transparent 99%);
   }
 
+  /* The orbit ring fades out behind the shoulders instead of crossing the shirt. */
+  .hero-orbit {
+    mask-image: linear-gradient(to bottom, black 50%, transparent 78%);
+  }
+
   /* The photo's lower corners were cut by the original frame: fade the sides too. */
   .hero-photo {
     mask-image: linear-gradient(

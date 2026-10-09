@@ -154,7 +154,7 @@ export async function HeroSection() {
             />
             <div
               aria-hidden="true"
-              className="entrance-scale absolute -inset-x-[3%] top-[4%] aspect-square [--entrance-order:3]"
+              className="hero-orbit entrance-scale absolute -inset-x-[3%] top-[4%] aspect-square [--entrance-order:3]"
             >
               <div className="motion-orbit size-full rounded-full border border-dashed border-control-border">
                 <span className="absolute top-[14.6%] left-[14.6%] size-3 -translate-1/2 rounded-full bg-accent shadow-[0_0_1rem_var(--color-accent)]" />
