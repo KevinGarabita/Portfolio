@@ -112,7 +112,7 @@ export default async function ProjectPage({
               {projectTexts.backToProjects}
             </Link>
           </p>
-          <h1 className="mt-6 font-display text-display font-extrabold lg:mt-10">
+          <h1 className="mt-6 font-display text-headline font-extrabold lg:mt-10">
             {projectName}
           </h1>
           <p className="mt-6 max-w-prose text-subtitle">

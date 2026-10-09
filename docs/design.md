@@ -39,7 +39,8 @@ Los componentes usan los nombres de función, nunca los colores crudos. El tema 
 
 ## Tipografía
 
-- Escala fluida de 360 a 1440 px de ancho: `text-small` (14→15 px), `text-base` (16→18), `text-subtitle` (19→24), `text-title` (26→40) y `text-display` (40→100). Pocos pasos y un salto grande entre el título principal y el texto.
+- Escala fluida de 360 a 1440 px de ancho: `text-small` (14→15 px), `text-base` (16→18), `text-subtitle` (19→24), `text-title` (26→40), `text-headline` (32→64) y `text-display` (40→100). Pocos pasos y un salto grande entre el título principal y el texto.
+- `text-display` es solo para el nombre en la portada. `text-headline` es para el título de un caso de estudio: los nombres de proyecto son largos ("Agente conversacional para Motosureste Suzuki") y a 100 px ocuparían cuatro líneas.
 - El tamaño de texto corrido se llama `base` y no `body`, porque `text-body` ya es el color del texto.
 - Familias: `font-sans` para texto, `font-display` para títulos y `font-mono` (la monoespaciada del sistema, sin descarga) para código.
 - **Atkinson Hyperlegible Next** para texto y títulos, elegida por Kevin. Es del Braille Institute y está diseñada para que cada letra se distinga a primera vista (la I con remates, el cero tachado): pone la legibilidad por delante del estilo. Es una sola familia variable (pesos 200 a 800) y pesa unos 33 KB.
@@ -59,4 +60,4 @@ Los componentes usan los nombres de función, nunca los colores crudos. El tema 
 - Botón principal: `bg-accent text-on-accent hover:bg-accent-hover rounded-control`.
 - Botón secundario o campo: `border border-control-border rounded-control`.
 - Bloque oscuro: `surface-inverse` (ajusta también los colores de texto, enlaces y foco de su contenido).
-- Títulos: `font-display` con `text-display`, `text-title` o `text-subtitle`.
+- Títulos: `font-display` con `text-display`, `text-headline`, `text-title` o `text-subtitle`.
