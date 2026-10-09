@@ -1,5 +1,7 @@
 import type { Project } from "@/types/content";
 
+const imageDir = "/images/projects/controltec-pest-control-crm";
+
 /** Pest control CRM built for Controltec Fumigaciones (freelance). */
 export const controltecPestControlCrm: Project = {
   slug: "controltec-pest-control-crm",
@@ -72,7 +74,48 @@ export const controltecPestControlCrm: Project = {
     "Render",
   ],
   integrations: ["WhatsApp Cloud API (Meta)", "Google Maps"],
-  images: [],
+  images: [
+    {
+      src: `${imageDir}/office-dashboard.webp`,
+      alt: {
+        es: "Tablero de oficina con datos de ejemplo: servicios de la semana, servicios por día y carga por técnico",
+        en: "Office dashboard with sample data: the week's services, services per day and workload per technician",
+      },
+      width: 1440,
+      height: 900,
+      viewport: "desktop",
+    },
+    {
+      src: `${imageDir}/weekly-schedule.webp`,
+      alt: {
+        es: "Agenda semanal con servicios de ejemplo, de colores según su estado",
+        en: "Weekly schedule with sample services, colored by status",
+      },
+      width: 1440,
+      height: 900,
+      viewport: "desktop",
+    },
+    {
+      src: `${imageDir}/field-report-stations.webp`,
+      alt: {
+        es: "Paso de estaciones del reporte de campo con datos de ejemplo: tres de seis estaciones capturadas",
+        en: "Stations step of the field report with sample data: three of six stations recorded",
+      },
+      width: 750,
+      height: 1624,
+      viewport: "mobile",
+    },
+    {
+      src: `${imageDir}/station-inspection-form.webp`,
+      alt: {
+        es: "Formulario de inspección de una estación con datos de ejemplo: hallazgo, estado del dispositivo y plaga detectada",
+        en: "Station inspection form with sample data: finding, device condition and detected pest",
+      },
+      width: 750,
+      height: 1624,
+      viewport: "mobile",
+    },
+  ],
   links: [],
   decisions: [
     {
