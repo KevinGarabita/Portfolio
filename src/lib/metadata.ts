@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 
 import { profile } from "@/content/profile";
+import { siteLastUpdated } from "@/content/site-metadata";
 import { supportedLocales, type Locale } from "@/i18n/locales";
+import type { CalendarDate } from "@/types/content";
+
+import { getAllProjects } from "./projects";
+import { siteUrl } from "./site-config";
 
 /** Open Graph locale codes (language_TERRITORY), matching the date formats in format-date.ts. */
 const openGraphLocaleByLocale: Record<Locale, string> = {
@@ -17,6 +22,20 @@ export function localizePath(
   return pathWithoutLocale === "/"
     ? `/${locale}`
     : `/${locale}${pathWithoutLocale}`;
+}
+
+/** Absolute URL on the site's domain (see site-config.ts), for the sitemap and structured data. */
+export function toAbsoluteUrl(path: string): string {
+  return new URL(path, siteUrl).href;
+}
+
+/** The home page lists every project, so it changes when the site content or any project does. */
+export function getHomeLastModified(): CalendarDate {
+  return getAllProjects().reduce<CalendarDate>(
+    (latest, project) =>
+      project.lastUpdated > latest ? project.lastUpdated : latest,
+    siteLastUpdated,
+  );
 }
 
 /**
