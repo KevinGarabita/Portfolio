@@ -1,8 +1,10 @@
 /** Interface text in Spanish. Its shape defines the Dictionary type every language must follow. */
 export const spanishDictionary = {
   skipToContent: "Saltar al contenido",
+  opensInNewTab: "se abre en una pestaña nueva",
   siteNavigation: {
     label: "Navegación principal",
+    home: "Inicio",
     projects: "Proyectos",
     experience: "Experiencia",
     about: "Sobre mí",
@@ -15,6 +17,8 @@ export const spanishDictionary = {
   hero: {
     photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
     viewProjects: "Ver proyectos",
+    writeOnWhatsApp: "Escríbeme por WhatsApp",
+    pauseAnimations: "Pausar animaciones",
   },
   resume: {
     download: "Descargar CV (PDF)",
@@ -25,6 +29,15 @@ export const spanishDictionary = {
   },
   projects: {
     sectionTitle: "Proyectos",
+    groups: {
+      freelance: "Proyectos freelance",
+      kobler: "Proyectos en Kobler",
+    },
+    category: {
+      freelance: "Proyecto freelance",
+      kobler: "Proyecto en Kobler",
+    },
+    viewCaseStudy: "Ver caso de estudio",
     status: {
       "in-production": "En producción",
       "in-development": "En desarrollo",
@@ -41,6 +54,10 @@ export const spanishDictionary = {
       technologies: "Tecnologías",
     },
     sections: {
+      highlights: "Puntos clave",
+      flowDiagram: "Flujo de la automatización",
+      gallery: "Capturas",
+      links: "Enlaces",
       problem: "Problema",
       solution: "Solución",
       decisions: "Decisiones técnicas",
@@ -48,6 +65,16 @@ export const spanishDictionary = {
       role: "Mi rol",
       results: "Resultado",
       nextSteps: "Siguientes pasos",
+    },
+    flowStepTool: "Herramienta",
+    gallery: {
+      enlarge: "Ampliar",
+      dialogLabel: "Capturas del proyecto",
+      close: "Cerrar",
+      previous: "Imagen anterior",
+      next: "Imagen siguiente",
+      position: (current: number, total: number) =>
+        `Imagen ${current} de ${total}`,
     },
     backToProjects: "Volver a proyectos",
     confidentialityNote:
@@ -79,6 +106,7 @@ export const spanishDictionary = {
     email: "Correo",
     phone: "Teléfono",
     whatsApp: "WhatsApp",
+    sendEmail: "Enviar correo",
     location: "Ubicación",
     workMode: "Modalidad",
     availability: "Disponibilidad",
