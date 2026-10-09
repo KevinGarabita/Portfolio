@@ -103,6 +103,11 @@ export const englishDictionary: Dictionary = {
   },
   about: {
     sectionTitle: "About",
+    facts: {
+      location: "Location",
+      focus: "Focus",
+      languages: "Languages",
+    },
   },
   contact: {
     sectionTitle: "Contact",

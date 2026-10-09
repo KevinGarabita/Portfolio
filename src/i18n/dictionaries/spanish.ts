@@ -101,6 +101,11 @@ export const spanishDictionary = {
   },
   about: {
     sectionTitle: "Sobre mí",
+    facts: {
+      location: "Ubicación",
+      focus: "Enfoque",
+      languages: "Idiomas",
+    },
   },
   contact: {
     sectionTitle: "Contacto",
