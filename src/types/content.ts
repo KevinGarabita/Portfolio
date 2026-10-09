@@ -1,3 +1,4 @@
+import type { TechnologyLogoId } from "@/content/technology-logos";
 import type { Locale } from "@/i18n/locales";
 
 /** Text written in every supported language. */
@@ -26,8 +27,10 @@ export interface Profile {
   /** Legal full name, used in structured data. */
   fullName: string;
   role: LocalizedText;
-  /** One concrete sentence for the hero. */
-  headline: LocalizedText;
+  /** Titles that rotate in the hero, in order. The longest one reserves the space. */
+  heroTitles: string[];
+  /** Short line under the hero title. */
+  heroSubtitle: LocalizedText;
   /** Paragraphs for the "About" section. */
   about: LocalizedText[];
   location: {
@@ -46,8 +49,12 @@ export interface Profile {
     display: string;
     /** Number in E.164 format, used for tel: links. */
     international: string;
-    /** Unknown until confirmed; controls whether a WhatsApp link is shown. */
-    hasWhatsApp?: boolean;
+  };
+  whatsApp: {
+    /** Digits only, with country code and no "+", as wa.me expects. */
+    number: string;
+    /** Message pre-filled in the chat. */
+    prefilledMessage: LocalizedText;
   };
   socialProfiles: SocialProfile[];
   /** Public paths to the downloadable CV, one per language. */
@@ -76,29 +83,79 @@ export interface Education {
   expectedGraduation?: YearMonth;
 }
 
+/**
+ * One entry of the CV skills list. A tool has a logo and is shown on the page; an
+ * entry without one is a skill or concept (REST APIs, webhooks...) kept only for the
+ * structured data.
+ */
+export interface SkillItem {
+  name: LocalizedText;
+  logo?: TechnologyLogoId;
+}
+
 export interface SkillGroup {
   id: string;
   title: LocalizedText;
-  items: LocalizedText[];
+  items: SkillItem[];
 }
 
 export type ProjectStatus = "in-production" | "in-development";
 
+/** Groups projects on the site: freelance work or work done at Kobler y Asociados. */
+export type ProjectCategory = "freelance" | "kobler";
+
+/** A screenshot stored under public/images/projects/<slug>/. */
+export interface ProjectImage {
+  /** Public path, e.g. "/images/projects/field-report-manager/dashboard.webp". */
+  src: string;
+  alt: LocalizedText;
+  width: number;
+  height: number;
+  /** Which viewport the screenshot shows. */
+  viewport: "desktop" | "mobile";
+}
+
+export interface ProjectLink {
+  label: LocalizedText;
+  url: string;
+  kind: "live-site" | "repository" | "other";
+}
+
+/** One step of an automation flow, drawn as a simple diagram (no editor screenshots). */
+export interface FlowStep {
+  /** What happens in this step, in plain language. */
+  label: LocalizedText;
+  /** Tool or service involved, e.g. "WhatsApp", "GoHighLevel", "OpenAI". */
+  tool?: string;
+}
+
 export type TeamSetup = "individual" | "team";
+
+/**
+ * How the code was written: "vibe-coded" (generated with AI under Kevin's direction) or
+ * "hand-coded". Shown as a badge; unset for automations built in n8n.
+ */
+export type BuildMethod = "vibe-coded" | "hand-coded";
+
+/** What the project is, for the filters on the projects page. */
+export type ProjectKind = "web-app" | "ai-automation";
 
 export interface Project {
   /** URL segment: /[lang]/projects/[slug]. Lowercase words joined by hyphens. */
   slug: string;
   name: LocalizedText;
   client: string;
+  category: ProjectCategory;
+  kind: ProjectKind;
   /** Where the work happened, e.g. "Freelance" or the employer's name. */
   context: LocalizedText;
   status?: ProjectStatus;
   /** Extra status detail, e.g. "since July 2026" or the expected delivery date. */
   statusNote?: LocalizedText;
   period?: DateRange;
-  /** Featured projects get more space on the home page. */
+  /** Featured projects are the ones shown on the home page; the rest only on /projects. */
   isFeatured: boolean;
+  buildMethod?: BuildMethod;
   teamSetup: TeamSetup;
   /** One or two sentences for the project card. */
   summary: LocalizedText;
@@ -106,11 +163,17 @@ export interface Project {
   solution: LocalizedText;
   role: LocalizedText;
   results: LocalizedText[];
-  /** Facts taken word for word from the CV. */
+  /** 3 to 5 key points, from the CV or from the project's own documentation. */
   highlights: LocalizedText[];
   /** Main technologies; integrations are listed separately. */
   stack: string[];
   integrations: string[];
+  /** Screenshots for the card and the gallery; empty when there are none yet. */
+  images: ProjectImage[];
+  /** Public links only (never internal client systems). */
+  links: ProjectLink[];
+  /** Automation flows: steps for a simple diagram. */
+  flowDiagram?: FlowStep[];
   /** Optional details that add credibility when the information exists. */
   decisions?: LocalizedText[];
   failureHandling?: LocalizedText[];

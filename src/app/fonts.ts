@@ -1,13 +1,14 @@
-import { Archivo } from "next/font/google";
+import { Atkinson_Hyperlegible_Next } from "next/font/google";
 
 /**
- * Archivo, a variable font with a width axis: body text at normal width and headings
- * wider (font-stretch) from the same family. Self-hosted by next/font at build time.
+ * Atkinson Hyperlegible Next, from the Braille Institute: one variable family (weights
+ * 200–800) for text and headings, chosen for legibility. Self-hosted by next/font at build time.
  */
-export const archivo = Archivo({
+export const atkinsonHyperlegibleNext = Atkinson_Hyperlegible_Next({
   subsets: ["latin"],
-  // The width axis requires leaving `weight` out; next/font throws otherwise.
-  axes: ["wdth"],
-  variable: "--font-archivo",
+  variable: "--font-atkinson",
+  // next 16.4 has no fallback metrics for this font; without these two options Turbopack warns.
+  adjustFontFallback: false,
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
   display: "swap",
 });

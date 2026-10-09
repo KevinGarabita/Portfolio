@@ -1,25 +1,41 @@
-import { ProjectCard } from "@/components/projects/project-card";
+import { ProjectGrid } from "@/components/projects/project-grid";
+import { ButtonLink } from "@/components/ui/button-link";
+import { ArrowRightIcon } from "@/components/ui/icons";
+import { PageSection } from "@/components/ui/page-section";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
-import { getAllProjects } from "@/lib/projects";
+import { homeSectionIds } from "@/lib/home-sections";
+import { getAllProjects, getFeaturedProjects } from "@/lib/projects";
 
+/**
+ * Home page projects: only the featured ones (isFeatured in content/projects), then a
+ * link to /[lang]/projects, where every project is listed.
+ */
 export async function ProjectsSection() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
+  const featuredProjects = getFeaturedProjects();
 
   return (
-    <section id="projects" aria-labelledby="projects-title">
-      <h2 id="projects-title">{dictionary.projects.sectionTitle}</h2>
-      <ul>
-        {getAllProjects().map((project) => (
-          <li key={project.slug}>
-            <ProjectCard
-              project={project}
-              locale={locale}
-              dictionary={dictionary}
-            />
-          </li>
-        ))}
-      </ul>
-    </section>
+    <PageSection
+      id={homeSectionIds.projects}
+      title={dictionary.projects.sectionTitle}
+      spacing="spacious"
+      revealsContentAsBlock={false}
+    >
+      <ProjectGrid
+        projects={featuredProjects}
+        locale={locale}
+        dictionary={dictionary}
+      />
+      <div data-reveal className="mt-10 flex justify-center lg:mt-14">
+        <ButtonLink
+          href={`/${locale}/projects`}
+          variant="secondary"
+          trailingIcon={<ArrowRightIcon />}
+        >
+          {dictionary.projects.viewAll(getAllProjects().length)}
+        </ButtonLink>
+      </div>
+    </PageSection>
   );
 }

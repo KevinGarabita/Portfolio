@@ -1,8 +1,10 @@
 /** Interface text in Spanish. Its shape defines the Dictionary type every language must follow. */
 export const spanishDictionary = {
   skipToContent: "Saltar al contenido",
+  opensInNewTab: "se abre en una pestaña nueva",
   siteNavigation: {
     label: "Navegación principal",
+    home: "Inicio",
     projects: "Proyectos",
     experience: "Experiencia",
     about: "Sobre mí",
@@ -10,12 +12,60 @@ export const spanishDictionary = {
   },
   languageSwitcher: {
     label: "Idioma",
-    currentLanguage: "Español",
     otherLanguage: "English",
   },
+  hero: {
+    photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
+    viewProjects: "Ver proyectos",
+    writeOnWhatsApp: "Escríbeme por WhatsApp",
+  },
+  resume: {
+    download: "Descargar CV (PDF)",
+    inLanguage: {
+      es: "CV en español (PDF)",
+      en: "CV en inglés (PDF)",
+    },
+  },
   projects: {
-    sectionTitle: "Proyectos",
-    viewCaseStudy: "Ver caso",
+    sectionTitle: "Proyectos destacados",
+    viewAll: (count: number) => `Ver todos los proyectos (${count})`,
+    allProjectsPage: {
+      title: "Proyectos",
+      description:
+        "Aplicaciones web freelance y agentes de IA con automatizaciones en n8n hechos en Kobler y Asociados.",
+    },
+    buildMethod: {
+      "vibe-coded": {
+        label: "Vibe coded",
+        description:
+          "Hecho con vibe coding: código generado con IA bajo mi dirección.",
+      },
+      "hand-coded": {
+        label: "Hecho a mano",
+        description: "Código escrito a mano.",
+      },
+    },
+    filters: {
+      label: "Filtrar proyectos",
+      kind: "Tipo",
+      technology: "Tecnología",
+      buildMethod: "Desarrollo",
+      all: "Todos",
+      kinds: {
+        "web-app": "Aplicaciones web",
+        "ai-automation": "Agentes de IA y automatización",
+      },
+      resultsOne: "1 proyecto",
+      resultsMany: "{count} proyectos",
+      empty: "Ningún proyecto coincide con estos filtros.",
+      clear: "Quitar filtros",
+    },
+    category: {
+      freelance: "Proyecto freelance",
+      kobler: "Proyecto en Kobler",
+    },
+    viewCaseStudy: "Ver caso de estudio",
+    moreTechnologies: (count: number) => `y ${count} más`,
     status: {
       "in-production": "En producción",
       "in-development": "En desarrollo",
@@ -29,19 +79,45 @@ export const spanishDictionary = {
       context: "Contexto",
       period: "Periodo",
       status: "Estado",
-      stack: "Stack",
+      technologies: "Tecnologías",
     },
     sections: {
+      highlights: "Puntos clave",
+      flowDiagram: "Flujo de la automatización",
+      gallery: "Capturas",
+      links: "Enlaces",
       problem: "Problema",
       solution: "Solución",
+      decisions: "Decisiones técnicas",
+      failureHandling: "Manejo de fallas",
       role: "Mi rol",
       results: "Resultado",
+      nextSteps: "Siguientes pasos",
+    },
+    flowStepTool: "Herramienta",
+    gallery: {
+      enlarge: "Ampliar",
+      dialogLabel: "Capturas del proyecto",
+      close: "Cerrar",
+      previous: "Imagen anterior",
+      next: "Imagen siguiente",
+      position: (current: number, total: number) =>
+        `Imagen ${current} de ${total}`,
     },
     backToProjects: "Volver a proyectos",
+    confidentialityNote:
+      "Código privado por confidencialidad con los clientes; capturas, arquitectura y demostración disponibles a solicitud.",
+    requestDetails: "Solicitar por correo",
+    neighborNavigation: {
+      label: "Más proyectos",
+      previous: "Proyecto anterior",
+      next: "Proyecto siguiente",
+    },
   },
   experience: {
     sectionTitle: "Experiencia",
     present: "actualidad",
+    relatedProjects: "Casos de estudio de este trabajo",
   },
   education: {
     sectionTitle: "Formación",
@@ -52,12 +128,25 @@ export const spanishDictionary = {
   },
   about: {
     sectionTitle: "Sobre mí",
+    facts: {
+      location: "Ubicación",
+      focus: "Enfoque",
+      languages: "Idiomas",
+    },
   },
   contact: {
     sectionTitle: "Contacto",
     email: "Correo",
     phone: "Teléfono",
-    downloadResume: "Descargar CV",
+    whatsApp: "WhatsApp",
+    sendEmail: "Enviar correo",
+    location: "Ubicación",
+    workMode: "Modalidad",
+    availability: "Disponibilidad",
+    timeZoneNote: (city: string, utcOffset: string) =>
+      `(hora de ${city}, ${utcOffset})`,
+    resume: "CV",
+    profiles: "Perfiles",
   },
   notFound: {
     title: "Página no encontrada",

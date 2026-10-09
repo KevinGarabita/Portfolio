@@ -23,6 +23,31 @@ export function getAllProjects(): Project[] {
   return projects;
 }
 
+/** The projects shown on the home page, in site order. */
+export function getFeaturedProjects(): Project[] {
+  return projects.filter((project) => project.isFeatured);
+}
+
+/**
+ * Technologies used by at least two projects, most used first: the options of the
+ * technology filter (one that matches a single project is not worth a filter).
+ */
+export function getSharedTechnologies(): string[] {
+  const counts = new Map<string, number>();
+  for (const project of projects) {
+    for (const technology of new Set(getProjectTechnologies(project))) {
+      counts.set(technology, (counts.get(technology) ?? 0) + 1);
+    }
+  }
+  return [...counts]
+    .filter(([, count]) => count >= 2)
+    .sort(
+      ([nameA, countA], [nameB, countB]) =>
+        countB - countA || nameA.localeCompare(nameB),
+    )
+    .map(([name]) => name);
+}
+
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
 }
