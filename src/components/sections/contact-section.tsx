@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 
+import { ButtonLink } from "@/components/ui/button-link";
+import { ChatBubbleIcon, MailIcon } from "@/components/ui/icons";
 import { PageSection } from "@/components/ui/page-section";
 import { profile } from "@/content/profile";
 import { supportedLocales } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
-import { joinClassNames } from "@/lib/class-names";
 import { formatUtcOffset } from "@/lib/format-date";
 import { homeSectionIds } from "@/lib/home-sections";
 import { socialNetworkNames } from "@/lib/social-networks";
@@ -14,22 +15,11 @@ import { buildWhatsAppUrl } from "@/lib/whatsapp";
 interface ContactDetailProps {
   label: string;
   children: ReactNode;
-  /** Spans both columns on wider screens. */
-  isWide?: boolean;
 }
 
-function ContactDetail({
-  label,
-  children,
-  isWide = false,
-}: ContactDetailProps) {
+function ContactDetail({ label, children }: ContactDetailProps) {
   return (
-    <div
-      className={joinClassNames(
-        "border-t border-hairline py-4",
-        isWide && "sm:col-span-2",
-      )}
-    >
+    <div className="border-t border-hairline py-4">
       <dt className="text-small text-muted">{label}</dt>
       <dd className="mt-1">{children}</dd>
     </div>
@@ -37,9 +27,9 @@ function ContactDetail({
 }
 
 /**
- * The site's one ink block. Email first and largest, then three pairs on wider screens:
- * phone and place, work mode and availability (with its time zone), CV and profiles.
- * The WhatsApp link appears only once Kevin confirms the number uses it.
+ * The closing panel: the email, large, with WhatsApp and email buttons, then every
+ * other detail in a grid (phone, place, work mode, availability with its time zone,
+ * CV and profiles). The panel has the gradient ring and a soft orange glow.
  */
 export async function ContactSection() {
   const locale = await getCurrentLocale();
@@ -51,95 +41,129 @@ export async function ContactSection() {
     locale,
     ...supportedLocales.filter((resumeLocale) => resumeLocale !== locale),
   ];
+  const whatsAppUrl = buildWhatsAppUrl(locale);
 
   return (
     <PageSection
       id={homeSectionIds.contact}
       title={labels.sectionTitle}
       spacing="spacious"
-      surface="inverse"
     >
-      <dl className="grid gap-x-10 sm:grid-cols-2">
-        <ContactDetail label={labels.email} isWide>
-          <a
-            href={`mailto:${profile.email}`}
-            className="inline-block py-1 font-display text-subtitle font-bold wrap-anywhere sm:text-title"
+      <div className="gradient-ring rounded-section border border-transparent bg-raised p-6 sm:p-10 lg:p-14">
+        {/* The glow is clipped by its own box, so the panel can keep its gradient ring. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 overflow-hidden rounded-[inherit]"
+        >
+          <div className="absolute -top-1/2 -right-1/4 aspect-square w-[min(48rem,120%)] rounded-full bg-[radial-gradient(closest-side,var(--tint-accent),transparent)]" />
+        </div>
+
+        <p className="text-small text-muted">{labels.email}</p>
+        <a
+          href={`mailto:${profile.email}`}
+          className="mt-2 inline-block font-display text-subtitle font-extrabold wrap-anywhere sm:text-title lg:text-headline"
+        >
+          {profile.email}
+        </a>
+
+        <div className="mt-8 flex flex-wrap gap-3">
+          <ButtonLink
+            href={whatsAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            leadingIcon={<ChatBubbleIcon />}
           >
-            {profile.email}
-          </a>
-        </ContactDetail>
+            {dictionary.hero.writeOnWhatsApp}
+            <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+          </ButtonLink>
+          <ButtonLink
+            href={`mailto:${profile.email}`}
+            variant="secondary"
+            leadingIcon={<MailIcon className="text-accent" />}
+          >
+            {labels.sendEmail}
+          </ButtonLink>
+        </div>
 
-        <ContactDetail label={labels.phone}>
-          <ul>
-            <li>
-              <a
-                href={`tel:${phone.international}`}
-                className="inline-block py-1"
-              >
-                {phone.display}
-              </a>
-            </li>
-            <li>
-              <a href={buildWhatsAppUrl(locale)} className="inline-block py-1">
-                {labels.whatsApp}
-              </a>
-            </li>
-          </ul>
-        </ContactDetail>
-
-        <ContactDetail label={labels.location}>
-          {location.city}, {location.region},{" "}
-          {localize(location.country, locale)}
-        </ContactDetail>
-
-        <ContactDetail label={labels.workMode}>
-          {localize(profile.workMode, locale)}
-        </ContactDetail>
-
-        <ContactDetail label={labels.availability}>
-          {localize(profile.availability, locale)}{" "}
-          <span className="text-muted">
-            {labels.timeZoneNote(
-              location.city,
-              formatUtcOffset(profile.timeZone),
-            )}
-          </span>
-        </ContactDetail>
-
-        <ContactDetail label={labels.resume}>
-          <ul>
-            {resumeLocales.map((resumeLocale) => (
-              <li key={resumeLocale}>
+        <dl className="mt-12 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
+          <ContactDetail label={labels.phone}>
+            <ul>
+              <li>
                 <a
-                  href={profile.resumeFiles[resumeLocale]}
-                  download
-                  hrefLang={resumeLocale}
-                  type="application/pdf"
+                  href={`tel:${phone.international}`}
                   className="inline-block py-1"
                 >
-                  {dictionary.resume.inLanguage[resumeLocale]}
+                  {phone.display}
                 </a>
               </li>
-            ))}
-          </ul>
-        </ContactDetail>
-
-        <ContactDetail label={labels.profiles}>
-          <ul>
-            {profile.socialProfiles.map((socialProfile) => (
-              <li key={socialProfile.network}>
+              <li>
                 <a
-                  href={socialProfile.url}
-                  rel="me"
+                  href={whatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-block py-1"
                 >
-                  {socialNetworkNames[socialProfile.network]}
+                  {labels.whatsApp}
+                  <span className="sr-only"> ({dictionary.opensInNewTab})</span>
                 </a>
               </li>
-            ))}
-          </ul>
-        </ContactDetail>
-      </dl>
+            </ul>
+          </ContactDetail>
+
+          <ContactDetail label={labels.location}>
+            {location.city}, {location.region},{" "}
+            {localize(location.country, locale)}
+          </ContactDetail>
+
+          <ContactDetail label={labels.workMode}>
+            {localize(profile.workMode, locale)}
+          </ContactDetail>
+
+          <ContactDetail label={labels.availability}>
+            {localize(profile.availability, locale)}{" "}
+            <span className="text-muted">
+              {labels.timeZoneNote(
+                location.city,
+                formatUtcOffset(profile.timeZone),
+              )}
+            </span>
+          </ContactDetail>
+
+          <ContactDetail label={labels.resume}>
+            <ul>
+              {resumeLocales.map((resumeLocale) => (
+                <li key={resumeLocale}>
+                  <a
+                    href={profile.resumeFiles[resumeLocale]}
+                    download
+                    hrefLang={resumeLocale}
+                    type="application/pdf"
+                    className="inline-block py-1"
+                  >
+                    {dictionary.resume.inLanguage[resumeLocale]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </ContactDetail>
+
+          <ContactDetail label={labels.profiles}>
+            <ul>
+              {profile.socialProfiles.map((socialProfile) => (
+                <li key={socialProfile.network}>
+                  <a
+                    href={socialProfile.url}
+                    rel="me"
+                    className="inline-block py-1"
+                  >
+                    {socialNetworkNames[socialProfile.network]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </ContactDetail>
+        </dl>
+      </div>
     </PageSection>
   );
 }

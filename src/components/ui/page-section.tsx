@@ -1,19 +1,17 @@
 import type { ReactNode } from "react";
 
 import { joinClassNames } from "@/lib/class-names";
-import type { HomeSectionId } from "@/lib/home-sections";
+import { homeSectionIds, type HomeSectionId } from "@/lib/home-sections";
 
 import { Container } from "./container";
 
 /** Vertical room by how much the section carries, so the page keeps a varied rhythm. */
 type SectionSpacing = "spacious" | "regular" | "compact";
 
-type SectionSurface = "page" | "inverse";
-
 const spacingClassNames: Record<SectionSpacing, string> = {
-  spacious: "pt-12 pb-20 lg:pt-16 lg:pb-28",
-  regular: "pt-10 pb-16 lg:pt-14 lg:pb-20",
-  compact: "pt-8 pb-12 lg:pt-10 lg:pb-14",
+  spacious: "py-20 lg:py-28",
+  regular: "py-16 lg:py-24",
+  compact: "py-12 lg:py-20",
 };
 
 interface PageSectionProps {
@@ -21,45 +19,61 @@ interface PageSectionProps {
   title: string;
   children: ReactNode;
   spacing?: SectionSpacing;
-  /** "inverse" turns the section into the ink block (surface-inverse). */
-  surface?: SectionSurface;
+  /**
+   * Reveal the whole content as one block on scroll (default). Sections that reveal
+   * their own items one by one (the project cards) turn it off.
+   */
+  revealsContentAsBlock?: boolean;
+}
+
+/** "01", "02"... from the order of homeSectionIds, which is the order of the page. */
+function getSectionNumber(id: HomeSectionId): string {
+  const position = Object.values(homeSectionIds).indexOf(id) + 1;
+  return String(position).padStart(2, "0");
 }
 
 /**
- * The layout every home section shares: the heading in a narrow label column and the
- * content beside it on large screens; stacked on small ones. Sections on the page
- * background are separated by a hairline.
+ * The layout every home section shares: a large heading with its number in orange and
+ * a gradient line running to the right edge, then the content at full width. The
+ * heading and the content fade in when they scroll into view.
  */
 export function PageSection({
   id,
   title,
   children,
   spacing = "regular",
-  surface = "page",
+  revealsContentAsBlock = true,
 }: PageSectionProps) {
   const titleId = `${id}-title`;
 
   return (
-    <section
-      id={id}
-      aria-labelledby={titleId}
-      className={surface === "inverse" ? "surface-inverse" : undefined}
-    >
-      <Container>
-        <div
-          className={joinClassNames(
-            "grid gap-y-8 lg:grid-cols-12 lg:gap-x-10",
-            surface === "page" && "border-t border-hairline",
-            spacingClassNames[spacing],
-          )}
-        >
+    <section id={id} aria-labelledby={titleId}>
+      <Container className={spacingClassNames[spacing]}>
+        <div data-reveal className="mb-10 flex items-end gap-6 lg:mb-14">
           <h2
             id={titleId}
-            className="font-display text-title font-bold lg:sticky lg:top-10 lg:col-span-4 lg:self-start"
+            className="font-display text-headline font-extrabold"
           >
+            <span
+              aria-hidden="true"
+              className="mb-3 block font-mono text-small font-bold tracking-widest text-accent"
+            >
+              {getSectionNumber(id)}
+            </span>
             {title}
           </h2>
-          <div className="lg:col-span-8">{children}</div>
+          <span
+            aria-hidden="true"
+            className="mb-[0.6em] h-px flex-1 bg-(image:--gradient-brand) opacity-50"
+          />
+        </div>
+        <div
+          data-reveal={revealsContentAsBlock ? "" : undefined}
+          className={joinClassNames(
+            revealsContentAsBlock && "[--reveal-order:1]",
+          )}
+        >
+          {children}
         </div>
       </Container>
     </section>
