@@ -14,6 +14,13 @@ export const englishDictionary: Dictionary = {
     label: "Language",
     otherLanguage: "Español",
   },
+  hero: {
+    photoAlt: "Kevin Garabita, backend, AI and automation developer",
+    viewProjects: "View projects",
+  },
+  resume: {
+    download: "Download résumé (PDF)",
+  },
   projects: {
     sectionTitle: "Projects",
     viewCaseStudy: "View case study",

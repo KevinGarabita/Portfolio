@@ -12,6 +12,13 @@ export const spanishDictionary = {
     label: "Idioma",
     otherLanguage: "English",
   },
+  hero: {
+    photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
+    viewProjects: "Ver proyectos",
+  },
+  resume: {
+    download: "Descargar CV (PDF)",
+  },
   projects: {
     sectionTitle: "Proyectos",
     viewCaseStudy: "Ver caso",
