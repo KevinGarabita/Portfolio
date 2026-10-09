@@ -1,3 +1,4 @@
+import { sameInEveryLanguage } from "@/i18n/localize";
 import type { LocalizedText } from "@/types/content";
 
 /**
@@ -15,6 +16,5 @@ export function placeholderText(missingInformation: string): LocalizedText {
     );
   }
 
-  const text = `${placeholderMark} ${missingInformation}`;
-  return { es: text, en: text };
+  return sameInEveryLanguage(`${placeholderMark} ${missingInformation}`);
 }

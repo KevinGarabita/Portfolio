@@ -1,9 +1,5 @@
-import type { LocalizedText, SkillGroup } from "@/types/content";
-
-/** For names that read the same in every language, such as "n8n" or "Docker". */
-function sameInEveryLanguage(text: string): LocalizedText {
-  return { es: text, en: text };
-}
+import { sameInEveryLanguage } from "@/i18n/localize";
+import type { SkillGroup } from "@/types/content";
 
 /** Skills list. Source: the "Habilidades técnicas" section of Kevin's CV, in its order. */
 export const skillGroups: SkillGroup[] = [

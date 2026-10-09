@@ -1,6 +1,7 @@
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
+import { getProjectTechnologies } from "@/lib/projects";
 import type { Project } from "@/types/content";
 
 interface ProjectFactsProps {
@@ -41,7 +42,7 @@ export function ProjectFacts({
       ) : null}
 
       <dt>{labels.stack}</dt>
-      <dd>{[...project.stack, ...project.integrations].join(", ")}</dd>
+      <dd>{getProjectTechnologies(project).join(", ")}</dd>
     </dl>
   );
 }

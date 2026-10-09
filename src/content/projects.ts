@@ -1,11 +1,7 @@
-import type { LocalizedText, Project } from "@/types/content";
+import type { Project } from "@/types/content";
 
+import { koblerHighlights } from "./experience";
 import { placeholderText } from "./placeholder";
-
-const fiveAgentsHighlight: LocalizedText = {
-  es: "Desarrollé cinco agentes conversacionales en n8n con la API de OpenAI, uno por cliente, integrados con GoHighLevel y WhatsApp: atienden la conversación, califican al prospecto y registran el lead en el CRM.",
-  en: "Built five conversational agents in n8n with the OpenAI API, one per client, integrated with GoHighLevel and WhatsApp: they handle the conversation, qualify the lead, and register it in the CRM.",
-};
 
 /**
  * Case studies, one page each at /[lang]/projects/[slug]. The order here is the order on the site.
@@ -82,11 +78,8 @@ export const projects: Project[] = [
       ),
     ],
     highlights: [
-      fiveAgentsHighlight,
-      {
-        es: "Motosureste Suzuki: el agente resuelve dudas de venta y financiamiento y filtra a los prospectos sin intención de compra, así los asesores dejaron de atender todas las conversaciones y se enfocan en cerrar ventas.",
-        en: "Motosureste Suzuki: the agent answers sales and financing questions and filters out prospects with no purchase intent, so sales advisors stopped handling every conversation and could focus on closing sales.",
-      },
+      koblerHighlights.fiveAgents,
+      koblerHighlights.motosuresteSuzuki,
     ],
     stack: ["n8n", "OpenAI API"],
     integrations: ["GoHighLevel", "WhatsApp"],
@@ -115,13 +108,7 @@ export const projects: Project[] = [
       "Rol: qué parte hiciste tú dentro del equipo de Kobler.",
     ),
     results: [placeholderText("Resultado que puedas confirmar.")],
-    highlights: [
-      fiveAgentsHighlight,
-      {
-        es: "Neorgana: agente que responde a los pacientes y les envía el calendario del doctor para agendar su consulta en Zoom, selecciona al consultor por idioma, ubicación y padecimiento, y al terminar la videollamada dispara el seguimiento y la cotización.",
-        en: "Neorgana: an agent that responds to patients and sends the doctor's calendar to schedule a Zoom consultation, selecting the consultant by language, location, and condition, and triggering follow-up and a quote once the video call ends.",
-      },
-    ],
+    highlights: [koblerHighlights.fiveAgents, koblerHighlights.neorgana],
     stack: ["n8n", "OpenAI API"],
     integrations: ["GoHighLevel", "WhatsApp", "Zoom"],
     lastUpdated: "2026-10-09",

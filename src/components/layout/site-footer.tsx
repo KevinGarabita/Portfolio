@@ -1,4 +1,10 @@
 import { profile } from "@/content/profile";
+import type { SocialProfile } from "@/types/content";
+
+const socialNetworkNames: Record<SocialProfile["network"], string> = {
+  linkedin: "LinkedIn",
+  github: "GitHub",
+};
 
 export function SiteFooter() {
   return (
@@ -12,7 +18,7 @@ export function SiteFooter() {
               rel="me noopener noreferrer"
               target="_blank"
             >
-              {socialProfile.network === "linkedin" ? "LinkedIn" : "GitHub"}
+              {socialNetworkNames[socialProfile.network]}
             </a>
           </li>
         ))}

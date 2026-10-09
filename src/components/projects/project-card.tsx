@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
+import { getProjectTechnologies } from "@/lib/projects";
 import type { Project } from "@/types/content";
 
 interface ProjectCardProps {
@@ -27,7 +28,7 @@ export function ProjectCard({ project, locale, dictionary }: ProjectCardProps) {
       </p>
       <p>{localize(project.summary, locale)}</p>
       <ul aria-label={dictionary.projects.facts.stack}>
-        {[...project.stack, ...project.integrations].map((technology) => (
+        {getProjectTechnologies(project).map((technology) => (
           <li key={technology}>{technology}</li>
         ))}
       </ul>
