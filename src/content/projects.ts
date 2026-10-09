@@ -19,21 +19,20 @@ export const projects: Project[] = [
     client: "UxmalTechnologies",
     context: { es: "Freelance", en: "Freelance" },
     status: "in-production",
-    statusNote: {
-      es: "En producción desde julio 2026",
-      en: "In production since July 2026",
-    },
+    statusNote: { es: "desde julio 2026", en: "since July 2026" },
     isFeatured: true,
     teamSetup: "individual",
     summary: placeholderText(
       "Resumen de una o dos frases para la tarjeta del proyecto.",
     ),
-    problem: placeholderText("Problema: cómo funcionaba el proceso antes."),
+    problem: placeholderText(
+      "Problema: el CV ya dice que era un flujo de tres pasos (formato por WhatsApp, captura manual por otra persona y evidencias aparte). ¿Qué problemas causaba (tiempo, errores, evidencias perdidas)?",
+    ),
     solution: placeholderText(
       "Solución: cómo funciona el sistema, a grandes rasgos.",
     ),
     role: placeholderText(
-      "Rol: qué partes hiciste tú (el CV dice que trabajaste por tu cuenta).",
+      "Rol: describe tu trabajo en el proyecto (me confirmaste que lo hiciste sin equipo).",
     ),
     results: [
       {
@@ -69,7 +68,7 @@ export const projects: Project[] = [
       "Resumen de una o dos frases para la tarjeta del proyecto.",
     ),
     problem: placeholderText(
-      "Problema: cómo atendían las conversaciones antes del agente.",
+      "Problema: el CV indica que los asesores atendían todas las conversaciones. ¿Qué más puedes confirmar de cómo era antes del agente?",
     ),
     solution: placeholderText(
       "Solución: cómo funciona el flujo del agente, a grandes rasgos.",
@@ -149,7 +148,7 @@ export const projects: Project[] = [
       "Solución: cómo funciona el sistema, a grandes rasgos.",
     ),
     role: placeholderText(
-      "Rol: qué partes hiciste tú (el CV dice que trabajaste por tu cuenta).",
+      "Rol: describe tu trabajo en el proyecto (me confirmaste que lo hiciste sin equipo).",
     ),
     results: [
       {
