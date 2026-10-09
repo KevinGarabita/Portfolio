@@ -49,21 +49,22 @@ src/
   components/
     layout/              header, footer, selector de idioma, enlace "saltar al contenido"
     sections/            secciones de la home
-    projects/            piezas de los casos de estudio
-    ui/                  piezas base: contenedor, sección, botón, etiqueta
+    projects/            tarjetas, galería, diagrama de flujo y piezas de los casos de estudio
+    motion/              aparición al hacer scroll, título que rota y botón para pausar animaciones
+    ui/                  piezas base: contenedor, sección, botón, etiqueta, íconos, monograma
     seo/                 datos estructurados (JSON-LD) y diseño de las imágenes para compartir
   content/               datos del sitio (perfil, proyectos, experiencia, formación, habilidades, textos SEO)
   i18n/                  idiomas, diccionarios de interfaz y negociación de idioma
-  lib/                   utilidades: URL del sitio, metadatos, datos estructurados, fechas, proyectos, anclas de la home
+  lib/                   utilidades: URL del sitio, metadatos, datos estructurados, fechas, proyectos, anclas de la home, WhatsApp, colores de marca, preferencias de movimiento
   types/                 tipos del contenido
 public/cv/               CV descargable en español e inglés
-public/images/           foto de perfil
+public/images/           foto de perfil (original y recortada sin fondo para la portada) y capturas de proyectos
 docs/                    decisiones técnicas y de diseño, guía de publicación
 ```
 
 ## Cómo agregar un proyecto
 
-1. Agrega un objeto al arreglo de `src/content/projects.ts`. TypeScript te marca cualquier campo que falte (el tipo `Project` está en `src/types/content.ts`).
+1. Crea un archivo en `src/content/projects/` y agrégalo al arreglo de `src/content/projects/index.ts` (el orden ahí es el del sitio). TypeScript te marca cualquier campo que falte (el tipo `Project` está en `src/types/content.ts`). `category` decide el grupo en la home ("freelance" o "kobler"); las capturas van en `public/images/projects/<slug>/` y en `images`, y los flujos de automatización en `flowDiagram`.
 2. Escribe cada texto en los dos idiomas: `{ es: "...", en: "..." }`.
 3. Pon en `lastUpdated` la fecha del cambio (`"AAAA-MM-DD"`); el sitemap la usa como fecha de modificación.
 4. Corre `npm run check`.

@@ -14,7 +14,7 @@ Cada decisión lleva su razón, para poder revisarla cuando cambien las herramie
 
 - Todas las páginas cuelgan de `app/[lang]`, así cada página tiene su `<html lang>` correcto y se genera como HTML estático para los dos idiomas.
 - `proxy.ts` (antes `middleware.ts`) redirige `/` y cualquier ruta sin idioma según el encabezado `Accept-Language`, con código 307 y `Vary: Accept-Language`. Si el navegador no prefiere español ni inglés, se usa inglés.
-- El idioma de la petición se lee con `next/root-params` en el layout, las páginas y las secciones. Los componentes pequeños de presentación (`FeaturedProjectCard`, `ProjectRow`, `ProjectFacts`, `ProjectStatus`) lo reciben por props junto con el diccionario, y el selector de idioma también, porque es un Client Component y no puede leer `next/root-params`.
+- El idioma de la petición se lee con `next/root-params` en el layout, las páginas y las secciones. Los componentes pequeños de presentación (`ProjectCard`, `ProjectVisual`, `ProjectFacts`, `ProjectStatus`, `FlowDiagram`) lo reciben por props junto con el diccionario. Los Client Components (selector de idioma, galería, título que rota) no pueden leer `next/root-params`: reciben el idioma o los textos ya traducidos por props.
 
 ## Páginas 404 y Cache Components
 
@@ -35,13 +35,13 @@ Por eso:
 - **Descripciones solo con datos del CV.** La de la home combina rol, ubicación y stack (máximo 160 caracteres, en `src/content/site-metadata.ts`); la de cada proyecto es su `summary`. El título de la home lleva nombre y rol.
 - **Imágenes para compartir en `app/[lang]/`**, no en `app/`: `proxy.ts` redirige cualquier ruta sin prefijo de idioma y sin extensión, y las imágenes generadas no tienen extensión (`/es/opengraph-image`). Cada archivo exporta su propio `generateStaticParams`, porque los route handlers no heredan los del layout; así se generan todas en el build.
 - **Un `alt` para todos los idiomas.** Un `alt` por idioma exige `generateImageMetadata`, y lo probamos: con él, Next.js 16.4 no pregenera las imágenes que están bajo `[lang]` (la ruta queda sin rutas estáticas y, con `dynamicParams = false`, respondería 404). El `alt` es el nombre, que es lo único que se lee igual en los dos idiomas.
-- **Imágenes sin foto.** Con la foto, el PNG pesaba entre 470 y 600 KB, y WhatsApp suele omitir la imagen de la vista previa cuando pasa de unos 300 KB. Solo con texto pesan unos 50 KB. Diseño plano: fondo tinta, texto claro y el bloque naranja del monograma.
+- **Imágenes sin foto.** Con la foto, el PNG pesaba entre 470 y 600 KB, y WhatsApp suele omitir la imagen de la vista previa cuando pasa de unos 300 KB. Solo con texto pesan unos 50 KB. Fondo negro, texto blanco, el monograma con el degradado naranja-rojo, una barra de degradado arriba y un brillo naranja suave. Como `next/og` no lee variables CSS, los colores salen de `src/lib/brand-colors.ts`.
 - **Atkinson Hyperlegible Next en TTF** (`src/assets/fonts/`, licencia OFL incluida). `next/og` no lee woff2 ni fuentes variables, y Google Fonts solo publica la variable, así que los archivos estáticos vienen del repositorio oficial `googlefonts/atkinson-hyperlegible-next` (commit `7925f50`, el mismo que usa Google Fonts).
 - **Sitemap sin `new Date()`.** La fecha de cada proyecto es su `lastUpdated`; la de la home, la más reciente entre `siteLastUpdated` y las de los proyectos. Con la fecha del build, cada despliegue diría que todo cambió. Sin `priority` ni `changefreq`: Google los ignora.
 - **robots.txt permite todo.** No bloquea los previews porque Vercel ya les manda `X-Robots-Tag: noindex`.
 - **Datos estructurados** en la home: un grafo con `WebSite`, la página como `ProfilePage` y Kevin como `Person` (nombre, nombre completo, rol, foto, correo y teléfono que Kevin aprobó publicar, dirección en Mérida, LinkedIn, GitHub, habilidades técnicas e idiomas). Universidad Modelo va en `affiliation` porque sigue estudiando; `alumniOf` es para estudios terminados, y el código lo cambia solo cuando la formación tenga fecha de fin. Sin `worksFor`: el trabajo en Kobler terminó. Se escribe con un `<script>` nativo y escapando `<`, como indica la guía de Next.js.
-- **Íconos como archivos estáticos** en `app/` (`favicon.ico`, `icon.svg`, `apple-icon.png`): llevan extensión, así que el proxy no los redirige. El monograma "KG" usa los contornos de Atkinson Hyperlegible Next Bold para no depender de las fuentes instaladas. El `.ico` y el PNG se generaron una sola vez con `sharp` desde el SVG; no hay script ni dependencia nueva en el proyecto.
-- **`themeColor`** igual al fondo de la página en cada tema (`#f9f7f5` y `#15110e`), para que la barra del navegador móvil no cambie de color.
+- **Íconos como archivos estáticos** en `app/` (`favicon.ico`, `icon.svg`, `apple-icon.png`): llevan extensión, así que el proxy no los redirige. El monograma "KG" usa los contornos de Atkinson Hyperlegible Next Bold para no depender de las fuentes instaladas, en negro sobre el degradado naranja-rojo. El `.ico` (16, 32 y 48 px) y el PNG se generaron una sola vez con `sharp` desde el SVG; no hay script ni dependencia nueva en el proyecto.
+- **`themeColor`** igual al fondo de la página (`#0a0a0a`) y `colorScheme: "dark"`: el sitio tiene un solo tema oscuro, así que la barra del navegador móvil no cambia de color.
 - **Sin `vercel.json`**: el preset de Next.js, `engines` y la configuración de dominios de Vercel cubren todo. Pasos de publicación en [deployment.md](deployment.md).
 
 ## Agentes de IA
@@ -52,3 +52,10 @@ Por eso:
 
 - `npm audit` reporta 5 vulnerabilidades altas que son una sola cadena: `braces` (≤ 3.0.3), que usa el plugin de ESLint de Next a través de `micromatch` y `fast-glob`. Solo afecta herramientas de desarrollo, no el sitio publicado, y no existe versión corregida de `braces` (la última es la 3.0.3).
 - Next.js anunció un parche de seguridad para el 14 de octubre de 2026. Hay que actualizar `next` y `eslint-config-next` antes de pasar a producción. Al 9 de octubre no había versión corregida (la última era 16.4.0); los pasos están en [deployment.md](deployment.md#8-dependencias-al-día).
+
+## Foto recortada de la portada
+
+- `public/images/kevin-garabita-cutout.png` sale de `kevin-garabita.jpg` con `rembg` (modelo `birefnet-portrait`), en un entorno de Python aparte, fuera del proyecto. Se compararon `isnet-general-use` (dejaba un pedazo de la televisión del fondo pegado al pelo) y el alpha matting de `rembg` (bordes en escalones); `birefnet-portrait` separa bien los rizos.
+- Los colores de los bordes semitransparentes se recalcularon con `estimate_foreground_ml` de `pymatting`, para que la pared blanca y la tele no dejen un halo claro u oscuro alrededor del pelo; el alfa se ajustó apenas (umbral 0.04, gamma 1.15).
+- PNG con alfa completo (sin paleta, que dañaría los bordes del pelo), 900 × 1024, unos 880 KB. El navegador recibe la versión que optimiza `next/image` (WebP del tamaño que pide `sizes`).
+- La foto original se queda: la usan los datos estructurados.
