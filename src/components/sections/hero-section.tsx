@@ -1,11 +1,14 @@
 import Image from "next/image";
 
 import { RotatingTitle } from "@/components/motion/rotating-title";
+import { AvailabilityNote } from "@/components/recruiter/availability-note";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SocialIconLink } from "@/components/ui/social-icon-link";
 import { Container } from "@/components/ui/container";
 import {
   ArrowDownIcon,
+  DownloadIcon,
+  MailIcon,
   WhatsAppLogoIcon,
   MapPinIcon,
 } from "@/components/ui/icons";
@@ -50,8 +53,9 @@ const floatingTechnologies = [
  *
  * Text: location, then the h1 (the name and, on the next line, the role; it reads
  * "Kevin Garabita — <role>"), a large word that rotates through the parts of the role
- * (visual only), the subtitle and two calls to action: the projects and WhatsApp. The
- * CV and the profiles sit below.
+ * (visual only), the subtitle and four calls to action of the same size: the projects
+ * and the CV, then WhatsApp and email. Kevin's availability goes above them once
+ * content/availability.ts has it. The profiles sit below.
  *
  * Photo: Kevin's cut-out portrait in front of an orange-to-red circle, with an orbit
  * ring and three floating chips. The photo is the LCP element: it is preloaded and
@@ -63,6 +67,9 @@ export async function HeroSection() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
   const resume = getResumeLink(locale);
+  // Relative to /[lang] ("./cv/…"), so ButtonLink renders a plain <a>: next/link would
+  // prefetch the PDF (about 100 KB) on every visit as if it were a page.
+  const resumeDownloadHref = `.${resume.href}`;
   const { location } = profile;
 
   return (
@@ -110,57 +117,73 @@ export async function HeroSection() {
             {localize(profile.heroSubtitle, locale)}
           </p>
 
-          <div className="entrance mt-8 flex flex-wrap gap-3 [--entrance-order:4]">
-            <ButtonLink
-              href={getHomeSectionHref(locale, homeSectionIds.projects)}
-              trailingIcon={<ArrowDownIcon />}
-            >
-              {dictionary.hero.viewProjects}
-            </ButtonLink>
-            <ButtonLink
-              href={buildWhatsAppUrl(locale)}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="whatsapp"
-              leadingIcon={<WhatsAppLogoIcon />}
-            >
-              {dictionary.hero.writeOnWhatsApp}
-              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-            </ButtonLink>
+          {/* Two pairs of buttons of the same size: see the work (projects, CV), then get in
+              touch (WhatsApp, email). Below lg, where the text column is narrow, each button
+              stretches to fill its line, so the rows wrap cleanly down to 320 px. The CV downloads in the page's language,
+              or in Spanish when there is none (lib/resume.ts); the label says so. */}
+          <div className="entrance mt-8 flex flex-col gap-3 [--entrance-order:4]">
+            {/* Only when content/availability.ts has a status; renders nothing otherwise. */}
+            <AvailabilityNote
+              locale={locale}
+              dictionary={dictionary}
+              className="mb-1"
+            />
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink
+                href={getHomeSectionHref(locale, homeSectionIds.projects)}
+                trailingIcon={<ArrowDownIcon />}
+                className="max-lg:grow"
+              >
+                {dictionary.hero.viewProjects}
+              </ButtonLink>
+              <ButtonLink
+                href={resumeDownloadHref}
+                hrefLang={resume.language}
+                type="application/pdf"
+                download
+                variant="secondary"
+                leadingIcon={<DownloadIcon className="text-accent" />}
+                className="max-lg:grow max-[22.5rem]:px-4"
+              >
+                {dictionary.resume.download}
+              </ButtonLink>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink
+                href={buildWhatsAppUrl(locale)}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="whatsapp"
+                leadingIcon={<WhatsAppLogoIcon />}
+                className="max-lg:grow max-[22.5rem]:px-4"
+              >
+                {dictionary.hero.writeOnWhatsApp}
+                <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+              </ButtonLink>
+              <ButtonLink
+                href={`mailto:${profile.email}`}
+                variant="secondary"
+                leadingIcon={<MailIcon className="text-accent" />}
+                className="max-lg:grow"
+              >
+                {dictionary.recruiter.email}
+              </ButtonLink>
+            </div>
           </div>
 
-          <div className="entrance mt-6 flex flex-wrap items-center gap-x-6 gap-y-1 text-small [--entrance-order:5]">
-            <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <li>
-                <a
-                  href={resume.href}
-                  hrefLang={resume.language}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  type="application/pdf"
-                  className="inline-flex min-h-11 items-center font-bold"
-                >
-                  {dictionary.resume.view}
-                  <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-                </a>
+          <ul className="entrance mt-6 flex gap-3 [--entrance-order:5]">
+            {profile.socialProfiles.map((socialProfile) => (
+              <li key={socialProfile.network}>
+                <SocialIconLink
+                  network={socialProfile.network}
+                  href={socialProfile.url}
+                  label={socialNetworkNames[socialProfile.network]}
+                  opensInNewTabText={dictionary.opensInNewTab}
+                  rel="me"
+                />
               </li>
-              <li>
-                <ul className="flex gap-3">
-                  {profile.socialProfiles.map((socialProfile) => (
-                    <li key={socialProfile.network}>
-                      <SocialIconLink
-                        network={socialProfile.network}
-                        href={socialProfile.url}
-                        label={socialNetworkNames[socialProfile.network]}
-                        opensInNewTabText={dictionary.opensInNewTab}
-                        rel="me"
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </ul>
-          </div>
+            ))}
+          </ul>
         </div>
 
         <div className="order-first mx-auto w-full max-w-52 min-[22.5rem]:max-w-60 sm:max-w-80 md:order-0 md:col-span-5 md:max-w-none short:order-0 short:max-w-48">

@@ -58,10 +58,9 @@ export const profile: Profile = {
     { network: "linkedin", url: "https://www.linkedin.com/in/kevingarabita/" },
     { network: "github", url: "https://github.com/KevinGarabita" },
   ],
+  // Only Spanish and English exist; Portuguese and French pages get the Spanish CV.
   resumeFiles: {
     es: "/cv/kevin-garabita-cv-es.pdf",
     en: "/cv/kevin-garabita-cv-en.pdf",
-    pt: "/cv/kevin-garabita-cv-en.pdf",
-    fr: "/cv/kevin-garabita-cv-en.pdf",
   },
 };

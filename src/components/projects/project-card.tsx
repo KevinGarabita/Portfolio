@@ -33,7 +33,7 @@ const mediaSizes =
 
 /**
  * A compact project card (home page and projects page): media on top, then the status
- * and how it was built ("Vibe coded"), name, client, a three-line summary and the main
+ * and how it was built ("Desarrollo asistido por IA"), name, client, a three-line summary and the main
  * technologies. The full story lives on the case-study page. The name is the only link; its ::after covers the whole card
  * ("stretched link"), so the card is clickable without nesting interactive elements.
  * On hover or keyboard focus the card lifts, the gradient ring and the glow fade in and
@@ -58,7 +58,7 @@ export function ProjectCard({
 
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
         {project.status || project.buildMethod ? (
-          <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
             {project.status ? (
               <ProjectStatus
                 status={project.status}

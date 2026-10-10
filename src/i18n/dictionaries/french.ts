@@ -21,7 +21,9 @@ export const frenchDictionary: Dictionary = {
     writeOnWhatsApp: "M'écrire sur WhatsApp",
   },
   resume: {
-    view: "Voir le CV (PDF, en anglais)",
+    // The French pages link to the Spanish CV (lib/resume.ts) until one in French exists.
+    view: "Voir le CV (PDF, en espagnol)",
+    download: "Télécharger le CV (en espagnol)",
   },
   projects: {
     sectionTitle: "Projets phares",
@@ -32,10 +34,10 @@ export const frenchDictionary: Dictionary = {
         "Applications web en freelance, et agents d'IA avec des automatisations n8n réalisés chez Kobler y Asociados.",
     },
     buildMethod: {
-      "vibe-coded": {
-        label: "Vibe coded",
+      "ai-assisted": {
+        label: "Développement assisté par IA",
         description:
-          "Réalisé en vibe coding : code généré par IA sous ma direction.",
+          "Je prends en charge l'architecture, la revue de code, les tests et la sécurité ; le code est généré par IA sous ma direction.",
       },
       "hand-coded": {
         label: "Codé à la main",
@@ -66,6 +68,7 @@ export const frenchDictionary: Dictionary = {
     status: {
       "in-production": "En production",
       "in-development": "En développement",
+      delivered: "Livré",
     },
     teamSetup: {
       individual: "Projet individuel",
@@ -90,6 +93,8 @@ export const frenchDictionary: Dictionary = {
       role: "Mon rôle",
       results: "Résultats",
       nextSteps: "Prochaines étapes",
+      metrics: "Avant et après",
+      architecture: "Architecture",
     },
     flowStepTool: "Outil",
     gallery: {
@@ -144,5 +149,24 @@ export const frenchDictionary: Dictionary = {
     description:
       "La page que vous cherchez n'existe pas ou a changé d'adresse.",
     backHome: "Retour à l'accueil",
+  },
+  recruiter: {
+    email: "E-mail",
+    metrics: {
+      before: "Avant",
+      after: "Après",
+    },
+    availability: {
+      status: {
+        "open-to-offers": "Ouvert aux offres d'emploi",
+        "open-to-freelance": "Disponible pour des missions en freelance",
+      },
+      modality: {
+        remote: "à distance",
+        hybrid: "hybride",
+        "on-site": "sur site",
+      },
+      availableFrom: (month: string) => `Disponible à partir de ${month}`,
+    },
   },
 };

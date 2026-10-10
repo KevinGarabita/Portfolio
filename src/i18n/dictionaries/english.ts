@@ -22,6 +22,7 @@ export const englishDictionary: Dictionary = {
   },
   resume: {
     view: "View résumé (PDF)",
+    download: "Download résumé",
   },
   projects: {
     sectionTitle: "Featured projects",
@@ -32,10 +33,10 @@ export const englishDictionary: Dictionary = {
         "Freelance web applications, and AI agents with n8n automations built at Kobler y Asociados.",
     },
     buildMethod: {
-      "vibe-coded": {
-        label: "Vibe coded",
+      "ai-assisted": {
+        label: "AI-assisted development",
         description:
-          "Built with vibe coding: AI-generated code under my direction.",
+          "I'm responsible for the architecture, code review, testing and security; the code is generated with AI under my direction.",
       },
       "hand-coded": {
         label: "Hand-coded",
@@ -66,6 +67,7 @@ export const englishDictionary: Dictionary = {
     status: {
       "in-production": "In production",
       "in-development": "In development",
+      delivered: "Delivered",
     },
     teamSetup: {
       individual: "Individual project",
@@ -90,6 +92,8 @@ export const englishDictionary: Dictionary = {
       role: "My role",
       results: "Results",
       nextSteps: "Next steps",
+      metrics: "Before and after",
+      architecture: "Architecture",
     },
     flowStepTool: "Tool",
     gallery: {
@@ -143,5 +147,24 @@ export const englishDictionary: Dictionary = {
     title: "Page not found",
     description: "The page you are looking for does not exist or has moved.",
     backHome: "Back to home",
+  },
+  recruiter: {
+    email: "Email",
+    metrics: {
+      before: "Before",
+      after: "After",
+    },
+    availability: {
+      status: {
+        "open-to-offers": "Open to job offers",
+        "open-to-freelance": "Available for freelance projects",
+      },
+      modality: {
+        remote: "remote",
+        hybrid: "hybrid",
+        "on-site": "on-site",
+      },
+      availableFrom: (month: string) => `Available from ${month}`,
+    },
   },
 };

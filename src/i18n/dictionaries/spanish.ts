@@ -20,6 +20,7 @@ export const spanishDictionary = {
   },
   resume: {
     view: "Ver CV (PDF)",
+    download: "Descargar CV",
   },
   projects: {
     sectionTitle: "Proyectos destacados",
@@ -30,10 +31,10 @@ export const spanishDictionary = {
         "Aplicaciones web freelance y agentes de IA con automatizaciones en n8n hechos en Kobler y Asociados.",
     },
     buildMethod: {
-      "vibe-coded": {
-        label: "Vibe coded",
+      "ai-assisted": {
+        label: "Desarrollo asistido por IA",
         description:
-          "Hecho con vibe coding: código generado con IA bajo mi dirección.",
+          "Arquitectura, revisión de código, pruebas y seguridad a mi cargo; código generado con IA bajo mi dirección.",
       },
       "hand-coded": {
         label: "Hecho a mano",
@@ -64,6 +65,7 @@ export const spanishDictionary = {
     status: {
       "in-production": "En producción",
       "in-development": "En desarrollo",
+      delivered: "Entregado",
     },
     teamSetup: {
       individual: "Proyecto individual",
@@ -88,6 +90,8 @@ export const spanishDictionary = {
       role: "Mi rol",
       results: "Resultado",
       nextSteps: "Siguientes pasos",
+      metrics: "Antes y después",
+      architecture: "Arquitectura",
     },
     flowStepTool: "Herramienta",
     gallery: {
@@ -141,6 +145,25 @@ export const spanishDictionary = {
     title: "Página no encontrada",
     description: "La página que buscas no existe o cambió de dirección.",
     backHome: "Volver al inicio",
+  },
+  recruiter: {
+    email: "Correo",
+    metrics: {
+      before: "Antes",
+      after: "Después",
+    },
+    availability: {
+      status: {
+        "open-to-offers": "Abierto a ofertas de empleo",
+        "open-to-freelance": "Disponible para proyectos freelance",
+      },
+      modality: {
+        remote: "remoto",
+        hybrid: "híbrido",
+        "on-site": "presencial",
+      },
+      availableFrom: (month: string) => `Disponible desde ${month}`,
+    },
   },
 };
 

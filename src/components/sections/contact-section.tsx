@@ -55,8 +55,10 @@ export async function ContactSection() {
         </div>
 
         <p className="text-small text-muted">{labels.email}</p>
+        {/* The <wbr> would split the accessible name ("kevingarabita0 @outlook.com"). */}
         <a
           href={`mailto:${profile.email}`}
+          aria-label={profile.email}
           className="mt-2 inline-block font-display text-subtitle font-extrabold wrap-anywhere sm:text-title lg:text-headline"
         >
           {emailUser}
