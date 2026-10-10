@@ -75,7 +75,11 @@ interface NeighborProjectLinkProps {
   dictionary: Dictionary;
 }
 
-/** Previous/next case study: a panel with a small label above the project name, all one link. */
+/**
+ * Previous/next case study: a panel with a small label above the project name, all one
+ * link. The space between them keeps the link's name from reading "Proyecto
+ * siguienteCRM…" (a flex container does not render white-space-only text).
+ */
 function NeighborProjectLink({
   project,
   direction,
@@ -102,7 +106,7 @@ function NeighborProjectLink({
         {isPrevious ? null : (
           <DirectionIcon className="project-card-arrow size-4 text-accent" />
         )}
-      </span>
+      </span>{" "}
       <span className="font-display text-subtitle font-bold text-heading underline decoration-1 underline-offset-[0.2em] group-hover:decoration-2">
         {localize(project.name, locale)}
       </span>
@@ -169,7 +173,7 @@ export default async function ProjectPage({
             <div className="entrance-slide relative z-(--layer-raised) mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
               <p className="font-mono text-small font-bold tracking-widest text-accent uppercase">
                 {projectTexts.category[project.category]}
-              </p>
+              </p>{" "}
               {project.status ? (
                 <ProjectStatus
                   status={project.status}
@@ -177,7 +181,7 @@ export default async function ProjectPage({
                   locale={locale}
                   dictionary={dictionary}
                 />
-              ) : null}
+              ) : null}{" "}
               {project.buildMethod ? (
                 <ProjectBuildBadge
                   buildMethod={project.buildMethod}
