@@ -4,6 +4,7 @@ import { join } from "node:path";
 import type { ImageResponse } from "next/og";
 
 import { brandColors } from "@/lib/brand-colors";
+import { shareImageSize, type ShareCardText } from "@/lib/share-card";
 
 /**
  * Shared layout of the generated link-preview images (app/[lang]/opengraph-image.tsx and
@@ -40,12 +41,11 @@ const [regularFont, boldFont] = await Promise.all([
   ),
 ]);
 
-/** 1200×630, the size Facebook, LinkedIn, X and WhatsApp crop the least, plus the fonts. */
+/** The size every preview image has (lib/share-card.ts), plus the fonts. */
 export const openGraphImageOptions: ConstructorParameters<
   typeof ImageResponse
 >[1] = {
-  width: 1200,
-  height: 630,
+  ...shareImageSize,
   fonts: [
     { name: fontFamily, data: regularFont, weight: 400, style: "normal" },
     { name: fontFamily, data: boldFont, weight: 700, style: "normal" },
@@ -74,14 +74,9 @@ function Monogram({ size }: { size: number }) {
   );
 }
 
-interface OpenGraphCardProps {
-  /** Short line next to the monogram, such as the owner's name on a project card. */
-  eyebrow?: string;
-  title: string;
+interface OpenGraphCardProps extends ShareCardText {
   /** 96 for a short title such as the name; smaller for project names that may wrap. */
   titleSize: number;
-  subtitle: string;
-  footer: string;
 }
 
 export function OpenGraphCard({

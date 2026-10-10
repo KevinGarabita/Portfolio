@@ -18,6 +18,15 @@ import { localize } from "@/i18n/localize";
 import type { CalendarDate, LocalizedText, Project } from "@/types/content";
 
 import { getAllProjects } from "./projects";
+import {
+  describeShareCard,
+  getHomeShareCard,
+  getProjectShareCard,
+  getProjectsShareCard,
+  shareImageSize,
+  shareImageType,
+  type ShareCardText,
+} from "./share-card";
 import { siteUrl } from "./site-config";
 
 /*
@@ -119,6 +128,18 @@ export function toAbsoluteUrl(path: string): string {
   return new URL(path, siteUrl).href;
 }
 
+/**
+ * Path of a page's link-preview image: every page has an opengraph-image.tsx next to it,
+ * so it answers at the page's path plus "/opengraph-image" (/es/opengraph-image,
+ * /es/projects/x/opengraph-image), prerendered at build time.
+ */
+export function getShareImagePath(
+  pathWithoutLocale: string,
+  locale: Locale,
+): string {
+  return `${localizePath(pathWithoutLocale, locale)}/opengraph-image`;
+}
+
 /** Home page title for search results and link previews: the name and the role. */
 export function buildHomeTitle(locale: Locale): string {
   return `${profile.displayName} | ${localize(profile.role, locale)}`;
@@ -188,15 +209,20 @@ interface PageMetadataOptions {
   pathWithoutLocale: string;
   locale: Locale;
   type: "website" | "article";
+  /** What the page's link-preview image says, for its alt text. */
+  shareCard: ShareCardText;
 }
 
 /**
  * Title, description, canonical, hreflang, Open Graph and Twitter card for one page.
  *
  * Next.js merges metadata shallowly: a page that sets `openGraph` replaces the layout's
- * whole object, so every page builds the complete set here. There is deliberately no
- * `images` key: the opengraph-image.tsx file next to each page supplies the image, and
- * Next.js copies it to the Twitter card.
+ * whole object, so every page builds the complete set here.
+ *
+ * The image is listed by hand, with its alt in the page's language. Listing it replaces
+ * the one Next.js would take from opengraph-image.tsx (whose alt could only be the same
+ * in every language) instead of adding a second og:image, and the image route stays
+ * prerendered. Next.js copies the image and its alt to the Twitter card.
  */
 function buildPageMetadata({
   title,
@@ -204,6 +230,7 @@ function buildPageMetadata({
   pathWithoutLocale,
   locale,
   type,
+  shareCard,
 }: PageMetadataOptions): Metadata {
   return {
     title: { absolute: title },
@@ -215,6 +242,14 @@ function buildPageMetadata({
       url: localizePath(pathWithoutLocale, locale),
       title,
       description,
+      images: [
+        {
+          url: getShareImagePath(pathWithoutLocale, locale),
+          ...shareImageSize,
+          type: shareImageType,
+          alt: describeShareCard(shareCard),
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -232,6 +267,7 @@ export function buildHomeMetadata(locale: Locale): Metadata {
     pathWithoutLocale: "/",
     locale,
     type: "website",
+    shareCard: getHomeShareCard(locale),
   });
 }
 
@@ -243,6 +279,7 @@ export function buildProjectsPageMetadata(locale: Locale): Metadata {
     pathWithoutLocale: "/projects",
     locale,
     type: "website",
+    shareCard: getProjectsShareCard(locale),
   });
 }
 
@@ -259,5 +296,6 @@ export function buildProjectMetadata(
     pathWithoutLocale: `/projects/${project.slug}`,
     locale,
     type: "article",
+    shareCard: getProjectShareCard(project, locale),
   });
 }
