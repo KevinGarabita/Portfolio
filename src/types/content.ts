@@ -132,10 +132,11 @@ export interface FlowStep {
 export type TeamSetup = "individual" | "team";
 
 /**
- * How the code was written: "vibe-coded" (generated with AI under Kevin's direction) or
- * "hand-coded". Shown as a badge; unset for automations built in n8n.
+ * How the code was written: "ai-assisted" (generated with AI under Kevin's direction,
+ * with the architecture, review, tests and security in his hands) or "hand-coded".
+ * Shown as a badge; unset for automations built in n8n.
  */
-export type BuildMethod = "vibe-coded" | "hand-coded";
+export type BuildMethod = "ai-assisted" | "hand-coded";
 
 /** What the project is, for the filters on the projects page. */
 export type ProjectKind = "web-app" | "ai-automation";

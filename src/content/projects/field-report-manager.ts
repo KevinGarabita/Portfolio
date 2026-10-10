@@ -23,7 +23,7 @@ export const fieldReportManager: Project = {
   period: { start: "2026-06" },
   kind: "web-app",
   isFeatured: true,
-  buildMethod: "vibe-coded",
+  buildMethod: "ai-assisted",
   teamSetup: "individual",
   summary: {
     es: "Aplicación web donde los técnicos de instalación registran cada reporte con sus fotos desde el teléfono y el supervisor lo revisa y aprueba. Reemplazó un flujo de tres pasos basado en WhatsApp y captura manual.",

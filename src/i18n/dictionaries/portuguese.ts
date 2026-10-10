@@ -32,7 +32,7 @@ export const portugueseDictionary: Dictionary = {
         "Aplicações web freelance e agentes de IA com automações no n8n desenvolvidos na Kobler y Asociados.",
     },
     buildMethod: {
-      "vibe-coded": {
+      "ai-assisted": {
         label: "Vibe coded",
         description:
           "Feito com vibe coding: código gerado com IA sob a minha direção.",

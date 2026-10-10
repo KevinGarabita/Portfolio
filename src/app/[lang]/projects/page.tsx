@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const kindOrder: ProjectKind[] = ["web-app", "ai-automation"];
-const buildMethodOrder: BuildMethod[] = ["vibe-coded", "hand-coded"];
+const buildMethodOrder: BuildMethod[] = ["ai-assisted", "hand-coded"];
 
 /**
  * Every project in one grid, with filters (type, technology, how it was built). The

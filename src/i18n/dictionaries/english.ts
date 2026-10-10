@@ -32,7 +32,7 @@ export const englishDictionary: Dictionary = {
         "Freelance web applications, and AI agents with n8n automations built at Kobler y Asociados.",
     },
     buildMethod: {
-      "vibe-coded": {
+      "ai-assisted": {
         label: "Vibe coded",
         description:
           "Built with vibe coding: AI-generated code under my direction.",
