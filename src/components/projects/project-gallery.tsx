@@ -194,9 +194,10 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
               }}
               type="button"
               onClick={() => openAt(index)}
+              // "Ampliar: <alt>". The badge below repeats the action visually only.
+              aria-label={`${labels.enlarge}: ${image.alt}`}
               className="group relative block h-full w-full cursor-zoom-in overflow-hidden rounded-media border border-hairline bg-raised"
             >
-              <span className="sr-only">{labels.enlarge}: </span>
               <Image
                 src={image.src}
                 alt={image.alt}
