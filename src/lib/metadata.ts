@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { profile } from "@/content/profile";
 import { siteLastUpdated } from "@/content/site-metadata";
 import {
+  defaultLocale,
   regionalLocaleTags,
   supportedLocales,
   type Locale,
@@ -51,26 +52,33 @@ export function getHomeLastModified(): CalendarDate {
 }
 
 /**
- * Canonical URL and hreflang links for a page that exists in every language.
+ * hreflang paths of a page that exists in every language: one per language, plus
+ * x-default on the English page, a page that answers 200 and the one proxy.ts sends
+ * visitors without a language cookie to. The <head> and the sitemap both use it.
  * `pathWithoutLocale` starts with "/" ("/" for the home page, "/projects/x" for a project).
- * x-default points to the unprefixed path, which redirects to English or to the language
- * the visitor picked in the switcher.
  */
+export function buildHreflangPaths(
+  pathWithoutLocale: string,
+): Record<Locale | "x-default", string> {
+  return {
+    ...(Object.fromEntries(
+      supportedLocales.map((locale) => [
+        locale,
+        localizePath(pathWithoutLocale, locale),
+      ]),
+    ) as Record<Locale, string>),
+    "x-default": localizePath(pathWithoutLocale, defaultLocale),
+  };
+}
+
+/** Canonical URL (the page itself, in its language) and hreflang links of a page. */
 export function buildLanguageAlternates(
   pathWithoutLocale: string,
   currentLocale: Locale,
 ): Metadata["alternates"] {
   return {
     canonical: localizePath(pathWithoutLocale, currentLocale),
-    languages: {
-      ...Object.fromEntries(
-        supportedLocales.map((locale) => [
-          locale,
-          localizePath(pathWithoutLocale, locale),
-        ]),
-      ),
-      "x-default": pathWithoutLocale,
-    },
+    languages: buildHreflangPaths(pathWithoutLocale),
   };
 }
 
