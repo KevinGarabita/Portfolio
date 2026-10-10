@@ -177,7 +177,7 @@ export function LanguageSwitcher({
                   aria-current={isCurrent ? "true" : undefined}
                   onClick={(event) => switchLanguage(event, locale, href)}
                   className={joinClassNames(
-                    "flex min-h-11 items-center gap-3 rounded-[0.5rem] px-3 text-small no-underline transition-colors hover:bg-control-border",
+                    "flex min-h-11 items-center gap-3 rounded-[0.5rem] px-3 text-small no-underline transition-colors hover:bg-control-hover",
                     isCurrent ? "font-bold text-heading" : "text-body",
                   )}
                 >
