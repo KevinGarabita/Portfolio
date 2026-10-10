@@ -66,7 +66,7 @@ export const projectSeo: Record<string, ProjectSeo> = {
       es: "Agente de agendado para Neorgana · n8n + OpenAI",
       en: "Neorgana scheduling agent · n8n + OpenAI",
       pt: "Agente de agendamento para a Neorgana · n8n + OpenAI",
-      fr: "Agent de rendez-vous pour Neorgana · n8n + OpenAI",
+      fr: "Agent de prise de rendez-vous pour Neorgana · n8n + OpenAI",
     },
     description: {
       es: "Agente de WhatsApp en n8n con la API de OpenAI para Neorgana: elige al consultor por idioma, ubicación y padecimiento, y envía su agenda para consulta por Zoom.",
