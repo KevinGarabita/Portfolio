@@ -7,15 +7,15 @@ Source code of the personal site of **Kevin Garabita**, a Backend, AI & Automati
 **Live site: [www.garasoftware.com.mx](https://www.garasoftware.com.mx)**
 
 <p align="center">
-  <img src="docs/screenshots/home-desktop.png" width="600" alt="English home page on a desktop screen: Kevin Garabita's name and title, a summary of his backend, AI agent and automation work, buttons to view his projects and message him on WhatsApp, links to his résumé, LinkedIn and GitHub, and his photo in front of an orange-to-red circle labelled FastAPI, n8n and OpenAI API.">
-  <img src="docs/screenshots/home-phone.png" width="173" alt="The same English home page on a phone: the photo first, then the name, title, summary and buttons stacked in one column.">
+  <img src="docs/screenshots/home-desktop.png" width="600" alt="English home page on a desktop screen: the heading Kevin Garabita, Backend, AI &amp; Automation Engineer, the word Backend in large orange letters, a summary of his backend, AI agent and automation work, buttons to view his projects, view his résumé, message him on WhatsApp and email him, LinkedIn and GitHub links, and his photo in front of an orange-to-red circle labelled FastAPI, n8n and OpenAI API.">
+  <img src="docs/screenshots/home-phone.png" width="173" alt="The same English home page on a phone: the photo first, then the name and role, the word Backend, the summary and the buttons stacked in one column.">
 </p>
 
 ## Highlights
 
 - **Four languages without an i18n library**, with types that fail the build when a text is missing in any of them.
 - **Every page is static HTML**, generated at build time for each language and project.
-- **SEO built from the content**: complete metadata on every page, `hreflang`, a sitemap dated by the content, Open Graph images rendered at build time and JSON-LD structured data.
+- **SEO built from the content**: complete metadata on every page (titles and descriptions whose length the build checks), `hreflang`, a sitemap dated by the content, Open Graph images rendered at build time and JSON-LD structured data on every page.
 - **Accessibility as a gate**: the full `jsx-a11y` recommended rule set with zero warnings allowed, keyboard and screen-reader support in the menus, filters and gallery, and measured colour contrast.
 - **Three runtime dependencies**: `next`, `react` and `react-dom`. No UI kit, animation library or i18n package.
 - **Continuous integration** on every pull request: lint, typecheck, formatting and a production build.
@@ -41,23 +41,25 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 
 - **Every page lives under `src/app/[lang]`**, so the root layout renders the right `<html lang>` and each language is generated as its own static HTML.
 - **The locale comes from `next/root-params`** (`lang()`), read in the layout, pages and sections. Small presentational components and Client Components receive the locale or the translated text through props.
-- **`src/proxy.ts` sends URLs without a language prefix** to the language the visitor picked in the language menu (stored in the `preferred-locale` cookie) or, without that cookie, to English. The browser's `Accept-Language` is not used: everyone sees English first and can choose another language.
+- **`src/proxy.ts` sends URLs without a language prefix in one hop**: a permanent 308 to English without the `preferred-locale` cookie, or a 307 to the language the visitor picked in the language menu. Both carry `Cache-Control: private, no-store` and `Vary: Cookie`, so a browser never keeps the permanent redirect for someone who later picks another language. The browser's `Accept-Language` is not used: everyone sees English first and can choose another language.
 - **Interface text lives in typed dictionaries** (`src/i18n/dictionaries/`). The `Dictionary` type is the shape of the Spanish dictionary, so a key missing in another language is a type error, and a new locale does not compile until its dictionary is registered.
 - **Content uses `LocalizedText`** (`Record<Locale, string>`), so every project, job and skill has to be written in all four languages.
 
 ### SEO
 
-- **One helper builds the metadata of every page** (`buildPageMetadata` in `src/lib/metadata.ts`): title, description, canonical URL, `hreflang` alternates, Open Graph and the X card. Next.js merges metadata shallowly (a page that sets `openGraph` replaces the layout's whole object), so each page gets the complete set from one place.
+- **One helper builds the metadata of every page** (`buildPageMetadata` in `src/lib/metadata.ts`): title, description, canonical URL, `hreflang` alternates, Open Graph and the X card. Titles stay within 60 characters and descriptions within 140–160 in every language; the SEO texts live in `src/content/site-metadata.ts` and `src/content/project-seo.ts`, and the build fails when one is missing or out of range. Next.js merges metadata shallowly (a page that sets `openGraph` replaces the layout's whole object), so each page gets the complete set from one place.
+- **`x-default` points to the English page**, which answers 200, in the `<head>` and in the sitemap; both come from the same function.
 - **The sitemap is dated by the content**: each project uses its `lastUpdated` date and the home page the most recent content date, never the build date, so a redeploy does not claim that every page changed.
-- **Open Graph images are rendered at build time** with `next/og`, one per language and project. They are text only (about 50 KB) because WhatsApp tends to drop link previews heavier than about 300 KB; a version with the photo weighed 470–600 KB.
-- **JSON-LD structured data** is built in `src/lib/structured-data.ts` from the same content files as the pages; the home page describes Kevin as a schema.org `Person` on a `ProfilePage`.
+- **Open Graph images are rendered at build time** with `next/og`, one per language and project. They are text only (60–80 KB) because WhatsApp tends to drop link previews heavier than about 300 KB; a version with the photo weighed 470–600 KB. Each one has alt text in its page's language, and its URL carries a hash of the text it draws, so social networks fetch it again when the content changes.
+- **JSON-LD structured data** is built in `src/lib/structured-data.ts` from the same content files as the pages; the home page describes Kevin as a schema.org `Person` on a `ProfilePage`, and every case study adds a `BreadcrumbList` and a `CreativeWork`.
 - **Descriptions only use facts from the CV**, kept with the rest of the content in `src/content/`.
 
 ### Performance
 
 - **Static generation everywhere**: `generateStaticParams` lists every language and project, and `dynamicParams = false` rejects anything else. Cache Components stays off: the site is fully static, and with it enabled a missing project answered 200 on its first request.
 - **Real 404s**: `app/global-not-found.tsx` answers any unknown URL with a server-rendered 404 page in all four languages.
-- **`next/image`** for every photo and screenshot, with `sizes` that match the layout.
+- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths trimmed to what the layouts draw, `sizes` that match the layout, and `fetchPriority="high"` only on the largest element of the first screen.
+- **Lean HTML**: the skill logos are SVG files from a statically generated route instead of inline markup, which cut the home page HTML by more than half.
 - **Self-hosted font** through `next/font`: the font files are downloaded at build time and served from the same domain.
 - **Motion only animates `transform` and `opacity`**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. Scroll reveals are progressive enhancement: the HTML arrives fully visible, and content is hidden only after the script knows what is already on screen. The hero photo, the largest element on the first screen, never starts invisible.
 
@@ -65,19 +67,22 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 
 - One `h1` per page, ordered headings, landmarks (`header`, `nav`, `main`, `footer`) and a skip-to-content link.
 - A visible focus ring on every interactive element; anchors and focused elements are never hidden behind the sticky header.
-- The language menu and the project filters follow the disclosure pattern (`aria-expanded`, `aria-controls`, Escape closes and returns focus). The screenshot gallery opens in a native `<dialog>` with keyboard navigation.
+- The language menu and the project filters follow the disclosure pattern (`aria-expanded`, `aria-controls`, Escape closes and returns focus). The screenshot gallery opens in a native `<dialog>` with keyboard navigation; focus stays inside it and returns to the thumbnail that opened it.
 - Colour contrast is measured and documented in `docs/design.md`; colours below 4.5:1 are never used for small text.
 - Touch targets of at least 24 px, and links that open a new tab say so to screen readers.
+- axe-core reports no violations on any page in the four languages, at phone and desktop sizes.
 
 ## Lighthouse
 
-Measured on a **local production build** (`next build` + `next start`) with Lighthouse 13.5 and mobile emulation on 2026-10-10. Scores on the live site may differ.
+Measured on a **local production build** (`next build` + `next start`) with Lighthouse 13.5 and mobile emulation on 2026-10-10, median of three runs. Scores on the live site may differ.
 
-| Page                                | Performance | Accessibility | Best Practices | SEO |
-| ----------------------------------- | ----------: | ------------: | -------------: | --: |
-| `/es`                               |          93 |           100 |            100 | 100 |
-| `/en`                               |          94 |           100 |            100 | 100 |
-| `/es/projects/field-report-manager` |          94 |           100 |            100 | 100 |
+| Page                                | Performance | Accessibility | Best Practices | SEO | Largest Contentful Paint |
+| ----------------------------------- | ----------: | ------------: | -------------: | --: | -----------------------: |
+| `/es`                               |          96 |           100 |            100 | 100 |                    2.7 s |
+| `/en`                               |          96 |           100 |            100 | 100 |                    2.7 s |
+| `/es/projects/field-report-manager` |          97 |           100 |            100 | 100 |                    2.7 s |
+
+The same pages scored 93, 94 and 94 in performance before the image and HTML work described above, with a Largest Contentful Paint of 2.9–3.1 s. Cumulative Layout Shift is 0 on every page.
 
 ## Getting started
 
@@ -126,12 +131,14 @@ src/
     sitemap.ts           /sitemap.xml
     robots.ts            /robots.txt
     icon.svg             KG monogram (also apple-icon.png and favicon.ico)
+    technology-logos/    skill logos as static SVG files
   proxy.ts               sends URLs without a language to the saved language or English
   assets/fonts/          Atkinson Hyperlegible Next TTF files (OFL) for the Open Graph images
   components/
     layout/              header, footer, language menu, skip link
     sections/            home page sections
     projects/            cards, filters, gallery, flow diagram and case-study parts
+    recruiter/           availability note
     motion/              scroll reveal and the rotating title
     ui/                  building blocks: container, section, button, tag, icons, flags
     seo/                 JSON-LD and the Open Graph image layout
@@ -148,14 +155,17 @@ docs/                    technical and design decisions, deployment guide (in Sp
 
 ## Adding a project
 
-1. Create a file in `src/content/projects/` and add it to the array in `src/content/projects/index.ts` (that order is the order on the site). The `Project` type in `src/types/content.ts` describes every field, and TypeScript flags anything missing. `kind` feeds the "Type" filter on `/[lang]/projects`, `isFeatured: true` also shows the project on the home page, screenshots go in `public/images/projects/<slug>/` and in `images`, and automation flows go in `flowDiagram`.
+1. Create a file in `src/content/projects/` and add it to the array in `src/content/projects/index.ts` (that order is the order on the site). The `Project` type in `src/types/content.ts` describes every field, and TypeScript flags anything missing. `kind` feeds the "Type" filter on `/[lang]/projects`, `isFeatured: true` also shows the project on the home page, screenshots go in `public/images/projects/<slug>/` and in `images`, automation flows go in `flowDiagram`, and `buildMethod` (`"ai-assisted"` or `"hand-coded"`) shows the build badge and its filter. The optional `status`, `metrics` (before and after) and `architecture` fields only appear on the page when they have data.
 2. Write every text in the four languages, `{ es: "...", en: "...", pt: "...", fr: "..." }`, or use `sameInEveryLanguage("...")` when it reads the same in all of them.
-3. Set `lastUpdated` to the date of the change (`"YYYY-MM-DD"`); the sitemap uses it.
-4. Run `npm run check`.
+3. Add its title (60 characters at most, with the key stack) and description (140–160 characters) in the four languages to `src/content/project-seo.ts`; the build fails if they are missing or out of range.
+4. Set `lastUpdated` to the date of the change (`"YYYY-MM-DD"`); the sitemap uses it.
+5. Run `npm run check`.
 
 No component needs to change: the project card, the filters, the case-study page `/[lang]/projects/[slug]`, its Open Graph image and its sitemap entry are all generated from the data.
 
 If you change the profile, experience, education or skills, also update `siteLastUpdated` in `src/content/site-metadata.ts`.
+
+Résumés live in `public/cv/`, and `profile.resumeFiles` lists the ones that exist; a language without its own CV links the Spanish one. Every CV link opens the PDF in a new tab. Availability (status, work arrangement and start month) lives in `src/content/availability.ts`; while it is empty, the site shows nothing.
 
 Text that still needs real information is written with `placeholderText()` and shows `[PLACEHOLDER]`. A production build on Vercel fails while any remains, so none can go live by accident.
 
