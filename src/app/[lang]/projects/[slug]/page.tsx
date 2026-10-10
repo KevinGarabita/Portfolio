@@ -30,7 +30,7 @@ import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { joinClassNames } from "@/lib/class-names";
-import { buildPageMetadata } from "@/lib/metadata";
+import { buildProjectMetadata } from "@/lib/metadata";
 import {
   getAllProjects,
   getNeighborProjects,
@@ -57,15 +57,7 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
-  const locale = await getCurrentLocale();
-
-  return buildPageMetadata({
-    title: localize(project.name, locale),
-    description: localize(project.summary, locale),
-    pathWithoutLocale: `/projects/${project.slug}`,
-    locale,
-    type: "article",
-  });
+  return buildProjectMetadata(project, await getCurrentLocale());
 }
 
 interface NeighborProjectLinkProps {

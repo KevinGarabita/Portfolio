@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 
 import { profile } from "@/content/profile";
-import { siteLastUpdated } from "@/content/site-metadata";
+import { projectSeo } from "@/content/project-seo";
+import {
+  homeDescription,
+  projectsPageDescription,
+  projectsPageTitle,
+  siteLastUpdated,
+} from "@/content/site-metadata";
 import {
   defaultLocale,
   regionalLocaleTags,
@@ -9,10 +15,89 @@ import {
   type Locale,
 } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
-import type { CalendarDate } from "@/types/content";
+import type { CalendarDate, LocalizedText, Project } from "@/types/content";
 
 import { getAllProjects } from "./projects";
 import { siteUrl } from "./site-config";
+
+/*
+ * Search-result limits: Google shows about 60 characters of a title and about 160 of a
+ * description. 140 is this site's floor, so every description fills the snippet.
+ */
+const titleMaxLength = 60;
+const descriptionMinLength = 140;
+const descriptionMaxLength = 160;
+
+function assertLength(
+  text: LocalizedText,
+  min: number,
+  max: number,
+  source: string,
+): void {
+  for (const locale of supportedLocales) {
+    const { length } = text[locale];
+    if (length < min || length > max) {
+      throw new Error(
+        `${source} (${locale}) has ${length} characters; keep it between ${min} and ${max}: "${text[locale]}"`,
+      );
+    }
+  }
+}
+
+/**
+ * Fails the build when a project has no search texts in content/project-seo.ts, when an
+ * entry there names no project, or when a hand-written title or description is out of
+ * range. The home title is not checked: it comes from the profile (name and role).
+ */
+function assertSearchTexts(): void {
+  const projectSlugs = new Set(getAllProjects().map((project) => project.slug));
+
+  for (const slug of projectSlugs) {
+    if (!Object.hasOwn(projectSeo, slug)) {
+      throw new Error(
+        `src/content/project-seo.ts has no title and description for the project "${slug}"`,
+      );
+    }
+  }
+
+  for (const [slug, { title, description }] of Object.entries(projectSeo)) {
+    if (!projectSlugs.has(slug)) {
+      throw new Error(
+        `src/content/project-seo.ts has texts for "${slug}", which is not a project`,
+      );
+    }
+    const source = `The search texts of "${slug}" in src/content/project-seo.ts`;
+    assertLength(title, 1, titleMaxLength, `${source}: title`);
+    assertLength(
+      description,
+      descriptionMinLength,
+      descriptionMaxLength,
+      `${source}: description`,
+    );
+  }
+
+  const siteSource = "src/content/site-metadata.ts";
+  assertLength(
+    homeDescription,
+    descriptionMinLength,
+    descriptionMaxLength,
+    `homeDescription in ${siteSource}`,
+  );
+  assertLength(
+    projectsPageTitle,
+    1,
+    titleMaxLength,
+    `projectsPageTitle in ${siteSource}`,
+  );
+  assertLength(
+    projectsPageDescription,
+    descriptionMinLength,
+    descriptionMaxLength,
+    `projectsPageDescription in ${siteSource}`,
+  );
+}
+
+assertSearchTexts();
 
 /** Open Graph locale code (language_TERRITORY): "es-MX" → "es_MX", "pt-BR" → "pt_BR". */
 function toOpenGraphLocale(locale: Locale): string {
@@ -97,8 +182,8 @@ export function buildBaseOpenGraph(
 }
 
 interface PageMetadataOptions {
-  /** A plain string goes through the layout's "%s | Kevin Garabita" template; `absolute` skips it. */
-  title: string | { absolute: string };
+  /** The whole <title>, at most 60 characters. The layout's "%s | Kevin Garabita" template is skipped. */
+  title: string;
   description: string;
   pathWithoutLocale: string;
   locale: Locale;
@@ -113,30 +198,66 @@ interface PageMetadataOptions {
  * `images` key: the opengraph-image.tsx file next to each page supplies the image, and
  * Next.js copies it to the Twitter card.
  */
-export function buildPageMetadata({
+function buildPageMetadata({
   title,
   description,
   pathWithoutLocale,
   locale,
   type,
 }: PageMetadataOptions): Metadata {
-  const shareTitle = typeof title === "string" ? title : title.absolute;
-
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: buildLanguageAlternates(pathWithoutLocale, locale),
     openGraph: {
       ...buildBaseOpenGraph(locale),
       type,
       url: localizePath(pathWithoutLocale, locale),
-      title: shareTitle,
+      title,
       description,
     },
     twitter: {
       card: "summary_large_image",
-      title: shareTitle,
+      title,
       description,
     },
   };
+}
+
+/** Home page: the name and the role as title. */
+export function buildHomeMetadata(locale: Locale): Metadata {
+  return buildPageMetadata({
+    title: buildHomeTitle(locale),
+    description: localize(homeDescription, locale),
+    pathWithoutLocale: "/",
+    locale,
+    type: "website",
+  });
+}
+
+/** The page with every project. */
+export function buildProjectsPageMetadata(locale: Locale): Metadata {
+  return buildPageMetadata({
+    title: localize(projectsPageTitle, locale),
+    description: localize(projectsPageDescription, locale),
+    pathWithoutLocale: "/projects",
+    locale,
+    type: "website",
+  });
+}
+
+/** A case study, with its search texts from content/project-seo.ts. */
+export function buildProjectMetadata(
+  project: Project,
+  locale: Locale,
+): Metadata {
+  const { title, description } = projectSeo[project.slug];
+
+  return buildPageMetadata({
+    title: localize(title, locale),
+    description: localize(description, locale),
+    pathWithoutLocale: `/projects/${project.slug}`,
+    locale,
+    type: "article",
+  });
 }

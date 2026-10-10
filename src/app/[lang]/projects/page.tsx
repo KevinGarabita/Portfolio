@@ -7,7 +7,7 @@ import {
 import { ProjectCard } from "@/components/projects/project-card";
 import { Container } from "@/components/ui/container";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
-import { buildPageMetadata } from "@/lib/metadata";
+import { buildProjectsPageMetadata } from "@/lib/metadata";
 import {
   getAllProjects,
   getProjectTechnologies,
@@ -16,16 +16,7 @@ import {
 import type { BuildMethod, ProjectKind } from "@/types/content";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getCurrentLocale();
-  const { allProjectsPage } = (await getDictionary()).projects;
-
-  return buildPageMetadata({
-    title: allProjectsPage.title,
-    description: allProjectsPage.description,
-    pathWithoutLocale: "/projects",
-    locale,
-    type: "website",
-  });
+  return buildProjectsPageMetadata(await getCurrentLocale());
 }
 
 const kindOrder: ProjectKind[] = ["web-app", "ai-automation"];
