@@ -94,25 +94,27 @@ function getThumbnailSizes(images: GalleryImage[]): string[] {
 /**
  * Screenshots of a case study. Every image is visible in the page as a thumbnail (the
  * first desktop one at full width), so nothing depends on JavaScript. Each thumbnail
- * is a button that opens a larger view in a native <dialog>: Escape and the close
- * button close it, the arrow keys and the previous/next buttons move between images,
- * the position is announced politely, and focus returns to the thumbnail on close.
+ * is a button that opens a larger view in a native modal <dialog> (the page behind
+ * becomes inert):
+ * - focus moves to the close button when it opens, and Tab / Shift+Tab cycle through
+ *   the dialog's buttons instead of leaving for the browser's toolbar;
+ * - Escape and the close button close it, and focus returns to the thumbnail that
+ *   opened it;
+ * - the arrow keys and the previous/next buttons move between images (wrapping at both
+ *   ends), and the position is announced politely.
  */
 export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const thumbnailRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  // The image on screen, for the close handler (it returns focus to its thumbnail).
-  const openIndexRef = useRef<number | null>(null);
+  // The thumbnail that opened the dialog: focus goes back to it on close.
+  const openerIndexRef = useRef<number | null>(null);
+  const isOpen = openIndex !== null;
   const imageCount = images.length;
 
-  useEffect(() => {
-    openIndexRef.current = openIndex;
-  }, [openIndex]);
-
   function openAt(index: number) {
+    openerIndexRef.current = index;
     setOpenIndex(index);
-    dialogRef.current?.showModal();
   }
 
   function showRelative(step: number) {
@@ -121,30 +123,59 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
     );
   }
 
+  // Opened only once its content is rendered, so showModal() can move focus to the
+  // close button (the first button inside) instead of the empty dialog.
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (isOpen && dialog && !dialog.open) dialog.showModal();
+  }, [isOpen]);
+
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
     function handleClose() {
-      const lastIndex = openIndexRef.current;
       setOpenIndex(null);
-      if (lastIndex !== null) thumbnailRefs.current[lastIndex]?.focus();
+      const openerIndex = openerIndexRef.current;
+      if (openerIndex !== null) thumbnailRefs.current[openerIndex]?.focus();
     }
 
+    // On the document, not the dialog: after a click on the image focus is on <body>,
+    // and the keys must still work.
     function handleKeyDown(event: KeyboardEvent) {
-      const step =
-        event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0;
-      if (step === 0) return;
-      setOpenIndex((current) =>
-        current === null ? current : (current + step + imageCount) % imageCount,
-      );
+      if (!dialog?.open) return;
+
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        const step = event.key === "ArrowLeft" ? -1 : 1;
+        setOpenIndex((current) =>
+          current === null
+            ? current
+            : (current + step + imageCount) % imageCount,
+        );
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+      const buttons = Array.from(dialog.querySelectorAll("button"));
+      const first = buttons[0];
+      const last = buttons[buttons.length - 1];
+      if (!first || !last) return;
+      const active = document.activeElement;
+      const isInside = active instanceof Node && dialog.contains(active);
+      if (event.shiftKey && (active === first || !isInside)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && (active === last || !isInside)) {
+        event.preventDefault();
+        first.focus();
+      }
     }
 
     dialog.addEventListener("close", handleClose);
-    dialog.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
       dialog.removeEventListener("close", handleClose);
-      dialog.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [imageCount]);
 
