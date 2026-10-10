@@ -15,6 +15,7 @@ import {
   ProjectStoryList,
   ProjectStorySection,
 } from "@/components/projects/project-story-section";
+import { ProjectStructuredData } from "@/components/seo/structured-data";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import {
@@ -144,6 +145,7 @@ export default async function ProjectPage({
 
   return (
     <Container className="pt-6 pb-20 lg:pt-10 lg:pb-28">
+      <ProjectStructuredData project={project} />
       <article>
         <header className="grid gap-10 pb-12 lg:grid-cols-12 lg:gap-x-10 lg:pb-16">
           <div className="lg:col-span-8">

@@ -82,8 +82,8 @@ Con el dominio ya funcionando (sustituye por tu dominio principal):
   curl https://garasoftware.com.mx/sitemap.xml                 # URLs absolutas del dominio, sin localhost ni vercel.app
   ```
 
-- [ ] Ver código fuente de `/es`, `/en` y un proyecto: `<title>`, `<meta name="description">`, `<link rel="canonical">`, los cinco `hreflang` (es, en, pt, fr, x-default), las etiquetas `og:*` y `twitter:*` (la URL de `og:image` debe ser absoluta y del dominio) y, en la home, el bloque `application/ld+json`.
-- [ ] [Rich Results Test](https://search.google.com/test/rich-results) y [Schema Markup Validator](https://validator.schema.org/) con la home: debe reconocer `ProfilePage` y `Person` sin errores.
+- [ ] Ver código fuente de `/es`, `/en` y un proyecto: `<title>`, `<meta name="description">`, `<link rel="canonical">`, los cinco `hreflang` (es, en, pt, fr, x-default), las etiquetas `og:*` y `twitter:*` (un solo `og:image`, con URL absoluta del dominio y un `og:image:alt` en el idioma de la página) y el bloque `application/ld+json` (en la home y en cada proyecto).
+- [ ] [Rich Results Test](https://search.google.com/test/rich-results) y [Schema Markup Validator](https://validator.schema.org/) con la home: debe reconocer `ProfilePage` y `Person` sin errores. Con un proyecto: `BreadcrumbList` sin errores en el Rich Results Test, y `CreativeWork` sin errores en el Schema Markup Validator (no genera resultado enriquecido).
 - [ ] Vista previa al compartir: [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/), [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) y un mensaje de WhatsApp a ti mismo con la URL de la home y de un proyecto. Si cambias la imagen, los dos primeros permiten volver a leerla; WhatsApp guarda la vista previa un tiempo.
 - [ ] Opcional: en [Google Search Console](https://search.google.com/search-console) agrega el dominio (verificación por registro TXT, sin tocar los demás registros) y envía `https://garasoftware.com.mx/sitemap.xml`.
 
