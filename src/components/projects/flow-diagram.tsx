@@ -27,6 +27,7 @@ export function FlowDiagram({ steps, locale, toolLabel }: FlowDiagramProps) {
           <span className="relative z-(--layer-raised) flex size-10 shrink-0 items-center justify-center rounded-full bg-accent font-bold text-on-accent ring-4 ring-page">
             {index + 1}
           </span>
+          {/* Text reads "1 El cliente…", not "1El cliente…"; a flex container never draws it. */}{" "}
           <div className="min-w-0 flex-1 rounded-media border border-hairline bg-raised p-4">
             <p className="font-bold wrap-break-word hyphens-auto text-heading">
               {localize(step.label, locale)}
