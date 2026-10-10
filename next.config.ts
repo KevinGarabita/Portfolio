@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Keeps `next dev` from writing AGENTS.md when it detects an AI coding agent.
   agentRules: false,
+  // proxy.ts removes a trailing slash in the same redirect that adds the language, so
+  // /projects/ reaches /en/projects in one hop. Without this, Next.js strips the slash
+  // first with a redirect of its own and the visitor goes through two.
+  skipTrailingSlashRedirect: true,
   images: {
     // AVIF first (lighter than WebP at the same quality), WebP for browsers without it.
     formats: ["image/avif", "image/webp"],

@@ -74,7 +74,7 @@ Con el dominio ya funcionando (sustituye por tu dominio principal):
   curl -I -H "Cookie: preferred-locale=es" https://garasoftware.com.mx/   # 307 a /es, mismos encabezados
   curl -I https://garasoftware.com.mx/projects/field-report-manager       # 308 directo a /en/projects/field-report-manager
   curl -I https://garasoftware.com.mx/es/projects/                         # 308 a /es/projects (solo quita la barra)
-  curl -I https://garasoftware.com.mx/projects/                # 308 directo a /en/projects si next.config.ts tiene skipTrailingSlashRedirect; si no, dos saltos
+  curl -I https://garasoftware.com.mx/projects/                # 308 directo a /en/projects, en un solo salto
   curl -I https://www.garasoftware.com.mx/                     # 308 al dominio principal (o al revés)
   curl -I https://garasoftware.com.mx/es                       # 200
   curl -I https://garasoftware.com.mx/es/projects/no-existe    # 404
