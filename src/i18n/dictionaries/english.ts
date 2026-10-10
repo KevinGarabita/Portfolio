@@ -62,7 +62,7 @@ export const englishDictionary: Dictionary = {
       kobler: "Project at Kobler",
     },
     viewCaseStudy: "View case study",
-    moreTechnologies: (count: number) => `and ${count} more`,
+    moreTechnologies: "more",
     status: {
       "in-production": "In production",
       "in-development": "In development",
