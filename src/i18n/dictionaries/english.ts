@@ -16,7 +16,7 @@ export const englishDictionary: Dictionary = {
     label: "Language",
   },
   hero: {
-    photoAlt: "Kevin Garabita, backend, AI and automation developer",
+    photoAlt: "Kevin Garabita, backend, AI and automation engineer",
     viewProjects: "View projects",
     writeOnWhatsApp: "Message me on WhatsApp",
   },
@@ -62,7 +62,7 @@ export const englishDictionary: Dictionary = {
       kobler: "Project at Kobler",
     },
     viewCaseStudy: "View case study",
-    moreTechnologies: (count: number) => `and ${count} more`,
+    moreTechnologies: "more",
     status: {
       "in-production": "In production",
       "in-development": "In development",

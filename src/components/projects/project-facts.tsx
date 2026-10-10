@@ -26,6 +26,8 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
 /**
  * Key facts of a case study as a definition list in a panel: client, context, period
  * and technologies. The status is shown above the title, so it is not repeated here.
+ * When the client is also the context (an internal project at Kobler y Asociados), the
+ * context row keeps only the team setup, so the name is not repeated either.
  * Technologies (stack, then integrations) are a list of tags, like on the cards.
  */
 export function ProjectFacts({
@@ -34,14 +36,15 @@ export function ProjectFacts({
   dictionary,
 }: ProjectFactsProps) {
   const labels = dictionary.projects.facts;
+  const context = localize(project.context, locale);
+  const teamSetup = dictionary.projects.teamSetup[project.teamSetup];
 
   return (
     <dl className="@container rounded-section border border-hairline bg-raised p-6">
       <Fact label={labels.client}>{project.client}</Fact>
 
       <Fact label={labels.context}>
-        {localize(project.context, locale)} ·{" "}
-        {dictionary.projects.teamSetup[project.teamSetup]}
+        {project.client === context ? teamSetup : `${context} · ${teamSetup}`}
       </Fact>
 
       {project.period ? (

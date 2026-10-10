@@ -82,8 +82,12 @@ export function ProjectCard({
           </Link>
         </Heading>
 
+        {/* "Client · Context"; an internal project's client is also its context
+            (Kobler y Asociados), so it is named once. */}
         <p className="text-small text-muted">
-          {project.client} · {localize(project.context, locale)}
+          {project.client === localize(project.context, locale)
+            ? project.client
+            : `${project.client} · ${localize(project.context, locale)}`}
         </p>
 
         <p className="line-clamp-3 text-small text-body">
@@ -100,12 +104,16 @@ export function ProjectCard({
             ))}
             {hiddenTechnologyCount > 0 ? (
               <li>
+                {/* Shows "+8"; reads "+8 more" as text and "8 more" aloud (the plus
+                    sign alone would be read as "plus"). */}
                 <Tag>
-                  <span aria-hidden="true">+{hiddenTechnologyCount}</span>
+                  <span>
+                    <span aria-hidden="true">+</span>
+                    {hiddenTechnologyCount}
+                  </span>
                   <span className="sr-only">
-                    {dictionary.projects.moreTechnologies(
-                      hiddenTechnologyCount,
-                    )}
+                    {" "}
+                    {dictionary.projects.moreTechnologies}
                   </span>
                 </Tag>
               </li>

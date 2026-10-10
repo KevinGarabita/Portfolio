@@ -48,16 +48,16 @@ const floatingTechnologies = [
 /**
  * First view of the home page.
  *
- * Text: location, then the h1 (the name, plus every title as static text for screen
- * readers), the rotating title (visual only), the subtitle and two calls to action:
- * the projects and WhatsApp. The CV and the profiles sit below.
+ * Text: location, then the h1 (the name and, on the next line, the role; it reads
+ * "Kevin Garabita — <role>"), a large word that rotates through the parts of the role
+ * (visual only), the subtitle and two calls to action: the projects and WhatsApp. The
+ * CV and the profiles sit below.
  *
  * Photo: Kevin's cut-out portrait in front of an orange-to-red circle, with an orbit
  * ring and three floating chips. The photo is the LCP element: it is preloaded and
  * never fades in (only the decoration does). The text comes first in the HTML; on
  * phones the photo is placed above it visually (not on short screens, where the text
- * would fall below the fold). On phones each title takes one word per line, so both
- * titles have the same height and the subtitle never jumps.
+ * would fall below the fold).
  */
 export async function HeroSection() {
   const locale = await getCurrentLocale();
@@ -84,17 +84,27 @@ export async function HeroSection() {
             </span>
           </p>
 
-          <h1 id="hero-title" className="mt-6 font-display lg:mt-8">
-            <span className="entrance block text-title font-bold text-heading [--entrance-order:1]">
+          {/* Static text, so it moves in without fading: it paints on the first frame. The
+              dash is only read (textContent and accessible name); on screen the role
+              takes its own line. */}
+          <h1
+            id="hero-title"
+            className="entrance-slide mt-6 font-display [--entrance-order:1] lg:mt-8"
+          >
+            <span className="block text-title font-bold text-heading">
               {profile.displayName}
             </span>
-            <span className="sr-only">{profile.heroTitles.join(" · ")}</span>
-            <RotatingTitle
-              titles={profile.heroTitles}
-              className="entrance mt-2 text-display font-extrabold [--entrance-order:2]"
-              titleClassName="text-gradient-brand pb-[0.08em] max-sm:w-min"
-            />
+            <span className="sr-only">{" — "}</span>
+            <span className="mt-2 block text-subtitle font-bold text-body">
+              {localize(profile.role, locale)}
+            </span>
           </h1>
+
+          <RotatingTitle
+            titles={profile.heroTitles.map((title) => localize(title, locale))}
+            className="entrance mt-3 text-headline font-extrabold [--entrance-order:2]"
+            titleClassName="text-gradient-brand pb-[0.08em]"
+          />
 
           <p className="entrance mt-6 max-w-xl text-subtitle text-body [--entrance-order:3]">
             {localize(profile.heroSubtitle, locale)}

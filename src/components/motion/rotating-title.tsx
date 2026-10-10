@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { Fragment, useEffect, useState, useSyncExternalStore } from "react";
 
 import { joinClassNames } from "@/lib/class-names";
 import {
@@ -31,9 +31,11 @@ interface RotationState {
  *
  * - No layout shift: all titles share one grid cell (globals.css, .rotating-title),
  *   so the box always has the size of the largest one.
- * - Screen readers: hidden (aria-hidden). The heading around it carries every title
- *   as static text, so nothing is announced on each change.
- * - Reduced motion shows the first title and never rotates.
+ * - Screen readers: hidden (aria-hidden), so nothing is announced on each change. Keep
+ *   it outside the page's headings: the heading next to it says the same in plain text.
+ * - Reduced motion shows the first title and never rotates: no timer and no transition.
+ * - The titles are separated by spaces in the HTML (a grid ignores them), so the text
+ *   of the page never glues them into one word.
  */
 export function RotatingTitle({
   titles,
@@ -78,21 +80,26 @@ export function RotatingTitle({
       className={joinClassNames("rotating-title", className)}
     >
       {titles.map((title, index) => (
-        <span
-          key={title}
-          data-state={getTitleState(index)}
-          className={joinClassNames("block", titleClassName)}
-          onTransitionEnd={(event) => {
-            if (
-              event.propertyName === "opacity" &&
-              index === rotation.leavingIndex
-            ) {
-              setRotation((current) => ({ ...current, leavingIndex: null }));
-            }
-          }}
-        >
-          {title}
-        </span>
+        <Fragment key={title}>
+          {index > 0 ? " " : null}
+          <span
+            data-state={getTitleState(index)}
+            className={joinClassNames(
+              "block motion-reduce:transition-none",
+              titleClassName,
+            )}
+            onTransitionEnd={(event) => {
+              if (
+                event.propertyName === "opacity" &&
+                index === rotation.leavingIndex
+              ) {
+                setRotation((current) => ({ ...current, leavingIndex: null }));
+              }
+            }}
+          >
+            {title}
+          </span>
+        </Fragment>
       ))}
     </span>
   );
