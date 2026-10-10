@@ -18,6 +18,8 @@ interface ProjectCardProps {
   dictionary: Dictionary;
   /** h3 under a home section (h2); h2 on the projects page, right under its h1. */
   headingLevel?: "h2" | "h3";
+  /** Preload the card's screenshot: only for the first card of the projects page (its LCP). */
+  preloadMedia?: boolean;
 }
 
 /** How many technologies a card lists before summing up the rest as "+N". */
@@ -44,6 +46,7 @@ export function ProjectCard({
   locale,
   dictionary,
   headingLevel: Heading = "h3",
+  preloadMedia = false,
 }: ProjectCardProps) {
   const technologies = getProjectTechnologies(project);
   const visibleTechnologies = technologies.slice(0, visibleTechnologyCount);
@@ -53,7 +56,12 @@ export function ProjectCard({
   return (
     <article className="project-card hover-glow gradient-ring flex h-full flex-col rounded-section border">
       <div className="project-card-media @container relative aspect-16/10 overflow-hidden rounded-t-section border-b border-hairline bg-raised-strong">
-        <ProjectVisual project={project} locale={locale} sizes={mediaSizes} />
+        <ProjectVisual
+          project={project}
+          locale={locale}
+          sizes={mediaSizes}
+          preload={preloadMedia}
+        />
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">

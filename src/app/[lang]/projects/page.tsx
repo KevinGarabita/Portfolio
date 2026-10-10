@@ -33,20 +33,23 @@ export default async function ProjectsPage() {
   const { allProjectsPage, filters, buildMethod } = dictionary.projects;
   const projects = getAllProjects();
 
-  const filterableProjects: FilterableProject[] = projects.map((project) => ({
-    slug: project.slug,
-    kind: project.kind,
-    technologies: getProjectTechnologies(project),
-    buildMethod: project.buildMethod,
-    card: (
-      <ProjectCard
-        project={project}
-        locale={locale}
-        dictionary={dictionary}
-        headingLevel="h2"
-      />
-    ),
-  }));
+  const filterableProjects: FilterableProject[] = projects.map(
+    (project, index) => ({
+      slug: project.slug,
+      kind: project.kind,
+      technologies: getProjectTechnologies(project),
+      buildMethod: project.buildMethod,
+      card: (
+        <ProjectCard
+          project={project}
+          locale={locale}
+          dictionary={dictionary}
+          headingLevel="h2"
+          preloadMedia={index === 0}
+        />
+      ),
+    }),
+  );
 
   const kindOptions = kindOrder
     .filter((kind) => projects.some((project) => project.kind === kind))
