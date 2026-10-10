@@ -14,6 +14,7 @@ import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { joinClassNames } from "@/lib/class-names";
 import { getHomeSectionHref, homeSectionIds } from "@/lib/home-sections";
+import { getResumeLink } from "@/lib/resume";
 import { socialNetworkNames } from "@/lib/social-networks";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -61,6 +62,7 @@ const floatingTechnologies = [
 export async function HeroSection() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
+  const resume = getResumeLink(locale);
   const { location } = profile;
 
   return (
@@ -78,8 +80,7 @@ export async function HeroSection() {
           <p className="entrance inline-flex items-center gap-2 rounded-tag border border-hairline bg-raised px-3 py-1.5 text-small text-muted [--entrance-order:0]">
             <MapPinIcon className="size-4 text-accent" />
             <span>
-              {location.city}, {location.region} ·{" "}
-              {localize(profile.workMode, locale)}
+              {location.city}, {location.region}
             </span>
           </p>
 
@@ -122,13 +123,15 @@ export async function HeroSection() {
             <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <li>
                 <a
-                  href={profile.resumeFiles[locale]}
-                  download
-                  hrefLang={locale}
+                  href={resume.href}
+                  hrefLang={resume.language}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   type="application/pdf"
                   className="inline-flex min-h-11 items-center font-bold"
                 >
-                  {dictionary.resume.download}
+                  {dictionary.resume.view}
+                  <span className="sr-only"> ({dictionary.opensInNewTab})</span>
                 </a>
               </li>
               <li>
@@ -139,6 +142,7 @@ export async function HeroSection() {
                         network={socialProfile.network}
                         href={socialProfile.url}
                         label={socialNetworkNames[socialProfile.network]}
+                        opensInNewTabText={dictionary.opensInNewTab}
                         rel="me"
                       />
                     </li>

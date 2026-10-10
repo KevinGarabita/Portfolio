@@ -14,7 +14,6 @@ export const englishDictionary: Dictionary = {
   },
   languageSwitcher: {
     label: "Language",
-    otherLanguage: "Español",
   },
   hero: {
     photoAlt: "Kevin Garabita, backend, AI and automation developer",
@@ -22,11 +21,7 @@ export const englishDictionary: Dictionary = {
     writeOnWhatsApp: "Message me on WhatsApp",
   },
   resume: {
-    download: "Download résumé (PDF)",
-    inLanguage: {
-      es: "Résumé in Spanish (PDF)",
-      en: "Résumé in English (PDF)",
-    },
+    view: "View résumé (PDF)",
   },
   projects: {
     sectionTitle: "Featured projects",
@@ -139,15 +134,9 @@ export const englishDictionary: Dictionary = {
   contact: {
     sectionTitle: "Contact",
     email: "Email",
-    phone: "Phone",
     whatsApp: "WhatsApp",
     sendEmail: "Send an email",
     location: "Location",
-    workMode: "Work mode",
-    availability: "Availability",
-    timeZoneNote: (city: string, utcOffset: string) =>
-      `(${city} time, ${utcOffset})`,
-    resume: "Résumé",
     profiles: "Profiles",
   },
   notFound: {

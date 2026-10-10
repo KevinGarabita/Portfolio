@@ -1,14 +1,9 @@
 import { notFound } from "next/navigation";
 import { lang } from "next/root-params";
 
-import { englishDictionary } from "./dictionaries/english";
-import { spanishDictionary, type Dictionary } from "./dictionaries/spanish";
+import { dictionariesByLocale } from "./dictionaries-by-locale";
+import type { Dictionary } from "./dictionaries/spanish";
 import { isSupportedLocale, type Locale } from "./locales";
-
-const dictionariesByLocale: Record<Locale, Dictionary> = {
-  es: spanishDictionary,
-  en: englishDictionary,
-};
 
 /** Locale of the current request, read from the [lang] segment. Server Components only. */
 export async function getCurrentLocale(): Promise<Locale> {

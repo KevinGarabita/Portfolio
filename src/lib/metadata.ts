@@ -2,18 +2,21 @@ import type { Metadata } from "next";
 
 import { profile } from "@/content/profile";
 import { siteLastUpdated } from "@/content/site-metadata";
-import { supportedLocales, type Locale } from "@/i18n/locales";
+import {
+  regionalLocaleTags,
+  supportedLocales,
+  type Locale,
+} from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import type { CalendarDate } from "@/types/content";
 
 import { getAllProjects } from "./projects";
 import { siteUrl } from "./site-config";
 
-/** Open Graph locale codes (language_TERRITORY), matching the date formats in format-date.ts. */
-const openGraphLocaleByLocale: Record<Locale, string> = {
-  es: "es_MX",
-  en: "en_US",
-};
+/** Open Graph locale code (language_TERRITORY): "es-MX" → "es_MX", "pt-BR" → "pt_BR". */
+function toOpenGraphLocale(locale: Locale): string {
+  return regionalLocaleTags[locale].replace("-", "_");
+}
 
 /** "/" → "/es", "/projects/x" → "/es/projects/x". `pathWithoutLocale` starts with "/". */
 export function localizePath(
@@ -50,7 +53,8 @@ export function getHomeLastModified(): CalendarDate {
 /**
  * Canonical URL and hreflang links for a page that exists in every language.
  * `pathWithoutLocale` starts with "/" ("/" for the home page, "/projects/x" for a project).
- * x-default points to the unprefixed path, which redirects visitors by browser language.
+ * x-default points to the unprefixed path, which redirects to English or to the language
+ * the visitor picked in the switcher.
  */
 export function buildLanguageAlternates(
   pathWithoutLocale: string,
@@ -77,10 +81,10 @@ export function buildBaseOpenGraph(
   return {
     siteName: profile.displayName,
     type: "website",
-    locale: openGraphLocaleByLocale[locale],
+    locale: toOpenGraphLocale(locale),
     alternateLocale: supportedLocales
       .filter((otherLocale) => otherLocale !== locale)
-      .map((otherLocale) => openGraphLocaleByLocale[otherLocale]),
+      .map(toOpenGraphLocale),
   };
 }
 

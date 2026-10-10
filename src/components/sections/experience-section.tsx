@@ -12,8 +12,8 @@ import type { Project } from "@/types/content";
 
 /**
  * Work history as a timeline: a gradient rail with a dot per job. Dates and place on
- * the left (from lg up), then role, employer, the CV bullet points and the related
- * case studies.
+ * the left (from lg up), then role, employer, short highlights (the CV bullet points,
+ * condensed) and the related case studies.
  */
 export async function ExperienceSection() {
   const locale = await getCurrentLocale();

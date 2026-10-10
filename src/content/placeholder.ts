@@ -7,7 +7,7 @@ import type { LocalizedText } from "@/types/content";
  */
 export const placeholderMark = "[PLACEHOLDER]";
 
-/** Placeholder text that explains, in both languages, what information is missing. */
+/** Placeholder text that explains, in every language, what information is missing. */
 export function placeholderText(missingInformation: string): LocalizedText {
   // Vercel production builds fail while any placeholder remains, so none can go live by accident.
   if (process.env.VERCEL_ENV === "production") {

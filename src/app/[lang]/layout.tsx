@@ -16,7 +16,7 @@ import { atkinsonHyperlegibleNext } from "../fonts";
 
 import "../globals.css";
 
-/** Only /es and /en exist; any other first segment falls through to app/global-not-found.tsx. */
+/** Only /es, /en, /pt and /fr exist; any other first segment falls through to app/global-not-found.tsx. */
 export const dynamicParams = false;
 
 export function generateStaticParams() {

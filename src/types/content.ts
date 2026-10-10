@@ -39,10 +39,6 @@ export interface Profile {
     countryCode: string;
     country: LocalizedText;
   };
-  /** IANA time zone used to explain the availability hours. */
-  timeZone: string;
-  workMode: LocalizedText;
-  availability: LocalizedText;
   email: string;
   phone: {
     /** Number as people read it. */
@@ -57,7 +53,10 @@ export interface Profile {
     prefilledMessage: LocalizedText;
   };
   socialProfiles: SocialProfile[];
-  /** Public paths to the downloadable CV, one per language. */
+  /**
+   * Public path to the CV (PDF) for each language. There is a Spanish and an English CV;
+   * the other languages use the English one.
+   */
   resumeFiles: Record<Locale, string>;
 }
 
@@ -67,6 +66,7 @@ export interface WorkExperience {
   organization: string;
   location: LocalizedText;
   period: DateRange;
+  /** Short bullet points: the CV facts, condensed for the Experience section. */
   highlights: LocalizedText[];
   /** Slugs of the projects that came out of this job. */
   relatedProjectSlugs: string[];

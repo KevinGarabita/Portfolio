@@ -12,7 +12,6 @@ export const spanishDictionary = {
   },
   languageSwitcher: {
     label: "Idioma",
-    otherLanguage: "English",
   },
   hero: {
     photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
@@ -20,11 +19,7 @@ export const spanishDictionary = {
     writeOnWhatsApp: "Escríbeme por WhatsApp",
   },
   resume: {
-    download: "Descargar CV (PDF)",
-    inLanguage: {
-      es: "CV en español (PDF)",
-      en: "CV en inglés (PDF)",
-    },
+    view: "Ver CV (PDF)",
   },
   projects: {
     sectionTitle: "Proyectos destacados",
@@ -137,15 +132,9 @@ export const spanishDictionary = {
   contact: {
     sectionTitle: "Contacto",
     email: "Correo",
-    phone: "Teléfono",
     whatsApp: "WhatsApp",
     sendEmail: "Enviar correo",
     location: "Ubicación",
-    workMode: "Modalidad",
-    availability: "Disponibilidad",
-    timeZoneNote: (city: string, utcOffset: string) =>
-      `(hora de ${city}, ${utcOffset})`,
-    resume: "CV",
     profiles: "Perfiles",
   },
   notFound: {

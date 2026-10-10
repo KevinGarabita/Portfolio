@@ -90,7 +90,7 @@ function toCollegeOrUniversity(institution: string): CollegeOrUniversity {
 
 /**
  * The home page as a ProfilePage about Kevin, inside the WebSite. The Person and the
- * WebSite keep the same @id in both languages because they are the same entities;
+ * WebSite keep the same @id in every language because they are the same entities;
  * only the page and the localized texts change.
  */
 export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {

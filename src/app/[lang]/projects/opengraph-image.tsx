@@ -5,14 +5,13 @@ import {
   openGraphImageOptions,
 } from "@/components/seo/open-graph-card";
 import { profile } from "@/content/profile";
-import { englishDictionary } from "@/i18n/dictionaries/english";
-import { spanishDictionary } from "@/i18n/dictionaries/spanish";
+import { dictionariesByLocale } from "@/i18n/dictionaries-by-locale";
 import { isSupportedLocale, supportedLocales } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 
 /**
  * Link-preview image of the projects page, per language. Same rules as
- * app/[lang]/opengraph-image.tsx: listed languages only, one alt for both.
+ * app/[lang]/opengraph-image.tsx: listed languages only, one alt for all of them.
  */
 export const dynamicParams = false;
 
@@ -24,11 +23,6 @@ export const alt = profile.displayName;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const pageTexts = {
-  es: spanishDictionary.projects.allProjectsPage,
-  en: englishDictionary.projects.allProjectsPage,
-};
-
 export default async function Image({
   params,
 }: {
@@ -37,11 +31,13 @@ export default async function Image({
   const { lang } = await params;
   if (!isSupportedLocale(lang)) return new Response(null, { status: 404 });
 
+  const pageTexts = dictionariesByLocale[lang].projects.allProjectsPage;
+
   return new ImageResponse(
     <OpenGraphCard
-      title={pageTexts[lang].title}
+      title={pageTexts.title}
       titleSize={96}
-      subtitle={pageTexts[lang].description}
+      subtitle={pageTexts.description}
       footer={`${profile.displayName} · ${localize(profile.role, lang)}`}
     />,
     openGraphImageOptions,
