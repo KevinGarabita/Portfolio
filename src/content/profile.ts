@@ -10,7 +10,16 @@ export const profile: Profile = {
     pt: "Desenvolvedor Backend, IA e Automação",
     fr: "Développeur Backend, IA et Automatisation",
   },
-  heroTitles: ["Software Engineer", "Automation Engineer"],
+  heroTitles: [
+    { es: "Backend", en: "Backend", pt: "Backend", fr: "Backend" },
+    { es: "IA", en: "AI", pt: "IA", fr: "IA" },
+    {
+      es: "Automatización",
+      en: "Automation",
+      pt: "Automação",
+      fr: "Automatisation",
+    },
+  ],
   heroSubtitle: {
     es: "Desarrollo backend, agentes de IA y automatizaciones con FastAPI, n8n y la API de OpenAI.",
     en: "Backend development, AI agents and automations with FastAPI, n8n and the OpenAI API.",
