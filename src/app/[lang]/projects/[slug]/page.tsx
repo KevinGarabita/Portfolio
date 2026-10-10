@@ -90,7 +90,7 @@ function NeighborProjectLink({
       href={`/${locale}/projects/${project.slug}`}
       rel={isPrevious ? "prev" : "next"}
       className={joinClassNames(
-        "project-card hover-glow gradient-ring group flex h-full flex-col gap-2 rounded-section border border-hairline bg-raised p-6 no-underline",
+        "project-card hover-glow gradient-ring group flex h-full flex-col gap-2 rounded-section border p-6 no-underline",
         !isPrevious && "sm:items-end sm:text-right",
       )}
     >
@@ -304,7 +304,7 @@ export default async function ProjectPage({
 
         <div
           data-reveal
-          className="gradient-ring mt-4 rounded-section border border-transparent bg-raised p-4 min-[22.5rem]:p-6 sm:p-8"
+          className="gradient-ring mt-4 rounded-section border p-4 min-[22.5rem]:p-6 sm:p-8"
         >
           <p className="max-w-prose">{projectTexts.confidentialityNote}</p>
           <div className="mt-6 flex flex-wrap gap-3">

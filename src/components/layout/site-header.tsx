@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { BrandMark } from "@/components/ui/brand-mark";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { WhatsAppLogoIcon } from "@/components/ui/icons";
@@ -13,10 +12,11 @@ import { LanguageSwitcher } from "./language-switcher";
 import { SiteHeaderFrame } from "./site-header-frame";
 
 /**
- * Sticky header: monogram and name, section links, WhatsApp and the language switch.
+ * Sticky header: the name (links home), section links, WhatsApp and the language menu.
  * Below 52rem the name, WhatsApp and the language share the first row and the section
- * links wrap onto a second one, so nothing scrolls sideways and no menu is needed.
- * Its height is --header-height in globals.css (used by scroll-padding-top).
+ * links wrap onto a second one, so nothing scrolls sideways and no menu is needed. On
+ * the narrowest phones (under 22.5rem) the name steps down to the body size so the row
+ * still fits. Its height is --header-height in globals.css (used by scroll-padding-top).
  */
 export async function SiteHeader() {
   const locale = await getCurrentLocale();
@@ -46,10 +46,9 @@ export async function SiteHeader() {
         <div className="site-header-row relative flex flex-wrap items-center gap-x-3 pt-2 min-[52rem]:h-18 min-[52rem]:flex-nowrap min-[52rem]:gap-x-6 min-[52rem]:pt-0">
           <Link
             href={`/${locale}`}
-            className="flex min-h-12 items-center gap-3 font-display text-subtitle font-extrabold text-heading no-underline"
+            className="flex min-h-12 items-center font-display text-subtitle font-extrabold whitespace-nowrap text-heading no-underline max-[22.5rem]:text-base"
           >
-            <BrandMark className="site-header-mark" />
-            <span className="max-[22.5rem]:sr-only">{profile.displayName}</span>
+            {profile.displayName}
           </Link>
 
           <nav
@@ -88,7 +87,6 @@ export async function SiteHeader() {
             <LanguageSwitcher
               currentLocale={locale}
               label={dictionary.languageSwitcher.label}
-              otherLanguageName={dictionary.languageSwitcher.otherLanguage}
             />
           </div>
         </div>

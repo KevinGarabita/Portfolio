@@ -6,17 +6,22 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { ArrowLeftIcon } from "@/components/ui/icons";
 import { profile } from "@/content/profile";
-import type { Dictionary } from "@/i18n/dictionaries/spanish";
-import { englishDictionary } from "@/i18n/dictionaries/english";
-import { spanishDictionary } from "@/i18n/dictionaries/spanish";
-import type { Locale } from "@/i18n/locales";
+import { dictionariesByLocale } from "@/i18n/dictionaries-by-locale";
+import { defaultLocale, supportedLocales, type Locale } from "@/i18n/locales";
 import { brandColors } from "@/lib/brand-colors";
 
 import { atkinsonHyperlegibleNext } from "./fonts";
 import "./globals.css";
 
+/** English (the default language) leads; the other languages follow in site order. */
+const otherLocales = supportedLocales.filter(
+  (locale) => locale !== defaultLocale,
+);
+
 export const metadata: Metadata = {
-  title: `${spanishDictionary.notFound.title} · ${englishDictionary.notFound.title}`,
+  title: [defaultLocale, ...otherLocales]
+    .map((locale) => dictionariesByLocale[locale].notFound.title)
+    .join(" · "),
 };
 
 export const viewport: Viewport = {
@@ -26,48 +31,65 @@ export const viewport: Viewport = {
 
 interface NotFoundMessageProps {
   locale: Locale;
-  dictionary: Dictionary;
-  headingLevel: "h1" | "h2";
+  /** The default language's message: h1, larger title and the primary button. */
+  isLead: boolean;
 }
 
 /** The message in one language: title, explanation and a button to that language's home. */
-function NotFoundMessage({
-  locale,
-  dictionary,
-  headingLevel: Heading,
-}: NotFoundMessageProps) {
-  const titleId = `not-found-title-${locale}`;
+function NotFoundMessage({ locale, isLead }: NotFoundMessageProps) {
+  const dictionary = dictionariesByLocale[locale];
+  const Heading = isLead ? "h1" : "h2";
 
   return (
-    <>
-      <Heading id={titleId} className="font-display text-title font-extrabold">
+    <section
+      lang={locale === defaultLocale ? undefined : locale}
+      aria-labelledby={`not-found-title-${locale}`}
+      className="flex flex-col items-start"
+    >
+      <Heading
+        id={`not-found-title-${locale}`}
+        className={
+          isLead
+            ? "font-display text-title font-extrabold"
+            : "font-display text-subtitle font-bold"
+        }
+      >
         {dictionary.notFound.title}
       </Heading>
-      <p className="mt-4 max-w-prose text-muted">
+      <p
+        className={
+          isLead
+            ? "mt-4 max-w-prose text-muted"
+            : "mt-2 max-w-prose text-small text-muted"
+        }
+      >
         {dictionary.notFound.description}
       </p>
-      <div className="mt-8">
-        <ButtonLink
-          href={`/${locale}`}
-          variant={locale === "es" ? "primary" : "secondary"}
-          leadingIcon={<ArrowLeftIcon />}
-        >
-          {dictionary.notFound.backHome}
-        </ButtonLink>
-      </div>
-    </>
+      <ButtonLink
+        href={`/${locale}`}
+        variant={isLead ? "primary" : "secondary"}
+        size={isLead ? "regular" : "compact"}
+        leadingIcon={
+          <ArrowLeftIcon className={isLead ? undefined : "size-4"} />
+        }
+        className={isLead ? "mt-8" : "mt-5"}
+      >
+        {dictionary.notFound.backHome}
+      </ButtonLink>
+    </section>
   );
 }
 
 /**
  * 404 page for any URL that matches no route (unknown project, unknown path or language).
- * It renders outside the [lang] layout, so it cannot know the visitor's language and
- * shows both versions side by side (stacked on phones), under a large gradient "404".
+ * It renders outside the [lang] layout, so it cannot know the visitor's language: under
+ * a large gradient "404" it shows the English message first (the default language), then
+ * the Spanish, Portuguese and French ones in a row of three (stacked on phones).
  */
 export default function GlobalNotFound() {
   return (
     <html
-      lang="es"
+      lang={defaultLocale}
       className={atkinsonHyperlegibleNext.variable}
       data-scroll-behavior="smooth"
     >
@@ -79,7 +101,7 @@ export default function GlobalNotFound() {
           className="flex min-h-svh flex-col focus:outline-none"
         >
           <Container className="flex flex-1 flex-col pb-20 lg:pb-28">
-            {/* "/" goes to the visitor's language (negotiated by the proxy). */}
+            {/* "/" goes to English, or to the language picked in the switcher (proxy.ts). */}
             <Link
               href="/"
               className="flex items-center gap-3 self-start border-b border-hairline py-4 font-display text-subtitle font-extrabold text-heading no-underline"
@@ -95,28 +117,17 @@ export default function GlobalNotFound() {
               >
                 <span className="text-gradient-brand">404</span>
               </p>
-              <div className="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-2 lg:gap-x-10">
-                <section
-                  aria-labelledby="not-found-title-es"
-                  className="entrance [--entrance-order:1]"
-                >
+              <div className="entrance mt-10 [--entrance-order:1] lg:mt-14">
+                <NotFoundMessage locale={defaultLocale} isLead />
+              </div>
+              <div className="entrance mt-12 grid gap-10 border-t border-hairline pt-10 [--entrance-order:2] md:grid-cols-3 md:gap-x-8 lg:mt-14">
+                {otherLocales.map((locale) => (
                   <NotFoundMessage
-                    locale="es"
-                    dictionary={spanishDictionary}
-                    headingLevel="h1"
+                    key={locale}
+                    locale={locale}
+                    isLead={false}
                   />
-                </section>
-                <section
-                  lang="en"
-                  aria-labelledby="not-found-title-en"
-                  className="entrance border-t border-hairline pt-12 [--entrance-order:2] lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10"
-                >
-                  <NotFoundMessage
-                    locale="en"
-                    dictionary={englishDictionary}
-                    headingLevel="h2"
-                  />
-                </section>
+                ))}
               </div>
             </div>
           </Container>

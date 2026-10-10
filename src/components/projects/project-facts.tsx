@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { Tag } from "@/components/ui/tag";
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
@@ -25,6 +26,7 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
 /**
  * Key facts of a case study as a definition list in a panel: client, context, period
  * and technologies. The status is shown above the title, so it is not repeated here.
+ * Technologies (stack, then integrations) are a list of tags, like on the cards.
  */
 export function ProjectFacts({
   project,
@@ -53,7 +55,13 @@ export function ProjectFacts({
       ) : null}
 
       <Fact label={labels.technologies}>
-        {getProjectTechnologies(project).join(", ")}
+        <ul className="flex flex-wrap gap-2 pt-0.5">
+          {getProjectTechnologies(project).map((technology) => (
+            <li key={technology}>
+              <Tag>{technology}</Tag>
+            </li>
+          ))}
+        </ul>
       </Fact>
     </dl>
   );

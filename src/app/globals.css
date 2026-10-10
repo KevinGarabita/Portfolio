@@ -156,6 +156,20 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Custom properties that transition (the gradient ring's fade and surface). Only
+ * registered properties interpolate; an unregistered one would jump. */
+@property --ring-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --ring-fill {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+}
+
 /* 6. Base styles */
 @layer base {
   :root {
@@ -200,6 +214,13 @@
     --duration-slow: 700ms;
     --duration-title-fade: 550ms;
     --stagger-step: 90ms;
+
+    /* Hover lifts in px, never rem: a multiple of 4 CSS px is a whole number of device
+     * pixels at every common display scale (100, 125, 150, 175, 200, 250, 300%), so a
+     * lifted border or gradient ring stays on the pixel grid instead of being smeared
+     * across two rows of pixels. */
+    --lift-control: 4px;
+    --lift-card: 8px;
 
     /* Stacking layers. */
     --layer-backdrop: -1;
@@ -420,28 +441,41 @@
     animation: orbit 48s linear infinite;
   }
 
-  /* Gradient ring drawn on a pseudo-element, so it can fade in with opacity only.
-   * It sits over the element's 1px border (give the element one, even transparent).
-   * Set --ring-opacity (0 to 1) on the element or a parent state. */
+  /* Gradient ring painted as the element's own 1px border: the gradient fills the
+   * border box and the surface colour (--ring-fill) covers the padding box on top of it.
+   * Give the element `border` (the width); the class makes it transparent.
+   *
+   * Why not a masked pseudo-element: browsers snap a real border to whole device pixels
+   * (at 125% or 150% scale a 1px border becomes exactly one device pixel), but a mask
+   * cut 1 CSS px wide is not snapped, so its edge fell in the middle of a device pixel
+   * and the ring was antialiased across two rows of pixels: soft and blurry. A border
+   * painted with background-clip uses the same snapped geometry as any other border.
+   *
+   * --ring-fill: the surface inside the ring (default: raised). Set it instead of a
+   * bg-* class, e.g. [--ring-fill:var(--color-page)].
+   * --ring-opacity (0 to 1): how much of the gradient shows; at 0 the border shows
+   * --ring-rest (default transparent). Registered with @property, so it can transition. */
   .gradient-ring {
+    --ring-fill: var(--color-raised);
     position: relative;
     isolation: isolate;
-  }
-
-  .gradient-ring::after {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: var(--gradient-brand-diagonal);
-    mask:
-      linear-gradient(black 0 0) content-box,
-      linear-gradient(black 0 0);
-    mask-composite: exclude;
-    opacity: var(--ring-opacity, 1);
-    transition: opacity var(--duration-moderate) var(--ease-standard);
-    pointer-events: none;
+    border-color: transparent;
+    background:
+      linear-gradient(var(--ring-fill) 0 0) padding-box,
+      linear-gradient(
+          135deg,
+          color-mix(
+            in oklab,
+            var(--color-orange-vibrant) calc(var(--ring-opacity, 1) * 100%),
+            var(--ring-rest, transparent)
+          ),
+          color-mix(
+            in oklab,
+            var(--color-red-signal) calc(var(--ring-opacity, 1) * 100%),
+            var(--ring-rest, transparent)
+          )
+        )
+        border-box;
   }
 
   /* Coloured glow on a pseudo-element that fades in: the shadow itself never animates. */
@@ -468,16 +502,20 @@
       color-mix(in srgb, var(--color-whatsapp) 60%, transparent);
   }
 
-  /* Project cards: lift, gradient ring and glow on hover or keyboard focus. */
+  /* Project cards: lift, gradient ring and glow on hover or keyboard focus. At rest the
+   * ring shows the hairline colour. */
   .project-card {
     --ring-opacity: 0;
-    transition: transform var(--duration-moderate) var(--ease-emphasized);
+    --ring-rest: var(--color-hairline);
+    transition:
+      transform var(--duration-moderate) var(--ease-emphasized),
+      --ring-opacity var(--duration-moderate) var(--ease-standard);
   }
 
   .project-card:focus-within {
     --ring-opacity: 1;
     --glow-opacity: 1;
-    transform: translate3d(0, -0.375rem, 0);
+    transform: translateY(calc(-1 * var(--lift-card)));
   }
 
   .project-card-media > :is(img, svg, div) {
@@ -493,7 +531,7 @@
   }
 
   .project-card:focus-within .project-card-arrow {
-    transform: translate3d(0.25rem, 0, 0);
+    transform: translateX(0.25rem);
   }
 
   /* Hover only where the pointer can hover, so effects don't stick after a tap. */
@@ -501,7 +539,7 @@
     .project-card:hover {
       --ring-opacity: 1;
       --glow-opacity: 1;
-      transform: translate3d(0, -0.375rem, 0);
+      transform: translateY(calc(-1 * var(--lift-card)));
     }
 
     .project-card:hover .project-card-media > :is(img, svg, div) {
@@ -509,30 +547,32 @@
     }
 
     .project-card:hover .project-card-arrow {
-      transform: translate3d(0.25rem, 0, 0);
+      transform: translateX(0.25rem);
     }
   }
 
-  /* Buttons: a small lift, the glow layer, and the icon nudging forward. */
+  /* Buttons: a small lift, the glow layer, and the icon nudging forward. --ring-fill
+   * is the surface of the gradient-ring (secondary) buttons. */
   .button-motion {
     transition:
       transform var(--duration-quick) var(--ease-standard),
-      background-color var(--duration-quick) var(--ease-standard);
+      background-color var(--duration-quick) var(--ease-standard),
+      --ring-fill var(--duration-quick) var(--ease-standard);
   }
 
   @media (hover: hover) {
     .button-motion:hover {
       --glow-opacity: 1;
-      transform: translate3d(0, -0.125rem, 0);
+      transform: translateY(calc(-1 * var(--lift-control)));
     }
 
     .button-motion:hover .button-icon {
-      transform: translate3d(0.1875rem, 0, 0);
+      transform: translateX(0.1875rem);
     }
   }
 
   .button-motion:active {
-    transform: translate3d(0, 0, 0);
+    transform: none;
   }
 
   .button-motion .button-icon {
@@ -603,18 +643,9 @@
     transition: transform var(--duration-moderate) var(--ease-emphasized);
   }
 
+  /* px, not rem: the header's buttons keep their borders on whole device pixels. */
   .site-header[data-at-top] .site-header-row {
-    transform: translate3d(0, 0.375rem, 0);
-  }
-
-  .site-header-mark {
-    transform: scale(0.88);
-    transform-origin: left center;
-    transition: transform var(--duration-moderate) var(--ease-emphasized);
-  }
-
-  .site-header[data-at-top] .site-header-mark {
-    transform: scale(1);
+    transform: translateY(8px);
   }
 
   /* Rotating hero title: every title sits in the same grid cell, so the cell keeps the

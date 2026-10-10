@@ -36,14 +36,17 @@ interface SocialIconLinkProps {
   href: string;
   /** Network name; it is the accessible name of the link and its tooltip. */
   label: string;
-  /** When set, the link opens in a new tab and screen readers hear this text. */
-  opensInNewTabText?: string;
+  /** "opens in a new tab", in the page's language: every social link opens one. */
+  opensInNewTabText: string;
+  /** Extra link relations, such as "me" on Kevin's own profiles. */
   rel?: string;
 }
 
 /**
- * Round, logo-only link (44 px target) with the network's logo in its own colours.
- * On hover the ring turns orange and the button lifts slightly; only transform is animated.
+ * Round, logo-only link (44 px target) with the network's logo in its own colours. It
+ * always opens in a new tab, and screen readers hear so.
+ * On hover the ring turns orange and the button lifts by --lift-control (4 px, a whole
+ * number of device pixels at every common display scale, so the ring stays sharp).
  */
 export function SocialIconLink({
   network,
@@ -52,20 +55,17 @@ export function SocialIconLink({
   opensInNewTabText,
   rel,
 }: SocialIconLinkProps) {
-  const opensInNewTab = opensInNewTabText !== undefined;
-
   return (
     <a
       href={href}
-      target={opensInNewTab ? "_blank" : undefined}
-      rel={opensInNewTab ? "noopener noreferrer" : rel}
+      target="_blank"
+      rel={rel ? `${rel} noopener noreferrer` : "noopener noreferrer"}
       title={label}
-      className="inline-flex size-11 items-center justify-center rounded-full border border-control-border bg-raised no-underline transition-transform hover:-translate-y-0.5 hover:border-accent"
+      className="inline-flex size-11 items-center justify-center rounded-full border border-control-border bg-raised no-underline transition-transform hover:-translate-y-(--lift-control) hover:border-accent"
     >
       <SocialNetworkLogo network={network} />
       <span className="sr-only">
-        {label}
-        {opensInNewTab ? ` (${opensInNewTabText})` : null}
+        {label} ({opensInNewTabText})
       </span>
     </a>
   );

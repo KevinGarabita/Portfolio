@@ -31,7 +31,7 @@ function getSkillCardSpan(index: number, count: number): string {
 
 /**
  * Two rows. First, the CV paragraph at reading size beside a short card of quick facts
- * (location and work mode, focus, languages). Then the technical skills as a grid of
+ * (location, focus, languages). Then the technical skills as a grid of
  * cards, one per CV group (one column on phones, two from sm, three from lg): each tool
  * with its logo and name.
  */
@@ -49,7 +49,7 @@ export async function AboutSection() {
   const quickFacts = [
     {
       label: labels.facts.location,
-      value: `${profile.location.city}, ${profile.location.region} · ${localize(profile.workMode, locale)}`,
+      value: `${profile.location.city}, ${profile.location.region}`,
     },
     { label: labels.facts.focus, value: localize(profile.role, locale) },
     {

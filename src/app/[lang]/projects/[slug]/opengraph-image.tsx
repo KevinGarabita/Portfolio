@@ -5,8 +5,7 @@ import {
   openGraphImageOptions,
 } from "@/components/seo/open-graph-card";
 import { profile } from "@/content/profile";
-import { englishDictionary } from "@/i18n/dictionaries/english";
-import { spanishDictionary } from "@/i18n/dictionaries/spanish";
+import { dictionariesByLocale } from "@/i18n/dictionaries-by-locale";
 import { isSupportedLocale, supportedLocales } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import {
@@ -34,11 +33,6 @@ export const alt = profile.displayName;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const clientLabels = {
-  es: spanishDictionary.projects.facts.client,
-  en: englishDictionary.projects.facts.client,
-};
-
 export default async function Image({
   params,
 }: {
@@ -55,7 +49,7 @@ export default async function Image({
       eyebrow={profile.displayName}
       title={localize(project.name, lang)}
       titleSize={72}
-      subtitle={`${clientLabels[lang]}: ${project.client}`}
+      subtitle={`${dictionariesByLocale[lang].projects.facts.client}: ${project.client}`}
       footer={getProjectTechnologies(project).join(" · ")}
     />,
     openGraphImageOptions,

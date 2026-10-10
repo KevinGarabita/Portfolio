@@ -9,7 +9,7 @@ import { isSupportedLocale, supportedLocales } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 
 /**
- * Link-preview image of the home page, one per language (/es/opengraph-image, /en/...).
+ * Link-preview image of the home page, one per language (/en/opengraph-image, /es/...).
  * It lives in app/[lang]/ and not in app/ because proxy.ts redirects every path that has
  * neither a language prefix nor a file extension.
  */
@@ -19,7 +19,7 @@ export function generateStaticParams() {
   return supportedLocales.map((locale) => ({ lang: locale }));
 }
 
-// One alt for both languages, so it names only what reads the same in both: the name.
+// One alt for every language, so it names only what reads the same in all: the name.
 // A per-language alt needs generateImageMetadata, and with it Next.js 16.4 stops
 // prerendering images under [lang] (see docs/decisions.md).
 export const alt = profile.displayName;
@@ -41,7 +41,7 @@ export default async function Image({
       title={profile.displayName}
       titleSize={96}
       subtitle={localize(profile.role, lang)}
-      footer={`${city}, ${region}, ${localize(country, lang)} · ${localize(profile.workMode, lang)}`}
+      footer={`${city}, ${region}, ${localize(country, lang)}`}
     />,
     openGraphImageOptions,
   );

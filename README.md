@@ -1,6 +1,6 @@
 # Portafolio de Kevin Garabita
 
-Sitio personal bilingüe (español e inglés) hecho con Next.js 16 (App Router), Tailwind CSS 4 y TypeScript. Se publica en Vercel.
+Sitio personal en cuatro idiomas (español, inglés, portugués y francés; inglés por defecto) hecho con Next.js 16 (App Router), Tailwind CSS 4 y TypeScript. Se publica en Vercel.
 
 ## Requisitos
 
@@ -38,26 +38,26 @@ Si está vacía, el sitio usa la URL de producción que expone Vercel o, en loca
 ```
 src/
   app/
-    [lang]/              layout raíz por idioma (/es, /en), páginas e imágenes para compartir (opengraph-image)
-    global-not-found.tsx 404 bilingüe para cualquier URL que no existe
+    [lang]/              layout raíz por idioma (/es, /en, /pt, /fr), páginas e imágenes para compartir (opengraph-image)
+    global-not-found.tsx 404 en los cuatro idiomas para cualquier URL que no existe
     globals.css          Tailwind y tokens de diseño
     sitemap.ts           /sitemap.xml
     robots.ts            /robots.txt
     icon.svg             monograma KG (también apple-icon.png y favicon.ico)
-  proxy.ts               redirige / y rutas sin idioma según el navegador
+  proxy.ts               redirige / y rutas sin idioma a inglés o al idioma elegido en el selector
   assets/fonts/          Atkinson Hyperlegible Next (TTF y licencia OFL) para las imágenes para compartir
   components/
     layout/              header, footer, selector de idioma, enlace "saltar al contenido"
     sections/            secciones de la home
     projects/            tarjetas, galería, diagrama de flujo y piezas de los casos de estudio
     motion/              aparición al hacer scroll y título que rota
-    ui/                  piezas base: contenedor, sección, botón, etiqueta, íconos, monograma
+    ui/                  piezas base: contenedor, sección, botón, etiqueta, íconos, banderas, monograma
     seo/                 datos estructurados (JSON-LD) y diseño de las imágenes para compartir
   content/               datos del sitio (perfil, proyectos, experiencia, formación, habilidades, textos SEO)
-  i18n/                  idiomas, diccionarios de interfaz y negociación de idioma
+  i18n/                  idiomas y diccionarios de interfaz
   lib/                   utilidades: URL del sitio, metadatos, datos estructurados, fechas, proyectos, anclas de la home, WhatsApp, colores de marca, preferencias de movimiento
   types/                 tipos del contenido
-public/cv/               CV descargable en español e inglés
+public/cv/               CV en español e inglés (se abre en una pestaña nueva; portugués y francés usan el de inglés)
 public/images/           foto de perfil (original y recortada sin fondo para la portada) y capturas de proyectos
 docs/                    decisiones técnicas y de diseño, guía de publicación
 ```
@@ -65,7 +65,7 @@ docs/                    decisiones técnicas y de diseño, guía de publicació
 ## Cómo agregar un proyecto
 
 1. Crea un archivo en `src/content/projects/` y agrégalo al arreglo de `src/content/projects/index.ts` (el orden ahí es el del sitio). TypeScript te marca cualquier campo que falte (el tipo `Project` está en `src/types/content.ts`). `kind` ("web-app" o "ai-automation") alimenta el filtro "Tipo" de `/[lang]/projects`; `isFeatured: true` lo muestra también en la home; `buildMethod` ("vibe-coded" o "hand-coded") pone la etiqueta y el filtro de desarrollo; las capturas van en `public/images/projects/<slug>/` y en `images`, y los flujos de automatización en `flowDiagram`.
-2. Escribe cada texto en los dos idiomas: `{ es: "...", en: "..." }`.
+2. Escribe cada texto en los cuatro idiomas: `{ es: "...", en: "...", pt: "...", fr: "..." }`, o `sameInEveryLanguage("...")` si se lee igual en todos.
 3. Pon en `lastUpdated` la fecha del cambio (`"AAAA-MM-DD"`); el sitemap la usa como fecha de modificación.
 4. Corre `npm run check`.
 
@@ -81,9 +81,12 @@ Si cambias el perfil, la experiencia, la formación o las habilidades, actualiza
 
 ## Idiomas
 
-- Las páginas viven en `/es/...` y `/en/...`. La raíz `/` y cualquier ruta sin idioma redirigen según el idioma del navegador; si no es español ni inglés, se usa inglés.
-- Los textos de interfaz (botones, títulos de sección) están en `src/i18n/dictionaries/`.
-- El contenido usa el tipo `LocalizedText`, que obliga a tener ambas versiones.
+- Las páginas viven en `/es/...`, `/en/...`, `/pt/...` y `/fr/...` (español de México, inglés de Estados Unidos, portugués de Brasil y francés de Francia).
+- La raíz `/` y cualquier ruta sin idioma redirigen a inglés, salvo que el visitante haya elegido otro idioma en el selector (se guarda en la cookie `preferred-locale`). No se usa el idioma del navegador.
+- El selector de idioma es una lista desplegable con banderas en SVG (México, Estados Unidos, Brasil y Francia); no usa emoji porque Windows no los dibuja como banderas.
+- Los textos de interfaz (botones, títulos de sección) están en `src/i18n/dictionaries/`, uno por idioma, y se registran en `src/i18n/dictionaries-by-locale.ts`.
+- El contenido usa el tipo `LocalizedText`, que obliga a tener los cuatro idiomas.
+- Solo hay CV en español y en inglés; las versiones en portugués y francés enlazan el de inglés.
 
 ## Contenido pendiente
 
