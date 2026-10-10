@@ -57,7 +57,7 @@ export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
       <span className="grid-texture grid-texture-centered absolute inset-0" />
       <span
         className={joinClassNames(
-          "gradient-ring relative flex size-14 shrink-0 items-center justify-center rounded-section border border-transparent bg-page shadow-(--glow-accent-soft) [--ring-opacity:1] @min-[22rem]:size-20",
+          "gradient-ring relative flex size-14 shrink-0 items-center justify-center rounded-section border shadow-(--glow-accent-soft) [--ring-fill:var(--color-page)] [--ring-opacity:1] @min-[22rem]:size-20",
           project.flowDiagram?.length ? "@max-[20rem]:hidden" : undefined,
         )}
       >

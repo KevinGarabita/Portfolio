@@ -20,7 +20,7 @@ export function ProjectBuildBadge({
   return (
     <span
       title={texts.description}
-      className="gradient-ring inline-flex shrink-0 items-center gap-1.5 rounded-tag border border-transparent bg-page px-2.5 py-0.5 text-small leading-snug font-bold whitespace-nowrap text-heading [--ring-opacity:1]"
+      className="gradient-ring inline-flex shrink-0 items-center gap-1.5 rounded-tag border px-2.5 py-0.5 text-small leading-snug font-bold whitespace-nowrap text-heading [--ring-fill:var(--color-page)] [--ring-opacity:1]"
     >
       {buildMethod === "vibe-coded" ? (
         <SparklesIcon className="size-4 text-accent" />

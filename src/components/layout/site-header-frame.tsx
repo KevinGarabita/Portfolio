@@ -4,9 +4,9 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * The sticky <header> element and its scroll state. While the page is at the very top
- * the header is transparent and roomy (data-at-top); once the page scrolls, a blurred
- * background, a hairline and a slightly smaller monogram fade in. Everything changes
- * with opacity and transform (globals.css, .site-header), so the page never shifts.
+ * the header is transparent and its row sits 8 px lower (data-at-top); once the page
+ * scrolls, a blurred background and a hairline fade in and the row moves up. Everything
+ * changes with opacity and transform (globals.css, .site-header), so the page never shifts.
  *
  * The server renders the solid state, so without JavaScript the header still has a
  * background over scrolled content.

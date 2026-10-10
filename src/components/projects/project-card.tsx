@@ -47,7 +47,7 @@ export function ProjectCard({
     technologies.length - visibleTechnologies.length;
 
   return (
-    <article className="project-card hover-glow gradient-ring flex h-full flex-col rounded-section border border-hairline bg-raised">
+    <article className="project-card hover-glow gradient-ring flex h-full flex-col rounded-section border">
       <div className="project-card-media @container relative aspect-16/10 overflow-hidden rounded-t-section border-b border-hairline bg-raised-strong">
         <ProjectVisual project={project} locale={locale} sizes={mediaSizes} />
       </div>

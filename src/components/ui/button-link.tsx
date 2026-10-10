@@ -17,7 +17,7 @@ const variantClassNames: Record<ButtonVariant, string> = {
   primary:
     "border border-transparent bg-accent text-on-accent hover:bg-accent-hover",
   secondary:
-    "gradient-ring border border-transparent bg-raised text-heading hover:bg-raised-strong",
+    "gradient-ring border text-heading hover:[--ring-fill:var(--color-raised-strong)]",
   whatsapp:
     "glow-whatsapp border border-transparent bg-whatsapp text-on-whatsapp hover:bg-whatsapp-hover",
 };
