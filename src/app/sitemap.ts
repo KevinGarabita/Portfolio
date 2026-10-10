@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { supportedLocales } from "@/i18n/locales";
 import {
+  buildHreflangPaths,
   getHomeLastModified,
   localizePath,
   toAbsoluteUrl,
@@ -15,7 +16,8 @@ interface SitemapPage {
 }
 
 /**
- * /sitemap.xml: every page in every language, each with its hreflang alternates.
+ * /sitemap.xml: every page in every language, each with its hreflang alternates, the same
+ * ones as the page's <head> (buildHreflangPaths), x-default included.
  * Dates come from the content (never the build date), so a deploy without content
  * changes does not tell search engines that every page changed.
  */
@@ -30,15 +32,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   return pages.flatMap(({ pathWithoutLocale, lastModified }) => {
-    const languages = {
-      ...Object.fromEntries(
-        supportedLocales.map((locale) => [
-          locale,
-          toAbsoluteUrl(localizePath(pathWithoutLocale, locale)),
-        ]),
+    const languages = Object.fromEntries(
+      Object.entries(buildHreflangPaths(pathWithoutLocale)).map(
+        ([hreflang, path]) => [hreflang, toAbsoluteUrl(path)],
       ),
-      "x-default": toAbsoluteUrl(pathWithoutLocale),
-    };
+    );
 
     return supportedLocales.map((locale) => ({
       url: toAbsoluteUrl(localizePath(pathWithoutLocale, locale)),

@@ -4,15 +4,13 @@ import {
   OpenGraphCard,
   openGraphImageOptions,
 } from "@/components/seo/open-graph-card";
-import { profile } from "@/content/profile";
-import { dictionariesByLocale } from "@/i18n/dictionaries-by-locale";
 import { isSupportedLocale, supportedLocales } from "@/i18n/locales";
-import { localize } from "@/i18n/localize";
+import { getAllProjects, getProjectBySlug } from "@/lib/projects";
 import {
-  getAllProjects,
-  getProjectBySlug,
-  getProjectTechnologies,
-} from "@/lib/projects";
+  getProjectShareCard,
+  shareImageSize,
+  shareImageType,
+} from "@/lib/share-card";
 
 /**
  * Link-preview image of each case study, per language. Route handlers do not inherit
@@ -27,11 +25,9 @@ export function generateStaticParams() {
   );
 }
 
-// One alt for every project and language, so it names only what every card shows the
-// same way: the owner's name. See the note in app/[lang]/opengraph-image.tsx.
-export const alt = profile.displayName;
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+// The alt is in the page's metadata, in its language: see app/[lang]/opengraph-image.tsx.
+export const size = shareImageSize;
+export const contentType = shareImageType;
 
 export default async function Image({
   params,
@@ -45,13 +41,7 @@ export default async function Image({
   }
 
   return new ImageResponse(
-    <OpenGraphCard
-      eyebrow={profile.displayName}
-      title={localize(project.name, lang)}
-      titleSize={72}
-      subtitle={`${dictionariesByLocale[lang].projects.facts.client}: ${project.client}`}
-      footer={getProjectTechnologies(project).join(" · ")}
-    />,
+    <OpenGraphCard {...getProjectShareCard(project, lang)} titleSize={72} />,
     openGraphImageOptions,
   );
 }
