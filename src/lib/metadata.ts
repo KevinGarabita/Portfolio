@@ -56,8 +56,8 @@ function assertLength(
 
 /**
  * Fails the build when a project has no search texts in content/project-seo.ts, when an
- * entry there names no project, or when a hand-written title or description is out of
- * range. The home title is not checked: it comes from the profile (name and role).
+ * entry there names no project, or when a title or description is out of range. That
+ * includes the home title, built from the name and the role in content/profile.ts.
  */
 function assertSearchTexts(): void {
   const projectSlugs = new Set(getAllProjects().map((project) => project.slug));
@@ -85,6 +85,16 @@ function assertSearchTexts(): void {
       `${source}: description`,
     );
   }
+
+  const homeTitle = Object.fromEntries(
+    supportedLocales.map((locale) => [locale, buildHomeTitle(locale)]),
+  ) as LocalizedText;
+  assertLength(
+    homeTitle,
+    1,
+    titleMaxLength,
+    "The home title (displayName and role in src/content/profile.ts)",
+  );
 
   const siteSource = "src/content/site-metadata.ts";
   assertLength(
