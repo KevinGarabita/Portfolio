@@ -15,6 +15,26 @@ interface ProjectVisualProps {
   sizes: string;
 }
 
+/** Aspect ratio of the card's media frame (aspect-16/10 in ProjectCard). */
+const mediaFrameRatio = 16 / 10;
+
+/**
+ * A screenshot wider than the frame (16:9 in 16:10) fills it with object-cover, so it is
+ * drawn wider than the card: every width in `sizes` grows by that factor, so the
+ * browser still picks a sharp file.
+ */
+function scaleSizes(sizes: string, factor: number): string {
+  if (factor <= 1.01) return sizes;
+  return sizes
+    .split(",")
+    .map((entry) => {
+      const [, condition = "", length = ""] =
+        /^\s*(\([^)]*\)\s*)?(.+)$/.exec(entry) ?? [];
+      return `${condition}calc(${length.trim()} * ${factor.toFixed(3)})`;
+    })
+    .join(", ");
+}
+
 /**
  * The media area of a project card:
  * - the first screenshot, when the project has one (desktop screenshots fill the frame
@@ -37,7 +57,14 @@ export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
         alt={localize(firstImage.alt, locale)}
         width={firstImage.width}
         height={firstImage.height}
-        sizes={sizes}
+        sizes={
+          isPhoneScreenshot
+            ? sizes
+            : scaleSizes(
+                sizes,
+                firstImage.width / firstImage.height / mediaFrameRatio,
+              )
+        }
         className={joinClassNames(
           "absolute inset-0 size-full",
           isPhoneScreenshot ? "object-contain p-4" : "object-cover object-top",
