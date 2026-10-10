@@ -51,8 +51,8 @@ Los componentes usan los nombres de función, nunca los colores crudos: `page`, 
 
 ## Tipografía
 
-- Escala fluida de 360 a 1440 px de ancho: `text-small` (14→15 px), `text-base` (16→18), `text-subtitle` (19→24), `text-title` (26→40), `text-headline` (32→64), `text-display` (40→100) y `text-giant` (96→224, solo el 404).
-- `text-headline` es para títulos de sección y de caso de estudio, y para la palabra que rota en la portada: con `text-display` (hasta 100 px), "Automatización" y "Automatisation" no cabían en la columna de texto. `text-display` quedó sin uso.
+- Escala fluida de 360 a 1440 px de ancho: `text-small` (14→15 px), `text-base` (16→18), `text-subtitle` (19→24), `text-title` (26→40), `text-headline` (32→64) y `text-giant` (96→224, solo el 404).
+- `text-headline` es para títulos de sección y de caso de estudio, y para la palabra que rota en la portada: con `text-display` (hasta 100 px), "Automatización" y "Automatisation" no cabían en la columna de texto, así que ese tamaño se quitó de la escala.
 - **Atkinson Hyperlegible Next** para texto y títulos, elegida por Kevin; los títulos se distinguen por tamaño y peso. La monoespaciada del sistema (`font-mono`) marca números de sección, fechas y herramientas.
 - Riesgo conocido: Next 16.4 no tiene las métricas de respaldo de esta fuente (`adjustFontFallback: false` en `src/app/fonts.ts`), así que el texto puede moverse un poco cuando la fuente termina de cargar.
 
