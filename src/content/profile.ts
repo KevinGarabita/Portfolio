@@ -6,7 +6,7 @@ export const profile: Profile = {
   fullName: "Kevin Emanuel Garabita Córdova",
   role: {
     es: "Desarrollador Backend, IA y Automatización",
-    en: "Backend, AI & Automation Developer",
+    en: "Backend, AI & Automation Engineer",
     pt: "Desenvolvedor Backend, IA e Automação",
     fr: "Développeur Backend, IA et Automatisation",
   },

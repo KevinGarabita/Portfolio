@@ -16,7 +16,7 @@ export const englishDictionary: Dictionary = {
     label: "Language",
   },
   hero: {
-    photoAlt: "Kevin Garabita, backend, AI and automation developer",
+    photoAlt: "Kevin Garabita, backend, AI and automation engineer",
     viewProjects: "View projects",
     writeOnWhatsApp: "Message me on WhatsApp",
   },
