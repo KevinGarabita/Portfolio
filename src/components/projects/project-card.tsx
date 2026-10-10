@@ -82,8 +82,12 @@ export function ProjectCard({
           </Link>
         </Heading>
 
+        {/* "Client · Context"; an internal project's client is also its context
+            (Kobler y Asociados), so it is named once. */}
         <p className="text-small text-muted">
-          {project.client} · {localize(project.context, locale)}
+          {project.client === localize(project.context, locale)
+            ? project.client
+            : `${project.client} · ${localize(project.context, locale)}`}
         </p>
 
         <p className="line-clamp-3 text-small text-body">
