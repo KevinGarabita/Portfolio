@@ -20,7 +20,6 @@ export const spanishDictionary = {
   },
   resume: {
     view: "Ver CV (PDF)",
-    download: "Descargar CV",
   },
   projects: {
     sectionTitle: "Proyectos destacados",

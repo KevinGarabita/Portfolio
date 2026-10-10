@@ -23,7 +23,6 @@ export const portugueseDictionary: Dictionary = {
   resume: {
     // The Portuguese pages link to the Spanish CV (lib/resume.ts) until one in Portuguese exists.
     view: "Ver currículo (PDF, em espanhol)",
-    download: "Baixar currículo (em espanhol)",
   },
   projects: {
     sectionTitle: "Projetos em destaque",

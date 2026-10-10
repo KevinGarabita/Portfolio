@@ -22,7 +22,6 @@ export const englishDictionary: Dictionary = {
   },
   resume: {
     view: "View résumé (PDF)",
-    download: "Download résumé",
   },
   projects: {
     sectionTitle: "Featured projects",

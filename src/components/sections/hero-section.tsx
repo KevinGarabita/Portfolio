@@ -7,7 +7,7 @@ import { SocialIconLink } from "@/components/ui/social-icon-link";
 import { Container } from "@/components/ui/container";
 import {
   ArrowDownIcon,
-  DownloadIcon,
+  ExternalLinkIcon,
   MailIcon,
   WhatsAppLogoIcon,
   MapPinIcon,
@@ -137,12 +137,16 @@ export async function HeroSection() {
                 href={resume.href}
                 hrefLang={resume.language}
                 type="application/pdf"
-                download
+                target="_blank"
+                rel="noopener noreferrer"
                 variant="secondary"
-                leadingIcon={<DownloadIcon className="text-accent" />}
+                trailingIcon={
+                  <ExternalLinkIcon className="size-4 text-accent" />
+                }
                 className="max-lg:grow max-[22.5rem]:px-4"
               >
-                {dictionary.resume.download}
+                {dictionary.resume.view}
+                <span className="sr-only"> ({dictionary.opensInNewTab})</span>
               </ButtonLink>
             </div>
             <div className="flex flex-wrap gap-3">
