@@ -15,7 +15,9 @@ interface ProjectStatusProps {
 
 /**
  * Status tag plus its note ("since July 2026"). Only "in production" gets the orange
- * fill; the tag text, not the colour, carries the meaning.
+ * fill; the tag text, not the colour, carries the meaning. A comma that is only read
+ * joins them, so the text is "In production, since July 2026" and not two glued words;
+ * notes start in lowercase for that reason.
  */
 export function ProjectStatus({
   status,
@@ -36,9 +38,12 @@ export function ProjectStatus({
         {dictionary.projects.status[status]}
       </Tag>
       {statusNote ? (
-        <span className="text-small text-muted">
-          {localize(statusNote, locale)}
-        </span>
+        <>
+          <span className="sr-only">, </span>
+          <span className="text-small text-muted">
+            {localize(statusNote, locale)}
+          </span>
+        </>
       ) : null}
     </span>
   );
