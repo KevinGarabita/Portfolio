@@ -15,6 +15,7 @@ import {
   toAbsoluteUrl,
 } from "./metadata";
 import { getProjectTechnologies } from "./projects";
+import { getProjectShareCard } from "./share-card";
 
 /*
  * schema.org types for the JSON-LD of the home page and the case studies, written in the
@@ -282,7 +283,11 @@ export function buildProjectStructuredData(
         dateModified: project.lastUpdated,
         keywords: getProjectTechnologies(project),
         image: [
-          getShareImagePath(pathWithoutLocale, locale),
+          getShareImagePath(
+            pathWithoutLocale,
+            locale,
+            getProjectShareCard(project, locale),
+          ),
           ...project.images.map((image) => image.src),
         ].map((path) => toAbsoluteUrl(path)),
         isPartOf: { "@id": getWebsiteId() },

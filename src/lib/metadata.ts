@@ -21,6 +21,7 @@ import { getAllProjects } from "./projects";
 import {
   describeShareCard,
   getHomeShareCard,
+  getShareCardVersion,
   getProjectShareCard,
   getProjectsShareCard,
   shareImageSize,
@@ -131,13 +132,15 @@ export function toAbsoluteUrl(path: string): string {
 /**
  * Path of a page's link-preview image: every page has an opengraph-image.tsx next to it,
  * so it answers at the page's path plus "/opengraph-image" (/es/opengraph-image,
- * /es/projects/x/opengraph-image), prerendered at build time.
+ * /es/projects/x/opengraph-image), prerendered at build time. The ?v= query is a hash of
+ * the card's text (getShareCardVersion), so the URL changes when the image does.
  */
 export function getShareImagePath(
   pathWithoutLocale: string,
   locale: Locale,
+  card: ShareCardText,
 ): string {
-  return `${localizePath(pathWithoutLocale, locale)}/opengraph-image`;
+  return `${localizePath(pathWithoutLocale, locale)}/opengraph-image?v=${getShareCardVersion(card)}`;
 }
 
 /** Home page title for search results and link previews: the name and the role. */
@@ -244,7 +247,7 @@ function buildPageMetadata({
       description,
       images: [
         {
-          url: getShareImagePath(pathWithoutLocale, locale),
+          url: getShareImagePath(pathWithoutLocale, locale, shareCard),
           ...shareImageSize,
           type: shareImageType,
           alt: describeShareCard(shareCard),

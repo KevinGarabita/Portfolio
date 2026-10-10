@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+
 import { profile } from "@/content/profile";
 import { dictionariesByLocale } from "@/i18n/dictionaries-by-locale";
 import type { Locale } from "@/i18n/locales";
@@ -57,6 +59,19 @@ export function getProjectShareCard(
     subtitle: `${clientLabel}${colon} ${project.client}`,
     footer: getProjectTechnologies(project).join(" · "),
   };
+}
+
+/**
+ * Short hash of what a card says, for the version in its image URL (?v=...). Facebook,
+ * LinkedIn and X keep a preview image by its URL, so the URL changes whenever the text on
+ * the card does. Next.js's own ?hash only followed the source of opengraph-image.tsx, not
+ * the texts it draws. A change to the layout alone keeps the URL (see docs/decisions.md).
+ */
+export function getShareCardVersion(card: ShareCardText): string {
+  return createHash("sha256")
+    .update(JSON.stringify(card))
+    .digest("hex")
+    .slice(0, 12);
 }
 
 /**
