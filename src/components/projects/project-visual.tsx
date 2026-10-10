@@ -13,6 +13,12 @@ interface ProjectVisualProps {
   locale: Locale;
   /** next/image `sizes` for the screenshot, matching the card's width. */
   sizes: string;
+  /**
+   * Preload the screenshot with high priority instead of loading it lazily. Only for the
+   * card whose image is the page's largest paint (LCP): the first card of the projects
+   * page on phones. Never on the home page, where the hero photo is the LCP.
+   */
+  preload?: boolean;
 }
 
 /** Aspect ratio of the card's media frame (aspect-16/10 in ProjectCard). */
@@ -46,7 +52,12 @@ function scaleSizes(sizes: string, factor: number): string {
  * It fills the card's media frame (absolutely positioned),
  * so a tall phone screenshot never stretches the card.
  */
-export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
+export function ProjectVisual({
+  project,
+  locale,
+  sizes,
+  preload = false,
+}: ProjectVisualProps) {
   const [firstImage] = project.images;
 
   if (firstImage) {
@@ -57,6 +68,8 @@ export function ProjectVisual({ project, locale, sizes }: ProjectVisualProps) {
         alt={localize(firstImage.alt, locale)}
         width={firstImage.width}
         height={firstImage.height}
+        preload={preload}
+        fetchPriority={preload ? "high" : undefined}
         sizes={
           isPhoneScreenshot
             ? sizes
