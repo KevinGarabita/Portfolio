@@ -40,9 +40,22 @@ type ButtonLinkProps = {
 } & Omit<ComponentPropsWithoutRef<"a">, "href" | "className" | "children">;
 
 /**
- * A link that looks like a button. Internal paths ("/es#projects") use next/link;
- * anything else (mailto:, wa.me, files) is a plain anchor. On hover it lifts slightly
- * and an orange glow fades in.
+ * Whether next/link should render the link: a page of this site ("/es#projects"), not
+ * another origin ("//..."), a download or a file ("/cv/kevin-garabita-cv-es.pdf").
+ * next/link prefetches the links it renders when they enter the viewport, so a file
+ * behind it (a 100 KB CV PDF, say) would be downloaded on every visit.
+ */
+function isInternalPage(href: string, isDownload: boolean): boolean {
+  if (isDownload || !href.startsWith("/") || href.startsWith("//"))
+    return false;
+  const [path = ""] = href.split(/[?#]/);
+  return !/\.\w+$/.test(path);
+}
+
+/**
+ * A link that looks like a button. Pages of the site ("/es#projects") use next/link;
+ * anything else (mailto:, wa.me, files such as the CV) is a plain anchor. On hover it
+ * lifts slightly and an orange glow fades in.
  */
 export function ButtonLink({
   href,
@@ -71,7 +84,7 @@ export function ButtonLink({
     </>
   );
 
-  if (href.startsWith("/")) {
+  if (isInternalPage(href, anchorAttributes.download !== undefined)) {
     return (
       <Link href={href} className={combinedClassName} {...anchorAttributes}>
         {content}

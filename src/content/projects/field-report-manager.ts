@@ -23,7 +23,7 @@ export const fieldReportManager: Project = {
   period: { start: "2026-06" },
   kind: "web-app",
   isFeatured: true,
-  buildMethod: "vibe-coded",
+  buildMethod: "ai-assisted",
   teamSetup: "individual",
   summary: {
     es: "Aplicación web donde los técnicos de instalación registran cada reporte con sus fotos desde el teléfono y el supervisor lo revisa y aprueba. Reemplazó un flujo de tres pasos basado en WhatsApp y captura manual.",
@@ -212,5 +212,5 @@ export const fieldReportManager: Project = {
       fr: "La génération du PDF et l'envoi des photos ont des limites de simultanéité et de fréquence ; quand le serveur est occupé, il répond par un message clair invitant à réessayer au lieu de rester bloqué.",
     },
   ],
-  lastUpdated: "2026-10-09",
+  lastUpdated: "2026-10-10",
 };

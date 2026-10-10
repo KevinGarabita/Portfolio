@@ -6,11 +6,20 @@ export const profile: Profile = {
   fullName: "Kevin Emanuel Garabita Córdova",
   role: {
     es: "Desarrollador Backend, IA y Automatización",
-    en: "Backend, AI & Automation Developer",
+    en: "Backend, AI & Automation Engineer",
     pt: "Desenvolvedor Backend, IA e Automação",
     fr: "Développeur Backend, IA et Automatisation",
   },
-  heroTitles: ["Software Engineer", "Automation Engineer"],
+  heroTitles: [
+    { es: "Backend", en: "Backend", pt: "Backend", fr: "Backend" },
+    { es: "IA", en: "AI", pt: "IA", fr: "IA" },
+    {
+      es: "Automatización",
+      en: "Automation",
+      pt: "Automação",
+      fr: "Automatisation",
+    },
+  ],
   heroSubtitle: {
     es: "Desarrollo backend, agentes de IA y automatizaciones con FastAPI, n8n y la API de OpenAI.",
     en: "Backend development, AI agents and automations with FastAPI, n8n and the OpenAI API.",
@@ -49,10 +58,9 @@ export const profile: Profile = {
     { network: "linkedin", url: "https://www.linkedin.com/in/kevingarabita/" },
     { network: "github", url: "https://github.com/KevinGarabita" },
   ],
+  // Only Spanish and English exist; Portuguese and French pages get the Spanish CV.
   resumeFiles: {
     es: "/cv/kevin-garabita-cv-es.pdf",
     en: "/cv/kevin-garabita-cv-en.pdf",
-    pt: "/cv/kevin-garabita-cv-en.pdf",
-    fr: "/cv/kevin-garabita-cv-en.pdf",
   },
 };

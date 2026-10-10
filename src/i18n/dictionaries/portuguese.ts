@@ -21,7 +21,8 @@ export const portugueseDictionary: Dictionary = {
     writeOnWhatsApp: "Fale comigo no WhatsApp",
   },
   resume: {
-    view: "Ver currículo (PDF, em inglês)",
+    // The Portuguese pages link to the Spanish CV (lib/resume.ts) until one in Portuguese exists.
+    view: "Ver currículo (PDF, em espanhol)",
   },
   projects: {
     sectionTitle: "Projetos em destaque",
@@ -32,10 +33,10 @@ export const portugueseDictionary: Dictionary = {
         "Aplicações web freelance e agentes de IA com automações no n8n desenvolvidos na Kobler y Asociados.",
     },
     buildMethod: {
-      "vibe-coded": {
-        label: "Vibe coded",
+      "ai-assisted": {
+        label: "Desenvolvimento assistido por IA",
         description:
-          "Feito com vibe coding: código gerado com IA sob a minha direção.",
+          "Arquitetura, revisão de código, testes e segurança ficam a meu cargo; o código é gerado com IA sob a minha direção.",
       },
       "hand-coded": {
         label: "Feito à mão",
@@ -62,10 +63,11 @@ export const portugueseDictionary: Dictionary = {
       kobler: "Projeto na Kobler",
     },
     viewCaseStudy: "Ver estudo de caso",
-    moreTechnologies: (count: number) => `e mais ${count}`,
+    moreTechnologies: "a mais",
     status: {
       "in-production": "Em produção",
       "in-development": "Em desenvolvimento",
+      delivered: "Entregue",
     },
     teamSetup: {
       individual: "Projeto individual",
@@ -90,6 +92,8 @@ export const portugueseDictionary: Dictionary = {
       role: "Meu papel",
       results: "Resultados",
       nextSteps: "Próximos passos",
+      metrics: "Antes e depois",
+      architecture: "Arquitetura",
     },
     flowStepTool: "Ferramenta",
     gallery: {
@@ -143,5 +147,24 @@ export const portugueseDictionary: Dictionary = {
     title: "Página não encontrada",
     description: "A página que você procura não existe ou mudou de endereço.",
     backHome: "Voltar ao início",
+  },
+  recruiter: {
+    email: "E-mail",
+    metrics: {
+      before: "Antes",
+      after: "Depois",
+    },
+    availability: {
+      status: {
+        "open-to-offers": "Aberto a propostas de emprego",
+        "open-to-freelance": "Disponível para projetos freelance",
+      },
+      modality: {
+        remote: "remoto",
+        hybrid: "híbrido",
+        "on-site": "presencial",
+      },
+      availableFrom: (month: string) => `Disponível a partir de ${month}`,
+    },
   },
 };

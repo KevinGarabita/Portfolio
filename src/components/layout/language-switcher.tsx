@@ -43,6 +43,10 @@ function rememberLocale(locale: Locale) {
  * the button; a click outside or moving focus out of it also closes it. Below lg the
  * button shrinks to the flag and the language code (EN), so the header row still fits
  * on phones and, from 52rem, on one line with the section links.
+ *
+ * The button's name is "Language: English" from lg and "Language: English, EN" below
+ * it: the visible code stays part of the name (WCAG 2.5.3), and the parts are separated
+ * so neither the name nor the text runs words together.
  */
 export function LanguageSwitcher({
   currentLocale,
@@ -139,10 +143,14 @@ export function LanguageSwitcher({
           <span className="sr-only">{label}: </span>
           <span lang={currentLocale} className="max-lg:sr-only">
             {localeNames[currentLocale]}
-          </span>
+            {/* Read only below lg, where the code follows: "Español, ES". */}
+            <span className="lg:hidden">,</span>
+          </span>{" "}
           {/* Below lg the code stands in for the name. It is read too, so the visible
               text stays part of the button's accessible name. */}
-          <span className="font-mono uppercase lg:hidden">{currentLocale}</span>
+          <span className="font-mono lg:hidden">
+            {currentLocale.toUpperCase()}
+          </span>
           <ChevronDownIcon
             className={joinClassNames(
               "size-4 text-muted transition-transform",
@@ -169,7 +177,7 @@ export function LanguageSwitcher({
                   aria-current={isCurrent ? "true" : undefined}
                   onClick={(event) => switchLanguage(event, locale, href)}
                   className={joinClassNames(
-                    "flex min-h-11 items-center gap-3 rounded-[0.5rem] px-3 text-small no-underline transition-colors hover:bg-control-border",
+                    "flex min-h-11 items-center gap-3 rounded-[0.5rem] px-3 text-small no-underline transition-colors hover:bg-control-hover",
                     isCurrent ? "font-bold text-heading" : "text-body",
                   )}
                 >

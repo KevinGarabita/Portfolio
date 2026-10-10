@@ -106,8 +106,8 @@ export default function GlobalNotFound() {
               href="/"
               className="flex items-center gap-3 self-start border-b border-hairline py-4 font-display text-subtitle font-extrabold text-heading no-underline"
             >
-              <BrandMark />
-              {profile.displayName}
+              {/* The space keeps the monogram and the name apart in the link's text. */}
+              <BrandMark /> {profile.displayName}
             </Link>
             {/* Centred vertically on tall screens. */}
             <div className="my-auto">

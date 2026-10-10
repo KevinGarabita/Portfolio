@@ -7,7 +7,7 @@ import {
 import { ProjectCard } from "@/components/projects/project-card";
 import { Container } from "@/components/ui/container";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
-import { buildPageMetadata } from "@/lib/metadata";
+import { buildProjectsPageMetadata } from "@/lib/metadata";
 import {
   getAllProjects,
   getProjectTechnologies,
@@ -16,20 +16,11 @@ import {
 import type { BuildMethod, ProjectKind } from "@/types/content";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getCurrentLocale();
-  const { allProjectsPage } = (await getDictionary()).projects;
-
-  return buildPageMetadata({
-    title: allProjectsPage.title,
-    description: allProjectsPage.description,
-    pathWithoutLocale: "/projects",
-    locale,
-    type: "website",
-  });
+  return buildProjectsPageMetadata(await getCurrentLocale());
 }
 
 const kindOrder: ProjectKind[] = ["web-app", "ai-automation"];
-const buildMethodOrder: BuildMethod[] = ["vibe-coded", "hand-coded"];
+const buildMethodOrder: BuildMethod[] = ["ai-assisted", "hand-coded"];
 
 /**
  * Every project in one grid, with filters (type, technology, how it was built). The
@@ -42,20 +33,23 @@ export default async function ProjectsPage() {
   const { allProjectsPage, filters, buildMethod } = dictionary.projects;
   const projects = getAllProjects();
 
-  const filterableProjects: FilterableProject[] = projects.map((project) => ({
-    slug: project.slug,
-    kind: project.kind,
-    technologies: getProjectTechnologies(project),
-    buildMethod: project.buildMethod,
-    card: (
-      <ProjectCard
-        project={project}
-        locale={locale}
-        dictionary={dictionary}
-        headingLevel="h2"
-      />
-    ),
-  }));
+  const filterableProjects: FilterableProject[] = projects.map(
+    (project, index) => ({
+      slug: project.slug,
+      kind: project.kind,
+      technologies: getProjectTechnologies(project),
+      buildMethod: project.buildMethod,
+      card: (
+        <ProjectCard
+          project={project}
+          locale={locale}
+          dictionary={dictionary}
+          headingLevel="h2"
+          preloadMedia={index === 0}
+        />
+      ),
+    }),
+  );
 
   const kindOptions = kindOrder
     .filter((kind) => projects.some((project) => project.kind === kind))

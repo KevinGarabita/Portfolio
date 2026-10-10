@@ -1,11 +1,14 @@
 import Image from "next/image";
 
 import { RotatingTitle } from "@/components/motion/rotating-title";
+import { AvailabilityNote } from "@/components/recruiter/availability-note";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SocialIconLink } from "@/components/ui/social-icon-link";
 import { Container } from "@/components/ui/container";
 import {
   ArrowDownIcon,
+  ExternalLinkIcon,
+  MailIcon,
   WhatsAppLogoIcon,
   MapPinIcon,
 } from "@/components/ui/icons";
@@ -48,16 +51,17 @@ const floatingTechnologies = [
 /**
  * First view of the home page.
  *
- * Text: location, then the h1 (the name, plus every title as static text for screen
- * readers), the rotating title (visual only), the subtitle and two calls to action:
- * the projects and WhatsApp. The CV and the profiles sit below.
+ * Text: location, then the h1 (the name and, on the next line, the role; it reads
+ * "Kevin Garabita — <role>"), a large word that rotates through the parts of the role
+ * (visual only), the subtitle and four calls to action of the same size: the projects
+ * and the CV, then WhatsApp and email. Kevin's availability goes above them once
+ * content/availability.ts has it. The profiles sit below.
  *
  * Photo: Kevin's cut-out portrait in front of an orange-to-red circle, with an orbit
  * ring and three floating chips. The photo is the LCP element: it is preloaded and
  * never fades in (only the decoration does). The text comes first in the HTML; on
  * phones the photo is placed above it visually (not on short screens, where the text
- * would fall below the fold). On phones each title takes one word per line, so both
- * titles have the same height and the subtitle never jumps.
+ * would fall below the fold).
  */
 export async function HeroSection() {
   const locale = await getCurrentLocale();
@@ -84,73 +88,103 @@ export async function HeroSection() {
             </span>
           </p>
 
-          <h1 id="hero-title" className="mt-6 font-display lg:mt-8">
-            <span className="entrance block text-title font-bold text-heading [--entrance-order:1]">
+          {/* Static text, so it moves in without fading: it paints on the first frame. The
+              dash is only read (textContent and accessible name); on screen the role
+              takes its own line. */}
+          <h1
+            id="hero-title"
+            className="entrance-slide mt-6 font-display [--entrance-order:1] lg:mt-8"
+          >
+            <span className="block text-title font-bold text-heading">
               {profile.displayName}
             </span>
-            <span className="sr-only">{profile.heroTitles.join(" · ")}</span>
-            <RotatingTitle
-              titles={profile.heroTitles}
-              className="entrance mt-2 text-display font-extrabold [--entrance-order:2]"
-              titleClassName="text-gradient-brand pb-[0.08em] max-sm:w-min"
-            />
+            <span className="sr-only">{" — "}</span>
+            <span className="mt-2 block text-subtitle font-bold text-body">
+              {localize(profile.role, locale)}
+            </span>
           </h1>
+
+          <RotatingTitle
+            titles={profile.heroTitles.map((title) => localize(title, locale))}
+            className="entrance mt-3 text-headline font-extrabold [--entrance-order:2]"
+            titleClassName="text-gradient-brand pb-[0.08em]"
+          />
 
           <p className="entrance mt-6 max-w-xl text-subtitle text-body [--entrance-order:3]">
             {localize(profile.heroSubtitle, locale)}
           </p>
 
-          <div className="entrance mt-8 flex flex-wrap gap-3 [--entrance-order:4]">
-            <ButtonLink
-              href={getHomeSectionHref(locale, homeSectionIds.projects)}
-              trailingIcon={<ArrowDownIcon />}
-            >
-              {dictionary.hero.viewProjects}
-            </ButtonLink>
-            <ButtonLink
-              href={buildWhatsAppUrl(locale)}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="whatsapp"
-              leadingIcon={<WhatsAppLogoIcon />}
-            >
-              {dictionary.hero.writeOnWhatsApp}
-              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-            </ButtonLink>
+          {/* Two pairs of buttons of the same size: see the work (projects, CV), then get in
+              touch (WhatsApp, email). Below lg, where the text column is narrow, each button
+              stretches to fill its line, so the rows wrap cleanly down to 320 px. The CV downloads in the page's language,
+              or in Spanish when there is none (lib/resume.ts); the label says so. */}
+          <div className="entrance mt-8 flex flex-col gap-3 [--entrance-order:4]">
+            {/* Only when content/availability.ts has a status; renders nothing otherwise. */}
+            <AvailabilityNote
+              locale={locale}
+              dictionary={dictionary}
+              className="mb-1"
+            />
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink
+                href={getHomeSectionHref(locale, homeSectionIds.projects)}
+                trailingIcon={<ArrowDownIcon />}
+                className="max-lg:grow"
+              >
+                {dictionary.hero.viewProjects}
+              </ButtonLink>
+              <ButtonLink
+                href={resume.href}
+                hrefLang={resume.language}
+                type="application/pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="secondary"
+                trailingIcon={
+                  <ExternalLinkIcon className="size-4 text-accent" />
+                }
+                className="max-lg:grow max-[22.5rem]:px-4"
+              >
+                {dictionary.resume.view}
+                <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+              </ButtonLink>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink
+                href={buildWhatsAppUrl(locale)}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="whatsapp"
+                leadingIcon={<WhatsAppLogoIcon />}
+                className="max-lg:grow max-[22.5rem]:px-4"
+              >
+                {dictionary.hero.writeOnWhatsApp}
+                <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+              </ButtonLink>
+              <ButtonLink
+                href={`mailto:${profile.email}`}
+                variant="secondary"
+                leadingIcon={<MailIcon className="text-accent" />}
+                className="max-lg:grow"
+              >
+                {dictionary.recruiter.email}
+              </ButtonLink>
+            </div>
           </div>
 
-          <div className="entrance mt-6 flex flex-wrap items-center gap-x-6 gap-y-1 text-small [--entrance-order:5]">
-            <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <li>
-                <a
-                  href={resume.href}
-                  hrefLang={resume.language}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  type="application/pdf"
-                  className="inline-flex min-h-11 items-center font-bold"
-                >
-                  {dictionary.resume.view}
-                  <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-                </a>
+          <ul className="entrance mt-6 flex gap-3 [--entrance-order:5]">
+            {profile.socialProfiles.map((socialProfile) => (
+              <li key={socialProfile.network}>
+                <SocialIconLink
+                  network={socialProfile.network}
+                  href={socialProfile.url}
+                  label={socialNetworkNames[socialProfile.network]}
+                  opensInNewTabText={dictionary.opensInNewTab}
+                  rel="me"
+                />
               </li>
-              <li>
-                <ul className="flex gap-3">
-                  {profile.socialProfiles.map((socialProfile) => (
-                    <li key={socialProfile.network}>
-                      <SocialIconLink
-                        network={socialProfile.network}
-                        href={socialProfile.url}
-                        label={socialNetworkNames[socialProfile.network]}
-                        opensInNewTabText={dictionary.opensInNewTab}
-                        rel="me"
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            </ul>
-          </div>
+            ))}
+          </ul>
         </div>
 
         <div className="order-first mx-auto w-full max-w-52 min-[22.5rem]:max-w-60 sm:max-w-80 md:order-0 md:col-span-5 md:max-w-none short:order-0 short:max-w-48">
@@ -180,7 +214,10 @@ export async function HeroSection() {
                 src={kevinGarabitaCutout}
                 alt={dictionary.hero.photoAlt}
                 preload
-                sizes="(min-width: 1800px) 34rem, (min-width: 1280px) 30rem, (min-width: 768px) 40vw, (min-width: 640px) 20rem, 16rem"
+                fetchPriority="high"
+                // The width the photo column really takes at each breakpoint (its max-w-*
+                // and md:col-span-5), so phones get a 480w file instead of a 640w one.
+                sizes="(max-height: 30rem) 12rem, (min-width: 1800px) 33rem, (min-width: 1280px) 30rem, (min-width: 768px) 37vw, (min-width: 640px) 20rem, (min-width: 360px) 15rem, 13rem"
                 className="hero-photo entrance-lift absolute inset-0 size-full"
               />
             </div>

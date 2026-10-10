@@ -172,14 +172,6 @@ export function MailIcon({ className }: IconProps) {
   );
 }
 
-export function DownloadIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
-    </Icon>
-  );
-}
-
 export function MapPinIcon({ className }: IconProps) {
   return (
     <Icon className={className}>
@@ -247,7 +239,7 @@ export function AppWindowIcon({ className }: IconProps) {
   );
 }
 
-/** Four-point sparkle: marks AI-generated ("vibe coded") work. */
+/** Four-point sparkle: marks AI-assisted work ("ai-assisted" build method). */
 export function SparklesIcon({ className }: IconProps) {
   return (
     <Icon className={className}>

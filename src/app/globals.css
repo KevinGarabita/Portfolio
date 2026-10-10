@@ -67,6 +67,9 @@
   --color-control-border: var(
     --color-gray-control
   ); /* input/button outlines (>= 3:1) */
+  --color-control-hover: var(
+    --color-black-line
+  ); /* hover of options and pills on raised-strong: white text 13.17:1 (on control-border it was 4.35:1) */
   --color-accent: var(--color-orange-vibrant); /* orange fill and orange text */
   --color-accent-hover: var(
     --color-orange-light
@@ -112,9 +115,6 @@
   --text-headline: clamp(2rem, 1.3333rem + 2.963vw, 4rem); /* 32 -> 64px */
   --text-headline--line-height: 1.1;
   --text-headline--letter-spacing: -0.015em;
-  --text-display: clamp(2.5rem, 1.25rem + 5.5556vw, 6.25rem); /* 40 -> 100px */
-  --text-display--line-height: 1.05; /* not tighter: Spanish capitals carry accents (Á, É) */
-  --text-display--letter-spacing: -0.02em;
   --text-giant: clamp(
     6rem,
     4rem + 12vw,
@@ -250,20 +250,11 @@
     }
   }
 
-  /* The fluid display size follows the width; in landscape on a phone that leaves no
-   * room for the subtitle and buttons, so it follows the height there. */
-  @media (orientation: landscape) and (max-height: 30rem) {
-    :root {
-      --text-display: clamp(2.5rem, 12svh, 3.25rem);
-    }
-  }
-
   /* Large monitors (from 1800px): one more type step, matching the wider container. */
   @media (width >= 112.5rem) {
     :root {
       --text-base: 1.1875rem;
       --text-headline: 4.5rem;
-      --text-display: 7rem;
     }
   }
 

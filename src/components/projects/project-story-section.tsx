@@ -69,6 +69,7 @@ export function ProjectKeyPoints({ items }: { items: string[] }) {
           >
             {String(index + 1).padStart(2, "0")}
           </span>
+          {/* Text reads "01 El agente…", not "01El agente…"; the paragraph is a block, so it never shows. */}{" "}
           <p className="mt-3">{item}</p>
         </li>
       ))}

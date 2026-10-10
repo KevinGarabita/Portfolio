@@ -27,8 +27,12 @@ export interface Profile {
   /** Legal full name, used in structured data. */
   fullName: string;
   role: LocalizedText;
-  /** Titles that rotate in the hero, in order. The longest one reserves the space. */
-  heroTitles: string[];
+  /**
+   * Short words that rotate in large type under the hero heading, in order. They are the
+   * parts of `role` (Backend, AI, Automation), so the hero keeps a single positioning.
+   * Decorative: the heading already says the role. The longest word reserves the space.
+   */
+  heroTitles: LocalizedText[];
   /** Short line under the hero title. */
   heroSubtitle: LocalizedText;
   /** Paragraphs for the "About" section. */
@@ -54,10 +58,10 @@ export interface Profile {
   };
   socialProfiles: SocialProfile[];
   /**
-   * Public path to the CV (PDF) for each language. There is a Spanish and an English CV;
-   * the other languages use the English one.
+   * Public path to the CV (PDF) in each language it exists in. Spanish is required: a
+   * page whose language has no CV links to the Spanish one (lib/resume.ts).
    */
-  resumeFiles: Record<Locale, string>;
+  resumeFiles: { es: string } & Partial<Record<Locale, string>>;
 }
 
 export interface WorkExperience {
@@ -99,7 +103,11 @@ export interface SkillGroup {
   items: SkillItem[];
 }
 
-export type ProjectStatus = "in-production" | "in-development";
+/**
+ * "delivered" is finished work handed over to a client (e.g. agency work), with no claim
+ * about whether it still runs. Not used yet: no project has a confirmed status of this kind.
+ */
+export type ProjectStatus = "in-production" | "in-development" | "delivered";
 
 /** Groups projects on the site: freelance work or work done at Kobler y Asociados. */
 export type ProjectCategory = "freelance" | "kobler";
@@ -131,11 +139,37 @@ export interface FlowStep {
 
 export type TeamSetup = "individual" | "team";
 
+/** A before/after figure of a case study. Only real values from the project itself. */
+export interface ProjectMetric {
+  /** What was measured, e.g. the time it takes to file a report. */
+  label: LocalizedText;
+  before: LocalizedText;
+  after: LocalizedText;
+}
+
+/** An architecture diagram exported as an image, stored under public/images/projects/<slug>/. */
+export interface ArchitectureImage {
+  src: string;
+  alt: LocalizedText;
+  width: number;
+  height: number;
+}
+
 /**
- * How the code was written: "vibe-coded" (generated with AI under Kevin's direction) or
- * "hand-coded". Shown as a badge; unset for automations built in n8n.
+ * How the system is built: an exported diagram ("image") or its main parts in the order
+ * a request goes through them ("diagram"), each with its technology, drawn like the
+ * automation flow.
  */
-export type BuildMethod = "vibe-coded" | "hand-coded";
+export type ProjectArchitecture =
+  | { kind: "image"; image: ArchitectureImage }
+  | { kind: "diagram"; parts: FlowStep[] };
+
+/**
+ * How the code was written: "ai-assisted" (generated with AI under Kevin's direction,
+ * with the architecture, review, tests and security in his hands) or "hand-coded".
+ * Shown as a badge; unset for automations built in n8n.
+ */
+export type BuildMethod = "ai-assisted" | "hand-coded";
 
 /** What the project is, for the filters on the projects page. */
 export type ProjectKind = "web-app" | "ai-automation";
@@ -174,6 +208,10 @@ export interface Project {
   links: ProjectLink[];
   /** Automation flows: steps for a simple diagram. */
   flowDiagram?: FlowStep[];
+  /** Before/after figures; the case study shows them only when there are some. */
+  metrics?: ProjectMetric[];
+  /** How the system is built; the case study shows it only when it is set. */
+  architecture?: ProjectArchitecture;
   /** Optional details that add credibility when the information exists. */
   decisions?: LocalizedText[];
   failureHandling?: LocalizedText[];

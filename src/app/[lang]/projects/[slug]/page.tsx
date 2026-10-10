@@ -3,18 +3,21 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { FlowDiagram } from "@/components/projects/flow-diagram";
+import { ProjectArchitecture } from "@/components/projects/project-architecture";
 import { ProjectBuildBadge } from "@/components/projects/project-build-badge";
 import { ProjectFacts } from "@/components/projects/project-facts";
 import {
   ProjectGallery,
   type GalleryLabels,
 } from "@/components/projects/project-gallery";
+import { ProjectMetrics } from "@/components/projects/project-metrics";
 import { ProjectStatus } from "@/components/projects/project-status";
 import {
   ProjectKeyPoints,
   ProjectStoryList,
   ProjectStorySection,
 } from "@/components/projects/project-story-section";
+import { ProjectStructuredData } from "@/components/seo/structured-data";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import {
@@ -30,7 +33,7 @@ import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { joinClassNames } from "@/lib/class-names";
-import { buildPageMetadata } from "@/lib/metadata";
+import { buildProjectMetadata } from "@/lib/metadata";
 import {
   getAllProjects,
   getNeighborProjects,
@@ -57,15 +60,7 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
-  const locale = await getCurrentLocale();
-
-  return buildPageMetadata({
-    title: localize(project.name, locale),
-    description: localize(project.summary, locale),
-    pathWithoutLocale: `/projects/${project.slug}`,
-    locale,
-    type: "article",
-  });
+  return buildProjectMetadata(project, await getCurrentLocale());
 }
 
 interface NeighborProjectLinkProps {
@@ -75,7 +70,11 @@ interface NeighborProjectLinkProps {
   dictionary: Dictionary;
 }
 
-/** Previous/next case study: a panel with a small label above the project name, all one link. */
+/**
+ * Previous/next case study: a panel with a small label above the project name, all one
+ * link. The space between them keeps the link's name from reading "Proyecto
+ * siguienteCRM…" (a flex container does not render white-space-only text).
+ */
 function NeighborProjectLink({
   project,
   direction,
@@ -102,7 +101,7 @@ function NeighborProjectLink({
         {isPrevious ? null : (
           <DirectionIcon className="project-card-arrow size-4 text-accent" />
         )}
-      </span>
+      </span>{" "}
       <span className="font-display text-subtitle font-bold text-heading underline decoration-1 underline-offset-[0.2em] group-hover:decoration-2">
         {localize(project.name, locale)}
       </span>
@@ -152,6 +151,7 @@ export default async function ProjectPage({
 
   return (
     <Container className="pt-6 pb-20 lg:pt-10 lg:pb-28">
+      <ProjectStructuredData project={project} />
       <article>
         <header className="grid gap-10 pb-12 lg:grid-cols-12 lg:gap-x-10 lg:pb-16">
           <div className="lg:col-span-8">
@@ -164,10 +164,12 @@ export default async function ProjectPage({
                 {projectTexts.backToProjects}
               </Link>
             </p>
-            <div className="entrance-slide mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
+            {/* Above the title, which has its own stacking context (entrance-slide), so the
+                build badge's tooltip opens over it. */}
+            <div className="entrance-slide relative z-(--layer-raised) mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
               <p className="font-mono text-small font-bold tracking-widest text-accent uppercase">
                 {projectTexts.category[project.category]}
-              </p>
+              </p>{" "}
               {project.status ? (
                 <ProjectStatus
                   status={project.status}
@@ -175,7 +177,7 @@ export default async function ProjectPage({
                   locale={locale}
                   dictionary={dictionary}
                 />
-              ) : null}
+              ) : null}{" "}
               {project.buildMethod ? (
                 <ProjectBuildBadge
                   buildMethod={project.buildMethod}
@@ -217,6 +219,17 @@ export default async function ProjectPage({
           <ProjectKeyPoints items={localizeEach(project.highlights)} />
         </ProjectStorySection>
 
+        {/* Before/after figures, only when the project has real ones. */}
+        {project.metrics?.length ? (
+          <ProjectStorySection id="metrics" title={sectionTitles.metrics}>
+            <ProjectMetrics
+              metrics={project.metrics}
+              locale={locale}
+              labels={dictionary.recruiter.metrics}
+            />
+          </ProjectStorySection>
+        ) : null}
+
         {project.flowDiagram?.length ? (
           <section
             aria-labelledby="flow-diagram-title"
@@ -246,6 +259,29 @@ export default async function ProjectPage({
         <ProjectStorySection id="solution" title={sectionTitles.solution}>
           <p className="max-w-prose">{localize(project.solution, locale)}</p>
         </ProjectStorySection>
+
+        {/* Full width, like the automation flow; only when the project has one. */}
+        {project.architecture ? (
+          <section
+            aria-labelledby="architecture-title"
+            data-reveal
+            className="border-t border-hairline py-10 lg:py-14"
+          >
+            <h2
+              id="architecture-title"
+              className="font-display text-title font-bold"
+            >
+              {sectionTitles.architecture}
+            </h2>
+            <div className="mt-8">
+              <ProjectArchitecture
+                architecture={project.architecture}
+                locale={locale}
+                toolLabel={projectTexts.flowStepTool}
+              />
+            </div>
+          </section>
+        ) : null}
 
         {project.decisions?.length ? (
           <ProjectStorySection id="decisions" title={sectionTitles.decisions}>

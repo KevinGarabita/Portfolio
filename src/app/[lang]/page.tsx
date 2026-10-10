@@ -7,21 +7,11 @@ import { ExperienceSection } from "@/components/sections/experience-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { HomeStructuredData } from "@/components/seo/structured-data";
-import { homeDescription } from "@/content/site-metadata";
-import { localize } from "@/i18n/localize";
 import { getCurrentLocale } from "@/i18n/request-locale";
-import { buildHomeTitle, buildPageMetadata } from "@/lib/metadata";
+import { buildHomeMetadata } from "@/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getCurrentLocale();
-
-  return buildPageMetadata({
-    title: { absolute: buildHomeTitle(locale) },
-    description: localize(homeDescription, locale),
-    pathWithoutLocale: "/",
-    locale,
-    type: "website",
-  });
+  return buildHomeMetadata(await getCurrentLocale());
 }
 
 export default function HomePage() {

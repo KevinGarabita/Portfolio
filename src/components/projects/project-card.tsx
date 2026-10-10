@@ -18,18 +18,24 @@ interface ProjectCardProps {
   dictionary: Dictionary;
   /** h3 under a home section (h2); h2 on the projects page, right under its h1. */
   headingLevel?: "h2" | "h3";
+  /** Preload the card's screenshot: only for the first card of the projects page (its LCP). */
+  preloadMedia?: boolean;
 }
 
 /** How many technologies a card lists before summing up the rest as "+N". */
 const visibleTechnologyCount = 5;
 
-/** One column on phones, two from sm, three from lg (see ProjectGrid). */
+/**
+ * Card width: one column on phones, two from sm, three from lg (see ProjectGrid), inside
+ * the page container (16, 24 or 40 px of side padding; 1200 px wide from 1280 px and
+ * 1328 px from 1800 px) with 20 px gaps (24 px from lg).
+ */
 const mediaSizes =
-  "(min-width: 1800px) 440px, (min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
+  "(min-width: 1800px) 427px, (min-width: 1280px) 384px, (min-width: 1024px) calc(33.3vw - 43px), (min-width: 640px) calc(50vw - 34px), calc(100vw - 2rem)";
 
 /**
  * A compact project card (home page and projects page): media on top, then the status
- * and how it was built ("Vibe coded"), name, client, a three-line summary and the main
+ * and how it was built ("Desarrollo asistido por IA"), name, client, a three-line summary and the main
  * technologies. The full story lives on the case-study page. The name is the only link; its ::after covers the whole card
  * ("stretched link"), so the card is clickable without nesting interactive elements.
  * On hover or keyboard focus the card lifts, the gradient ring and the glow fade in and
@@ -40,6 +46,7 @@ export function ProjectCard({
   locale,
   dictionary,
   headingLevel: Heading = "h3",
+  preloadMedia = false,
 }: ProjectCardProps) {
   const technologies = getProjectTechnologies(project);
   const visibleTechnologies = technologies.slice(0, visibleTechnologyCount);
@@ -49,12 +56,17 @@ export function ProjectCard({
   return (
     <article className="project-card hover-glow gradient-ring flex h-full flex-col rounded-section border">
       <div className="project-card-media @container relative aspect-16/10 overflow-hidden rounded-t-section border-b border-hairline bg-raised-strong">
-        <ProjectVisual project={project} locale={locale} sizes={mediaSizes} />
+        <ProjectVisual
+          project={project}
+          locale={locale}
+          sizes={mediaSizes}
+          preload={preloadMedia}
+        />
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
         {project.status || project.buildMethod ? (
-          <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
             {project.status ? (
               <ProjectStatus
                 status={project.status}
@@ -82,8 +94,12 @@ export function ProjectCard({
           </Link>
         </Heading>
 
+        {/* "Client · Context"; an internal project's client is also its context
+            (Kobler y Asociados), so it is named once. */}
         <p className="text-small text-muted">
-          {project.client} · {localize(project.context, locale)}
+          {project.client === localize(project.context, locale)
+            ? project.client
+            : `${project.client} · ${localize(project.context, locale)}`}
         </p>
 
         <p className="line-clamp-3 text-small text-body">
@@ -100,12 +116,16 @@ export function ProjectCard({
             ))}
             {hiddenTechnologyCount > 0 ? (
               <li>
+                {/* Shows "+8"; reads "+8 more" as text and "8 more" aloud (the plus
+                    sign alone would be read as "plus"). */}
                 <Tag>
-                  <span aria-hidden="true">+{hiddenTechnologyCount}</span>
+                  <span>
+                    <span aria-hidden="true">+</span>
+                    {hiddenTechnologyCount}
+                  </span>
                   <span className="sr-only">
-                    {dictionary.projects.moreTechnologies(
-                      hiddenTechnologyCount,
-                    )}
+                    {" "}
+                    {dictionary.projects.moreTechnologies}
                   </span>
                 </Tag>
               </li>
