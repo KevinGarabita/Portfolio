@@ -29,7 +29,7 @@ const mediaSizes =
 
 /**
  * A compact project card (home page and projects page): media on top, then the status
- * and how it was built ("Vibe coded"), name, client, a three-line summary and the main
+ * and how it was built ("Desarrollo asistido por IA"), name, client, a three-line summary and the main
  * technologies. The full story lives on the case-study page. The name is the only link; its ::after covers the whole card
  * ("stretched link"), so the card is clickable without nesting interactive elements.
  * On hover or keyboard focus the card lifts, the gradient ring and the glow fade in and
