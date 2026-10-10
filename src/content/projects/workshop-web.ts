@@ -21,7 +21,7 @@ export const workshopWeb: Project = {
   context: sameInEveryLanguage("Kobler y Asociados"),
   period: { start: "2026-10" },
   kind: "web-app",
-  isFeatured: false,
+  isFeatured: true,
   teamSetup: "individual",
   summary: {
     es: "Web para un workshop presencial de diagnóstico empresarial: la sala responde por WhatsApp, una pantalla proyectada muestra las respuestas en vivo y el presentador avanza las preguntas desde un panel protegido con PIN.",
