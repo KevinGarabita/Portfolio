@@ -247,7 +247,7 @@ export function AppWindowIcon({ className }: IconProps) {
   );
 }
 
-/** Four-point sparkle: marks AI-generated ("vibe coded") work. */
+/** Four-point sparkle: marks AI-assisted work ("ai-assisted" build method). */
 export function SparklesIcon({ className }: IconProps) {
   return (
     <Icon className={className}>
