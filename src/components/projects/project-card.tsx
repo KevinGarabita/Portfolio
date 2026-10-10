@@ -54,7 +54,7 @@ export function ProjectCard({
 
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
         {project.status || project.buildMethod ? (
-          <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
             {project.status ? (
               <ProjectStatus
                 status={project.status}
