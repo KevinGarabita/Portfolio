@@ -180,7 +180,10 @@ export async function HeroSection() {
                 src={kevinGarabitaCutout}
                 alt={dictionary.hero.photoAlt}
                 preload
-                sizes="(min-width: 1800px) 34rem, (min-width: 1280px) 30rem, (min-width: 768px) 40vw, (min-width: 640px) 20rem, 16rem"
+                fetchPriority="high"
+                // The width the photo column really takes at each breakpoint (its max-w-*
+                // and md:col-span-5), so phones get a 480w file instead of a 640w one.
+                sizes="(max-height: 30rem) 12rem, (min-width: 1800px) 33rem, (min-width: 1280px) 30rem, (min-width: 768px) 37vw, (min-width: 640px) 20rem, (min-width: 360px) 15rem, 13rem"
                 className="hero-photo entrance-lift absolute inset-0 size-full"
               />
             </div>
