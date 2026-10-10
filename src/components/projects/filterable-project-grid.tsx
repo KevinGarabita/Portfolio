@@ -47,7 +47,7 @@ function pillClassNames(isActive: boolean): string {
     "inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-control border px-4 text-small font-bold whitespace-nowrap text-heading transition-colors",
     isActive
       ? "border-accent bg-raised-strong"
-      : "border-transparent bg-raised-strong hover:bg-control-border",
+      : "border-transparent bg-raised-strong hover:border-control-border hover:bg-control-hover",
   );
 }
 
@@ -151,7 +151,7 @@ function FilterMenu<Value extends string>({
                 aria-pressed={isSelected}
                 onClick={() => choose(choice.value)}
                 className={joinClassNames(
-                  "flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 rounded-[0.5rem] px-3 text-left text-small transition-colors hover:bg-control-border",
+                  "flex min-h-11 w-full cursor-pointer items-center justify-between gap-4 rounded-[0.5rem] px-3 text-left text-small transition-colors hover:bg-control-hover",
                   isSelected ? "font-bold text-heading" : "text-body",
                 )}
               >

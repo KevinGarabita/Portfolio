@@ -74,6 +74,8 @@ export function PageSection({
             >
               {getSectionNumber(id)}
             </span>
+            {/* Keeps the text "01 Proyectos destacados", not "01Proyectos…"; the block
+                span above starts a new line, so the space is never drawn. */}{" "}
             {title}
           </h2>
           <span

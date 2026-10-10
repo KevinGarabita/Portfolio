@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useId } from "react";
 
 import {
   technologyLogos,
@@ -14,47 +13,25 @@ interface TechnologyLogoProps {
 
 /**
  * A tool's logo in its brand colours, 24 px. Decorative: the tool's name is always
- * beside it. Vector logos are inline SVG; a multicolour logo that only exists as an
- * image (HighLevel) is a small PNG.
+ * beside it. Vector logos are small SVG files written at build time from
+ * content/technology-logos.ts (app/technology-logos/[file]/route.ts), not inline SVG, so
+ * their path data stays out of the page; a multicolour logo that only exists as an image
+ * (HighLevel) is a small PNG. Both load lazily.
  */
 export function TechnologyLogo({ logo, className }: TechnologyLogoProps) {
-  const clipId = useId();
   const definition: (typeof technologyLogos)[TechnologyLogoId] =
     technologyLogos[logo];
-  const sizeClassName = joinClassNames("size-6 shrink-0", className);
-
-  if ("src" in definition) {
-    return (
-      <Image
-        src={definition.src}
-        alt=""
-        width={24}
-        height={24}
-        unoptimized
-        className={sizeClassName}
-      />
-    );
-  }
-
-  const clip = "clip" in definition ? definition.clip : undefined;
 
   return (
-    <svg
-      viewBox={definition.viewBox}
-      fill={definition.color}
-      aria-hidden="true"
-      focusable="false"
-      className={sizeClassName}
-    >
-      {clip ? (
-        <clipPath id={clipId}>
-          <path d={clip} />
-        </clipPath>
-      ) : null}
-      <path
-        d={definition.path}
-        clipPath={clip ? `url(#${clipId})` : undefined}
-      />
-    </svg>
+    <Image
+      src={
+        "src" in definition ? definition.src : `/technology-logos/${logo}.svg`
+      }
+      alt=""
+      width={24}
+      height={24}
+      unoptimized
+      className={joinClassNames("size-6 shrink-0", className)}
+    />
   );
 }
