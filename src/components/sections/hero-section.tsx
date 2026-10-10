@@ -67,9 +67,6 @@ export async function HeroSection() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
   const resume = getResumeLink(locale);
-  // Relative to /[lang] ("./cv/…"), so ButtonLink renders a plain <a>: next/link would
-  // prefetch the PDF (about 100 KB) on every visit as if it were a page.
-  const resumeDownloadHref = `.${resume.href}`;
   const { location } = profile;
 
   return (
@@ -137,7 +134,7 @@ export async function HeroSection() {
                 {dictionary.hero.viewProjects}
               </ButtonLink>
               <ButtonLink
-                href={resumeDownloadHref}
+                href={resume.href}
                 hrefLang={resume.language}
                 type="application/pdf"
                 download
