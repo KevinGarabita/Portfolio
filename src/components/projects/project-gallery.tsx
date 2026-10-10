@@ -40,6 +40,57 @@ function getThumbnailClassNames(image: GalleryImage, index: number): string {
   return index === 0 ? "col-span-2 sm:col-span-4" : "col-span-2";
 }
 
+/** Columns each thumbnail takes from sm up (getThumbnailClassNames). */
+function getWideColumnSpan(image: GalleryImage, index: number): number {
+  if (image.viewport === "mobile") return 1;
+  return index === 0 ? 4 : 2;
+}
+
+/**
+ * next/image `sizes` of each thumbnail: the width it is drawn at, so the browser picks
+ * a sharp file without downloading a larger one. The gallery is as wide as the page
+ * container (1200 px from 1280 px, 1328 px from 1800 px): two columns on phones, four
+ * from sm, so one column is 282 px (314 px from 1800 px) on large screens.
+ *
+ * From sm up, a desktop screenshot that shares its row with phone screenshots is
+ * stretched to their height (9:16) and cropped at the sides, so it is drawn wider than
+ * its half of the row. The rows are worked out the way CSS grid places the items: in
+ * order, and an item that does not fit in what is left of a row starts the next one.
+ */
+function getThumbnailSizes(images: GalleryImage[]): string[] {
+  const rowOfImage: number[] = [];
+  const rowsWithPhones = new Set<number>();
+  let row = 0;
+  let usedColumns = 0;
+  images.forEach((image, index) => {
+    const span = getWideColumnSpan(image, index);
+    if (usedColumns + span > 4) {
+      row += 1;
+      usedColumns = 0;
+    }
+    usedColumns += span;
+    rowOfImage[index] = row;
+    if (image.viewport === "mobile") rowsWithPhones.add(row);
+  });
+
+  return images.map((image, index) => {
+    if (image.viewport === "mobile") {
+      return "(min-width: 1800px) 314px, (min-width: 1280px) 282px, (min-width: 640px) 25vw, 50vw";
+    }
+    if (getWideColumnSpan(image, index) === 4) {
+      return "(min-width: 1800px) 1328px, (min-width: 1280px) 1200px, 100vw";
+    }
+    // Width drawn when cropped to the phone screenshots' height, in columns.
+    const croppedColumns = rowsWithPhones.has(rowOfImage[index] ?? -1)
+      ? (16 / 9) * (image.width / image.height)
+      : 0;
+    if (croppedColumns <= 2) {
+      return "(min-width: 1800px) 652px, (min-width: 1280px) 588px, (min-width: 640px) 50vw, 100vw";
+    }
+    return `(min-width: 1800px) ${Math.round(314 * croppedColumns)}px, (min-width: 1280px) ${Math.round(282 * croppedColumns)}px, (min-width: 640px) ${Math.round(25 * croppedColumns)}vw, 100vw`;
+  });
+}
+
 /**
  * Screenshots of a case study. Every image is visible in the page as a thumbnail (the
  * first desktop one at full width), so nothing depends on JavaScript. Each thumbnail
@@ -99,6 +150,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
 
   const openImage = openIndex === null ? null : images[openIndex];
   const hasSeveralImages = imageCount > 1;
+  const thumbnailSizes = getThumbnailSizes(images);
 
   return (
     <>
@@ -119,11 +171,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                 alt={image.alt}
                 width={image.width}
                 height={image.height}
-                sizes={
-                  index === 0 && image.viewport === "desktop"
-                    ? "(min-width: 1280px) 1200px, 100vw"
-                    : "(min-width: 640px) 50vw, 100vw"
-                }
+                sizes={thumbnailSizes[index]}
                 className={joinClassNames(
                   "w-full transition-transform duration-700 ease-emphasized group-hover:scale-[1.02]",
                   index === 0 && image.viewport === "desktop"
@@ -176,7 +224,8 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                 alt={openImage.alt}
                 width={openImage.width}
                 height={openImage.height}
-                sizes="100vw"
+                // Never drawn wider than the file itself (maxWidth below).
+                sizes={`(min-width: ${openImage.width}px) ${openImage.width}px, 100vw`}
                 style={{
                   maxWidth: openImage.width,
                   maxHeight: openImage.height,

@@ -23,9 +23,13 @@ interface ProjectCardProps {
 /** How many technologies a card lists before summing up the rest as "+N". */
 const visibleTechnologyCount = 5;
 
-/** One column on phones, two from sm, three from lg (see ProjectGrid). */
+/**
+ * Card width: one column on phones, two from sm, three from lg (see ProjectGrid), inside
+ * the page container (16, 24 or 40 px of side padding; 1200 px wide from 1280 px and
+ * 1328 px from 1800 px) with 20 px gaps (24 px from lg).
+ */
 const mediaSizes =
-  "(min-width: 1800px) 440px, (min-width: 1280px) 400px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
+  "(min-width: 1800px) 427px, (min-width: 1280px) 384px, (min-width: 1024px) calc(33.3vw - 43px), (min-width: 640px) calc(50vw - 34px), calc(100vw - 2rem)";
 
 /**
  * A compact project card (home page and projects page): media on top, then the status
