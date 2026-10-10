@@ -67,6 +67,9 @@
   --color-control-border: var(
     --color-gray-control
   ); /* input/button outlines (>= 3:1) */
+  --color-control-hover: var(
+    --color-black-line
+  ); /* hover of options and pills on raised-strong: white text 13.17:1 (on control-border it was 4.35:1) */
   --color-accent: var(--color-orange-vibrant); /* orange fill and orange text */
   --color-accent-hover: var(
     --color-orange-light
