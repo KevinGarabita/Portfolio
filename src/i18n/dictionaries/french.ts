@@ -149,5 +149,17 @@ export const frenchDictionary: Dictionary = {
   },
   recruiter: {
     email: "E-mail",
+    availability: {
+      status: {
+        "open-to-offers": "Ouvert aux offres d'emploi",
+        "open-to-freelance": "Disponible pour des missions en freelance",
+      },
+      modality: {
+        remote: "à distance",
+        hybrid: "hybride",
+        "on-site": "sur site",
+      },
+      availableFrom: (month: string) => `Disponible à partir de ${month}`,
+    },
   },
 };

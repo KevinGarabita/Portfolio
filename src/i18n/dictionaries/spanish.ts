@@ -145,6 +145,18 @@ export const spanishDictionary = {
   },
   recruiter: {
     email: "Correo",
+    availability: {
+      status: {
+        "open-to-offers": "Abierto a ofertas de empleo",
+        "open-to-freelance": "Disponible para proyectos freelance",
+      },
+      modality: {
+        remote: "remoto",
+        hybrid: "híbrido",
+        "on-site": "presencial",
+      },
+      availableFrom: (month: string) => `Disponible desde ${month}`,
+    },
   },
 };
 

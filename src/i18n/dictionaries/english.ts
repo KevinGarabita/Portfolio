@@ -147,5 +147,17 @@ export const englishDictionary: Dictionary = {
   },
   recruiter: {
     email: "Email",
+    availability: {
+      status: {
+        "open-to-offers": "Open to job offers",
+        "open-to-freelance": "Available for freelance projects",
+      },
+      modality: {
+        remote: "remote",
+        hybrid: "hybrid",
+        "on-site": "on-site",
+      },
+      availableFrom: (month: string) => `Available from ${month}`,
+    },
   },
 };

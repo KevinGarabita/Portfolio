@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { RotatingTitle } from "@/components/motion/rotating-title";
+import { AvailabilityNote } from "@/components/recruiter/availability-note";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SocialIconLink } from "@/components/ui/social-icon-link";
 import { Container } from "@/components/ui/container";
@@ -52,7 +53,8 @@ const floatingTechnologies = [
  *
  * Text: location, then the h1 (the name, plus every title as static text for screen
  * readers), the rotating title (visual only), the subtitle and four calls to action of
- * the same size: the projects and the CV, then WhatsApp and email. The profiles sit below.
+ * the same size: the projects and the CV, then WhatsApp and email. Kevin's availability
+ * goes above them once content/availability.ts has it. The profiles sit below.
  *
  * Photo: Kevin's cut-out portrait in front of an orange-to-red circle, with an orbit
  * ring and three floating chips. The photo is the LCP element: it is preloaded and
@@ -110,6 +112,12 @@ export async function HeroSection() {
               stretches to fill its line, so the rows wrap cleanly down to 320 px. The CV downloads in the page's language,
               or in Spanish when there is none (lib/resume.ts); the label says so. */}
           <div className="entrance mt-8 flex flex-col gap-3 [--entrance-order:4]">
+            {/* Only when content/availability.ts has a status; renders nothing otherwise. */}
+            <AvailabilityNote
+              locale={locale}
+              dictionary={dictionary}
+              className="mb-1"
+            />
             <div className="flex flex-wrap gap-3">
               <ButtonLink
                 href={getHomeSectionHref(locale, homeSectionIds.projects)}
