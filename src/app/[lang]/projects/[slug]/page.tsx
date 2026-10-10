@@ -3,12 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { FlowDiagram } from "@/components/projects/flow-diagram";
+import { ProjectArchitecture } from "@/components/projects/project-architecture";
 import { ProjectBuildBadge } from "@/components/projects/project-build-badge";
 import { ProjectFacts } from "@/components/projects/project-facts";
 import {
   ProjectGallery,
   type GalleryLabels,
 } from "@/components/projects/project-gallery";
+import { ProjectMetrics } from "@/components/projects/project-metrics";
 import { ProjectStatus } from "@/components/projects/project-status";
 import {
   ProjectKeyPoints,
@@ -223,6 +225,17 @@ export default async function ProjectPage({
           <ProjectKeyPoints items={localizeEach(project.highlights)} />
         </ProjectStorySection>
 
+        {/* Before/after figures, only when the project has real ones. */}
+        {project.metrics?.length ? (
+          <ProjectStorySection id="metrics" title={sectionTitles.metrics}>
+            <ProjectMetrics
+              metrics={project.metrics}
+              locale={locale}
+              labels={dictionary.recruiter.metrics}
+            />
+          </ProjectStorySection>
+        ) : null}
+
         {project.flowDiagram?.length ? (
           <section
             aria-labelledby="flow-diagram-title"
@@ -252,6 +265,29 @@ export default async function ProjectPage({
         <ProjectStorySection id="solution" title={sectionTitles.solution}>
           <p className="max-w-prose">{localize(project.solution, locale)}</p>
         </ProjectStorySection>
+
+        {/* Full width, like the automation flow; only when the project has one. */}
+        {project.architecture ? (
+          <section
+            aria-labelledby="architecture-title"
+            data-reveal
+            className="border-t border-hairline py-10 lg:py-14"
+          >
+            <h2
+              id="architecture-title"
+              className="font-display text-title font-bold"
+            >
+              {sectionTitles.architecture}
+            </h2>
+            <div className="mt-8">
+              <ProjectArchitecture
+                architecture={project.architecture}
+                locale={locale}
+                toolLabel={projectTexts.flowStepTool}
+              />
+            </div>
+          </section>
+        ) : null}
 
         {project.decisions?.length ? (
           <ProjectStorySection id="decisions" title={sectionTitles.decisions}>

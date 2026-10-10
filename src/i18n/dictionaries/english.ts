@@ -92,6 +92,8 @@ export const englishDictionary: Dictionary = {
       role: "My role",
       results: "Results",
       nextSteps: "Next steps",
+      metrics: "Before and after",
+      architecture: "Architecture",
     },
     flowStepTool: "Tool",
     gallery: {
@@ -148,6 +150,10 @@ export const englishDictionary: Dictionary = {
   },
   recruiter: {
     email: "Email",
+    metrics: {
+      before: "Before",
+      after: "After",
+    },
     availability: {
       status: {
         "open-to-offers": "Open to job offers",

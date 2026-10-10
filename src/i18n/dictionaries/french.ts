@@ -93,6 +93,8 @@ export const frenchDictionary: Dictionary = {
       role: "Mon rôle",
       results: "Résultats",
       nextSteps: "Prochaines étapes",
+      metrics: "Avant et après",
+      architecture: "Architecture",
     },
     flowStepTool: "Outil",
     gallery: {
@@ -150,6 +152,10 @@ export const frenchDictionary: Dictionary = {
   },
   recruiter: {
     email: "E-mail",
+    metrics: {
+      before: "Avant",
+      after: "Après",
+    },
     availability: {
       status: {
         "open-to-offers": "Ouvert aux offres d'emploi",

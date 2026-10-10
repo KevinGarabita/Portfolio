@@ -90,6 +90,8 @@ export const spanishDictionary = {
       role: "Mi rol",
       results: "Resultado",
       nextSteps: "Siguientes pasos",
+      metrics: "Antes y después",
+      architecture: "Arquitectura",
     },
     flowStepTool: "Herramienta",
     gallery: {
@@ -146,6 +148,10 @@ export const spanishDictionary = {
   },
   recruiter: {
     email: "Correo",
+    metrics: {
+      before: "Antes",
+      after: "Después",
+    },
     availability: {
       status: {
         "open-to-offers": "Abierto a ofertas de empleo",
