@@ -3,6 +3,7 @@ import type { Project } from "@/types/content";
 import { controltecPestControlCrm } from "./controltec-pest-control-crm";
 import { fieldReportManager } from "./field-report-manager";
 import { koblerProjects } from "./kobler";
+import { workshopWeb } from "./workshop-web";
 
 /**
  * Every case study, one page each at /[lang]/projects/[slug].
@@ -13,4 +14,5 @@ export const projects: Project[] = [
   fieldReportManager,
   controltecPestControlCrm,
   ...koblerProjects,
+  workshopWeb,
 ];
