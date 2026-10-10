@@ -98,12 +98,15 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
   const websiteId = toAbsoluteUrl("/#website");
   const personId = toAbsoluteUrl("/#person");
 
-  // A student is affiliated with the university; alumniOf is only for finished studies.
-  const currentStudies = education
+  // alumniOf lists every school in content/education.ts, finished or not: it is the
+  // property schema.org gives a person's schools, and Kevin asked for Universidad Modelo
+  // there. affiliation repeats the ones without an end date, so the data still says he
+  // studies there today and has not graduated.
+  const schools = education.map((entry) =>
+    toCollegeOrUniversity(entry.institution),
+  );
+  const currentSchools = education
     .filter((entry) => !entry.period.end)
-    .map((entry) => toCollegeOrUniversity(entry.institution));
-  const finishedStudies = education
-    .filter((entry) => entry.period.end)
     .map((entry) => toCollegeOrUniversity(entry.institution));
 
   const person: Person = {
@@ -123,8 +126,8 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
       addressCountry: profile.location.countryCode,
     },
     sameAs: profile.socialProfiles.map((socialProfile) => socialProfile.url),
-    ...(currentStudies.length > 0 ? { affiliation: currentStudies } : {}),
-    ...(finishedStudies.length > 0 ? { alumniOf: finishedStudies } : {}),
+    ...(schools.length > 0 ? { alumniOf: schools } : {}),
+    ...(currentSchools.length > 0 ? { affiliation: currentSchools } : {}),
     knowsAbout: skillGroups
       .filter((group) => !nonTechnicalSkillGroupIds.has(group.id))
       .flatMap((group) =>
