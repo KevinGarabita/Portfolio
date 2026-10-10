@@ -113,6 +113,8 @@ export function BadgeTooltip({ label, description, icon }: BadgeTooltipProps) {
       }}
       className="relative z-[calc(var(--layer-raised)+1)] inline-flex max-w-full shrink-[999]"
     >
+      {/* Real spaces, so the text never runs into what comes before (e.g. the status
+          note on a card); a flex container does not render white-space-only text. */}{" "}
       <button
         type="button"
         aria-describedby={descriptionId}
@@ -133,11 +135,10 @@ export function BadgeTooltip({ label, description, icon }: BadgeTooltipProps) {
       >
         {icon}
         {label}
-      </button>
+      </button>{" "}
       <span id={descriptionId} className="sr-only">
         {description}
       </span>
-
       {isOpen ? (
         <span
           aria-hidden="true"
