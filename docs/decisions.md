@@ -60,9 +60,49 @@ Por eso:
 - `npm audit` reporta 5 vulnerabilidades altas que son una sola cadena: `braces` (≤ 3.0.3), que usa el plugin de ESLint de Next a través de `micromatch` y `fast-glob`. Solo afecta herramientas de desarrollo, no el sitio publicado, y no existe versión corregida de `braces` (la última es la 3.0.3).
 - Next.js anunció un parche de seguridad para el 14 de octubre de 2026. Hay que actualizar `next` y `eslint-config-next` antes de pasar a producción. Al 9 de octubre no había versión corregida (la última era 16.4.0); los pasos están en [deployment.md](deployment.md#8-dependencias-al-día).
 
+## Rendimiento y accesibilidad
+
+Medido con Lighthouse 13.5 (móvil, red y CPU simuladas) sobre `next start` local, en `/es`, `/en` y `/es/projects/field-report-manager`, mediana de tres corridas. Antes: rendimiento 93, 94 y 94 (LCP de 2.9 a 3.1 s). Después: 96, 96 y 97 (LCP de 2.66 a 2.76 s, FCP 0.91 s, TBT menor a 40 ms, CLS 0). Accesibilidad, buenas prácticas y SEO siguen en 100. Las cifras locales usan gzip; Vercel sirve Brotli, que comprime más.
+
+### Imágenes
+
+- **AVIF primero y WebP de respaldo** (`images.formats` en `next.config.ts`). La foto de la portada pasó de 58 KB (WebP de 640 px) a 16 KB (AVIF de 480 px) en un teléfono de 412 px.
+- **Anchos candidatos recortados**: `deviceSizes` de 640 a 1920 e `imageSizes` 256, 384 y 480. La imagen más ancha mide 1600 px, así que 2048 y 3840 solo reenviaban el original; 480 y 1440 cubren los huecos donde la foto y las capturas caían entre dos candidatos y bajaban uno mucho más grande.
+- **`sizes` igual al ancho con que se dibuja cada imagen**:
+  - la foto de la portada, el ancho de su columna en cada punto de quiebre (15rem en la mayoría de los teléfonos);
+  - las tarjetas, el ancho de su columna menos márgenes y separaciones, y un 11 % más cuando la captura es 16:9 y llena recortada el marco 16:10 (`ProjectVisual`);
+  - las miniaturas de la galería, media fila en teléfono y un cuarto desde `sm` las capturas de teléfono (antes pedían el ancho completo: un archivo de 750 px para 315 px de pantalla), y la captura de escritorio que comparte fila con capturas de teléfono, que se estira a su alto y se dibuja más ancha que media fila (antes quedaba borrosa a 1x);
+  - la vista ampliada, nunca más ancha que el archivo.
+
+  Revisado en ocho pantallas (de 360 a 1920 px, de 1x a 3x): todas las imágenes reciben un archivo al menos tan ancho como se dibujan y ninguno pasa de 1.5 veces ese ancho.
+
+- **Solo la imagen del LCP se precarga**: la foto de la portada, con `preload` y `fetchPriority="high"` (Next.js 16 pasa los dos al `<img>` y al `<link rel="preload">`). Las demás cargan en diferido. `ProjectVisual` acepta `preload` para la tarjeta que sea el LCP: la primera de la página de proyectos en teléfono.
+
+### HTML y JavaScript
+
+- **Logos de las habilidades como archivos SVG** (`/technology-logos/python.svg`), que escribe en el build `app/technology-logos/[file]/route.ts` desde `content/technology-logos.ts`. En línea eran unos 32 KB de trazos que la home llevaba dos veces (en el HTML y en el payload de React Server Components) para una sección muy abajo. El HTML de la home bajó de 57.6 a 26.4 KB con gzip (de 28.7 a 16.1 KB con Brotli) y los logos cargan en diferido. La URL termina en `.svg`, así que `proxy.ts` no la manda a un idioma.
+- **`ButtonLink` usa `next/link` solo para páginas del sitio.** `next/link` precarga en producción los enlaces que entran en pantalla; un botón hacia un PDF lo descargaba en cada visita. Archivos (`/cv/....pdf`), descargas y otros orígenes son `<a>` normales.
+
+### Lo que se probó y no se dejó
+
+- **CSS en línea** (`experimental.inlineCss`): quita la hoja que bloquea el render, pero Next.js 16.4 copia el CSS también en el payload de RSC. El HTML de la home creció de 57.6 a 80.4 KB con gzip y el FCP empeoró (1.24 a 1.38 s contra 1.06 s). La hoja externa (11 KB) se queda.
+- **Fuente de respaldo con métricas ajustadas**: `adjustFontFallback` sigue en `false`. Medido con fontkit, Atkinson Hyperlegible Next tiene el 99.4 % del ancho promedio de Arial, y todo el texto lleva `line-height` fijo. Reteniendo la fuente 1.5 s en Chrome, el cambio a la fuente web dio CLS 0.000 en `/es`, `/en` y un caso de estudio, en teléfono y escritorio: un `@font-face` de respaldo no tendría nada medible que corregir.
+- **JavaScript "legacy"** (Lighthouse estima 14 KB): es el `polyfill-module` que Next.js incluye siempre (1.4 KB reales); un `browserslist` no lo quita. Los 28 KB de "JavaScript sin usar" están en el chunk de React DOM y Next.js.
+- **`getImageProps` en lugar de `next/image`** para no cargar su Client Component: ahorraría unos pocos KB, pero la galería lo necesita igual y habría que tocar la portada.
+
+### Accesibilidad
+
+Comprobado con scripts de Puppeteer y axe-core 4.14 que viven fuera del repositorio:
+
+- **axe-core** (WCAG 2.0, 2.1 y 2.2 A y AA, y buenas prácticas) en inicio, proyectos, los seis casos de estudio y dos 404, en los cuatro idiomas, en teléfono y escritorio (68 páginas): sin violaciones. El texto que axe no puede decidir (sobre degradados y brillos) se midió con los píxeles de fondo reales: el contraste más bajo es 6.04:1.
+- **Hover de filtros**: el gris `control-border` bajaba el texto blanco a 4.35:1. El rol nuevo `control-hover` (#2a2a2a) lo deja en 13.17:1; las píldoras inactivas además muestran el borde al pasar el cursor.
+- **Vista ampliada de capturas**: el foco empieza en "Cerrar", Tab y Shift+Tab recorren solo los botones del diálogo, las flechas funcionan aunque se haga clic en la imagen, y al cerrar el foco vuelve a la miniatura que lo abrió. Cada miniatura se anuncia como "Ampliar: (descripción)"; antes su texto decía "Ampliar: Ampliar".
+- Foco visible (contorno naranja de 2 px) en todas las paradas del teclado de inicio, proyectos y casos de estudio; el enlace para saltar al contenido, el selector de idioma y los filtros se usan solo con teclado y Escape devuelve el foco a su botón.
+- Los números de sección y de paso llevan un espacio en el texto ("01 Proyectos destacados", "1 El cliente…") que no se dibuja.
+
 ## Foto recortada de la portada
 
 - `public/images/kevin-garabita-cutout.png` sale de `kevin-garabita.jpg` con `rembg` (modelo `birefnet-portrait`), en un entorno de Python aparte, fuera del proyecto. Se compararon `isnet-general-use` (dejaba un pedazo de la televisión del fondo pegado al pelo) y el alpha matting de `rembg` (bordes en escalones); `birefnet-portrait` separa bien los rizos.
 - Los colores de los bordes semitransparentes se recalcularon con `estimate_foreground_ml` de `pymatting`, para que la pared blanca y la tele no dejen un halo claro u oscuro alrededor del pelo; el alfa se ajustó apenas (umbral 0.04, gamma 1.15).
-- PNG con alfa completo (sin paleta, que dañaría los bordes del pelo), 900 × 1024, unos 880 KB. El navegador recibe la versión que optimiza `next/image` (WebP del tamaño que pide `sizes`).
+- PNG con alfa completo (sin paleta, que dañaría los bordes del pelo), 900 × 1024, unos 880 KB. El navegador recibe la versión que optimiza `next/image`: AVIF (o WebP si no lo admite) del ancho que pide `sizes`; en un teléfono de 412 px son 480 px y unos 16 KB.
 - La foto original se queda: la usan los datos estructurados.

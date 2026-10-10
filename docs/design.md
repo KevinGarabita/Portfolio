@@ -31,7 +31,7 @@ Los tokens viven en `src/app/globals.css`. Este documento explica para qué sirv
 
 ### Roles
 
-Los componentes usan los nombres de función, nunca los colores crudos: `page`, `raised`, `raised-strong`, `body`, `heading`, `muted`, `hairline`, `control-border`, `accent`, `accent-hover`, `accent-secondary`, `on-accent`, `link` y `focus`.
+Los componentes usan los nombres de función, nunca los colores crudos: `page`, `raised`, `raised-strong`, `body`, `heading`, `muted`, `hairline`, `control-border`, `control-hover`, `accent`, `accent-hover`, `accent-secondary`, `on-accent`, `link` y `focus`.
 
 ### Contraste medido (WCAG 2.x)
 
@@ -40,6 +40,8 @@ Los componentes usan los nombres de función, nunca los colores crudos: `page`, 
 - **Rojo `#e5252a`: 4.36:1** sobre la página y con texto negro o blanco encima. No alcanza 4.5:1, así que **nunca es texto pequeño**: solo degradados, bordes, brillos, hover y texto grande (24 px o más, o 18.66 px en negritas). El título que rota y el "404" usan el degradado porque son texto grande.
 - Los brillos naranjas y rojos del fondo no pasan de 16 % de opacidad, así que el texto encima conserva su contraste.
 - Bordes de controles (`#737373`, 4.17:1) y anillo de foco naranja: 3:1 o más.
+- **Hover de filtros y opciones de menú**: `control-hover` (`#2a2a2a`, el gris de las líneas), con texto blanco a 13.17:1 y la palomita naranja a 5:1. El gris de los bordes (`control-border`) dejaba el texto en 4.35:1, debajo de 4.5:1, así que nunca es fondo de texto.
+- Medido también con los píxeles reales detrás de cada texto (sobre degradados, brillos y superficies): el contraste más bajo del sitio es 6.04:1.
 
 ### Degradados
 
@@ -105,6 +107,8 @@ La solución:
 - Foco visible en todo: contorno naranja de 2 px con 2 px de separación, que deja un espacio del color de la página entre el anillo y un botón naranja.
 - Un `h1` por página y títulos en orden; regiones (`header`, `nav`, `main`, `footer`); `alt` y tamaño en todas las imágenes; áreas táctiles de 24 px o más (WCAG 2.5.8); botones de 40 a 48 px de alto.
 - Sin desplazamiento horizontal a 375 px.
+- **Vista ampliada de capturas**: el foco empieza en "Cerrar", Tab y Shift+Tab no salen del diálogo, las flechas cambian de imagen aunque se haga clic en ella, y al cerrar el foco vuelve a la miniatura que lo abrió.
+- Revisado con axe-core 4.14 (WCAG 2.2 AA) en todas las páginas de los cuatro idiomas, en teléfono y escritorio, y recorriendo con el teclado la home, los proyectos y los casos de estudio; detalles en [decisions.md](decisions.md#accesibilidad).
 
 ## Guía rápida
 
