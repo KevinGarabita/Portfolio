@@ -258,8 +258,11 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                 height={openImage.height}
                 // Never drawn wider than the file itself (maxWidth below).
                 sizes={`(min-width: ${openImage.width}px) ${openImage.width}px, 100vw`}
+                // min(100%, …): a plain pixel max-width overrides max-w-full, and a
+                // desktop screenshot sized by the available height then overflows a
+                // narrow screen (a phone showed only its middle).
                 style={{
-                  maxWidth: openImage.width,
+                  maxWidth: `min(100%, ${openImage.width}px)`,
                   maxHeight: openImage.height,
                 }}
                 className="min-h-0 w-auto max-w-full flex-1 object-contain"
