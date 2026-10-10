@@ -22,6 +22,7 @@ export const englishDictionary: Dictionary = {
   },
   resume: {
     view: "View résumé (PDF)",
+    download: "Download résumé",
   },
   projects: {
     sectionTitle: "Featured projects",
@@ -143,5 +144,8 @@ export const englishDictionary: Dictionary = {
     title: "Page not found",
     description: "The page you are looking for does not exist or has moved.",
     backHome: "Back to home",
+  },
+  recruiter: {
+    email: "Email",
   },
 };

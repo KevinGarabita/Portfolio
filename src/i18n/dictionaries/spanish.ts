@@ -20,6 +20,7 @@ export const spanishDictionary = {
   },
   resume: {
     view: "Ver CV (PDF)",
+    download: "Descargar CV",
   },
   projects: {
     sectionTitle: "Proyectos destacados",
@@ -141,6 +142,9 @@ export const spanishDictionary = {
     title: "Página no encontrada",
     description: "La página que buscas no existe o cambió de dirección.",
     backHome: "Volver al inicio",
+  },
+  recruiter: {
+    email: "Correo",
   },
 };
 

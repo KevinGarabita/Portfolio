@@ -23,6 +23,7 @@ export const frenchDictionary: Dictionary = {
   resume: {
     // The French pages link to the Spanish CV (lib/resume.ts) until one in French exists.
     view: "Voir le CV (PDF, en espagnol)",
+    download: "Télécharger le CV (en espagnol)",
   },
   projects: {
     sectionTitle: "Projets phares",
@@ -145,5 +146,8 @@ export const frenchDictionary: Dictionary = {
     description:
       "La page que vous cherchez n'existe pas ou a changé d'adresse.",
     backHome: "Retour à l'accueil",
+  },
+  recruiter: {
+    email: "E-mail",
   },
 };
