@@ -99,7 +99,11 @@ export interface SkillGroup {
   items: SkillItem[];
 }
 
-export type ProjectStatus = "in-production" | "in-development";
+/**
+ * "delivered" is finished work handed over to a client (e.g. agency work), with no claim
+ * about whether it still runs. Not used yet: no project has a confirmed status of this kind.
+ */
+export type ProjectStatus = "in-production" | "in-development" | "delivered";
 
 /** Groups projects on the site: freelance work or work done at Kobler y Asociados. */
 export type ProjectCategory = "freelance" | "kobler";

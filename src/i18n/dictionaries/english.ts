@@ -67,6 +67,7 @@ export const englishDictionary: Dictionary = {
     status: {
       "in-production": "In production",
       "in-development": "In development",
+      delivered: "Delivered",
     },
     teamSetup: {
       individual: "Individual project",
