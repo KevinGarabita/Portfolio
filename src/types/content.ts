@@ -54,10 +54,10 @@ export interface Profile {
   };
   socialProfiles: SocialProfile[];
   /**
-   * Public path to the CV (PDF) for each language. There is a Spanish and an English CV;
-   * the other languages use the English one.
+   * Public path to the CV (PDF) in each language it exists in. Spanish is required: a
+   * page whose language has no CV links to the Spanish one (lib/resume.ts).
    */
-  resumeFiles: Record<Locale, string>;
+  resumeFiles: { es: string } & Partial<Record<Locale, string>>;
 }
 
 export interface WorkExperience {

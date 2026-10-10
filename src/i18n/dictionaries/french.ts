@@ -21,7 +21,8 @@ export const frenchDictionary: Dictionary = {
     writeOnWhatsApp: "M'écrire sur WhatsApp",
   },
   resume: {
-    view: "Voir le CV (PDF, en anglais)",
+    // The French pages link to the Spanish CV (lib/resume.ts) until one in French exists.
+    view: "Voir le CV (PDF, en espagnol)",
   },
   projects: {
     sectionTitle: "Projets phares",
