@@ -33,9 +33,9 @@ export const englishDictionary: Dictionary = {
     },
     buildMethod: {
       "ai-assisted": {
-        label: "Vibe coded",
+        label: "AI-assisted development",
         description:
-          "Built with vibe coding: AI-generated code under my direction.",
+          "I'm responsible for the architecture, code review, testing and security; the code is generated with AI under my direction.",
       },
       "hand-coded": {
         label: "Hand-coded",

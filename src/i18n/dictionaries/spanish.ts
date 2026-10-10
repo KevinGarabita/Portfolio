@@ -31,9 +31,9 @@ export const spanishDictionary = {
     },
     buildMethod: {
       "ai-assisted": {
-        label: "Vibe coded",
+        label: "Desarrollo asistido por IA",
         description:
-          "Hecho con vibe coding: código generado con IA bajo mi dirección.",
+          "Arquitectura, revisión de código, pruebas y seguridad a mi cargo; código generado con IA bajo mi dirección.",
       },
       "hand-coded": {
         label: "Hecho a mano",

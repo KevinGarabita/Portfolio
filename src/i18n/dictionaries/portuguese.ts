@@ -33,9 +33,9 @@ export const portugueseDictionary: Dictionary = {
     },
     buildMethod: {
       "ai-assisted": {
-        label: "Vibe coded",
+        label: "Desenvolvimento assistido por IA",
         description:
-          "Feito com vibe coding: código gerado com IA sob a minha direção.",
+          "Arquitetura, revisão de código, testes e segurança ficam a meu cargo; o código é gerado com IA sob a minha direção.",
       },
       "hand-coded": {
         label: "Feito à mão",
