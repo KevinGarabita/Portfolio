@@ -201,5 +201,5 @@ export const workshopWeb: Project = {
       fr: "Réessayer répète la dernière commande à l'identique ; pour avancer, la commande indique la question de départ, si bien qu'une nouvelle tentative ne saute jamais de question.",
     },
   ],
-  lastUpdated: "2026-10-09",
+  lastUpdated: "2026-10-10",
 };

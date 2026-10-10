@@ -207,5 +207,5 @@ export const controltecPestControlCrm: Project = {
     pt: "Compilar e testar o app no iOS, fazer a câmera do celular abrir o app ao escanear uma etiqueta (hoje abre a versão web) e desenvolver o módulo de despesas.",
     fr: "Compiler et tester l'application sur iOS, faire en sorte que l'appareil photo du téléphone ouvre l'application en scannant une étiquette (aujourd'hui il ouvre la version web) et développer le module des dépenses.",
   },
-  lastUpdated: "2026-10-09",
+  lastUpdated: "2026-10-10",
 };

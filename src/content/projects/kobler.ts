@@ -169,7 +169,7 @@ export const koblerProjects: Project[] = [
         fr: "Si la boutique a un emplacement de stock que le flux ne connaît pas, il s'arrête sans rien écrire, car une mise à jour sans lui effacerait le stock de cet emplacement.",
       },
     ],
-    lastUpdated: "2026-10-09",
+    lastUpdated: "2026-10-10",
   },
   {
     slug: "neorgana-agent",
@@ -338,7 +338,7 @@ export const koblerProjects: Project[] = [
         fr: "Si un rendez-vous change de médecin, Zoom crée une autre réunion. Le flux des rendez-vous le détecte et relie de nouveau la nouvelle réunion à son opportunité.",
       },
     ],
-    lastUpdated: "2026-10-09",
+    lastUpdated: "2026-10-10",
   },
   {
     slug: "lamau-beach-automation",
@@ -460,6 +460,6 @@ export const koblerProjects: Project[] = [
         tool: "WhatsApp",
       },
     ],
-    lastUpdated: "2026-10-09",
+    lastUpdated: "2026-10-10",
   },
 ];

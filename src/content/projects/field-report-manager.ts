@@ -212,5 +212,5 @@ export const fieldReportManager: Project = {
       fr: "La génération du PDF et l'envoi des photos ont des limites de simultanéité et de fréquence ; quand le serveur est occupé, il répond par un message clair invitant à réessayer au lieu de rester bloqué.",
     },
   ],
-  lastUpdated: "2026-10-09",
+  lastUpdated: "2026-10-10",
 };

@@ -35,4 +35,4 @@ export const projectsPageDescription: LocalizedText = {
  * Update it by hand when that content changes; the sitemap and structured data read it.
  * Projects carry their own `lastUpdated`.
  */
-export const siteLastUpdated: CalendarDate = "2026-10-09";
+export const siteLastUpdated: CalendarDate = "2026-10-10";
