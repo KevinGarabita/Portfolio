@@ -21,7 +21,7 @@ export const koblerProjects: Project[] = [
     category: "kobler",
     context: sameInEveryLanguage("Kobler y Asociados"),
     kind: "ai-automation",
-    isFeatured: true,
+    isFeatured: false,
     teamSetup: "team",
     summary: {
       es: "Agente de WhatsApp que atiende a quien busca una moto Suzuki: responde con el catálogo de la tienda, genera la cotización y pasa a un asesor a quien quiere financiamiento. Un segundo flujo lee el PDF de existencias y actualiza el stock de la tienda en línea.",
