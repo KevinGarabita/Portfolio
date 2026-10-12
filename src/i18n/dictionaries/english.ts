@@ -57,7 +57,6 @@ export const englishDictionary: Dictionary = {
     },
     facts: {
       client: "Client",
-      context: "Context",
       period: "Period",
       technologies: "Technologies",
     },

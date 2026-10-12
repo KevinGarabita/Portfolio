@@ -58,7 +58,6 @@ export const portugueseDictionary: Dictionary = {
     },
     facts: {
       client: "Cliente",
-      context: "Contexto",
       period: "Período",
       technologies: "Tecnologias",
     },

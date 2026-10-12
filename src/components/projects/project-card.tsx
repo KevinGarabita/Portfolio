@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
-import { localize } from "@/i18n/localize";
+import { labelColon, localize } from "@/i18n/localize";
 import { joinClassNames } from "@/lib/class-names";
 import { getProjectCredit, getProjectTechnologies } from "@/lib/projects";
 import type { Project } from "@/types/content";
@@ -50,8 +50,7 @@ const tileSizes =
 /**
  * A project as a screenshot with its caption, with no panel around them: the status
  * ("En producción" is the only one in orange) and who the work was for, the name, its
- * one line of value (the tagline; the summary, cut to two lines, until the project has
- * one) and up to four technologies. The full story lives on the case-study page.
+ * one line of value (the tagline) and up to four technologies. The full story lives on the case-study page.
  *
  * The name is the only link; its ::after covers the whole card ("stretched link"), so
  * every part of the card opens the case study without nesting interactive elements. On
@@ -72,8 +71,6 @@ export function ProjectCard({
     0,
     visibleTechnologyCount,
   );
-  const valueLine = project.tagline ?? project.summary;
-
   return (
     <article
       className={joinClassNames(
@@ -136,10 +133,13 @@ export function ProjectCard({
             isFeature ? "line-clamp-2 lg:line-clamp-3" : "line-clamp-2",
           )}
         >
-          {localize(valueLine, locale)}
+          {localize(project.tagline, locale)}
         </p>
 
-        <p className="sr-only">{dictionary.projects.facts.technologies}:</p>
+        <p className="sr-only">
+          {dictionary.projects.facts.technologies}
+          {labelColon(locale)}
+        </p>
         <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-small text-muted">
           {technologies.map((technology) => (
             <li key={technology}>{technology}</li>

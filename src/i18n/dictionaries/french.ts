@@ -58,7 +58,6 @@ export const frenchDictionary: Dictionary = {
     },
     facts: {
       client: "Client",
-      context: "Contexte",
       period: "Période",
       technologies: "Technologies",
     },

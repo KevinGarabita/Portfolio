@@ -55,7 +55,6 @@ export const spanishDictionary = {
     },
     facts: {
       client: "Cliente",
-      context: "Contexto",
       period: "Periodo",
       technologies: "Tecnologías",
     },
