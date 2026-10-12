@@ -37,11 +37,11 @@ Qué esperar:
 
 ## 4. Variables de entorno
 
-- [ ] En Settings → Environment Variables, solo para **Production**: `NEXT_PUBLIC_SITE_URL=https://garasoftware.com.mx` (o `https://www.garasoftware.com.mx` si eliges `www` como dominio principal en el paso 5). Sin `/` al final.
+- [ ] En Settings → Environment Variables, solo para **Production**: `NEXT_PUBLIC_SITE_URL=https://www.garasoftware.com.mx`, el dominio principal (paso 5). Sin `/` al final. Sin ella, el build de producción falla a propósito.
 - [ ] Después de guardarla, **vuelve a desplegar** producción (Deployments → el último → Redeploy): el valor se lee al hacer el build.
 - No la pongas en Preview: los previews usan el dominio de producción que da Vercel, así sus canonical apuntan a producción.
 - Las variables `VERCEL_*` las define Vercel solo; deja marcada la opción "Enable access to System Environment Variables" (viene activada).
-- Por qué hace falta aunque Vercel tenga un respaldo: con varios dominios, Vercel elige el **más corto**, que puede no ser el principal.
+- Por qué hace falta aunque Vercel tenga un respaldo: con varios dominios, Vercel elige el **más corto** (`garasoftware.com.mx`), que redirige al principal. Un canonical que apunta a una redirección hace que Google elija otra URL como canónica ("Duplicada: Google ha elegido una versión canónica diferente a la del usuario").
 
 ## 5. Dominio `garasoftware.com.mx`
 
@@ -59,33 +59,36 @@ Antes de tocar el DNS:
 En Vercel:
 
 - [ ] Settings → Domains → agrega `garasoftware.com.mx` y `www.garasoftware.com.mx`.
-- [ ] Elige **un solo dominio principal** y configura el otro para que redirija a él (308). El que elijas es el que va en `NEXT_PUBLIC_SITE_URL`.
+- [ ] El dominio principal es **`www.garasoftware.com.mx`**; `garasoftware.com.mx` redirige a él (308). El principal es el que va en `NEXT_PUBLIC_SITE_URL`, en el sitemap y en Search Console.
 - [ ] En el panel DNS de donde registraste el dominio, crea **exactamente** los registros que muestra Vercel: un registro `A` para el dominio raíz y un `CNAME` para `www`. Cambia solo esos dos; no cambies los nameservers ni los registros de correo.
 - [ ] Espera a que Vercel marque los dos dominios como válidos y emita el certificado HTTPS (automático). Luego haz el paso 4.
 
 ## 6. Revisión después del despliegue
 
-Con el dominio ya funcionando (sustituye por tu dominio principal):
+Con el dominio ya funcionando:
 
 - [ ] Encabezados y redirecciones:
 
   ```bash
-  curl -I https://garasoftware.com.mx/                         # 308 a /en, con Cache-Control: private, no-store y Vary: Cookie
-  curl -I -H "Cookie: preferred-locale=es" https://garasoftware.com.mx/   # 307 a /es, mismos encabezados
-  curl -I https://garasoftware.com.mx/projects/field-report-manager       # 308 directo a /en/projects/field-report-manager
-  curl -I https://garasoftware.com.mx/es/projects/                         # 308 a /es/projects (solo quita la barra)
-  curl -I https://garasoftware.com.mx/projects/                # 308 directo a /en/projects, en un solo salto
-  curl -I https://www.garasoftware.com.mx/                     # 308 al dominio principal (o al revés)
-  curl -I https://garasoftware.com.mx/es                       # 200
-  curl -I https://garasoftware.com.mx/es/projects/no-existe    # 404
-  curl https://garasoftware.com.mx/robots.txt                  # Sitemap con la URL del dominio
-  curl https://garasoftware.com.mx/sitemap.xml                 # URLs absolutas del dominio, sin localhost ni vercel.app
+  curl -I https://www.garasoftware.com.mx/                     # 308 a /en, con Cache-Control: private, no-store y Vary: Cookie
+  curl -I -H "Cookie: preferred-locale=es" https://www.garasoftware.com.mx/   # 307 a /es, mismos encabezados
+  curl -I https://www.garasoftware.com.mx/projects/field-report-manager       # 308 directo a /en/projects/field-report-manager
+  curl -I https://www.garasoftware.com.mx/es/projects/                         # 308 a /es/projects (solo quita la barra)
+  curl -I https://www.garasoftware.com.mx/projects/            # 308 directo a /en/projects, en un solo salto
+  curl -I https://garasoftware.com.mx/es                       # 308 a https://www.garasoftware.com.mx/es (mismo camino)
+  curl -I https://www.garasoftware.com.mx/es                   # 200
+  curl -I https://www.garasoftware.com.mx/es/projects/no-existe   # 404
+  curl https://www.garasoftware.com.mx/robots.txt              # Sitemap con la URL del dominio principal
+  curl https://www.garasoftware.com.mx/sitemap.xml             # URLs absolutas con www, sin localhost ni vercel.app
   ```
 
 - [ ] Ver código fuente de `/es`, `/en` y un proyecto: `<title>`, `<meta name="description">`, `<link rel="canonical">`, los cinco `hreflang` (es, en, pt, fr, x-default), las etiquetas `og:*` y `twitter:*` (un solo `og:image`, con URL absoluta del dominio y un `og:image:alt` en el idioma de la página) y el bloque `application/ld+json` (en la home y en cada proyecto).
 - [ ] [Rich Results Test](https://search.google.com/test/rich-results) y [Schema Markup Validator](https://validator.schema.org/) con la home: debe reconocer `ProfilePage` y `Person` sin errores. Con un proyecto: `BreadcrumbList` sin errores en el Rich Results Test, y `CreativeWork` sin errores en el Schema Markup Validator (no genera resultado enriquecido).
 - [ ] Vista previa al compartir: [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/), [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) y un mensaje de WhatsApp a ti mismo con la URL de la home y de un proyecto. Si cambias la imagen, los dos primeros permiten volver a leerla; WhatsApp guarda la vista previa un tiempo.
-- [ ] Opcional: en [Google Search Console](https://search.google.com/search-console) agrega el dominio (verificación por registro TXT, sin tocar los demás registros) y envía `https://garasoftware.com.mx/sitemap.xml`.
+- [ ] En [Google Search Console](https://search.google.com/search-console) agrega el dominio (verificación por registro TXT, sin tocar los demás registros) y envía `https://www.garasoftware.com.mx/sitemap.xml`.
+- [ ] Indexación → Páginas: si aparecen estos motivos, revisa las URLs de ejemplo de cada uno y, cuando la causa esté corregida en producción, pulsa **Validar corrección**:
+  - "Bloqueada debido a otro problema de tipo 4xx" en URLs de `/_next/image`: un ancho (`w=`) que ya no está en `next.config.ts`. Los anchos solo se agregan, nunca se quitan (ver [decisions.md](decisions.md#imágenes)).
+  - "Duplicada: Google ha elegido una versión canónica diferente a la del usuario": con Inspeccionar URL, compara la "canónica declarada por el usuario" con la "seleccionada por Google". Si la declarada no lleva `www`, `NEXT_PUBLIC_SITE_URL` estaba mal al hacer el build.
 
 ## 7. Lighthouse
 

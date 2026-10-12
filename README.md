@@ -58,7 +58,7 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 
 - **Static generation everywhere**: `generateStaticParams` lists every language and project, and `dynamicParams = false` rejects anything else. Cache Components stays off: the site is fully static, and with it enabled a missing project answered 200 on its first request.
 - **Real 404s**: `app/global-not-found.tsx` answers any unknown URL with a server-rendered 404 page in all four languages.
-- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths trimmed to what the layouts draw, `sizes` that match the layout, and `fetchPriority="high"` only on the largest element of the first screen.
+- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths that cover what the layouts draw (never removed, because Google keeps the image URLs it has crawled), `sizes` that match the layout, and `fetchPriority="high"` only on the largest element of the first screen.
 - **Lean HTML**: the skill logos are SVG files from a statically generated route instead of inline markup, which cut the home page HTML by more than half.
 - **Self-hosted font** through `next/font`: the font files are downloaded at build time and served from the same domain.
 - **Motion only animates `transform` and `opacity`**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. Scroll reveals are progressive enhancement: the HTML arrives fully visible, and content is hidden only after the script knows what is already on screen. The hero photo, the largest element on the first screen, never starts invisible.
@@ -112,11 +112,11 @@ npm run dev                  # http://localhost:3000
 
 Only one variable is ever set by hand; Vercel provides the others.
 
-| Variable                        | Purpose                                                                                                                                                           | Where to set it                                                                            |
-| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| `NEXT_PUBLIC_SITE_URL`          | Base URL of the site, without a trailing `/`. Feeds `metadataBase`, the Open Graph image URLs, canonical URLs, `hreflang`, the sitemap, `robots.txt` and JSON-LD. | Vercel, Production environment, with the primary domain; redeploy afterwards (build time). |
-| `VERCEL_PROJECT_PRODUCTION_URL` | Production domain without a scheme; fallback when `NEXT_PUBLIC_SITE_URL` is empty.                                                                                | Nowhere: Vercel sets it.                                                                   |
-| `VERCEL_ENV`                    | Deployment environment. A production build fails while any `[PLACEHOLDER]` content remains.                                                                       | Nowhere: Vercel sets it.                                                                   |
+| Variable                        | Purpose                                                                                                                                                           | Where to set it                                                                                                                           |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`          | Base URL of the site, without a trailing `/`. Feeds `metadataBase`, the Open Graph image URLs, canonical URLs, `hreflang`, the sitemap, `robots.txt` and JSON-LD. | Vercel, Production environment: `https://www.garasoftware.com.mx`; redeploy afterwards (build time). A production build fails without it. |
+| `VERCEL_PROJECT_PRODUCTION_URL` | Production domain without a scheme; fallback when `NEXT_PUBLIC_SITE_URL` is empty.                                                                                | Nowhere: Vercel sets it.                                                                                                                  |
+| `VERCEL_ENV`                    | Deployment environment. A production build fails while any `[PLACEHOLDER]` content remains.                                                                       | Nowhere: Vercel sets it.                                                                                                                  |
 
 With none of them set, the site uses `http://localhost:3000`.
 
