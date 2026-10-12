@@ -14,8 +14,9 @@
  *   4. Type, radius and motion tokens.
  *   5. Fonts: mapped to the CSS variables that next/font puts on <html>.
  *   6. Base styles: gradients, glows, layers, header height and element defaults.
- *   7. Components: the backdrop, the hero portrait, the entrance on load, project
- *      tiles and framed links, the gradient ring, the header and the flow diagram.
+ *   7. Components: the backdrop, the hero photo, the entrance on load and the loops
+ *      around the photo, project tiles and framed links, the gradient ring, the header
+ *      and the flow diagram.
  *   8. Reduced motion (prefers-reduced-motion).
  *
  * Contrast (WCAG 2.x, measured): text #f5f5f5 on page 18.15:1, muted #a3a3a3 7.84:1,
@@ -113,7 +114,12 @@
   --text-title: clamp(1.625rem, 1.3333rem + 1.2963vw, 2.5rem); /* 26 -> 40px */
   --text-title--line-height: 1.15;
   --text-title--letter-spacing: -0.01em;
-  /* 32 -> 64px: the hero statement and the case-study title, nothing else. */
+  /* 28 -> 48px: the hero statement, in the text column beside the photo (3 to 4 lines
+   * on a desktop). */
+  --text-statement: clamp(1.75rem, 1.3333rem + 1.8519vw, 3rem);
+  --text-statement--line-height: 1.1;
+  --text-statement--letter-spacing: -0.015em;
+  /* 32 -> 64px: the case-study title, nothing else. */
   --text-headline: clamp(2rem, 1.3333rem + 2.963vw, 4rem);
   --text-headline--line-height: 1.08;
   --text-headline--letter-spacing: -0.02em;
@@ -221,6 +227,7 @@
   @media (width >= 112.5rem) {
     :root {
       --text-base: 1.1875rem;
+      --text-statement: 3.25rem;
       --text-headline: 4.5rem;
     }
   }
@@ -311,30 +318,33 @@
     );
   }
 
-  /* Hero portrait: the cut-out photo over the orange-to-red disc. The disc is 92% of
-   * the frame's width, centred, 14% from the top (see the hero). The photo shows
-   * inside the disc and, above the disc's centre line, outside it too: the curls break
-   * out of the circle and the shoulders stay inside it. The numbers follow from the
-   * frame's 900:1024 ratio: centre at 14% + 46% of the width = 54.43% of the height,
-   * radius 46% of the width = 40.43% of the height. */
-  .portrait-medallion {
-    mask-image:
-      radial-gradient(
-        ellipse 46% 40.43% at 50% 54.43%,
-        black 99.5%,
-        transparent 100%
-      ),
-      linear-gradient(black, black);
-    mask-size:
-      100% 100%,
-      100% 54.43%;
-    mask-position: center, top;
-    mask-repeat: no-repeat;
+  /* Hero photo, as Kevin asked to keep it: the circle and the cut-out fade into the
+   * page together at the bottom, where the original photo was cropped, so no straight
+   * edge shows. */
+  .hero-portrait {
+    mask-image: linear-gradient(to bottom, black 78%, transparent 99%);
   }
 
-  /* The one orchestrated moment of the home page: the hero arrives in sequence on load.
-   * Set --entrance-order on each element (0, 1, 2...). Text that can be the LCP element
-   * uses .entrance-slide (moves, never fades); decoration may use .entrance-scale. */
+  /* The orbit ring fades out behind the shoulders instead of crossing the shirt. */
+  .hero-orbit {
+    mask-image: linear-gradient(to bottom, black 50%, transparent 78%);
+  }
+
+  /* The photo's lower corners were cut by the original frame: fade the sides too. */
+  .hero-photo {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 9%,
+      black 91%,
+      transparent
+    );
+  }
+
+  /* The one orchestrated moment of each page: its first view arrives in sequence on
+   * load. Set --entrance-order on each element (0, 1, 2...). Text that can be the LCP
+   * element uses .entrance-slide (moves, never fades), the hero photo .entrance-lift
+   * (moves, never fades); decoration may use .entrance-scale. */
   .entrance {
     animation: rise-in var(--duration-slow) var(--ease-emphasized) both;
     animation-delay: calc(var(--entrance-order, 0) * var(--stagger-step));
@@ -346,11 +356,27 @@
     animation-delay: calc(var(--entrance-order, 0) * var(--stagger-step));
   }
 
+  /* Hero photo: moves up into place without fading, so it paints (LCP) on the first frame. */
+  .entrance-lift {
+    animation: lift-in 900ms var(--ease-emphasized) both;
+  }
+
   /* Staggered entrance that only moves (no fade): for a page's main text, which must
    * paint on the first frame because it can be the LCP element. */
   .entrance-slide {
     animation: lift-in var(--duration-slow) var(--ease-emphasized) both;
     animation-delay: calc(var(--entrance-order, 0) * var(--stagger-step));
+  }
+
+  /* Gentle up-and-down float for the chips around the hero photo. */
+  .motion-float {
+    animation: float 7s ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
+  }
+
+  /* Slow full turn for the orbit ring around the hero photo. */
+  .motion-orbit {
+    animation: orbit 48s linear infinite;
   }
 
   /* Gradient ring painted as the element's own 1px border: the gradient fills the
@@ -556,7 +582,20 @@
   }
 }
 
-/* 8. Reduced motion turns every animation and transition into an instant change. */
+@keyframes float {
+  50% {
+    transform: translate3d(0, -0.5rem, 0);
+  }
+}
+
+@keyframes orbit {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* 8. Reduced motion turns every animation and transition into an instant change and
+ * stops the loops around the hero photo. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -565,5 +604,10 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .motion-float,
+  .motion-orbit {
+    animation: none !important;
   }
 }

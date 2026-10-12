@@ -25,9 +25,9 @@ const kindOrder: ProjectKind[] = ["web-app", "ai-automation"];
  * Every project in one grid, with filters (type and technology). The home page shows
  * only the featured ones and links here. Filter options only list values that some
  * project has. The header follows the home page's scale: the h1 at the size of a home
- * section heading (the 64 px size is kept for the hero and the case-study titles) and
- * the description at reading size. It arrives on load without fading, the page's one
- * motion.
+ * section heading (the larger sizes are kept for the hero statement and the case-study
+ * titles) and the description at reading size. It arrives on load without fading, the
+ * page's one motion.
  */
 export default async function ProjectsPage() {
   const locale = await getCurrentLocale();
