@@ -22,7 +22,7 @@ export const koblerProjects: Project[] = [
     context: sameInEveryLanguage("Kobler y Asociados"),
     status: "in-production",
     kind: "ai-automation",
-    isFeatured: true,
+    isFeatured: false,
     teamSetup: "team",
     tagline: {
       es: "Cotiza motos por WhatsApp, filtra prospectos y actualiza el inventario sin captura manual.",

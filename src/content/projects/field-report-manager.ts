@@ -19,7 +19,7 @@ export const fieldReportManager: Project = {
   status: "completed-unreleased",
   period: { start: "2026-06", end: "2026-08" },
   kind: "web-app",
-  isFeatured: false,
+  isFeatured: true,
   teamSetup: "individual",
   tagline: {
     es: "Reportes de campo con fotos desde el celular, revisados y aprobados en un solo lugar.",
