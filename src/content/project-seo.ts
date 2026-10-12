@@ -97,10 +97,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Diagnostic en direct de l'atelier Appolo · React + Supabase",
     },
     description: {
-      es: "Web para el workshop Appolo: la sala responde por WhatsApp, una pantalla proyectada muestra las respuestas en vivo y el presentador avanza las preguntas.",
-      en: "Web app for the Appolo workshop: the audience answers on WhatsApp, a projected screen shows the answers live and the presenter runs it from a host panel.",
-      pt: "Aplicação web para o workshop Appolo: o público responde pelo WhatsApp, uma tela projetada mostra as respostas ao vivo e o apresentador avança pelo painel.",
-      fr: "Application web pour l'atelier Appolo : la salle répond sur WhatsApp, un écran projeté affiche les réponses en direct et l'animateur pilote depuis son panneau.",
+      es: "Sistema en producción para el workshop Appolo: la sala responde a un bot de WhatsApp en n8n y una pantalla proyecta las respuestas en vivo. React y Supabase.",
+      en: "System in production for the Appolo workshop: the audience answers a WhatsApp bot built in n8n and a projected screen shows the answers live. React, Supabase.",
+      pt: "Sistema em produção para o workshop Appolo: o público responde a um bot de WhatsApp feito no n8n e uma tela projeta as respostas ao vivo. React e Supabase.",
+      fr: "Système en production pour l'atelier Appolo : la salle répond à un bot WhatsApp créé dans n8n et un écran projette les réponses en direct. React et Supabase.",
     },
   },
 };
