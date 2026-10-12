@@ -96,9 +96,6 @@ export const spanishDictionary = {
         `Imagen ${current} de ${total}`,
     },
     backToProjects: "Volver a proyectos",
-    confidentialityNote:
-      "Código privado por confidencialidad con los clientes; capturas, arquitectura y demostración disponibles a solicitud.",
-    requestDetails: "Solicitar por correo",
     neighborNavigation: {
       label: "Más proyectos",
       previous: "Proyecto anterior",

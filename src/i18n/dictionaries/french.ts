@@ -99,9 +99,6 @@ export const frenchDictionary: Dictionary = {
         `Image ${current} sur ${total}`,
     },
     backToProjects: "Retour aux projets",
-    confidentialityNote:
-      "Code privé par confidentialité envers les clients ; captures d'écran, architecture et démonstration disponibles sur demande.",
-    requestDetails: "Demander par e-mail",
     neighborNavigation: {
       label: "Autres projets",
       previous: "Projet précédent",

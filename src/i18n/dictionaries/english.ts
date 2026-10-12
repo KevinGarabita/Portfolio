@@ -98,9 +98,6 @@ export const englishDictionary: Dictionary = {
         `Image ${current} of ${total}`,
     },
     backToProjects: "Back to projects",
-    confidentialityNote:
-      "Code kept private due to client confidentiality; screenshots, architecture, and a demo available upon request.",
-    requestDetails: "Request by email",
     neighborNavigation: {
       label: "More projects",
       previous: "Previous project",

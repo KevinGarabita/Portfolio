@@ -22,11 +22,8 @@ import { Container } from "@/components/ui/container";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  WhatsAppLogoIcon,
   ExternalLinkIcon,
-  MailIcon,
 } from "@/components/ui/icons";
-import { profile } from "@/content/profile";
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
@@ -38,7 +35,6 @@ import {
   getNeighborProjects,
   getProjectBySlug,
 } from "@/lib/projects";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import type { LocalizedText, Project } from "@/types/content";
 
 /**
@@ -111,8 +107,8 @@ function NeighborProjectLink({
 /**
  * Case study: header (category, status, title, summary, key facts), screenshots, key
  * points, the automation flow, then the story (problem, solution, decisions, failure
- * handling, role, results, next steps), public links, the confidentiality note and the
- * previous/next projects. Everything after the header fades in on scroll.
+ * handling, role, results, next steps), public links and the previous/next projects.
+ * Everything after the header fades in on scroll.
  */
 export default async function ProjectPage({
   params,
@@ -328,33 +324,6 @@ export default async function ProjectPage({
             </ul>
           </ProjectStorySection>
         ) : null}
-
-        <div
-          data-reveal
-          className="gradient-ring mt-4 rounded-section border p-4 min-[22.5rem]:p-6 sm:p-8"
-        >
-          <p className="max-w-prose">{projectTexts.confidentialityNote}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <ButtonLink
-              variant="secondary"
-              href={`mailto:${profile.email}?subject=${encodeURIComponent(projectName)}`}
-              leadingIcon={<MailIcon className="text-accent" />}
-            >
-              {projectTexts.requestDetails}
-            </ButtonLink>
-            <ButtonLink
-              variant="whatsapp"
-              className="max-[22.5rem]:px-4"
-              href={buildWhatsAppUrl(locale)}
-              target="_blank"
-              rel="noopener noreferrer"
-              leadingIcon={<WhatsAppLogoIcon />}
-            >
-              {dictionary.hero.writeOnWhatsApp}
-              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-            </ButtonLink>
-          </div>
-        </div>
       </article>
 
       <nav
