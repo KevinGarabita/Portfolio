@@ -27,10 +27,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Gestionnaire de rapports de terrain · FastAPI + React",
     },
     description: {
-      es: "App web en producción para UxmalTechnologies: los técnicos registran reportes con fotos desde el celular y el supervisor los aprueba. FastAPI, React y Supabase.",
-      en: "Web app in production for UxmalTechnologies: technicians log reports with photos from their phone and the supervisor approves them. FastAPI, React, Supabase.",
-      pt: "Aplicação web em produção para a UxmalTechnologies: os técnicos registram relatórios com fotos pelo celular e o supervisor os aprova. FastAPI, React e Supabase.",
-      fr: "Application web en production pour UxmalTechnologies : les techniciens saisissent rapports et photos sur mobile, le superviseur les approuve. FastAPI et React.",
+      es: "App web para UxmalTechnologies, terminada y sin publicar: el técnico registra reportes con fotos desde el celular y el supervisor los aprueba. FastAPI y React.",
+      en: "Web app for UxmalTechnologies, completed but not released: technicians log reports with photos from their phone and a supervisor approves them. FastAPI, React.",
+      pt: "Aplicação web para a UxmalTechnologies, concluída e não publicada: o técnico registra relatórios com fotos pelo celular e o supervisor aprova. FastAPI e React.",
+      fr: "Application web pour UxmalTechnologies, terminée mais non publiée : rapports avec photos saisis sur mobile et approuvés par le superviseur. FastAPI et React.",
     },
   },
   "controltec-pest-control-crm": {
