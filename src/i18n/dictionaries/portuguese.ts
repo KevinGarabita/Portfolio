@@ -6,6 +6,7 @@ export const portugueseDictionary: Dictionary = {
   opensInNewTab: "abre em uma nova aba",
   siteNavigation: {
     label: "Navegação principal",
+    menu: "Menu",
     home: "Início",
     projects: "Projetos",
     experience: "Experiência",
@@ -17,7 +18,6 @@ export const portugueseDictionary: Dictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, desenvolvedor backend, IA e automação",
-    viewProjects: "Ver projetos",
     writeOnWhatsApp: "Fale comigo no WhatsApp",
   },
   resume: {
@@ -109,6 +109,7 @@ export const portugueseDictionary: Dictionary = {
     sectionTitle: "Experiência",
     present: "atual",
     relatedProjects: "Estudos de caso deste trabalho",
+    moreDetails: "Mais detalhes",
   },
   education: {
     sectionTitle: "Formação",
@@ -120,13 +121,12 @@ export const portugueseDictionary: Dictionary = {
   about: {
     sectionTitle: "Sobre mim",
     facts: {
-      location: "Localização",
-      focus: "Foco",
       languages: "Idiomas",
     },
   },
   contact: {
     sectionTitle: "Contato",
+    lead: "Conte o que você quer desenvolver ou automatizar.",
     email: "E-mail",
     whatsApp: "WhatsApp",
     sendEmail: "Enviar e-mail",

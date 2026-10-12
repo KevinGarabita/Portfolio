@@ -4,6 +4,7 @@ export const spanishDictionary = {
   opensInNewTab: "se abre en una pestaña nueva",
   siteNavigation: {
     label: "Navegación principal",
+    menu: "Menú",
     home: "Inicio",
     projects: "Proyectos",
     experience: "Experiencia",
@@ -15,7 +16,6 @@ export const spanishDictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
-    viewProjects: "Ver proyectos",
     writeOnWhatsApp: "Escríbeme por WhatsApp",
   },
   resume: {
@@ -106,6 +106,7 @@ export const spanishDictionary = {
     sectionTitle: "Experiencia",
     present: "actualidad",
     relatedProjects: "Casos de estudio de este trabajo",
+    moreDetails: "Más detalles",
   },
   education: {
     sectionTitle: "Formación",
@@ -117,13 +118,12 @@ export const spanishDictionary = {
   about: {
     sectionTitle: "Sobre mí",
     facts: {
-      location: "Ubicación",
-      focus: "Enfoque",
       languages: "Idiomas",
     },
   },
   contact: {
     sectionTitle: "Contacto",
+    lead: "Cuéntame qué quieres desarrollar o automatizar.",
     email: "Correo",
     whatsApp: "WhatsApp",
     sendEmail: "Enviar correo",

@@ -15,9 +15,11 @@ interface ProjectStatusProps {
 
 /**
  * Status tag plus its note ("since July 2026"). Only "in production" gets the orange
- * fill; the tag text, not the colour, carries the meaning. A comma that is only read
- * joins them, so the text is "In production, since July 2026" and not two glued words;
- * notes start in lowercase for that reason.
+ * fill: "in development" and "completed, not released" are quiet grey outlines, so
+ * nothing that never went live reads as live. The tag text, not the colour, carries the
+ * meaning. A comma that is only read joins tag and note, so the text is "In production,
+ * since July 2026" and not two glued words; notes start in lowercase for that reason.
+ * Project cards show the tag alone; the case study adds the note.
  */
 export function ProjectStatus({
   status,

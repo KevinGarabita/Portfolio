@@ -6,6 +6,7 @@ export const englishDictionary: Dictionary = {
   opensInNewTab: "opens in a new tab",
   siteNavigation: {
     label: "Main navigation",
+    menu: "Menu",
     home: "Home",
     projects: "Projects",
     experience: "Experience",
@@ -17,7 +18,6 @@ export const englishDictionary: Dictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, backend, AI and automation engineer",
-    viewProjects: "View projects",
     writeOnWhatsApp: "Message me on WhatsApp",
   },
   resume: {
@@ -108,6 +108,7 @@ export const englishDictionary: Dictionary = {
     sectionTitle: "Experience",
     present: "present",
     relatedProjects: "Case studies from this job",
+    moreDetails: "More details",
   },
   education: {
     sectionTitle: "Education",
@@ -119,13 +120,12 @@ export const englishDictionary: Dictionary = {
   about: {
     sectionTitle: "About",
     facts: {
-      location: "Location",
-      focus: "Focus",
       languages: "Languages",
     },
   },
   contact: {
     sectionTitle: "Contact",
+    lead: "Tell me what you want to build or automate.",
     email: "Email",
     whatsApp: "WhatsApp",
     sendEmail: "Send an email",

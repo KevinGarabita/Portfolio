@@ -10,13 +10,15 @@ import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 import { LanguageSwitcher } from "./language-switcher";
 import { SiteHeaderFrame } from "./site-header-frame";
+import { SiteNavigation } from "./site-navigation";
 
 /**
- * Sticky header: the name (links home), section links, WhatsApp and the language menu.
- * Below 52rem the name, WhatsApp and the language share the first row and the section
- * links wrap onto a second one, so nothing scrolls sideways and no menu is needed. On
- * the narrowest phones (under 22.5rem) the name steps down to the body size so the row
- * still fits. Its height is --header-height in globals.css (used by scroll-padding-top).
+ * Sticky header, one row: the name (links home), the section links, the WhatsApp button
+ * and the language menu. WhatsApp is always on screen: a green 44 px button with the
+ * logo on phones, and with the word "WhatsApp" from sm. Below lg the section links fold
+ * into a menu button (SiteNavigation), so the row fits down to 320 px; on the narrowest
+ * phones (under 22.5rem) the name steps down to the body size. Its height is
+ * --header-height in globals.css (used by scroll-padding-top).
  */
 export async function SiteHeader() {
   const locale = await getCurrentLocale();
@@ -43,52 +45,39 @@ export async function SiteHeader() {
   return (
     <SiteHeaderFrame>
       <Container>
-        <div className="site-header-row relative flex flex-wrap items-center gap-x-3 pt-2 min-[52rem]:h-18 min-[52rem]:flex-nowrap min-[52rem]:gap-x-6 min-[52rem]:pt-0">
+        <div className="flex h-16 items-center gap-1 sm:gap-2 lg:h-18 lg:gap-4">
           <Link
             href={`/${locale}`}
-            className="flex min-h-12 items-center font-display text-subtitle font-extrabold whitespace-nowrap text-heading no-underline max-[22.5rem]:text-base"
+            className="mr-auto flex min-h-11 items-center font-display text-subtitle font-bold whitespace-nowrap text-heading no-underline max-[22.5rem]:text-base"
           >
             {profile.displayName}
           </Link>
 
-          <nav
-            aria-label={navigation.label}
-            className="order-last -mx-1 w-[calc(100%+0.5rem)] min-[22.5rem]:-mx-2 min-[22.5rem]:w-[calc(100%+1rem)] min-[52rem]:order-0 min-[52rem]:mx-0 min-[52rem]:ml-auto min-[52rem]:w-auto"
-          >
-            <ul className="flex flex-wrap">
-              {navigationLinks.map((navigationLink) => (
-                <li key={navigationLink.href}>
-                  <Link
-                    href={navigationLink.href}
-                    className="nav-link inline-flex min-h-11 items-center px-1 text-small font-bold text-muted transition-colors hover:text-heading min-[22.5rem]:px-2 lg:px-3"
-                  >
-                    {navigationLink.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <SiteNavigation
+            label={navigation.label}
+            menuLabel={navigation.menu}
+            links={navigationLinks}
+          />
 
-          <div className="ml-auto flex items-center gap-1 sm:gap-3 min-[52rem]:ml-0">
-            <ButtonLink
-              href={buildWhatsAppUrl(locale)}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="secondary"
-              size="compact"
-              leadingIcon={<WhatsAppLogoIcon colors="brand" />}
-              className="max-sm:size-11 max-sm:gap-0 max-sm:px-0"
-            >
-              <span className="sr-only sm:not-sr-only">
-                {dictionary.contact.whatsApp}
-              </span>
-              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-            </ButtonLink>
-            <LanguageSwitcher
-              currentLocale={locale}
-              label={dictionary.languageSwitcher.label}
-            />
-          </div>
+          <ButtonLink
+            href={buildWhatsAppUrl(locale)}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="whatsapp"
+            size="compact"
+            leadingIcon={<WhatsAppLogoIcon />}
+            className="max-sm:size-11 max-sm:gap-0 max-sm:px-0"
+          >
+            <span className="sr-only sm:not-sr-only">
+              {dictionary.contact.whatsApp}
+            </span>
+            <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+          </ButtonLink>
+
+          <LanguageSwitcher
+            currentLocale={locale}
+            label={dictionary.languageSwitcher.label}
+          />
         </div>
       </Container>
     </SiteHeaderFrame>

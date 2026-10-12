@@ -189,6 +189,15 @@ export function CloseIcon({ className }: IconProps) {
   );
 }
 
+/** Three lines: the button that opens the section links on phones and tablets. */
+export function MenuIcon({ className }: IconProps) {
+  return (
+    <Icon className={className}>
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </Icon>
+  );
+}
+
 export function ChevronDownIcon({ className }: IconProps) {
   return (
     <Icon className={className}>

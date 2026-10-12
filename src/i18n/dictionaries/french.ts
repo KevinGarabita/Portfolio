@@ -6,6 +6,7 @@ export const frenchDictionary: Dictionary = {
   opensInNewTab: "s'ouvre dans un nouvel onglet",
   siteNavigation: {
     label: "Navigation principale",
+    menu: "Menu",
     home: "Accueil",
     projects: "Projets",
     experience: "Expérience",
@@ -17,7 +18,6 @@ export const frenchDictionary: Dictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, développeur backend, IA et automatisation",
-    viewProjects: "Voir les projets",
     writeOnWhatsApp: "M'écrire sur WhatsApp",
   },
   resume: {
@@ -109,6 +109,7 @@ export const frenchDictionary: Dictionary = {
     sectionTitle: "Expérience",
     present: "aujourd'hui",
     relatedProjects: "Études de cas issues de ce poste",
+    moreDetails: "Plus de détails",
   },
   education: {
     sectionTitle: "Formation",
@@ -120,13 +121,12 @@ export const frenchDictionary: Dictionary = {
   about: {
     sectionTitle: "À propos",
     facts: {
-      location: "Localisation",
-      focus: "Spécialité",
       languages: "Langues",
     },
   },
   contact: {
     sectionTitle: "Contact",
+    lead: "Dites-moi ce que vous souhaitez développer ou automatiser.",
     email: "E-mail",
     whatsApp: "WhatsApp",
     sendEmail: "Envoyer un e-mail",
