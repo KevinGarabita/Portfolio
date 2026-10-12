@@ -24,7 +24,10 @@ const kindOrder: ProjectKind[] = ["web-app", "ai-automation"];
 /**
  * Every project in one grid, with filters (type and technology). The home page shows
  * only the featured ones and links here. Filter options only list values that some
- * project has.
+ * project has. The header follows the home page's scale: the h1 at the size of a home
+ * section heading (the 64 px size is kept for the hero and the case-study titles) and
+ * the description at reading size. It arrives on load without fading, the page's one
+ * motion.
  */
 export default async function ProjectsPage() {
   const locale = await getCurrentLocale();
@@ -58,17 +61,17 @@ export default async function ProjectsPage() {
   }));
 
   return (
-    <Container className="pt-10 pb-20 lg:pt-16 lg:pb-28">
-      <header className="max-w-3xl">
-        <h1 className="entrance-slide font-display text-headline font-extrabold [--entrance-order:0]">
+    <Container className="pt-8 pb-16 sm:pt-10 lg:pt-12 lg:pb-24">
+      <header className="max-w-prose">
+        <h1 className="entrance-slide font-display text-title font-bold [--entrance-order:0]">
           {allProjectsPage.title}
         </h1>
-        <p className="entrance-slide mt-6 text-subtitle [--entrance-order:1]">
+        <p className="entrance-slide mt-3 text-muted [--entrance-order:1]">
           {allProjectsPage.description}
         </p>
       </header>
 
-      <div className="entrance-slide mt-10 [--entrance-order:2] lg:mt-14">
+      <div className="entrance-slide mt-8 [--entrance-order:2] lg:mt-10">
         <FilterableProjectGrid
           projects={filterableProjects}
           kindOptions={kindOptions}
