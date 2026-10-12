@@ -219,7 +219,6 @@
      * pixels at every common display scale (100, 125, 150, 175, 200, 250, 300%), so a
      * lifted border or gradient ring stays on the pixel grid instead of being smeared
      * across two rows of pixels. */
-    --lift-control: 4px;
     --lift-card: 8px;
 
     /* Stacking layers. */
@@ -487,12 +486,6 @@
     pointer-events: none;
   }
 
-  /* WhatsApp button: the hover glow is green instead of orange. */
-  .glow-whatsapp {
-    --glow-accent: 0 0.75rem 2rem -0.75rem
-      color-mix(in srgb, var(--color-whatsapp) 60%, transparent);
-  }
-
   /* Project cards: lift, gradient ring and glow on hover or keyboard focus. At rest the
    * ring shows the hairline colour. */
   .project-card {
@@ -540,34 +533,6 @@
     .project-card:hover .project-card-arrow {
       transform: translateX(0.25rem);
     }
-  }
-
-  /* Buttons: a small lift, the glow layer, and the icon nudging forward. --ring-fill
-   * is the surface of the gradient-ring (secondary) buttons. */
-  .button-motion {
-    transition:
-      transform var(--duration-quick) var(--ease-standard),
-      background-color var(--duration-quick) var(--ease-standard),
-      --ring-fill var(--duration-quick) var(--ease-standard);
-  }
-
-  @media (hover: hover) {
-    .button-motion:hover {
-      --glow-opacity: 1;
-      transform: translateY(calc(-1 * var(--lift-control)));
-    }
-
-    .button-motion:hover .button-icon {
-      transform: translateX(0.1875rem);
-    }
-  }
-
-  .button-motion:active {
-    transform: none;
-  }
-
-  .button-motion .button-icon {
-    transition: transform var(--duration-moderate) var(--ease-emphasized);
   }
 
   /* Section links of the header. In the header row (from lg) an orange underline grows

@@ -44,9 +44,7 @@ interface SocialIconLinkProps {
 
 /**
  * Round, logo-only link (44 px target) with the network's logo in its own colours. It
- * always opens in a new tab, and screen readers hear so.
- * On hover the ring turns orange and the button lifts by --lift-control (4 px, a whole
- * number of device pixels at every common display scale, so the ring stays sharp).
+ * always opens in a new tab, and screen readers hear so. On hover the ring turns orange.
  */
 export function SocialIconLink({
   network,
@@ -61,7 +59,7 @@ export function SocialIconLink({
       target="_blank"
       rel={rel ? `${rel} noopener noreferrer` : "noopener noreferrer"}
       title={label}
-      className="inline-flex size-11 items-center justify-center rounded-full border border-control-border bg-raised no-underline transition-transform hover:-translate-y-(--lift-control) hover:border-accent"
+      className="inline-flex size-11 items-center justify-center rounded-full border border-control-border no-underline transition-colors hover:border-accent"
     >
       <SocialNetworkLogo network={network} />
       <span className="sr-only">
