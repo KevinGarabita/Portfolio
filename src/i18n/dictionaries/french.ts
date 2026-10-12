@@ -18,7 +18,6 @@ export const frenchDictionary: Dictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, développeur backend, IA et automatisation",
-    viewProjects: "Voir les projets",
     writeOnWhatsApp: "M'écrire sur WhatsApp",
   },
   resume: {

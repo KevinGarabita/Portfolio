@@ -16,7 +16,6 @@ export const spanishDictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
-    viewProjects: "Ver proyectos",
     writeOnWhatsApp: "Escríbeme por WhatsApp",
   },
   resume: {

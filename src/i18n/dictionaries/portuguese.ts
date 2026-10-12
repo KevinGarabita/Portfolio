@@ -18,7 +18,6 @@ export const portugueseDictionary: Dictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, desenvolvedor backend, IA e automação",
-    viewProjects: "Ver projetos",
     writeOnWhatsApp: "Fale comigo no WhatsApp",
   },
   resume: {
