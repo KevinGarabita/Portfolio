@@ -4,9 +4,11 @@ import type { Project } from "@/types/content";
 import { koblerHighlights } from "../experience";
 
 /**
- * Work done at Kobler y Asociados, shown together as "Proyectos en Kobler".
- * Sources: Kevin's CV and the n8n workflows of each client, read as they were up to
- * August 2026 (the end of the job). No client data, credentials or internal links.
+ * Team work at Kobler y Asociados, credited as "Colaboración con Kobler": each role says
+ * what Kevin built himself. All three are in production (Kevin, 12 October 2026; start
+ * dates unknown, so no status note). Sources: Kevin's CV and the n8n workflows of each
+ * client, read as they were up to August 2026 (the end of the job). No client data,
+ * credentials or internal links.
  */
 export const koblerProjects: Project[] = [
   {
@@ -20,14 +22,21 @@ export const koblerProjects: Project[] = [
     client: "Motosureste Suzuki",
     category: "kobler",
     context: sameInEveryLanguage("Kobler y Asociados"),
+    status: "in-production",
     kind: "ai-automation",
-    isFeatured: false,
+    isFeatured: true,
     teamSetup: "team",
+    tagline: {
+      es: "Cotiza motos por WhatsApp, filtra prospectos y actualiza el inventario sin captura manual.",
+      en: "Quotes motorcycles on WhatsApp, screens leads and updates stock with no manual entry.",
+      pt: "Faz orçamentos de motos pelo WhatsApp, filtra leads e atualiza o estoque sem digitação.",
+      fr: "Devis de motos sur WhatsApp, tri des prospects et stocks à jour sans saisie manuelle.",
+    },
     summary: {
-      es: "Agente de WhatsApp que atiende a quien busca una moto Suzuki: responde con el catálogo de la tienda, genera la cotización y pasa a un asesor a quien quiere financiamiento. Un segundo flujo lee el PDF de existencias y actualiza el stock de la tienda en línea.",
-      en: "WhatsApp agent for people looking for a Suzuki motorcycle: it answers from the store catalog, generates the quote and hands financing requests to an advisor. A second flow reads the stock PDF and updates the online store's inventory.",
-      pt: "Agente de WhatsApp que atende quem procura uma moto Suzuki: responde com o catálogo da loja, gera o orçamento e encaminha a um consultor quem quer financiamento. Um segundo fluxo lê o PDF de estoque e atualiza o estoque da loja on-line.",
-      fr: "Agent WhatsApp pour les personnes qui cherchent une moto Suzuki : il répond à partir du catalogue de la boutique, génère le devis et transmet les demandes de financement à un conseiller. Un second flux lit le PDF de stock et met à jour les stocks de la boutique en ligne.",
+      es: "Agente de WhatsApp que atiende a quien busca una moto Suzuki con el catálogo vigente de la tienda, genera su cotización y deja a los asesores enfocados en cerrar ventas. Un segundo flujo lee el PDF de existencias y mantiene al día el inventario de la tienda en línea.",
+      en: "A WhatsApp agent that helps people looking for a Suzuki motorcycle with the store's current catalog, generates their quote and keeps advisors focused on closing sales. A second flow reads the stock PDF and keeps the online store's inventory up to date.",
+      pt: "Agente de WhatsApp que atende quem procura uma moto Suzuki com o catálogo atual da loja, gera o orçamento e deixa os consultores focados em fechar vendas. Um segundo fluxo lê o PDF de estoque e mantém em dia o estoque da loja on-line.",
+      fr: "Un agent WhatsApp qui accompagne les personnes à la recherche d'une moto Suzuki avec le catalogue à jour de la boutique, génère leur devis et laisse les conseillers se concentrer sur la conclusion des ventes. Un second flux lit le PDF de stock et tient à jour l'inventaire de la boutique en ligne.",
     },
     problem: {
       es: "Los asesores de Motosureste atendían todas las conversaciones de WhatsApp, también las de personas sin intención de compra. Además, el inventario de las cinco sucursales se capturaba a mano en la tienda en línea a partir del PDF de existencias que envía Suzuki.",
@@ -42,33 +51,32 @@ export const koblerProjects: Project[] = [
       fr: "Quand un message arrive, GoHighLevel l'envoie à n8n et l'agent répond avec un modèle d'OpenAI. Il consulte à ce moment-là les modèles, prix, couleurs et offres dans la boutique WooCommerce : il ne les invente donc pas. Si le client veut un devis, l'agent lui demande ses coordonnées, lui montre un pré-devis à confirmer et génère le devis dans GoHighLevel. Pour les stocks, le PDF arrive par WhatsApp, un modèle d'IA extrait les quantités de chaque modèle et couleur, et le flux les enregistre par succursale dans WooCommerce via son API REST.",
     },
     role: {
-      es: "Fue trabajo en equipo dentro de Kobler. Construí en n8n el agente y el flujo de inventario, los monitoreé en producción y corregí sus fallas. También participé en las reuniones con el cliente para levantar reglas de negocio e identificar casos borde.",
-      en: "This was team work at Kobler. I built the agent and the inventory flow in n8n, monitored them in production and fixed their issues. I also took part in client meetings to gather business rules and identify edge cases.",
-      pt: "Foi um trabalho em equipe na Kobler. Construí no n8n o agente e o fluxo de estoque, monitorei os dois em produção e corrigi suas falhas. Também participei das reuniões com o cliente para levantar regras de negócio e identificar casos extremos.",
-      fr: "C'était un travail d'équipe chez Kobler. J'ai construit dans n8n l'agent et le flux de stocks, je les ai surveillés en production et j'ai corrigé leurs incidents. J'ai aussi participé aux réunions avec le client pour recueillir les règles métier et identifier les cas limites.",
+      es: "Colaboración con el equipo de Kobler. Mi aporte: construí en n8n el agente y el flujo de inventario, los cuidé en producción con monitoreo y corrección de fallas, y participé en las reuniones con el cliente para definir las reglas de negocio y anticipar casos borde.",
+      en: "A collaboration with the Kobler team. My part: I built the agent and the inventory flow in n8n, looked after them in production by monitoring them and fixing issues, and joined client meetings to define the business rules and anticipate edge cases.",
+      pt: "Colaboração com a equipe da Kobler. Minha parte: construí no n8n o agente e o fluxo de estoque, cuidei deles em produção com monitoramento e correção de falhas e participei das reuniões com o cliente para definir as regras de negócio e antecipar casos extremos.",
+      fr: "Une collaboration avec l'équipe de Kobler. Ma contribution : j'ai construit dans n8n l'agent et le flux de stocks, je les ai suivis en production en surveillant leur fonctionnement et en corrigeant les incidents, et j'ai participé aux réunions avec le client pour définir les règles métier et anticiper les cas limites.",
     },
     results: [
       {
-        es: "Los asesores dejaron de atender todas las conversaciones: el agente filtra a los prospectos sin intención de compra y ellos se enfocan en cerrar ventas.",
-        en: "Advisors stopped handling every conversation: the agent filters out prospects with no purchase intent, and advisors focus on closing sales.",
-        pt: "Os consultores deixaram de atender todas as conversas: o agente filtra os leads sem intenção de compra e eles se concentram em fechar vendas.",
-        fr: "Les conseillers ont cessé de traiter toutes les conversations : l'agent écarte les prospects sans intention d'achat et ils se concentrent sur la conclusion des ventes.",
+        es: "Los asesores ya no atienden todas las conversaciones: el agente filtra a quien no tiene intención de compra y ellos dedican su tiempo a cerrar ventas.",
+        en: "Advisors no longer handle every conversation: the agent screens out people with no intention to buy, so they spend their time closing sales.",
+        pt: "Os consultores não atendem mais todas as conversas: o agente filtra quem não tem intenção de compra, e eles dedicam o tempo a fechar vendas.",
+        fr: "Les conseillers ne traitent plus toutes les conversations : l'agent écarte les personnes sans intention d'achat, et ils consacrent leur temps à conclure des ventes.",
       },
       {
-        es: "El inventario de las cinco sucursales dejó de capturarse a mano.",
-        en: "Stock for the five branches is no longer entered by hand.",
-        pt: "O estoque das cinco filiais deixou de ser lançado à mão.",
-        fr: "Les stocks des cinq succursales ne sont plus saisis à la main.",
+        es: "El inventario de las cinco sucursales se actualiza sin captura manual.",
+        en: "Stock for the five branches is updated with no manual entry.",
+        pt: "O estoque das cinco filiais é atualizado sem digitação manual.",
+        fr: "Les stocks des cinq succursales sont mis à jour sans saisie manuelle.",
       },
       {
-        es: "Cada cotización queda registrada en GoHighLevel como oportunidad de venta, con el modelo y el color que eligió el cliente y asignada a su asesor.",
-        en: "Every quote is recorded in GoHighLevel as a sales opportunity, with the model and color the customer chose, assigned to their advisor.",
-        pt: "Cada orçamento fica registrado no GoHighLevel como oportunidade de venda, com o modelo e a cor que o cliente escolheu e atribuído ao seu consultor.",
-        fr: "Chaque devis est enregistré dans GoHighLevel comme opportunité de vente, avec le modèle et la couleur choisis par le client, et attribué à son conseiller.",
+        es: "Cada cotización llega a GoHighLevel como oportunidad de venta, con el modelo y el color que eligió el cliente y asignada a su asesor.",
+        en: "Every quote reaches GoHighLevel as a sales opportunity, with the model and color the customer chose, assigned to their advisor.",
+        pt: "Cada orçamento chega ao GoHighLevel como oportunidade de venda, com o modelo e a cor que o cliente escolheu e atribuído ao seu consultor.",
+        fr: "Chaque devis arrive dans GoHighLevel comme opportunité de vente, avec le modèle et la couleur choisis par le client, et attribué à son conseiller.",
       },
     ],
     highlights: [
-      koblerHighlights.motosuresteSuzuki,
       koblerHighlights.inventory,
       {
         es: "Para cotizar, el agente confirma modelo, color, nombre, teléfono y correo, muestra una precotización y, cuando el cliente la aprueba, genera la cotización formal y le comparte el enlace.",
@@ -90,7 +98,7 @@ export const koblerProjects: Project[] = [
       },
     ],
     stack: ["n8n", "OpenAI API"],
-    integrations: ["GoHighLevel", "WhatsApp", "WooCommerce"],
+    integrations: ["WhatsApp", "WooCommerce", "GoHighLevel"],
     images: [],
     links: [],
     flowDiagram: [
@@ -169,7 +177,7 @@ export const koblerProjects: Project[] = [
         fr: "Si la boutique a un emplacement de stock que le flux ne connaît pas, il s'arrête sans rien écrire, car une mise à jour sans lui effacerait le stock de cet emplacement.",
       },
     ],
-    lastUpdated: "2026-10-10",
+    lastUpdated: "2026-10-12",
   },
   {
     slug: "neorgana-agent",
@@ -182,14 +190,21 @@ export const koblerProjects: Project[] = [
     client: "Neorgana",
     category: "kobler",
     context: sameInEveryLanguage("Kobler y Asociados"),
+    status: "in-production",
     kind: "ai-automation",
     isFeatured: false,
     teamSetup: "team",
+    tagline: {
+      es: "Lleva a cada paciente con el consultor adecuado y envía el seguimiento tras la consulta.",
+      en: "Matches each patient with the right consultant and sends the follow-up after the call.",
+      pt: "Leva cada paciente ao consultor certo e envia o acompanhamento depois da consulta.",
+      fr: "Oriente chaque patient vers le bon consultant et envoie le suivi après la consultation.",
+    },
     summary: {
-      es: "Agente de WhatsApp para una clínica: responde a cada paciente en su idioma, elige al consultor adecuado y le envía su calendario para agendar una consulta por Zoom. Al terminar la videollamada, otro flujo actualiza el CRM y dispara el seguimiento.",
-      en: "WhatsApp agent for a clinic: it replies to each patient in their language, picks the right consultant and sends that consultant's calendar to book a Zoom consultation. When the call ends, another flow updates the CRM and triggers the follow-up.",
-      pt: "Agente de WhatsApp para uma clínica: responde a cada paciente no idioma dele, escolhe o consultor adequado e envia a agenda desse consultor para marcar uma consulta pelo Zoom. Ao fim da videochamada, outro fluxo atualiza o CRM e dispara o acompanhamento.",
-      fr: "Agent WhatsApp pour une clinique : il répond à chaque patient dans sa langue, choisit le consultant adapté et envoie son agenda pour réserver une consultation sur Zoom. À la fin de l'appel vidéo, un autre flux met à jour le CRM et déclenche le suivi.",
+      es: "Agente de WhatsApp para una clínica: atiende a cada paciente en su idioma, lo lleva con el consultor adecuado y le comparte su calendario para agendar una consulta por Zoom. Al terminar la videollamada, el CRM se actualiza y el seguimiento sale solo.",
+      en: "WhatsApp agent for a clinic: it serves each patient in their language, matches them with the right consultant and shares that consultant's calendar to book a Zoom consultation. When the call ends, the CRM updates itself and the follow-up goes out automatically.",
+      pt: "Agente de WhatsApp para uma clínica: atende cada paciente no idioma dele, leva-o ao consultor certo e compartilha a agenda desse consultor para marcar uma consulta pelo Zoom. Ao fim da videochamada, o CRM se atualiza e o acompanhamento é enviado automaticamente.",
+      fr: "Agent WhatsApp pour une clinique : il répond à chaque patient dans sa langue, l'oriente vers le bon consultant et partage l'agenda de celui-ci pour réserver une consultation sur Zoom. À la fin de l'appel vidéo, le CRM se met à jour et le suivi part automatiquement.",
     },
     problem: {
       es: "Neorgana recibe mensajes de pacientes que escriben en distintos idiomas y desde distintas ubicaciones. Cada uno tiene que llegar al consultor que habla su idioma, atiende su región y conoce su padecimiento, y después de la consulta hay que darle seguimiento y enviarle una cotización.",
@@ -204,33 +219,32 @@ export const koblerProjects: Project[] = [
       fr: "La solution repose sur trois flux n8n connectés à GoHighLevel. Le premier est l'agent WhatsApp : avec un modèle d'OpenAI, il échange avec le patient, recueille sa pathologie, sa langue et sa localisation, et envoie l'agenda du consultant correspondant. Le deuxième se déclenche quand le patient réserve : il crée l'opportunité dans le CRM et la relie à la réunion Zoom. Le troisième se déclenche à la fin de l'appel vidéo : il vérifie si la consultation a eu lieu, fait passer l'opportunité à l'étape correspondante et déclenche dans GoHighLevel le suivi et le devis.",
     },
     role: {
-      es: "Fue trabajo en equipo dentro de Kobler. Construí en n8n el agente y las automatizaciones de Neorgana, los monitoreé en producción y corregí sus fallas. También participé en las reuniones con el cliente para levantar reglas de negocio e identificar casos borde.",
-      en: "This was team work at Kobler. I built Neorgana's agent and automations in n8n, monitored them in production and fixed their issues. I also took part in client meetings to gather business rules and identify edge cases.",
-      pt: "Foi um trabalho em equipe na Kobler. Construí no n8n o agente e as automações da Neorgana, monitorei tudo em produção e corrigi as falhas. Também participei das reuniões com o cliente para levantar regras de negócio e identificar casos extremos.",
-      fr: "C'était un travail d'équipe chez Kobler. J'ai construit dans n8n l'agent et les automatisations de Neorgana, je les ai surveillés en production et j'ai corrigé leurs incidents. J'ai aussi participé aux réunions avec le client pour recueillir les règles métier et identifier les cas limites.",
+      es: "Colaboración con el equipo de Kobler. Mi aporte: construí en n8n el agente y las automatizaciones de Neorgana, los cuidé en producción con monitoreo y corrección de fallas, y participé en las reuniones con el cliente para definir las reglas de negocio y anticipar casos borde.",
+      en: "A collaboration with the Kobler team. My part: I built Neorgana's agent and automations in n8n, looked after them in production by monitoring them and fixing issues, and joined client meetings to define the business rules and anticipate edge cases.",
+      pt: "Colaboração com a equipe da Kobler. Minha parte: construí no n8n o agente e as automações da Neorgana, cuidei deles em produção com monitoramento e correção de falhas e participei das reuniões com o cliente para definir as regras de negócio e antecipar casos extremos.",
+      fr: "Une collaboration avec l'équipe de Kobler. Ma contribution : j'ai construit dans n8n l'agent et les automatisations de Neorgana, je les ai suivis en production en surveillant leur fonctionnement et en corrigeant les incidents, et j'ai participé aux réunions avec le client pour définir les règles métier et anticiper les cas limites.",
     },
     results: [
       {
-        es: "El agente elige al consultor por idioma, ubicación y padecimiento, y envía su calendario para agendar la consulta por Zoom.",
-        en: "The agent picks the consultant by language, location and condition, and sends their calendar to book the Zoom consultation.",
-        pt: "O agente escolhe o consultor por idioma, localização e condição de saúde e envia a agenda dele para marcar a consulta pelo Zoom.",
-        fr: "L'agent choisit le consultant selon la langue, la localisation et la pathologie, et envoie son agenda pour réserver la consultation sur Zoom.",
+        es: "Cada paciente llega al consultor que habla su idioma, atiende su región y conoce su padecimiento, con su calendario listo para agendar.",
+        en: "Each patient reaches the consultant who speaks their language, covers their region and handles their condition, with a calendar ready to book.",
+        pt: "Cada paciente chega ao consultor que fala seu idioma, atende sua região e conhece sua condição de saúde, com a agenda pronta para marcar.",
+        fr: "Chaque patient est orienté vers le consultant qui parle sa langue, couvre sa région et connaît sa pathologie, avec un agenda prêt pour réserver.",
       },
       {
-        es: "El seguimiento y la cotización se disparan solos al terminar la videollamada.",
-        en: "The follow-up and the quote are triggered automatically when the video call ends.",
-        pt: "O acompanhamento e o orçamento são disparados automaticamente quando a videochamada termina.",
-        fr: "Le suivi et le devis se déclenchent automatiquement à la fin de l'appel vidéo.",
+        es: "El seguimiento y la cotización salen solos al terminar la videollamada.",
+        en: "The follow-up and the quote go out on their own when the video call ends.",
+        pt: "O acompanhamento e o orçamento são enviados automaticamente quando a videochamada termina.",
+        fr: "Le suivi et le devis partent d'eux-mêmes à la fin de l'appel vidéo.",
       },
       {
-        es: "La etapa de cada oportunidad en GoHighLevel cambia sola según si la consulta se realizó o no.",
-        en: "Each opportunity's stage in GoHighLevel changes on its own depending on whether the consultation took place.",
-        pt: "A etapa de cada oportunidade no GoHighLevel muda sozinha conforme a consulta tenha acontecido ou não.",
-        fr: "L'étape de chaque opportunité dans GoHighLevel change d'elle-même selon que la consultation a eu lieu ou non.",
+        es: "El CRM se mantiene al día solo: cada oportunidad cambia de etapa según si la consulta se realizó o no.",
+        en: "The CRM keeps itself up to date: each opportunity moves to the next stage depending on whether the consultation took place.",
+        pt: "O CRM se mantém em dia sozinho: cada oportunidade muda de etapa conforme a consulta tenha acontecido ou não.",
+        fr: "Le CRM reste à jour de lui-même : chaque opportunité change d'étape selon que la consultation a eu lieu ou non.",
       },
     ],
     highlights: [
-      koblerHighlights.neorgana,
       {
         es: "El agente responde en el idioma en que escribe el paciente y no da diagnósticos ni consejos médicos: los datos clínicos los pide el formulario del calendario.",
         en: "The agent replies in whatever language the patient writes in and gives no diagnoses or medical advice: clinical details are collected by the calendar's booking form.",
@@ -257,7 +271,7 @@ export const koblerProjects: Project[] = [
       },
     ],
     stack: ["n8n", "OpenAI API"],
-    integrations: ["GoHighLevel", "WhatsApp", "Zoom"],
+    integrations: ["WhatsApp", "Zoom", "GoHighLevel"],
     images: [],
     links: [],
     flowDiagram: [
@@ -338,7 +352,7 @@ export const koblerProjects: Project[] = [
         fr: "Si un rendez-vous change de médecin, Zoom crée une autre réunion. Le flux des rendez-vous le détecte et relie de nouveau la nouvelle réunion à son opportunité.",
       },
     ],
-    lastUpdated: "2026-10-10",
+    lastUpdated: "2026-10-12",
   },
   {
     slug: "lamau-beach-automation",
@@ -351,14 +365,21 @@ export const koblerProjects: Project[] = [
     client: "Lamau Beach",
     category: "kobler",
     context: sameInEveryLanguage("Kobler y Asociados"),
+    status: "in-production",
     kind: "ai-automation",
     isFeatured: false,
     teamSetup: "team",
+    tagline: {
+      es: "Responde por WhatsApp con la disponibilidad y el precio por noche según la temporada.",
+      en: "Answers guests on WhatsApp with availability and the nightly rate for the season.",
+      pt: "Responde pelo WhatsApp com a disponibilidade e o valor da diária conforme a temporada.",
+      fr: "Répond sur WhatsApp avec la disponibilité et le prix par nuit selon la saison.",
+    },
     summary: {
-      es: "Agente de WhatsApp para Lamau Beach que revisa la disponibilidad de sus estancias de Airbnb y calcula el costo por noche según la temporada.",
-      en: "WhatsApp agent for Lamau Beach that checks availability for its Airbnb stays and works out the nightly rate by season.",
-      pt: "Agente de WhatsApp para a Lamau Beach que verifica a disponibilidade das hospedagens no Airbnb e calcula o valor da diária conforme a temporada.",
-      fr: "Agent WhatsApp pour Lamau Beach qui vérifie la disponibilité de ses logements Airbnb et calcule le prix par nuit selon la saison.",
+      es: "Agente de WhatsApp que responde a los huéspedes de Lamau Beach con la disponibilidad de sus estancias de Airbnb y el precio por noche de la temporada, sin que nadie tenga que revisar fechas y tarifas a mano.",
+      en: "WhatsApp agent that answers Lamau Beach guests with the availability of its Airbnb stays and the nightly rate for the season, without anyone checking dates and rates by hand.",
+      pt: "Agente de WhatsApp que responde aos hóspedes da Lamau Beach com a disponibilidade das hospedagens no Airbnb e o valor da diária da temporada, sem que ninguém precise conferir datas e tarifas à mão.",
+      fr: "Agent WhatsApp qui répond aux voyageurs de Lamau Beach avec la disponibilité de ses logements Airbnb et le prix par nuit de la saison, sans que personne ait à vérifier les dates et les tarifs à la main.",
     },
     problem: {
       es: "Para responderle a un huésped interesado hay que revisar si las fechas están libres en Airbnb y aplicar la tarifa por noche de la temporada que corresponde.",
@@ -373,17 +394,17 @@ export const koblerProjects: Project[] = [
       fr: "L'agent repose sur la même base que les autres agents de Kobler : GoHighLevel envoie les messages WhatsApp à n8n et un modèle d'OpenAI répond. Pour Lamau Beach, il dispose de ses propres outils : l'un vérifie la disponibilité du logement aux dates demandées, un autre calcule le devis avec le prix par nuit de la saison, et d'autres répondent aux questions fréquentes et aux conditions d'annulation.",
     },
     role: {
-      es: "Fue trabajo en equipo dentro de Kobler. Automaticé la disponibilidad por estancia de Airbnb y el costo por noche según temporada, y monitoreé los flujos en producción.",
-      en: "This was team work at Kobler. I automated Airbnb stay availability and nightly rates by season, and monitored the flows in production.",
-      pt: "Foi um trabalho em equipe na Kobler. Automatizei a disponibilidade de cada hospedagem do Airbnb e o valor da diária conforme a temporada, e monitorei os fluxos em produção.",
-      fr: "C'était un travail d'équipe chez Kobler. J'ai automatisé la disponibilité de chaque logement Airbnb et le prix par nuit selon la saison, et j'ai surveillé les flux en production.",
+      es: "Colaboración con el equipo de Kobler. Mi aporte: automaticé la consulta de disponibilidad de cada estancia de Airbnb y el cálculo del precio por noche según la temporada, y monitoreé los flujos en producción.",
+      en: "A collaboration with the Kobler team. My part: I automated the availability check for each Airbnb stay and the nightly rate calculation by season, and monitored the flows in production.",
+      pt: "Colaboração com a equipe da Kobler. Minha parte: automatizei a consulta de disponibilidade de cada hospedagem do Airbnb e o cálculo da diária conforme a temporada, e monitorei os fluxos em produção.",
+      fr: "Une collaboration avec l'équipe de Kobler. Ma contribution : j'ai automatisé la vérification de disponibilité de chaque logement Airbnb et le calcul du prix par nuit selon la saison, et j'ai surveillé les flux en production.",
     },
     results: [
       {
-        es: "La disponibilidad de cada estancia y su costo por noche según la temporada se calculan de forma automática dentro de la conversación.",
-        en: "Each stay's availability and its nightly rate for the season are worked out automatically within the conversation.",
-        pt: "A disponibilidade de cada hospedagem e o valor da diária da temporada são calculados automaticamente dentro da conversa.",
-        fr: "La disponibilité de chaque logement et son prix par nuit pour la saison sont calculés automatiquement pendant la conversation.",
+        es: "El huésped recibe la disponibilidad y el precio por noche en la misma conversación, sin esperar a que alguien revise fechas y tarifas.",
+        en: "Guests get availability and the nightly rate in the same conversation, without waiting for someone to check dates and rates.",
+        pt: "O hóspede recebe a disponibilidade e o valor da diária na mesma conversa, sem esperar que alguém confira datas e tarifas.",
+        fr: "Le voyageur obtient la disponibilité et le prix par nuit dans la même conversation, sans attendre que quelqu'un vérifie les dates et les tarifs.",
       },
     ],
     highlights: [
@@ -402,7 +423,7 @@ export const koblerProjects: Project[] = [
       },
     ],
     stack: ["n8n", "OpenAI API"],
-    integrations: ["GoHighLevel", "WhatsApp", "Airbnb"],
+    integrations: ["WhatsApp", "Airbnb", "GoHighLevel"],
     images: [],
     links: [],
     flowDiagram: [
@@ -460,6 +481,6 @@ export const koblerProjects: Project[] = [
         tool: "WhatsApp",
       },
     ],
-    lastUpdated: "2026-10-10",
+    lastUpdated: "2026-10-12",
   },
 ];

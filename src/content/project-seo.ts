@@ -27,10 +27,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Gestionnaire de rapports de terrain · FastAPI + React",
     },
     description: {
-      es: "App web en producción para UxmalTechnologies: los técnicos registran reportes con fotos desde el celular y el supervisor los aprueba. FastAPI, React y Supabase.",
-      en: "Web app in production for UxmalTechnologies: technicians log reports with photos from their phone and the supervisor approves them. FastAPI, React, Supabase.",
-      pt: "Aplicação web em produção para a UxmalTechnologies: os técnicos registram relatórios com fotos pelo celular e o supervisor os aprova. FastAPI, React e Supabase.",
-      fr: "Application web en production pour UxmalTechnologies : les techniciens saisissent rapports et photos sur mobile, le superviseur les approuve. FastAPI et React.",
+      es: "App web para UxmalTechnologies, terminada y sin publicar: el técnico registra reportes con fotos desde el celular y el supervisor los aprueba. FastAPI y React.",
+      en: "Web app for UxmalTechnologies, completed but not released: technicians log reports with photos from their phone and a supervisor approves them. FastAPI, React.",
+      pt: "Aplicação web para a UxmalTechnologies, concluída e não publicada: o técnico registra relatórios com fotos pelo celular e o supervisor aprova. FastAPI e React.",
+      fr: "Application web pour UxmalTechnologies, terminée mais non publiée : rapports avec photos saisis sur mobile et approuvés par le superviseur. FastAPI et React.",
     },
   },
   "controltec-pest-control-crm": {
@@ -55,10 +55,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Agent commercial pour Motosureste Suzuki · n8n + OpenAI",
     },
     description: {
-      es: "Agente de WhatsApp en n8n con la API de OpenAI para Motosureste Suzuki: cotiza motos con el catálogo de WooCommerce y actualiza el inventario desde un PDF.",
-      en: "WhatsApp agent built in n8n with the OpenAI API for Motosureste Suzuki: it quotes motorcycles from the WooCommerce catalog and updates stock from a PDF.",
-      pt: "Agente de WhatsApp no n8n com a API da OpenAI para a Motosureste Suzuki: faz orçamentos com o catálogo do WooCommerce e atualiza o estoque a partir de um PDF.",
-      fr: "Agent WhatsApp dans n8n avec l'API d'OpenAI pour Motosureste Suzuki : il établit les devis de motos depuis le catalogue WooCommerce et met à jour les stocks.",
+      es: "Agente de WhatsApp en producción para Motosureste Suzuki, hecho en n8n con OpenAI: cotiza motos con el catálogo de WooCommerce y actualiza el inventario.",
+      en: "WhatsApp agent in production for Motosureste Suzuki, built in n8n with OpenAI: it quotes motorcycles from the WooCommerce catalog and updates stock from a PDF.",
+      pt: "Agente de WhatsApp em produção para a Motosureste Suzuki, feito no n8n com OpenAI: faz orçamentos com o catálogo do WooCommerce e atualiza o estoque por PDF.",
+      fr: "Agent WhatsApp en production pour Motosureste Suzuki, créé dans n8n avec OpenAI : devis de motos depuis le catalogue WooCommerce et stocks mis à jour par PDF.",
     },
   },
   "neorgana-agent": {
@@ -69,10 +69,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Agent de prise de rendez-vous pour Neorgana · n8n + OpenAI",
     },
     description: {
-      es: "Agente de WhatsApp en n8n con la API de OpenAI para Neorgana: elige al consultor por idioma, ubicación y padecimiento, y envía su agenda para consulta por Zoom.",
-      en: "WhatsApp agent in n8n with the OpenAI API for Neorgana: it picks the consultant by language, location and condition, and sends their calendar for a Zoom call.",
-      pt: "Agente de WhatsApp no n8n com a API da OpenAI para a Neorgana: escolhe o consultor por idioma, região e condição de saúde e envia a agenda da consulta no Zoom.",
-      fr: "Agent WhatsApp dans n8n avec l'API d'OpenAI pour Neorgana : il oriente chaque patient vers le bon consultant et envoie son agenda pour une consultation Zoom.",
+      es: "Agente de WhatsApp en producción para Neorgana, hecho en n8n con OpenAI: lleva a cada paciente con el consultor adecuado y envía su agenda para Zoom.",
+      en: "WhatsApp agent in production for Neorgana, built in n8n with OpenAI: it matches each patient with the right consultant and sends their calendar for a Zoom call.",
+      pt: "Agente de WhatsApp em produção para a Neorgana, feito no n8n com OpenAI: leva cada paciente ao consultor certo e envia a agenda para a consulta no Zoom.",
+      fr: "Agent WhatsApp en production pour Neorgana, créé dans n8n avec OpenAI : il oriente chaque patient vers le bon consultant et envoie son agenda pour Zoom.",
     },
   },
   "lamau-beach-automation": {
@@ -83,10 +83,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Agent de disponibilité pour Lamau Beach · n8n + OpenAI",
     },
     description: {
-      es: "Agente de WhatsApp en n8n con la API de OpenAI para Lamau Beach: revisa si sus estancias de Airbnb están libres y calcula el costo por noche según la temporada.",
-      en: "WhatsApp agent built in n8n with the OpenAI API for Lamau Beach: it checks availability for its Airbnb stays and works out the nightly rate by season.",
-      pt: "Agente de WhatsApp no n8n com a API da OpenAI para a Lamau Beach: verifica a disponibilidade das hospedagens no Airbnb e calcula a diária conforme a temporada.",
-      fr: "Agent WhatsApp dans n8n avec l'API d'OpenAI pour Lamau Beach : il vérifie la disponibilité de ses logements Airbnb et calcule le prix par nuit selon la saison.",
+      es: "Agente de WhatsApp en producción para Lamau Beach, hecho en n8n con OpenAI: revisa si sus estancias de Airbnb están libres y calcula el precio por noche.",
+      en: "WhatsApp agent in production for Lamau Beach, built in n8n with OpenAI: it checks availability for its Airbnb stays and works out the nightly rate by season.",
+      pt: "Agente de WhatsApp em produção para a Lamau Beach, feito no n8n com OpenAI: verifica a disponibilidade das hospedagens no Airbnb e calcula a diária.",
+      fr: "Agent WhatsApp en production pour Lamau Beach, créé dans n8n avec OpenAI : il vérifie la disponibilité de ses logements Airbnb et calcule le prix par nuit.",
     },
   },
   "workshop-web": {
@@ -97,10 +97,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Diagnostic en direct de l'atelier Appolo · React + Supabase",
     },
     description: {
-      es: "Web para el workshop Appolo: la sala responde por WhatsApp, una pantalla proyectada muestra las respuestas en vivo y el presentador avanza las preguntas.",
-      en: "Web app for the Appolo workshop: the audience answers on WhatsApp, a projected screen shows the answers live and the presenter runs it from a host panel.",
-      pt: "Aplicação web para o workshop Appolo: o público responde pelo WhatsApp, uma tela projetada mostra as respostas ao vivo e o apresentador avança pelo painel.",
-      fr: "Application web pour l'atelier Appolo : la salle répond sur WhatsApp, un écran projeté affiche les réponses en direct et l'animateur pilote depuis son panneau.",
+      es: "Sistema en producción para el workshop Appolo: la sala responde a un bot de WhatsApp en n8n y una pantalla proyecta las respuestas en vivo. React y Supabase.",
+      en: "System in production for the Appolo workshop: the audience answers a WhatsApp bot built in n8n and a projected screen shows the answers live. React, Supabase.",
+      pt: "Sistema em produção para o workshop Appolo: o público responde a um bot de WhatsApp feito no n8n e uma tela projeta as respostas ao vivo. React e Supabase.",
+      fr: "Système en production pour l'atelier Appolo : la salle répond à un bot WhatsApp créé dans n8n et un écran projette les réponses en direct. React et Supabase.",
     },
   },
 };

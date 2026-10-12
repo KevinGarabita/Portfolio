@@ -26,6 +26,12 @@ export const controltecPestControlCrm: Project = {
   kind: "web-app",
   isFeatured: true,
   teamSetup: "individual",
+  tagline: {
+    es: "Reportes de servicio firmados en sitio, incluso sin señal, y listos para una auditoría.",
+    en: "Service reports signed on-site, even with no signal, and ready for an audit.",
+    pt: "Relatórios de serviço assinados no local, mesmo sem sinal, e prontos para auditoria.",
+    fr: "Rapports d'intervention signés sur place, même sans réseau, et prêts pour un audit.",
+  },
   summary: {
     es: "CRM para una empresa de control de plagas. Los técnicos escanean el QR de cada estación y llenan el reporte en sitio, la oficina agenda y cotiza, y cada cliente consulta en un portal sus reportes firmados.",
     en: "CRM for a pest control company. Technicians scan the QR code on each station and fill in the report on-site, the office schedules and quotes, and each client checks their signed reports in a portal.",
@@ -56,6 +62,12 @@ export const controltecPestControlCrm: Project = {
       en: "The client also contracted ongoing maintenance.",
       pt: "O cliente também contratou a manutenção.",
       fr: "Le client a également souscrit la maintenance.",
+    },
+    {
+      es: "El backend ya tiene más de mil pruebas automatizadas.",
+      en: "The backend already has more than a thousand automated tests.",
+      pt: "O backend já tem mais de mil testes automatizados.",
+      fr: "Le backend compte déjà plus de mille tests automatisés.",
     },
   ],
   highlights: [
@@ -92,13 +104,13 @@ export const controltecPestControlCrm: Project = {
   ],
   stack: [
     "FastAPI",
-    "Python",
     "React",
-    "TypeScript",
-    "Material UI",
-    "Expo",
     "React Native",
     "Supabase",
+    "Python",
+    "TypeScript",
+    "Expo",
+    "Material UI",
     "PostgreSQL",
     "Render",
   ],
@@ -206,5 +218,5 @@ export const controltecPestControlCrm: Project = {
     pt: "Compilar e testar o app no iOS, fazer a câmera do celular abrir o app ao escanear uma etiqueta (hoje abre a versão web) e desenvolver o módulo de despesas.",
     fr: "Compiler et tester l'application sur iOS, faire en sorte que l'appareil photo du téléphone ouvre l'application en scannant une étiquette (aujourd'hui il ouvre la version web) et développer le module des dépenses.",
   },
-  lastUpdated: "2026-10-10",
+  lastUpdated: "2026-10-12",
 };

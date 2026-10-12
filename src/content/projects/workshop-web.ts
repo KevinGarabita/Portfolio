@@ -2,11 +2,13 @@ import { sameInEveryLanguage } from "@/i18n/localize";
 import type { Project } from "@/types/content";
 
 /**
- * Live screen and host panel for the Appolo diagnostic workshop (Kobler y Asociados).
- * Source: the WorkShop-Web repository (README, code, tests and git history up to
- * 9 October 2026). The event backend (Supabase and the n8n flows) lives outside that
- * repository, so only the web app is described here. No credentials, keys, internal
- * URLs or participant data.
+ * The Appolo diagnostic workshop ("Diagnóstico Appolo"), built for Kobler y Asociados.
+ * Sources: the WorkShop-Web repository (README, code, tests and git history up to
+ * 9 October 2026) and Kevin's answers (12 October 2026): he built the whole system on
+ * his own with Claude Code, the web app and also the event backend (the Supabase
+ * database and the n8n flows of the WhatsApp bot), which lives outside that repository
+ * and is described only as far as the web app shows it. In production. No credentials,
+ * keys, internal URLs or participant data.
  */
 export const workshopWeb: Project = {
   slug: "workshop-web",
@@ -19,15 +21,22 @@ export const workshopWeb: Project = {
   client: "Kobler y Asociados",
   category: "kobler",
   context: sameInEveryLanguage("Kobler y Asociados"),
+  status: "in-production",
   period: { start: "2026-10" },
   kind: "web-app",
   isFeatured: true,
   teamSetup: "individual",
+  tagline: {
+    es: "La sala responde un diagnóstico por WhatsApp y ve sus resultados en vivo en pantalla.",
+    en: "The audience answers a diagnostic on WhatsApp and sees the results live on screen.",
+    pt: "O público responde a um diagnóstico pelo WhatsApp e vê os resultados ao vivo na tela.",
+    fr: "Le public répond à un diagnostic sur WhatsApp et voit les résultats en direct à l'écran.",
+  },
   summary: {
-    es: "Web para un workshop presencial de diagnóstico empresarial: la sala responde por WhatsApp, una pantalla proyectada muestra las respuestas en vivo y el presentador avanza las preguntas desde un panel protegido con PIN.",
-    en: "Web app for an in-person business diagnostic workshop: the audience answers on WhatsApp, a projected screen shows the answers live, and the presenter moves through the questions from a PIN-protected panel.",
-    pt: "Aplicação web para um workshop presencial de diagnóstico empresarial: o público responde pelo WhatsApp, uma tela projetada mostra as respostas ao vivo e o apresentador avança as perguntas em um painel protegido por PIN.",
-    fr: "Application web pour un atelier de diagnostic d'entreprise en présentiel : la salle répond sur WhatsApp, un écran projeté affiche les réponses en direct et l'animateur fait avancer les questions depuis un panneau protégé par un code PIN.",
+    es: "Sistema para un workshop presencial de diagnóstico empresarial: la sala responde a un bot de WhatsApp, una pantalla proyectada muestra las respuestas en vivo y el presentador conduce el cuestionario desde un panel protegido con PIN.",
+    en: "System for an in-person business diagnostic workshop: the audience answers a WhatsApp bot, a projected screen shows the answers live, and the presenter runs the questionnaire from a PIN-protected panel.",
+    pt: "Sistema para um workshop presencial de diagnóstico empresarial: o público responde a um bot de WhatsApp, uma tela projetada mostra as respostas ao vivo e o apresentador conduz o questionário em um painel protegido por PIN.",
+    fr: "Système pour un atelier de diagnostic d'entreprise en présentiel : la salle répond à un bot WhatsApp, un écran projeté affiche les réponses en direct et l'animateur pilote le questionnaire depuis un panneau protégé par un code PIN.",
   },
   problem: {
     es: "En el workshop presencial de Appolo, los asistentes responden por WhatsApp un diagnóstico empresarial de 20 preguntas en tres secciones (visión y liderazgo, orden operativo y automatización), más una pregunta abierta de cierre. Hacía falta proyectar a la sala lo que va respondiendo, en vivo, y que el presentador condujera el cuestionario desde la laptop o el celular sin que el navegador viera las claves del backend.",
@@ -36,16 +45,16 @@ export const workshopWeb: Project = {
     fr: "Lors de l'atelier Appolo en présentiel, les participants répondent sur WhatsApp à un diagnostic d'entreprise de 20 questions réparties en trois sections (vision et leadership, organisation opérationnelle et automatisation), suivies d'une question ouverte de clôture. Il fallait projeter en direct les réponses de la salle et permettre à l'animateur de piloter le questionnaire depuis un ordinateur portable ou un téléphone, sans exposer les clés du backend au navigateur.",
   },
   solution: {
-    es: "La web tiene dos vistas. La pantalla en vivo, de solo lectura, muestra el QR para entrar por WhatsApp, la pregunta activa con sus barras, el promedio de cada sección al cerrarse, una nube de palabras para la pregunta abierta y los resultados de la sala. El panel del host, protegido con PIN, sirve para avanzar y reenviar preguntas, enviar los resultados, cerrar la sesión y abrir una nueva. La web lee el estado con una RPC de Supabase, escucha avisos por Supabase Realtime y manda las órdenes del host a n8n a través de funciones serverless en Vercel.",
-    en: "The web app has two views. The live screen is read-only: it shows the QR code to join on WhatsApp, the active question with its bars, each section's average when the section closes, a word cloud for the open question, and the room's results. The host panel, protected by a PIN, is used to advance and resend questions, send the results, close the session and open a new one. The app reads the state through a Supabase RPC, listens for notices over Supabase Realtime, and sends the host's commands to n8n through serverless functions on Vercel.",
-    pt: "A aplicação tem duas visões. A tela ao vivo, somente leitura, mostra o QR code para entrar pelo WhatsApp, a pergunta ativa com suas barras, a média de cada seção quando ela termina, uma nuvem de palavras para a pergunta aberta e os resultados da sala. O painel do host, protegido por PIN, serve para avançar e reenviar perguntas, enviar os resultados, encerrar a sessão e abrir uma nova. A aplicação lê o estado com uma RPC do Supabase, recebe avisos pelo Supabase Realtime e envia os comandos do host ao n8n por meio de funções serverless na Vercel.",
-    fr: "L'application comporte deux vues. L'écran en direct, en lecture seule, affiche le QR code pour rejoindre la session sur WhatsApp, la question en cours avec ses barres, la moyenne de chaque section à sa clôture, un nuage de mots pour la question ouverte et les résultats de la salle. Le panneau de l'animateur, protégé par un code PIN, permet d'avancer et de renvoyer les questions, d'envoyer les résultats, de clôturer la session et d'en ouvrir une nouvelle. L'application lit l'état via une RPC Supabase, reçoit des notifications par Supabase Realtime et transmet les commandes de l'animateur à n8n via des fonctions serverless sur Vercel.",
+    es: "El sistema une tres piezas: el bot de WhatsApp en n8n, la base de datos en Supabase y una web con dos vistas. La pantalla en vivo, de solo lectura, muestra el QR para entrar por WhatsApp, la pregunta activa con sus barras, el promedio de cada sección al cerrarse, una nube de palabras para la pregunta abierta y los resultados de la sala. El panel del host, protegido con PIN, sirve para avanzar y reenviar preguntas, enviar los resultados, cerrar la sesión y abrir una nueva. La web lee el estado con una RPC de Supabase, escucha avisos por Supabase Realtime y manda las órdenes del host a n8n a través de funciones serverless en Vercel.",
+    en: "The system joins three pieces: the WhatsApp bot in n8n, the Supabase database, and a web app with two views. The live screen is read-only: it shows the QR code to join on WhatsApp, the active question with its bars, each section's average when the section closes, a word cloud for the open question, and the room's results. The host panel, protected by a PIN, is used to advance and resend questions, send the results, close the session and open a new one. The app reads the state through a Supabase RPC, listens for notices over Supabase Realtime, and sends the host's commands to n8n through serverless functions on Vercel.",
+    pt: "O sistema une três peças: o bot de WhatsApp no n8n, o banco de dados no Supabase e uma aplicação web com duas visões. A tela ao vivo, somente leitura, mostra o QR code para entrar pelo WhatsApp, a pergunta ativa com suas barras, a média de cada seção quando ela termina, uma nuvem de palavras para a pergunta aberta e os resultados da sala. O painel do host, protegido por PIN, serve para avançar e reenviar perguntas, enviar os resultados, encerrar a sessão e abrir uma nova. A aplicação lê o estado com uma RPC do Supabase, recebe avisos pelo Supabase Realtime e envia os comandos do host ao n8n por meio de funções serverless na Vercel.",
+    fr: "Le système réunit trois éléments : le bot WhatsApp dans n8n, la base de données Supabase et une application web à deux vues. L'écran en direct, en lecture seule, affiche le QR code pour rejoindre la session sur WhatsApp, la question en cours avec ses barres, la moyenne de chaque section à sa clôture, un nuage de mots pour la question ouverte et les résultats de la salle. Le panneau de l'animateur, protégé par un code PIN, permet d'avancer et de renvoyer les questions, d'envoyer les résultats, de clôturer la session et d'en ouvrir une nouvelle. L'application lit l'état via une RPC Supabase, reçoit des notifications par Supabase Realtime et transmet les commandes de l'animateur à n8n via des fonctions serverless sur Vercel.",
   },
   role: {
-    es: "Escribí el código de este repositorio: las dos vistas en React y TypeScript, las funciones serverless del host, la sincronización con Supabase, el modo demo y las pruebas con Vitest y Testing Library. El backend del evento (la base de datos en Supabase y los flujos de n8n del bot de WhatsApp) vive fuera del repositorio; la web solo lee su estado y le manda las órdenes del host.",
-    en: "I wrote the code in this repository: both views in React and TypeScript, the host's serverless functions, the Supabase sync, the demo mode, and the tests with Vitest and Testing Library. The event backend (the Supabase database and the n8n flows behind the WhatsApp bot) lives outside the repository; the web app only reads its state and sends it the host's commands.",
-    pt: "Escrevi o código deste repositório: as duas visões em React e TypeScript, as funções serverless do host, a sincronização com o Supabase, o modo demo e os testes com Vitest e Testing Library. O backend do evento (o banco de dados no Supabase e os fluxos do n8n do bot de WhatsApp) fica fora do repositório; a aplicação apenas lê o estado dele e envia os comandos do host.",
-    fr: "J'ai écrit le code de ce dépôt : les deux vues en React et TypeScript, les fonctions serverless de l'animateur, la synchronisation avec Supabase, le mode démo et les tests avec Vitest et Testing Library. Le backend de l'événement (la base de données Supabase et les flux n8n du bot WhatsApp) se trouve en dehors du dépôt ; l'application se contente de lire son état et de lui transmettre les commandes de l'animateur.",
+    es: "Lo construí solo, de punta a punta, con Claude Code: la web en React y TypeScript, la base de datos en Supabase (con su RPC y Realtime), los flujos de n8n del bot de WhatsApp y las funciones serverless en Vercel, además del modo demo y las pruebas con Vitest y Testing Library.",
+    en: "I built it on my own, end to end, with Claude Code: the React and TypeScript web app, the Supabase database (with its RPC and Realtime), the n8n flows behind the WhatsApp bot, and the serverless functions on Vercel, plus the demo mode and the tests with Vitest and Testing Library.",
+    pt: "Construí sozinho, de ponta a ponta, com o Claude Code: a aplicação web em React e TypeScript, o banco de dados no Supabase (com a RPC e o Realtime), os fluxos do n8n do bot de WhatsApp e as funções serverless na Vercel, além do modo demo e dos testes com Vitest e Testing Library.",
+    fr: "Je l'ai construit seul, de bout en bout, avec Claude Code : l'application web en React et TypeScript, la base de données Supabase (avec sa RPC et Realtime), les flux n8n du bot WhatsApp et les fonctions serverless sur Vercel, ainsi que le mode démo et les tests avec Vitest et Testing Library.",
   },
   results: [
     {
@@ -53,6 +62,12 @@ export const workshopWeb: Project = {
       en: "The presenter runs the event from a laptop or phone, and the room sees its aggregated answers live, with no names or phone numbers.",
       pt: "O apresentador conduz o evento pelo notebook ou pelo celular, e a sala vê ao vivo as respostas agregadas, sem nomes nem telefones.",
       fr: "L'animateur pilote l'événement depuis un ordinateur portable ou un téléphone, et la salle voit ses réponses agrégées en direct, sans noms ni numéros de téléphone.",
+    },
+    {
+      es: "Un solo sistema cubre el evento completo: el bot de WhatsApp, la base de datos, la pantalla en vivo y el panel del presentador.",
+      en: "One system covers the whole event: the WhatsApp bot, the database, the live screen, and the presenter's panel.",
+      pt: "Um único sistema cobre o evento inteiro: o bot de WhatsApp, o banco de dados, a tela ao vivo e o painel do apresentador.",
+      fr: "Un seul système couvre tout l'événement : le bot WhatsApp, la base de données, l'écran en direct et le panneau de l'animateur.",
     },
   ],
   highlights: [
@@ -80,22 +95,17 @@ export const workshopWeb: Project = {
       pt: "Modo demo que simula um evento completo em loop com dados fictícios e passa pelo mesmo sincronizador, para revisar as telas e o design sem uma sala real.",
       fr: "Un mode démo qui simule en boucle un événement complet avec des données fictives et passe par le même synchroniseur, pour vérifier les vues et le design sans vraie salle.",
     },
-    {
-      es: "Mientras está abierta, la pantalla evita que el equipo entre en reposo y esconde el cursor a los 3 segundos sin moverlo.",
-      en: "While it is open, the screen keeps the computer from going to sleep and hides the cursor after 3 seconds without movement.",
-      pt: "Enquanto está aberta, a tela impede que o computador entre em repouso e esconde o cursor após 3 segundos sem movimento.",
-      fr: "Tant qu'il est ouvert, l'écran empêche l'ordinateur de se mettre en veille et masque le curseur après 3 secondes d'inactivité.",
-    },
   ],
   stack: [
     "React",
     "TypeScript",
-    "Vite",
-    "Tailwind CSS",
-    "React Router",
     "Supabase",
     "Vercel",
+    "Tailwind CSS",
+    "Vite",
+    "React Router",
     "Vitest",
+    "Claude Code",
   ],
   integrations: ["Supabase Realtime", "n8n", "WhatsApp"],
   images: [
@@ -225,5 +235,5 @@ export const workshopWeb: Project = {
       fr: "Réessayer répète la dernière commande à l'identique ; pour avancer, la commande indique la question de départ, si bien qu'une nouvelle tentative ne saute jamais de question.",
     },
   ],
-  lastUpdated: "2026-10-10",
+  lastUpdated: "2026-10-12",
 };
