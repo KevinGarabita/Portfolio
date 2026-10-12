@@ -4,7 +4,7 @@ import { Tag } from "@/components/ui/tag";
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { formatDateRange } from "@/lib/format-date";
-import { getProjectCredit, getProjectTechnologies } from "@/lib/projects";
+import { getProjectTechnologies } from "@/lib/projects";
 import type { Project } from "@/types/content";
 
 interface ProjectFactsProps {
@@ -15,7 +15,7 @@ interface ProjectFactsProps {
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="grid gap-x-4 gap-y-1 border-t border-hairline py-3 first:border-t-0 first:pt-0 last:pb-0 @md:grid-cols-[7rem_minmax(0,1fr)]">
+    <div className="grid gap-x-4 gap-y-1 border-b border-hairline py-3 @md:grid-cols-[7rem_minmax(0,1fr)]">
       <dt className="text-small text-muted">{label}</dt>
       <dd className="wrap-break-word">{children}</dd>
     </div>
@@ -23,11 +23,10 @@ function Fact({ label, children }: { label: string; children: ReactNode }) {
 }
 
 /**
- * Key facts of a case study as a definition list in a panel: client, context, period
- * and technologies. The status is shown above the title, so it is not repeated here.
- * The context row is the credit (getProjectCredit): freelance work, team work at Kobler
- * ("Colaboración con Kobler") or work Kevin did alone for Kobler.
- * Technologies (stack, then integrations) are a list of tags, like on the cards.
+ * Key facts of a case study as a definition list between hairlines, without a panel:
+ * client, period and technologies. The status and the credit (getProjectCredit) are
+ * shown above the title, so they are not repeated here. Technologies (stack, then
+ * integrations) are a list of grey pills.
  */
 export function ProjectFacts({
   project,
@@ -37,12 +36,8 @@ export function ProjectFacts({
   const labels = dictionary.projects.facts;
 
   return (
-    <dl className="@container rounded-section border border-hairline bg-raised p-6">
+    <dl className="@container border-t border-hairline">
       <Fact label={labels.client}>{project.client}</Fact>
-
-      <Fact label={labels.context}>
-        {dictionary.projects.credit[getProjectCredit(project)]}
-      </Fact>
 
       {project.period ? (
         <Fact label={labels.period}>

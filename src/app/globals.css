@@ -14,9 +14,8 @@
  *   4. Type, radius and motion tokens.
  *   5. Fonts: mapped to the CSS variables that next/font puts on <html>.
  *   6. Base styles: gradients, glows, layers, header height and element defaults.
- *   7. Components: the backdrop, the hero portrait, the hero entrance, project tiles,
- *      gradient rings, hover glows, the header and the flow diagram; then the scroll
- *      reveal that the case-study pages use.
+ *   7. Components: the backdrop, the hero portrait, the entrance on load, project
+ *      tiles and framed links, the gradient ring, the header and the flow diagram.
  *   8. Reduced motion (prefers-reduced-motion).
  *
  * Contrast (WCAG 2.x, measured): text #f5f5f5 on page 18.15:1, muted #a3a3a3 7.84:1,
@@ -159,20 +158,6 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-/* Custom properties that transition (the gradient ring's fade and surface). Only
- * registered properties interpolate; an unregistered one would jump. */
-@property --ring-opacity {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 1;
-}
-
-@property --ring-fill {
-  syntax: "<color>";
-  inherits: false;
-  initial-value: transparent;
-}
-
 /* 6. Base styles */
 @layer base {
   :root {
@@ -188,13 +173,7 @@
       var(--color-red-signal)
     );
 
-    /* Glows: coloured shadows shown on hover (by fading a layer in, never by animating
-     * the shadow itself) and behind the hero photo. */
-    --glow-accent:
-      0 1.5rem 3.5rem -1.5rem
-        color-mix(in oklab, var(--color-orange-vibrant) 55%, transparent),
-      0 0.75rem 2rem -1.25rem
-        color-mix(in oklab, var(--color-red-signal) 65%, transparent);
+    /* Soft orange glow under the icon of a project without screenshots. */
     --glow-accent-soft: 0 1rem 2.5rem -1.25rem
       color-mix(in oklab, var(--color-orange-vibrant) 45%, transparent);
     --tint-accent: color-mix(
@@ -209,12 +188,6 @@
     --duration-moderate: 320ms;
     --duration-slow: 700ms;
     --stagger-step: 90ms;
-
-    /* Hover lift of the case-study previous/next links, in px, never rem: a multiple of
-     * 4 CSS px is a whole number of device pixels at every common display scale (100,
-     * 125, 150, 175, 200, 250, 300%), so the lifted gradient ring stays on the pixel
-     * grid instead of being smeared across two rows of pixels. */
-    --lift-card: 8px;
 
     /* Stacking layers. */
     --layer-backdrop: -1;
@@ -382,7 +355,8 @@
 
   /* Gradient ring painted as the element's own 1px border: the gradient fills the
    * border box and the surface colour (--ring-fill) covers the padding box on top of it.
-   * Give the element `border` (the width); the class makes it transparent.
+   * Give the element `border` (the width); the class makes it transparent. Today it
+   * frames the icon of a project without screenshots.
    *
    * Why not a masked pseudo-element: browsers snap a real border to whole device pixels
    * (at 125% or 150% scale a 1px border becomes exactly one device pixel), but a mask
@@ -391,72 +365,13 @@
    * painted with background-clip uses the same snapped geometry as any other border.
    *
    * --ring-fill: the surface inside the ring (default: raised). Set it instead of a
-   * bg-* class, e.g. [--ring-fill:var(--color-page)].
-   * --ring-opacity (0 to 1): how much of the gradient shows; at 0 the border shows
-   * --ring-rest (default transparent). Registered with @property, so it can transition. */
+   * bg-* class, e.g. [--ring-fill:var(--color-page)]. */
   .gradient-ring {
     --ring-fill: var(--color-raised);
-    position: relative;
-    isolation: isolate;
     border-color: transparent;
     background:
       linear-gradient(var(--ring-fill) 0 0) padding-box,
-      linear-gradient(
-          135deg,
-          color-mix(
-            in oklab,
-            var(--color-orange-vibrant) calc(var(--ring-opacity, 1) * 100%),
-            var(--ring-rest, transparent)
-          ),
-          color-mix(
-            in oklab,
-            var(--color-red-signal) calc(var(--ring-opacity, 1) * 100%),
-            var(--ring-rest, transparent)
-          )
-        )
-        border-box;
-  }
-
-  /* Coloured glow on a pseudo-element that fades in: the shadow itself never animates. */
-  .hover-glow {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .hover-glow::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    border-radius: inherit;
-    box-shadow: var(--glow-accent);
-    opacity: var(--glow-opacity, 0);
-    transition: opacity var(--duration-moderate) var(--ease-standard);
-    pointer-events: none;
-  }
-
-  /* Previous/next links of the case-study pages: lift, gradient ring and glow on hover
-   * or keyboard focus. At rest the ring shows the hairline colour. */
-  .project-card {
-    --ring-opacity: 0;
-    --ring-rest: var(--color-hairline);
-    transition:
-      transform var(--duration-moderate) var(--ease-emphasized),
-      --ring-opacity var(--duration-moderate) var(--ease-standard);
-  }
-
-  .project-card:focus-within {
-    --ring-opacity: 1;
-    --glow-opacity: 1;
-    transform: translateY(calc(-1 * var(--lift-card)));
-  }
-
-  .project-card-arrow {
-    transition: transform var(--duration-moderate) var(--ease-emphasized);
-  }
-
-  .project-card:focus-within .project-card-arrow {
-    transform: translateX(0.25rem);
+      var(--gradient-brand-diagonal) border-box;
   }
 
   /* Project tiles (home and projects page): a screenshot and its caption, no panel
@@ -464,13 +379,18 @@
    * screenshot comes a little closer and the name is underlined: the answer to the
    * pointer, with nothing else moving. The frame's colour and the name's underline are
    * set here, not with utilities: utilities sit in a later layer and would win over the
-   * hover rules below. */
-  .project-tile-media {
+   * hover rules below.
+   *
+   * Framed links (.link-frame, the previous/next links of a case study) answer the same
+   * way: the link is the frame, and its .link-frame-name is underlined. */
+  .project-tile-media,
+  .link-frame {
     border-color: var(--color-hairline);
     transition: border-color var(--duration-moderate) var(--ease-standard);
   }
 
-  .project-tile-name {
+  .project-tile-name,
+  .link-frame-name {
     text-decoration-line: none;
   }
 
@@ -478,7 +398,8 @@
     transition: transform var(--duration-slow) var(--ease-emphasized);
   }
 
-  .project-tile:focus-within .project-tile-media {
+  .project-tile:focus-within .project-tile-media,
+  .link-frame:focus-visible {
     border-color: var(--color-accent);
   }
 
@@ -486,23 +407,15 @@
     transform: scale(1.03);
   }
 
-  .project-tile:focus-within .project-tile-name {
+  .project-tile:focus-within .project-tile-name,
+  .link-frame:focus-visible .link-frame-name {
     text-decoration-line: underline;
   }
 
   /* Hover only where the pointer can hover, so effects don't stick after a tap. */
   @media (hover: hover) {
-    .project-card:hover {
-      --ring-opacity: 1;
-      --glow-opacity: 1;
-      transform: translateY(calc(-1 * var(--lift-card)));
-    }
-
-    .project-card:hover .project-card-arrow {
-      transform: translateX(0.25rem);
-    }
-
-    .project-tile:hover .project-tile-media {
+    .project-tile:hover .project-tile-media,
+    .link-frame:hover {
       border-color: var(--color-accent);
     }
 
@@ -510,7 +423,8 @@
       transform: scale(1.03);
     }
 
-    .project-tile:hover .project-tile-name {
+    .project-tile:hover .project-tile-name,
+    .link-frame:hover .link-frame-name {
       text-decoration-line: underline;
     }
   }

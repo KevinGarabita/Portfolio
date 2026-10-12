@@ -41,7 +41,9 @@ export function ProjectArchitecture({
       alt={localize(image.alt, locale)}
       width={image.width}
       height={image.height}
-      sizes="(min-width: 1280px) 1200px, 100vw"
+      // The page container's width (16, 24 or 40 px of side padding; 1200 px from
+      // 1280 px and 1328 px from 1800 px).
+      sizes="(min-width: 1800px) 1328px, (min-width: 1280px) 1200px, (min-width: 1024px) calc(100vw - 80px), (min-width: 640px) calc(100vw - 48px), calc(100vw - 2rem)"
       className="h-auto w-full rounded-media border border-hairline bg-raised-strong"
     />
   );
