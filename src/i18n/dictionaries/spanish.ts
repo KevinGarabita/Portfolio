@@ -27,7 +27,7 @@ export const spanishDictionary = {
     allProjectsPage: {
       title: "Proyectos",
       description:
-        "Aplicaciones web freelance y agentes de IA con automatizaciones en n8n hechos en Kobler y Asociados.",
+        "Aplicaciones web, agentes de IA y automatizaciones: proyectos freelance y en colaboración con Kobler y Asociados.",
     },
     filters: {
       label: "Filtrar proyectos",

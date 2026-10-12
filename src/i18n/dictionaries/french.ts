@@ -30,7 +30,7 @@ export const frenchDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projets",
       description:
-        "Applications web en freelance, et agents d'IA avec des automatisations n8n réalisés chez Kobler y Asociados.",
+        "Applications web, agents d'IA et automatisations : projets en freelance et en collaboration avec Kobler y Asociados.",
     },
     filters: {
       label: "Filtrer les projets",
