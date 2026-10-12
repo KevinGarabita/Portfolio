@@ -29,7 +29,7 @@ export const projectSeo: Record<string, ProjectSeo> = {
     description: {
       es: "App web para UxmalTechnologies, terminada y sin publicar: el técnico registra reportes con fotos desde el celular y el supervisor los aprueba. FastAPI y React.",
       en: "Web app for UxmalTechnologies, completed but not released: technicians log reports with photos from their phone and a supervisor approves them. FastAPI, React.",
-      pt: "Aplicação web para a UxmalTechnologies, concluída e não publicada: o técnico registra relatórios com fotos pelo celular e o supervisor aprova. FastAPI e React.",
+      pt: "Aplicação web para a UxmalTechnologies, concluída e não publicada: o técnico registra relatórios com fotos no celular e o supervisor os aprova. FastAPI e React.",
       fr: "Application web pour UxmalTechnologies, terminée mais non publiée : rapports avec photos saisis sur mobile et approuvés par le superviseur. FastAPI et React.",
     },
   },
@@ -55,7 +55,7 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Agent commercial pour Motosureste Suzuki · n8n + OpenAI",
     },
     description: {
-      es: "Agente de WhatsApp en producción para Motosureste Suzuki, hecho en n8n con OpenAI: cotiza motos con el catálogo de WooCommerce y actualiza el inventario.",
+      es: "Agente de WhatsApp en producción para Motosureste Suzuki, hecho en n8n con OpenAI: cotiza con el catálogo de WooCommerce y actualiza el inventario desde un PDF.",
       en: "WhatsApp agent in production for Motosureste Suzuki, built in n8n with OpenAI: it quotes motorcycles from the WooCommerce catalog and updates stock from a PDF.",
       pt: "Agente de WhatsApp em produção para a Motosureste Suzuki, feito no n8n com OpenAI: faz orçamentos com o catálogo do WooCommerce e atualiza o estoque por PDF.",
       fr: "Agent WhatsApp en production pour Motosureste Suzuki, créé dans n8n avec OpenAI : devis de motos depuis le catalogue WooCommerce et stocks mis à jour par PDF.",
@@ -69,10 +69,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Agent de prise de rendez-vous pour Neorgana · n8n + OpenAI",
     },
     description: {
-      es: "Agente de WhatsApp en producción para Neorgana, hecho en n8n con OpenAI: lleva a cada paciente con el consultor adecuado y envía su agenda para Zoom.",
-      en: "WhatsApp agent in production for Neorgana, built in n8n with OpenAI: it matches each patient with the right consultant and sends their calendar for a Zoom call.",
-      pt: "Agente de WhatsApp em produção para a Neorgana, feito no n8n com OpenAI: leva cada paciente ao consultor certo e envia a agenda para a consulta no Zoom.",
-      fr: "Agent WhatsApp en production pour Neorgana, créé dans n8n avec OpenAI : il oriente chaque patient vers le bon consultant et envoie son agenda pour Zoom.",
+      es: "Agente de WhatsApp en producción para Neorgana, hecho en n8n con OpenAI: lleva a cada paciente con el consultor adecuado para agendar una consulta por Zoom.",
+      en: "WhatsApp agent in production for Neorgana, built in n8n with OpenAI: it matches each patient with the right consultant to book a consultation on Zoom.",
+      pt: "Agente de WhatsApp em produção para a Neorgana, feito no n8n com OpenAI: leva cada paciente ao consultor certo para marcar uma consulta pelo Zoom.",
+      fr: "Agent WhatsApp en production pour Neorgana, créé dans n8n avec OpenAI : il oriente chaque patient vers le bon consultant pour réserver une consultation Zoom.",
     },
   },
   "lamau-beach-automation": {
@@ -83,10 +83,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Agent de disponibilité pour Lamau Beach · n8n + OpenAI",
     },
     description: {
-      es: "Agente de WhatsApp en producción para Lamau Beach, hecho en n8n con OpenAI: revisa si sus estancias de Airbnb están libres y calcula el precio por noche.",
+      es: "Agente de WhatsApp en producción para Lamau Beach, hecho en n8n con OpenAI: revisa la disponibilidad en Airbnb y calcula el precio por noche según la temporada.",
       en: "WhatsApp agent in production for Lamau Beach, built in n8n with OpenAI: it checks availability for its Airbnb stays and works out the nightly rate by season.",
-      pt: "Agente de WhatsApp em produção para a Lamau Beach, feito no n8n com OpenAI: verifica a disponibilidade das hospedagens no Airbnb e calcula a diária.",
-      fr: "Agent WhatsApp en production pour Lamau Beach, créé dans n8n avec OpenAI : il vérifie la disponibilité de ses logements Airbnb et calcule le prix par nuit.",
+      pt: "Agente de WhatsApp em produção para a Lamau Beach, feito no n8n com OpenAI: verifica a disponibilidade no Airbnb e calcula a diária conforme a temporada.",
+      fr: "Agent WhatsApp en production pour Lamau Beach, créé dans n8n avec OpenAI : il vérifie la disponibilité sur Airbnb et calcule le prix par nuit selon la saison.",
     },
   },
   "workshop-web": {

@@ -1,8 +1,6 @@
 import { sameInEveryLanguage } from "@/i18n/localize";
 import type { Project } from "@/types/content";
 
-import { koblerHighlights } from "../experience";
-
 /**
  * Team work at Kobler y Asociados, credited as "Colaboración con Kobler": each role says
  * what Kevin built himself. All three are in production (Kevin, 12 October 2026; start
@@ -77,7 +75,12 @@ export const koblerProjects: Project[] = [
       },
     ],
     highlights: [
-      koblerHighlights.inventory,
+      {
+        es: "Eliminé la captura manual del inventario de cinco sucursales: un modelo de IA extrae las existencias del PDF que envía Suzuki y el flujo actualiza WooCommerce por su API REST.",
+        en: "Eliminated manual stock entry for five branches: an AI model extracts the quantities from the PDF Suzuki sends, and the flow updates WooCommerce through its REST API.",
+        pt: "Eliminei o lançamento manual do estoque de cinco filiais: um modelo de IA extrai as quantidades do PDF enviado pela Suzuki e o fluxo atualiza o WooCommerce pela API REST.",
+        fr: "J'ai supprimé la saisie manuelle des stocks de cinq succursales : un modèle d'IA extrait les quantités du PDF envoyé par Suzuki et le flux met à jour WooCommerce via son API REST.",
+      },
       {
         es: "Para cotizar, el agente confirma modelo, color, nombre, teléfono y correo, muestra una precotización y, cuando el cliente la aprueba, genera la cotización formal y le comparte el enlace.",
         en: "To quote, the agent confirms model, color, name, phone and email, shows a draft quote and, once the customer approves it, generates the formal quote and shares the link.",
@@ -408,7 +411,12 @@ export const koblerProjects: Project[] = [
       },
     ],
     highlights: [
-      koblerHighlights.lamauBeach,
+      {
+        es: "Responde con la disponibilidad de cada estancia de Airbnb y el precio por noche de la temporada, dentro de la misma conversación.",
+        en: "It replies with each Airbnb stay's availability and the nightly rate for the season, within the same conversation.",
+        pt: "Responde com a disponibilidade de cada hospedagem do Airbnb e o valor da diária da temporada, na mesma conversa.",
+        fr: "Il répond avec la disponibilité de chaque logement Airbnb et le prix par nuit de la saison, dans la même conversation.",
+      },
       {
         es: "Tiene herramientas para revisar disponibilidad, cotizar la estancia y responder preguntas frecuentes y políticas de cancelación.",
         en: "It has tools to check availability, quote the stay and answer frequently asked questions and cancellation policies.",

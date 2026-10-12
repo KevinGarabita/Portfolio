@@ -140,10 +140,10 @@ export const skillGroups: SkillGroup[] = [
       },
       {
         name: {
-          es: "Inglés intermedio (B1): leo documentación técnica sin dificultad, conversación en desarrollo",
-          en: "Intermediate English (B1) — I read technical documentation without difficulty, conversational skills in progress",
-          pt: "Inglês intermediário (B1): leio documentação técnica sem dificuldade, conversação em desenvolvimento",
-          fr: "Anglais intermédiaire (B1) : je lis la documentation technique sans difficulté, expression orale en cours d'amélioration",
+          es: "Inglés intermedio (B1, autoevaluado): leo documentación técnica sin dificultad, conversación en desarrollo",
+          en: "Intermediate English (B1, self-assessed) — I read technical documentation without difficulty, conversational skills in progress",
+          pt: "Inglês intermediário (B1, autoavaliado): leio documentação técnica sem dificuldade, conversação em desenvolvimento",
+          fr: "Anglais intermédiaire (B1, auto-évalué) : je lis la documentation technique sans difficulté, expression orale en cours d'amélioration",
         },
       },
     ],

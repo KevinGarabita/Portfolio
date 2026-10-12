@@ -120,6 +120,16 @@ Only one variable is ever set by hand; Vercel provides the others.
 
 With none of them set, the site uses `http://localhost:3000`.
 
+### CV
+
+The CVs the site links (`public/cv/kevin-garabita-cv-es.pdf` and `kevin-garabita-cv-en.pdf`) are built from the HTML sources in `docs/cv/`. Edit the HTML, then rebuild both PDFs:
+
+```bash
+npm run cv   # docs/cv/*.html → public/cv/*.pdf with the installed Chrome
+```
+
+`scripts/build-cv.mjs` prints each source with headless Chrome from its default Windows path; set `CHROME_PATH` to use another executable. It fails unless each PDF is exactly one Letter page. Keep the CVs ATS-friendly: one column, standard headings, real text (no tables, icons or images) and one date format. Commit the HTML and the PDFs together.
+
 ## Project structure
 
 ```
