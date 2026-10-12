@@ -24,6 +24,7 @@
  * 4.36:1 on the page and with black or white text on it, so red is for gradients,
  * borders, glows, hovers and large text, never for small text. White on orange fails
  * (2.63:1). Glows stay under 20% opacity so text on top keeps its contrast.
+ * Every pair is listed with its ratio in docs/design.md.
  */
 
 @theme {
