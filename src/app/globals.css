@@ -215,10 +215,10 @@
     --duration-title-fade: 550ms;
     --stagger-step: 90ms;
 
-    /* Hover lifts in px, never rem: a multiple of 4 CSS px is a whole number of device
-     * pixels at every common display scale (100, 125, 150, 175, 200, 250, 300%), so a
-     * lifted border or gradient ring stays on the pixel grid instead of being smeared
-     * across two rows of pixels. */
+    /* Hover lift of the case-study previous/next links, in px, never rem: a multiple of
+     * 4 CSS px is a whole number of device pixels at every common display scale (100,
+     * 125, 150, 175, 200, 250, 300%), so the lifted gradient ring stays on the pixel
+     * grid instead of being smeared across two rows of pixels. */
     --lift-card: 8px;
 
     /* Stacking layers. */
@@ -364,16 +364,6 @@
     );
   }
 
-  /* Smaller grid, fading out from the centre: placeholder visuals in project cards. */
-  .grid-texture-centered {
-    background-size: 2rem 2rem;
-    mask-image: radial-gradient(
-      ellipse 60% 60% at 50% 50%,
-      black 10%,
-      transparent 80%
-    );
-  }
-
   /* Hero portrait: the circle and the cut-out fade into the page together at the
    * bottom, where the original photo was cropped, so no straight edge shows. */
   .hero-portrait {
@@ -486,8 +476,8 @@
     pointer-events: none;
   }
 
-  /* Project cards: lift, gradient ring and glow on hover or keyboard focus. At rest the
-   * ring shows the hairline colour. */
+  /* Previous/next links of the case-study pages: lift, gradient ring and glow on hover
+   * or keyboard focus. At rest the ring shows the hairline colour. */
   .project-card {
     --ring-opacity: 0;
     --ring-rest: var(--color-hairline);
@@ -502,20 +492,43 @@
     transform: translateY(calc(-1 * var(--lift-card)));
   }
 
-  .project-card-media > :is(img, svg, div) {
-    transition: transform var(--duration-slow) var(--ease-emphasized);
-  }
-
-  .project-card:focus-within .project-card-media > :is(img, svg, div) {
-    transform: scale(1.04);
-  }
-
   .project-card-arrow {
     transition: transform var(--duration-moderate) var(--ease-emphasized);
   }
 
   .project-card:focus-within .project-card-arrow {
     transform: translateX(0.25rem);
+  }
+
+  /* Project tiles (home and projects page): a screenshot and its caption, no panel
+   * around them. On hover or keyboard focus the screenshot's frame turns orange, the
+   * screenshot comes a little closer and the name is underlined: the answer to the
+   * pointer, with nothing else moving. The frame's colour and the name's underline are
+   * set here, not with utilities: utilities sit in a later layer and would win over the
+   * hover rules below. */
+  .project-tile-media {
+    border-color: var(--color-hairline);
+    transition: border-color var(--duration-moderate) var(--ease-standard);
+  }
+
+  .project-tile-name {
+    text-decoration-line: none;
+  }
+
+  .project-tile-media > :is(img, div) {
+    transition: transform var(--duration-slow) var(--ease-emphasized);
+  }
+
+  .project-tile:focus-within .project-tile-media {
+    border-color: var(--color-accent);
+  }
+
+  .project-tile:focus-within .project-tile-media > :is(img, div) {
+    transform: scale(1.03);
+  }
+
+  .project-tile:focus-within .project-tile-name {
+    text-decoration-line: underline;
   }
 
   /* Hover only where the pointer can hover, so effects don't stick after a tap. */
@@ -526,12 +539,20 @@
       transform: translateY(calc(-1 * var(--lift-card)));
     }
 
-    .project-card:hover .project-card-media > :is(img, svg, div) {
-      transform: scale(1.04);
-    }
-
     .project-card:hover .project-card-arrow {
       transform: translateX(0.25rem);
+    }
+
+    .project-tile:hover .project-tile-media {
+      border-color: var(--color-accent);
+    }
+
+    .project-tile:hover .project-tile-media > :is(img, div) {
+      transform: scale(1.03);
+    }
+
+    .project-tile:hover .project-tile-name {
+      text-decoration-line: underline;
     }
   }
 

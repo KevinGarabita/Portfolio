@@ -16,12 +16,12 @@ interface ProjectVisualProps {
   /**
    * Preload the screenshot with high priority instead of loading it lazily. Only for the
    * card whose image is the page's largest paint (LCP): the first card of the projects
-   * page on phones. Never on the home page, where the hero photo is the LCP.
+   * page and, on the home page, the lead project (the LCP on phones).
    */
   preload?: boolean;
 }
 
-/** Aspect ratio of the card's media frame (aspect-16/10 in ProjectCard). */
+/** Aspect ratio of the card's media frame (aspect-16/10 in ProjectCard, every variant). */
 const mediaFrameRatio = 16 / 10;
 
 /**
@@ -49,8 +49,8 @@ function scaleSizes(sizes: string, factor: number): string {
  * - otherwise an icon (an automation for Kobler work, a web application for the rest).
  * Never a made-up screenshot. The icon shrinks on narrow cards and, when a flow
  * follows, is dropped below 20rem so the flow always fits (container query on the frame).
- * It fills the card's media frame (absolutely positioned),
- * so a tall phone screenshot never stretches the card.
+ * It fills the card's media frame (absolutely positioned), so a tall phone screenshot
+ * never stretches the card. The frame and the zoom on hover come from ProjectCard.
  */
 export function ProjectVisual({
   project,
@@ -94,7 +94,6 @@ export function ProjectVisual({
       aria-hidden="true"
       className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[radial-gradient(60%_70%_at_50%_45%,var(--tint-accent),transparent)]"
     >
-      <span className="grid-texture grid-texture-centered absolute inset-0" />
       <span
         className={joinClassNames(
           "gradient-ring relative flex size-14 shrink-0 items-center justify-center rounded-section border shadow-(--glow-accent-soft) [--ring-fill:var(--color-page)] [--ring-opacity:1] @min-[22rem]:size-20",
@@ -106,13 +105,8 @@ export function ProjectVisual({
       {project.flowDiagram?.length ? (
         <FlowPreview steps={project.flowDiagram} className="relative" />
       ) : (
-        <span className="relative px-6 text-center">
-          <span className="block font-display text-subtitle font-bold text-heading">
-            {project.client}
-          </span>
-          <span className="mt-1 block font-mono text-small text-muted">
-            {project.stack.slice(0, 3).join(" · ")}
-          </span>
+        <span className="relative px-6 text-center font-display text-subtitle font-bold text-heading">
+          {project.client}
         </span>
       )}
     </div>

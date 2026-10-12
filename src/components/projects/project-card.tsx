@@ -1,16 +1,21 @@
 import Link from "next/link";
 
-import { ArrowRightIcon } from "@/components/ui/icons";
-import { Tag } from "@/components/ui/tag";
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
-import { getProjectTechnologies } from "@/lib/projects";
+import { joinClassNames } from "@/lib/class-names";
+import { getProjectCredit, getProjectTechnologies } from "@/lib/projects";
 import type { Project } from "@/types/content";
 
-import { ProjectBuildBadge } from "./project-build-badge";
 import { ProjectStatus } from "./project-status";
 import { ProjectVisual } from "./project-visual";
+
+/**
+ * "tile": the screenshot on top and the caption under it (every grid).
+ * "feature": from lg, the screenshot on the left (7 of 12 columns) and the caption
+ * beside it, larger; below lg it is a tile. For the lead project of the home page.
+ */
+type ProjectCardVariant = "tile" | "feature";
 
 interface ProjectCardProps {
   project: Project;
@@ -18,28 +23,40 @@ interface ProjectCardProps {
   dictionary: Dictionary;
   /** h3 under a home section (h2); h2 on the projects page, right under its h1. */
   headingLevel?: "h2" | "h3";
-  /** Preload the card's screenshot: only for the first card of the projects page (its LCP). */
+  /**
+   * Preload the card's screenshot: only for the page's LCP image, the first card of the
+   * projects page and the lead project of the home page on phones.
+   */
   preloadMedia?: boolean;
+  variant?: ProjectCardVariant;
+  /**
+   * next/image `sizes` of the screenshot: the width the card really takes in its grid.
+   * The default is the projects page's grid (ProjectCard's own `tileSizes`).
+   */
+  mediaSizes?: string;
 }
 
-/** How many technologies a card lists before summing up the rest as "+N". */
-const visibleTechnologyCount = 5;
+/** How many technologies a card names; the case study lists all of them. */
+const visibleTechnologyCount = 4;
 
 /**
- * Card width: one column on phones, two from sm, three from lg (see ProjectGrid), inside
- * the page container (16, 24 or 40 px of side padding; 1200 px wide from 1280 px and
- * 1328 px from 1800 px) with 20 px gaps (24 px from lg).
+ * Width of a tile in the projects page's grid: one column on phones, two from sm, three
+ * from lg, inside the page container (16, 24 or 40 px of side padding; 1200 px wide
+ * from 1280 px and 1328 px from 1800 px) with 20 px gaps (24 px from lg).
  */
-const mediaSizes =
+const tileSizes =
   "(min-width: 1800px) 427px, (min-width: 1280px) 384px, (min-width: 1024px) calc(33.3vw - 43px), (min-width: 640px) calc(50vw - 34px), calc(100vw - 2rem)";
 
 /**
- * A compact project card (home page and projects page): media on top, then the status
- * and how it was built ("Desarrollo asistido por IA"), name, client, a three-line summary and the main
- * technologies. The full story lives on the case-study page. The name is the only link; its ::after covers the whole card
- * ("stretched link"), so the card is clickable without nesting interactive elements.
- * On hover or keyboard focus the card lifts, the gradient ring and the glow fade in and
- * the media zooms a little (globals.css, .project-card).
+ * A project as a screenshot with its caption, with no panel around them: the status
+ * ("En producción" is the only one in orange) and who the work was for, the name, its
+ * one line of value (the tagline; the summary, cut to two lines, until the project has
+ * one) and up to four technologies. The full story lives on the case-study page.
+ *
+ * The name is the only link; its ::after covers the whole card ("stretched link"), so
+ * every part of the card opens the case study without nesting interactive elements. On
+ * hover or keyboard focus the screenshot's frame turns orange, the screenshot comes a
+ * little closer and the name is underlined (globals.css, .project-tile).
  */
 export function ProjectCard({
   project,
@@ -47,15 +64,29 @@ export function ProjectCard({
   dictionary,
   headingLevel: Heading = "h3",
   preloadMedia = false,
+  variant = "tile",
+  mediaSizes = tileSizes,
 }: ProjectCardProps) {
-  const technologies = getProjectTechnologies(project);
-  const visibleTechnologies = technologies.slice(0, visibleTechnologyCount);
-  const hiddenTechnologyCount =
-    technologies.length - visibleTechnologies.length;
+  const isFeature = variant === "feature";
+  const technologies = getProjectTechnologies(project).slice(
+    0,
+    visibleTechnologyCount,
+  );
+  const valueLine = project.tagline ?? project.summary;
 
   return (
-    <article className="project-card hover-glow gradient-ring flex h-full flex-col rounded-section border">
-      <div className="project-card-media @container relative aspect-16/10 overflow-hidden rounded-t-section border-b border-hairline bg-raised-strong">
+    <article
+      className={joinClassNames(
+        "project-tile relative flex h-full flex-col",
+        isFeature && "lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-10",
+      )}
+    >
+      <div
+        className={joinClassNames(
+          "project-tile-media @container relative aspect-16/10 overflow-hidden rounded-media border bg-raised-strong",
+          isFeature && "lg:col-span-7",
+        )}
+      >
         <ProjectVisual
           project={project}
           locale={locale}
@@ -64,81 +95,56 @@ export function ProjectCard({
         />
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
-        {project.status || project.buildMethod ? (
-          <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-            {project.status ? (
+      <div
+        className={joinClassNames(
+          "flex flex-1 flex-col pt-5",
+          isFeature && "lg:col-span-5 lg:pt-0",
+        )}
+      >
+        <p className="flex min-h-7 flex-wrap items-center gap-x-3 gap-y-2 text-small text-muted">
+          {project.status ? (
+            <>
               <ProjectStatus
                 status={project.status}
-                statusNote={project.statusNote}
                 locale={locale}
                 dictionary={dictionary}
-                stacked
               />
-            ) : null}
-            {project.buildMethod ? (
-              <ProjectBuildBadge
-                buildMethod={project.buildMethod}
-                dictionary={dictionary}
-              />
-            ) : null}
-          </div>
-        ) : null}
+              {/* Read "En producción, Freelance", not two glued words. */}
+              <span className="sr-only">, </span>
+            </>
+          ) : null}
+          <span>{dictionary.projects.credit[getProjectCredit(project)]}</span>
+        </p>
 
-        <Heading className="font-display text-subtitle font-bold text-pretty">
+        <Heading
+          className={joinClassNames(
+            "mt-3 font-display font-bold text-pretty",
+            isFeature ? "text-subtitle lg:text-title" : "text-subtitle",
+          )}
+        >
           <Link
             href={`/${locale}/projects/${project.slug}`}
-            className="text-heading no-underline after:absolute after:inset-0 after:z-(--layer-raised) after:rounded-section hover:underline"
+            className="project-tile-name text-heading decoration-accent decoration-2 outline-offset-4 after:absolute after:inset-0 after:z-(--layer-raised)"
           >
             {localize(project.name, locale)}
           </Link>
         </Heading>
 
-        {/* "Client · Context"; an internal project's client is also its context
-            (Kobler y Asociados), so it is named once. */}
-        <p className="text-small text-muted">
-          {project.client === localize(project.context, locale)
-            ? project.client
-            : `${project.client} · ${localize(project.context, locale)}`}
+        <p
+          className={joinClassNames(
+            "mt-2 text-body",
+            isFeature ? "line-clamp-2 lg:line-clamp-3" : "line-clamp-2",
+          )}
+        >
+          {localize(valueLine, locale)}
         </p>
 
-        <p className="line-clamp-3 text-small text-body">
-          {localize(project.summary, locale)}
-        </p>
-
-        <div className="mt-auto flex flex-col gap-4 pt-2">
-          <p className="sr-only">{dictionary.projects.facts.technologies}:</p>
-          <ul className="flex flex-wrap gap-2">
-            {visibleTechnologies.map((technology) => (
-              <li key={technology}>
-                <Tag>{technology}</Tag>
-              </li>
-            ))}
-            {hiddenTechnologyCount > 0 ? (
-              <li>
-                {/* Shows "+8"; reads "+8 more" as text and "8 more" aloud (the plus
-                    sign alone would be read as "plus"). */}
-                <Tag>
-                  <span>
-                    <span aria-hidden="true">+</span>
-                    {hiddenTechnologyCount}
-                  </span>
-                  <span className="sr-only">
-                    {" "}
-                    {dictionary.projects.moreTechnologies}
-                  </span>
-                </Tag>
-              </li>
-            ) : null}
-          </ul>
-          <span
-            aria-hidden="true"
-            className="inline-flex items-center gap-2 text-small font-bold text-accent"
-          >
-            {dictionary.projects.viewCaseStudy}
-            <ArrowRightIcon className="project-card-arrow" />
-          </span>
-        </div>
+        <p className="sr-only">{dictionary.projects.facts.technologies}:</p>
+        <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-small text-muted">
+          {technologies.map((technology) => (
+            <li key={technology}>{technology}</li>
+          ))}
+        </ul>
       </div>
     </article>
   );
