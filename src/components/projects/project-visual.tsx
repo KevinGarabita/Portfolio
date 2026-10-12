@@ -21,13 +21,20 @@ interface ProjectVisualProps {
   preload?: boolean;
 }
 
-/** Aspect ratio of the card's media frame (aspect-16/10 in ProjectCard, every variant). */
-const mediaFrameRatio = 16 / 10;
+/**
+ * Aspect ratio of the card's media frame (aspect-video in ProjectCard, every variant).
+ * 16:9 is the widest screenshot the site has, so a desktop screenshot is never cut at
+ * the sides, where text starts: a 16:9 one fits exactly and a 16:10 one keeps its full
+ * width and loses only a strip at the bottom (object-top). With a 16:10 frame, the 16:9
+ * captures of the Appolo workshop lost 5% on each side and the first letters of their
+ * titles.
+ */
+const mediaFrameRatio = 16 / 9;
 
 /**
- * A screenshot wider than the frame (16:9 in 16:10) fills it with object-cover, so it is
- * drawn wider than the card: every width in `sizes` grows by that factor, so the
- * browser still picks a sharp file.
+ * A screenshot wider than the frame would fill it with object-cover and be drawn wider
+ * than the card: every width in `sizes` would grow by that factor, so the browser
+ * still picked a sharp file. With today's screenshots (16:9 and 16:10) the factor is 1.
  */
 function scaleSizes(sizes: string, factor: number): string {
   if (factor <= 1.01) return sizes;
@@ -44,7 +51,7 @@ function scaleSizes(sizes: string, factor: number): string {
 /**
  * The media area of a project card:
  * - the first screenshot, when the project has one (desktop screenshots fill the frame
- *   from the top; phone screenshots are shown whole);
+ *   from the top, at full width; phone screenshots are shown whole);
  * - otherwise the tools of its automation flow, when it has one;
  * - otherwise an icon (an automation for Kobler work, a web application for the rest).
  * Never a made-up screenshot. The icon shrinks on narrow cards and, when a flow

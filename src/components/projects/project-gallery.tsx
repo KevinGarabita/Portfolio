@@ -210,7 +210,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                     ? "h-auto"
                     : image.viewport === "mobile"
                       ? "aspect-9/16 object-cover object-top"
-                      : "aspect-16/10 object-cover object-top sm:aspect-auto sm:h-full",
+                      : "aspect-video object-cover object-top sm:aspect-auto sm:h-full",
                 )}
               />
               <span

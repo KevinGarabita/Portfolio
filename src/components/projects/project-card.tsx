@@ -83,7 +83,7 @@ export function ProjectCard({
     >
       <div
         className={joinClassNames(
-          "project-tile-media @container relative aspect-16/10 overflow-hidden rounded-media border bg-raised-strong",
+          "project-tile-media @container relative aspect-video overflow-hidden rounded-media border bg-raised-strong",
           isFeature && "lg:col-span-7",
         )}
       >
