@@ -115,7 +115,7 @@ export const portugueseDictionary: Dictionary = {
   },
   contact: {
     sectionTitle: "Contato",
-    lead: "Conte o que você quer desenvolver ou automatizar.",
+    lead: "Me conte o que você quer desenvolver ou automatizar.",
     email: "E-mail",
     whatsApp: "WhatsApp",
     sendEmail: "Enviar e-mail",
