@@ -123,6 +123,7 @@ export const englishDictionary: Dictionary = {
     sectionTitle: "Experience",
     present: "present",
     relatedProjects: "Case studies from this job",
+    moreDetails: "More details",
   },
   education: {
     sectionTitle: "Education",
@@ -134,13 +135,12 @@ export const englishDictionary: Dictionary = {
   about: {
     sectionTitle: "About",
     facts: {
-      location: "Location",
-      focus: "Focus",
       languages: "Languages",
     },
   },
   contact: {
     sectionTitle: "Contact",
+    lead: "Tell me what you want to build or automate.",
     email: "Email",
     whatsApp: "WhatsApp",
     sendEmail: "Send an email",

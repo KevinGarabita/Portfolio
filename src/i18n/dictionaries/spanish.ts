@@ -121,6 +121,7 @@ export const spanishDictionary = {
     sectionTitle: "Experiencia",
     present: "actualidad",
     relatedProjects: "Casos de estudio de este trabajo",
+    moreDetails: "Más detalles",
   },
   education: {
     sectionTitle: "Formación",
@@ -132,13 +133,12 @@ export const spanishDictionary = {
   about: {
     sectionTitle: "Sobre mí",
     facts: {
-      location: "Ubicación",
-      focus: "Enfoque",
       languages: "Idiomas",
     },
   },
   contact: {
     sectionTitle: "Contacto",
+    lead: "Cuéntame qué quieres desarrollar o automatizar.",
     email: "Correo",
     whatsApp: "WhatsApp",
     sendEmail: "Enviar correo",

@@ -1,96 +1,57 @@
 import type { ReactNode } from "react";
 
-import { joinClassNames } from "@/lib/class-names";
-import { homeSectionIds, type HomeSectionId } from "@/lib/home-sections";
+import type { HomeSectionId } from "@/lib/home-sections";
 
 import { Container } from "./container";
 
-/** Vertical room by how much the section carries, so the page keeps a varied rhythm. */
-type SectionSpacing = "spacious" | "regular" | "compact";
-
-const spacingClassNames: Record<SectionSpacing, string> = {
-  spacious: "py-20 lg:py-28",
-  regular: "py-16 lg:py-24",
-  compact: "py-12 lg:py-20",
-};
-
 /**
- * Anchor links land on the heading, not on the empty top padding: the scroll margin
- * cancels all but 1rem of it.
+ * "split": the h2 in a narrow column on the left and the content beside it from lg up
+ * (stacked below lg), like the parts of a case study. A hairline above it separates it
+ * from the section before. For the short sections after the projects.
+ * "stacked": the h2 above the content at full width, without a line. For the projects,
+ * which come right after the hero.
  */
-const scrollMarginClassNames: Record<SectionSpacing, string> = {
-  spacious: "-scroll-mt-16 lg:-scroll-mt-24",
-  regular: "-scroll-mt-12 lg:-scroll-mt-20",
-  compact: "-scroll-mt-8 lg:-scroll-mt-16",
-};
+type SectionLayout = "split" | "stacked";
 
 interface PageSectionProps {
   id: HomeSectionId;
   title: string;
   children: ReactNode;
-  spacing?: SectionSpacing;
-  /**
-   * Reveal the whole content as one block on scroll (default). Sections that reveal
-   * their own items one by one (the project cards) turn it off.
-   */
-  revealsContentAsBlock?: boolean;
-}
-
-/** "01", "02"... from the order of homeSectionIds, which is the order of the page. */
-function getSectionNumber(id: HomeSectionId): string {
-  const position = Object.values(homeSectionIds).indexOf(id) + 1;
-  return String(position).padStart(2, "0");
+  layout?: SectionLayout;
 }
 
 /**
- * The layout every home section shares: a large heading with its number in orange and
- * a gradient line running to the right edge, then the content at full width. The
- * heading and the content fade in when they scroll into view.
+ * A home page section: a plain heading (no number, no label above it) and its content.
+ * Nothing fades in on scroll: the content is simply there. An anchor link lands on the
+ * hairline at the top of the section; scroll-padding-top keeps it below the header.
  */
 export function PageSection({
   id,
   title,
   children,
-  spacing = "regular",
-  revealsContentAsBlock = true,
+  layout = "split",
 }: PageSectionProps) {
   const titleId = `${id}-title`;
+  const heading = (
+    <h2 id={titleId} className="font-display text-title font-bold">
+      {title}
+    </h2>
+  );
 
   return (
-    <section
-      id={id}
-      aria-labelledby={titleId}
-      className={scrollMarginClassNames[spacing]}
-    >
-      <Container className={spacingClassNames[spacing]}>
-        <div data-reveal className="mb-10 flex items-end gap-6 lg:mb-14">
-          <h2
-            id={titleId}
-            className="font-display text-headline font-extrabold"
-          >
-            <span
-              aria-hidden="true"
-              className="mb-3 block font-mono text-small font-bold tracking-widest text-accent"
-            >
-              {getSectionNumber(id)}
-            </span>
-            {/* Keeps the text "01 Proyectos destacados", not "01Proyectos…"; the block
-                span above starts a new line, so the space is never drawn. */}{" "}
-            {title}
-          </h2>
-          <span
-            aria-hidden="true"
-            className="mb-[0.6em] h-px flex-1 bg-(image:--gradient-brand) opacity-50"
-          />
-        </div>
-        <div
-          data-reveal={revealsContentAsBlock ? "" : undefined}
-          className={joinClassNames(
-            revealsContentAsBlock && "[--reveal-order:1]",
-          )}
-        >
-          {children}
-        </div>
+    <section id={id} aria-labelledby={titleId}>
+      <Container>
+        {layout === "split" ? (
+          <div className="grid gap-6 border-t border-hairline py-14 lg:grid-cols-12 lg:gap-10 lg:py-24">
+            <div className="lg:col-span-4">{heading}</div>
+            <div className="min-w-0 lg:col-span-8">{children}</div>
+          </div>
+        ) : (
+          <div className="pb-14 lg:pb-24">
+            <div className="mb-8 lg:mb-10">{heading}</div>
+            {children}
+          </div>
+        )}
       </Container>
     </section>
   );

@@ -124,6 +124,7 @@ export const frenchDictionary: Dictionary = {
     sectionTitle: "Expérience",
     present: "aujourd'hui",
     relatedProjects: "Études de cas issues de ce poste",
+    moreDetails: "Plus de détails",
   },
   education: {
     sectionTitle: "Formation",
@@ -135,13 +136,12 @@ export const frenchDictionary: Dictionary = {
   about: {
     sectionTitle: "À propos",
     facts: {
-      location: "Localisation",
-      focus: "Spécialité",
       languages: "Langues",
     },
   },
   contact: {
     sectionTitle: "Contact",
+    lead: "Dites-moi ce que vous souhaitez développer ou automatiser.",
     email: "E-mail",
     whatsApp: "WhatsApp",
     sendEmail: "Envoyer un e-mail",

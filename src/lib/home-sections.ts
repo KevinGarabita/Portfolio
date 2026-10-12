@@ -1,8 +1,8 @@
 import type { Locale } from "@/i18n/locales";
 
 /**
- * Anchor ids of the home page sections. The sections, the header navigation and the
- * case-study back link all read them from here, so a renamed id cannot break a link.
+ * Anchor ids of the home page sections, in page order. The sections and the header
+ * navigation both read them from here, so a renamed id cannot break a link.
  */
 export const homeSectionIds = {
   projects: "projects",

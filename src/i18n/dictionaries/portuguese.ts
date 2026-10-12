@@ -124,6 +124,7 @@ export const portugueseDictionary: Dictionary = {
     sectionTitle: "Experiência",
     present: "atual",
     relatedProjects: "Estudos de caso deste trabalho",
+    moreDetails: "Mais detalhes",
   },
   education: {
     sectionTitle: "Formação",
@@ -135,13 +136,12 @@ export const portugueseDictionary: Dictionary = {
   about: {
     sectionTitle: "Sobre mim",
     facts: {
-      location: "Localização",
-      focus: "Foco",
       languages: "Idiomas",
     },
   },
   contact: {
     sectionTitle: "Contato",
+    lead: "Conte o que você quer desenvolver ou automatizar.",
     email: "E-mail",
     whatsApp: "WhatsApp",
     sendEmail: "Enviar e-mail",
