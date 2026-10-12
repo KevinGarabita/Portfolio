@@ -7,8 +7,8 @@ Source code of the personal site of **Kevin Garabita**, a Backend, AI & Automati
 **Live site: [www.garasoftware.com.mx](https://www.garasoftware.com.mx)**
 
 <p align="center">
-  <img src="docs/screenshots/home-desktop.png" width="600" alt="English home page on a desktop screen: the heading Kevin Garabita, Backend, AI &amp; Automation Engineer, the word Backend in large orange letters, a summary of his backend, AI agent and automation work, buttons to view his projects, view his résumé, message him on WhatsApp and email him, LinkedIn and GitHub links, and his photo in front of an orange-to-red circle labelled FastAPI, n8n and OpenAI API.">
-  <img src="docs/screenshots/home-phone.png" width="173" alt="The same English home page on a phone: the photo first, then the name and role, the word Backend, the summary and the buttons stacked in one column.">
+  <img src="docs/screenshots/home-desktop.png" width="600" alt="English home page on a desktop screen: a header with the name, the section links, a green WhatsApp button and the language menu; a byline with Kevin's photo on an orange-to-red disc, his name, the role Backend, AI &amp; Automation Engineer and Mérida, Yucatán; the value line “I build web apps, backends, automations and AI agents that take the manual work out of your business.” in large type; buttons to message him on WhatsApp and to view his résumé (PDF); and the Featured projects heading right after.">
+  <img src="docs/screenshots/home-phone.png" width="173" alt="The same English home page on a phone: the header with the menu button, the WhatsApp button and the language menu; the byline with photo, name, role and Mérida, Yucatán; the value line; the WhatsApp and résumé buttons stacked; and right after, Featured projects with the first one's screenshot.">
 </p>
 
 ## Highlights
