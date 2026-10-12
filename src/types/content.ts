@@ -27,12 +27,6 @@ export interface Profile {
   /** Legal full name, used in structured data. */
   fullName: string;
   role: LocalizedText;
-  /**
-   * Short words that rotate in large type under the hero heading, in order. They are the
-   * parts of `role` (Backend, AI, Automation), so the hero keeps a single positioning.
-   * Decorative: the heading already says the role. The longest word reserves the space.
-   */
-  heroTitles: LocalizedText[];
   /** Short line under the hero title. */
   heroSubtitle: LocalizedText;
   /** Paragraphs for the "About" section. */

@@ -46,12 +46,6 @@ export const portugueseDictionary: Dictionary = {
       empty: "Nenhum projeto corresponde a esses filtros.",
       clear: "Limpar filtros",
     },
-    category: {
-      freelance: "Projeto freelance",
-      kobler: "Projeto na Kobler",
-    },
-    viewCaseStudy: "Ver estudo de caso",
-    moreTechnologies: "a mais",
     status: {
       "in-production": "Em produção",
       "in-development": "Em desenvolvimento",
@@ -62,15 +56,10 @@ export const portugueseDictionary: Dictionary = {
       "kobler-team": "Colaboração com a Kobler",
       "kobler-individual": "Feito para a Kobler y Asociados",
     },
-    teamSetup: {
-      individual: "Projeto individual",
-      team: "Trabalho em equipe",
-    },
     facts: {
       client: "Cliente",
       context: "Contexto",
       period: "Período",
-      status: "Status",
       technologies: "Tecnologias",
     },
     sections: {
@@ -139,7 +128,6 @@ export const portugueseDictionary: Dictionary = {
     backHome: "Voltar ao início",
   },
   recruiter: {
-    email: "E-mail",
     metrics: {
       before: "Antes",
       after: "Depois",
