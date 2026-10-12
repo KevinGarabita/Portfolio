@@ -38,13 +38,17 @@ interface FilterableProjectGridProps {
   labels: ProjectFilterLabels;
 }
 
-/** A filter pill: dark by default, outlined in orange while its filter is on. */
+/**
+ * A filter button, drawn like the home page's secondary buttons: a grey outline
+ * (4.18:1) that turns orange on hover, and stays orange, on a raised surface, while its
+ * filter is on.
+ */
 function pillClassNames(isActive: boolean): string {
   return joinClassNames(
     "inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-control border px-4 text-small font-bold whitespace-nowrap text-heading transition-colors",
     isActive
-      ? "border-accent bg-raised-strong"
-      : "border-transparent bg-raised-strong hover:border-control-border hover:bg-control-hover",
+      ? "border-accent bg-raised"
+      : "border-control-border hover:border-accent hover:bg-raised",
   );
 }
 
@@ -167,9 +171,10 @@ function FilterMenu<Value extends string>({
 
 /**
  * Every project in one grid of columns (one on phones, two from sm, three from lg),
- * under a row of filter pills: type and technology each open a list. Filters combine,
- * and the result count on the right is announced to screen readers. The cards come
- * rendered from the server; filtering only hides the ones that don't match.
+ * with the gaps of the home page's tiles (24 px, 32 px from lg, and 48 px between
+ * rows), under a row of filter buttons: type and technology each open a list. Filters
+ * combine, and the result count on the right is announced to screen readers. The
+ * cards come rendered from the server; filtering only hides the ones that don't match.
  */
 export function FilterableProjectGrid({
   projects,
@@ -232,12 +237,12 @@ export function FilterableProjectGrid({
       </div>
 
       {shownCount === 0 ? (
-        <p className="mt-8 rounded-section border border-dashed border-control-border p-8 text-center text-muted">
+        <p className="mt-8 rounded-media border border-dashed border-control-border p-8 text-center text-muted">
           {labels.empty}
         </p>
       ) : null}
 
-      <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      <ul className="mt-8 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
         {projects.map((project) => (
           <li key={project.slug} hidden={!isShown(project)}>
             {project.card}

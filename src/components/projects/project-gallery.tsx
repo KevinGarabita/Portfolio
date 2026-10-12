@@ -196,7 +196,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
               onClick={() => openAt(index)}
               // "Ampliar: <alt>". The badge below repeats the action visually only.
               aria-label={`${labels.enlarge}: ${image.alt}`}
-              className="group relative block h-full w-full cursor-zoom-in overflow-hidden rounded-media border border-hairline bg-raised"
+              className="group relative block h-full w-full cursor-zoom-in overflow-hidden rounded-media border border-hairline bg-raised transition-colors hover:border-accent"
             >
               <Image
                 src={image.src}
@@ -210,7 +210,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                     ? "h-auto"
                     : image.viewport === "mobile"
                       ? "aspect-9/16 object-cover object-top"
-                      : "aspect-16/10 object-cover object-top sm:aspect-auto sm:h-full",
+                      : "aspect-video object-cover object-top sm:aspect-auto sm:h-full",
                 )}
               />
               <span

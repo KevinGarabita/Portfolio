@@ -55,9 +55,6 @@ export function ProjectGrid({
         dictionary={dictionary}
         variant="feature"
         mediaSizes={featureSizes}
-        // On phones its screenshot is the home page's LCP element (it starts in the first
-        // view, under the hero), so it is the one image the page preloads.
-        preloadMedia
       />
 
       {otherProjects.length > 0 ? (

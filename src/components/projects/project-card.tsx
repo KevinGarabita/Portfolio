@@ -42,10 +42,10 @@ const visibleTechnologyCount = 4;
 /**
  * Width of a tile in the projects page's grid: one column on phones, two from sm, three
  * from lg, inside the page container (16, 24 or 40 px of side padding; 1200 px wide
- * from 1280 px and 1328 px from 1800 px) with 20 px gaps (24 px from lg).
+ * from 1280 px and 1328 px from 1800 px) with 24 px gaps (32 px from lg).
  */
 const tileSizes =
-  "(min-width: 1800px) 427px, (min-width: 1280px) 384px, (min-width: 1024px) calc(33.3vw - 43px), (min-width: 640px) calc(50vw - 34px), calc(100vw - 2rem)";
+  "(min-width: 1800px) 421px, (min-width: 1280px) 379px, (min-width: 1024px) calc(33.3vw - 48px), (min-width: 640px) calc(50vw - 36px), calc(100vw - 2rem)";
 
 /**
  * A project as a screenshot with its caption, with no panel around them: the status
@@ -83,7 +83,7 @@ export function ProjectCard({
     >
       <div
         className={joinClassNames(
-          "project-tile-media @container relative aspect-16/10 overflow-hidden rounded-media border bg-raised-strong",
+          "project-tile-media @container relative aspect-video overflow-hidden rounded-media border bg-raised-strong",
           isFeature && "lg:col-span-7",
         )}
       >
