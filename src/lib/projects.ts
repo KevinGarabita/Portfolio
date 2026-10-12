@@ -1,5 +1,5 @@
 import { projects } from "@/content/projects";
-import type { Project } from "@/types/content";
+import type { Project, ProjectCredit } from "@/types/content";
 
 const slugFormat = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -50,6 +50,12 @@ export function getSharedTechnologies(): string[] {
 
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
+}
+
+/** Who did the work: freelance, team work at Kobler or Kevin alone for Kobler. */
+export function getProjectCredit(project: Project): ProjectCredit {
+  if (project.category === "freelance") return "freelance";
+  return project.teamSetup === "team" ? "kobler-team" : "kobler-individual";
 }
 
 /** Main technologies followed by integrations, as shown on cards and case studies. */

@@ -104,10 +104,17 @@ export interface SkillGroup {
 }
 
 /**
- * "delivered" is finished work handed over to a client (e.g. agency work), with no claim
- * about whether it still runs. Not used yet: no project has a confirmed status of this kind.
+ * "completed-unreleased": the work is finished but the delivery never concluded, so it
+ * never ran in production. Nothing on the site may suggest it is live.
  */
-export type ProjectStatus = "in-production" | "in-development" | "delivered";
+export type ProjectStatus =
+  "in-production" | "in-development" | "completed-unreleased";
+
+/**
+ * Who did the work, shown on cards and case studies: freelance work, team work at Kobler
+ * ("Colaboración con Kobler") or work Kevin did alone for Kobler. See getProjectCredit.
+ */
+export type ProjectCredit = "freelance" | "kobler-team" | "kobler-individual";
 
 /** Groups projects on the site: freelance work or work done at Kobler y Asociados. */
 export type ProjectCategory = "freelance" | "kobler";
@@ -191,7 +198,12 @@ export interface Project {
   isFeatured: boolean;
   buildMethod?: BuildMethod;
   teamSetup: TeamSetup;
-  /** One or two sentences for the project card. */
+  /**
+   * The project card's one line of value: what the work does for the client, in plain
+   * words and at most 90 characters. Optional only until every project has one.
+   */
+  tagline?: LocalizedText;
+  /** One or two sentences: the case study's lead and the structured data description. */
   summary: LocalizedText;
   problem: LocalizedText;
   solution: LocalizedText;

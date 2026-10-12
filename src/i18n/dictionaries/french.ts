@@ -67,7 +67,12 @@ export const frenchDictionary: Dictionary = {
     status: {
       "in-production": "En production",
       "in-development": "En développement",
-      delivered: "Livré",
+      "completed-unreleased": "Terminé · non publié",
+    },
+    credit: {
+      freelance: "Freelance",
+      "kobler-team": "Collaboration avec Kobler",
+      "kobler-individual": "Réalisé pour Kobler y Asociados",
     },
     teamSetup: {
       individual: "Projet individuel",
