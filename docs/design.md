@@ -22,7 +22,7 @@ Los tokens viven en `src/app/globals.css`. Este documento explica para qué sirv
 | Token                  | Valor     | Uso                                                       |
 | ---------------------- | --------- | --------------------------------------------------------- |
 | `black-deep`           | `#0a0a0a` | Fondo de la página                                        |
-| `black-surface`        | `#141414` | Paneles del caso de estudio, hover del botón secundario   |
+| `black-surface`        | `#141414` | Pasos del flujo, miniaturas, hover de botones y filtros   |
 | `black-surface-strong` | `#1c1c1c` | Fondo de las capturas, hover de menús                     |
 | `black-line`           | `#2a2a2a` | Divisores, marco de las capturas en reposo                |
 | `gray-control`         | `#737373` | Bordes de controles (botón secundario, íconos de redes)   |
@@ -41,30 +41,30 @@ Los componentes usan los nombres de función, nunca los colores crudos: `page`, 
 
 Texto (mínimo 4.5:1):
 
-| Par                                                               | Contraste |
-| ----------------------------------------------------------------- | --------- |
-| Texto `#f5f5f5` sobre la página                                   | 18.16:1   |
-| Texto secundario `#a3a3a3` sobre la página                        | 7.85:1    |
-| Naranja sobre la página (enlaces, "Más detalles")                 | 6.90:1    |
-| Negro sobre naranja ("En producción", botón principal)            | 6.90:1    |
-| Negro sobre el naranja del hover `#ff8a3d`                        | 8.44:1    |
-| Negro sobre el verde de WhatsApp                                  | 9.98:1    |
-| Negro sobre el verde del hover `#4ae082`                          | 11.57:1   |
-| Texto sobre `raised` (hover del botón secundario)                 | 16.90:1   |
-| Texto sobre `raised-strong` (hover de las filas del menú)         | 15.63:1   |
-| Texto secundario sobre `raised` (etiquetas del caso de estudio)   | 7.30:1    |
-| Texto sobre el brillo de la portada en su punto más intenso       | 15.61:1   |
-| Texto secundario sobre ese brillo                                 | 6.75:1    |
-| Enlace del menú (gris) con el encabezado sobre una captura blanca | 5.31:1    |
-| Texto blanco con el encabezado sobre una captura blanca           | 12.28:1   |
+| Par                                                                | Contraste |
+| ------------------------------------------------------------------ | --------- |
+| Texto `#f5f5f5` sobre la página                                    | 18.16:1   |
+| Texto secundario `#a3a3a3` sobre la página                         | 7.85:1    |
+| Naranja sobre la página (enlaces, "Más detalles")                  | 6.90:1    |
+| Negro sobre naranja ("En producción", botón principal)             | 6.90:1    |
+| Negro sobre el naranja del hover `#ff8a3d`                         | 8.44:1    |
+| Negro sobre el verde de WhatsApp                                   | 9.98:1    |
+| Negro sobre el verde del hover `#4ae082`                           | 11.57:1   |
+| Texto sobre `raised` (hover del botón secundario)                  | 16.90:1   |
+| Texto sobre `raised-strong` (hover de las filas del menú)          | 15.63:1   |
+| Texto secundario sobre `raised` (herramienta de un paso del flujo) | 7.30:1    |
+| Texto sobre el brillo de la portada en su punto más intenso        | 15.61:1   |
+| Texto secundario sobre ese brillo                                  | 6.75:1    |
+| Enlace del menú (gris) con el encabezado sobre una captura blanca  | 5.31:1    |
+| Texto blanco con el encabezado sobre una captura blanca            | 12.28:1   |
 
 Componentes y bordes (mínimo 3:1):
 
-| Par                                                               | Contraste |
-| ----------------------------------------------------------------- | --------- |
-| Borde `#737373` del botón secundario y de los íconos de redes     | 4.18:1    |
-| Anillo de foco, subrayado del menú y marco naranja de una captura | 6.90:1    |
-| Naranja con el encabezado sobre una captura blanca                | 4.66:1    |
+| Par                                                           | Contraste |
+| ------------------------------------------------------------- | --------- |
+| Borde `#737373` del botón secundario, los filtros y las redes | 4.18:1    |
+| Foco, subrayado del menú y marco naranja (capturas, enlaces)  | 6.90:1    |
+| Naranja con el encabezado sobre una captura blanca            | 4.66:1    |
 
 - **Rojo `#e5252a`: 4.36:1** sobre la página. No alcanza 4.5:1, así que **nunca es texto pequeño**: solo el extremo del degradado del disco de la foto y el "404" (texto gigante).
 - El marco gris de las capturas (`#2a2a2a`, 1.38:1) es decorativo: la captura misma marca el límite de la tarjeta.
@@ -73,7 +73,7 @@ Componentes y bordes (mínimo 3:1):
 ### Degradados
 
 - `--gradient-brand` (horizontal) y `--gradient-brand-diagonal` (135°), de naranja a rojo.
-- Se usan en: el disco de la foto de la portada, el monograma y el número del 404, los conectores del diagrama de flujo, el ícono de los proyectos sin capturas y el anillo de los enlaces "proyecto anterior / siguiente" del caso de estudio (`.gradient-ring`).
+- Se usan en: el disco de la foto de la portada, el monograma y el número del 404, los conectores del diagrama de flujo y el anillo del ícono de los proyectos sin capturas (`.gradient-ring`).
 - Texto con degradado (`.text-gradient-brand`) solo en texto grande (el 404).
 
 ## Tipografía
@@ -81,7 +81,7 @@ Componentes y bordes (mínimo 3:1):
 - **Atkinson Hyperlegible Next** para todo, elegida por Kevin; la jerarquía sale del tamaño y el peso (400 el texto, 700 los títulos).
 - Escala fluida de 360 a 1440 px de ancho: `text-small` (14→15 px), `text-base` (16→18), `text-subtitle` (19→24), `text-title` (26→40), `text-headline` (32→64) y `text-giant` (96→224, solo el 404).
 - `text-headline` (interlineado 1.08, tracking −0.02em) es solo para la frase de la portada y el título del caso de estudio. Los títulos de sección usan `text-title`; los nombres de proyecto y de puesto, `text-subtitle`.
-- Sin monoespaciada ni mayúsculas en la home: fechas, idioma del selector y tecnologías van en la misma familia.
+- Sin monoespaciada ni mayúsculas en ninguna página: fechas, idioma del selector, tecnologías, el crédito sobre el título del caso de estudio y las herramientas del flujo van en la misma familia.
 - Riesgo conocido: Next 16.4 no tiene las métricas de respaldo de esta fuente (`adjustFontFallback: false` en `src/app/fonts.ts`), así que el texto puede moverse un poco cuando la fuente termina de cargar.
 
 ## Composición
@@ -102,38 +102,44 @@ Proyectos destacados                   [captura del proyecto principal  ][estado
 - **Selector de idioma**: un botón con la bandera y el nombre del idioma (debajo de `lg`, la bandera y el código, `EN`) que despliega los cuatro idiomas, cada uno con su bandera, y marca el actual con una palomita naranja.
 - **Portada**: una firma y una frase. La firma es la foto como medallón (el recorte de Kevin sobre un disco con el degradado; los rizos salen por arriba del círculo y los hombros quedan dentro, `.portrait-medallion`) junto al `h1` y la ubicación. El `h1` es "Kevin Garabita — <rol>": el nombre en `text-title`, el rol debajo y la raya solo se lee (`sr-only`). Debajo, la frase de valor (`profile.heroSubtitle`) en `text-headline`, a todo lo ancho hasta 16em. Luego una sola acción principal, **Escríbeme por WhatsApp**, y el CV como secundaria. Cuando `src/content/availability.ts` tiene datos, la disponibilidad va encima de los botones; hoy está vacío y no se muestra.
 - **Proyectos (home)**: justo después de la portada, solo los destacados (`isFeatured`). El primero va ancho: desde `lg`, la captura en 7 de 12 columnas y el texto al lado, más grande. Los demás, de dos en dos desde `sm` (tres desde `lg` si son tres). Al final, "Ver todos los proyectos (N)".
-- **Tarjeta de proyecto** (`ProjectCard`, también en `/[lang]/projects`): la captura en un marco de 16:10, y debajo el estado (solo "En producción" lleva naranja; "En desarrollo" y "Completado · no publicado" son contornos grises, nunca se leen como en vivo) y para quién fue el trabajo (`getProjectCredit`: "Freelance", "Colaboración con Kobler", "Hecho para Kobler y Asociados"), el nombre, su frase de valor (`tagline`; mientras falte, el resumen cortado a dos líneas) y hasta cuatro tecnologías. Sin capturas, se muestran las herramientas del flujo o un ícono, nunca una captura inventada. Toda la tarjeta lleva al caso de estudio: el nombre es el único enlace y su `::after` cubre la tarjeta.
+- **Tarjeta de proyecto** (`ProjectCard`, también en `/[lang]/projects`): la captura en un marco de 16:9, y debajo el estado (solo "En producción" lleva naranja; "En desarrollo" y "Completado · no publicado" son contornos grises, nunca se leen como en vivo) y para quién fue el trabajo (`getProjectCredit`: "Freelance", "Colaboración con Kobler", "Hecho para Kobler y Asociados"), el nombre, su frase de valor (`tagline`; mientras falte, el resumen cortado a dos líneas) y hasta cuatro tecnologías. Sin capturas, se muestran las herramientas del flujo o un ícono, nunca una captura inventada. Toda la tarjeta lleva al caso de estudio: el nombre es el único enlace y su `::after` cubre la tarjeta. El marco es de 16:9 porque es la captura más ancha del sitio: una de 16:9 entra completa y una de 16:10 conserva todo su ancho y solo pierde una franja abajo (`object-top`); nunca se corta un costado, donde empieza el texto. Con un marco de 16:10, las capturas del workshop Appolo perdían 5 % por lado y la primera letra de sus títulos.
 - **Secciones después de los proyectos** (Experiencia, Formación, Sobre mí, Contacto): una línea fina arriba, el `h2` en una columna angosta a la izquierda y el contenido al lado desde `lg`, como las partes del caso de estudio. Sin números ni etiquetas sobre el título.
 - **Experiencia**, compacta: puesto, empresa, periodo y lugar, y el primer logro (el resumen del CV). Los demás logros esperan detrás de "Más detalles" (`<details>` nativo: funciona sin JavaScript y sigue en la página). Cierran los casos de estudio de ese trabajo como enlaces.
 - **Formación**: carrera, escuela y lugar, y en una línea el periodo, el semestre y la titulación prevista. Sin panel.
 - **Sobre mí**: el párrafo del CV y las habilidades en una lista compacta: una fila por grupo del CV (Backend, IA y automatización, Frontend, Integraciones, Herramientas), su nombre a la izquierda desde `sm` y cada herramienta con su logo; Claude Code está en Herramientas. Cierran los idiomas en texto.
 - **Contacto**: una frase en `text-title` que invita a contar qué se quiere desarrollar o automatizar, WhatsApp (la misma acción principal de la portada) y "Enviar correo", y debajo el correo, la ubicación y los perfiles (LinkedIn y GitHub).
 - **Pie de página**: nombre y rol, WhatsApp, LinkedIn, GitHub y el CV.
-- **Página de proyectos (`/[lang]/projects`)**: todos los proyectos en una cuadrícula de tarjetas (1, 2 y 3 columnas), con filtros por tipo y tecnología.
-- **Caso de estudio**: categoría y estado sobre el título, panel de datos clave, galería, puntos clave, métricas, flujo, la historia en secciones con el `h2` a la izquierda (el mismo esquema que las secciones de la home) y el proyecto anterior y siguiente.
+- **Página de proyectos (`/[lang]/projects`)**: con la escala de la home: el `h1` del tamaño de un título de sección (`text-title`; los 64 px quedan para la portada y el caso de estudio) y la descripción en texto secundario a tamaño de lectura. Debajo, los filtros por tipo y tecnología, dibujados como los botones secundarios (contorno gris que se vuelve naranja; naranja fijo y fondo `raised` mientras el filtro está activo), y todas las tarjetas en 1, 2 y 3 columnas con los mismos espacios que en la home (24 px, 32 px desde `lg`, 48 px entre filas).
+- **Caso de estudio**:
+  - Sobre el título, en texto pequeño y gris (sin monoespaciada, mayúsculas ni tracking), para quién fue el trabajo (`getProjectCredit`) y, al lado, el estado con su nota. El título en `text-headline` y el resumen debajo.
+  - A la derecha desde `lg`, los datos clave sin panel, entre líneas finas: cliente, periodo y tecnologías (píldoras grises). El crédito y el estado ya están sobre el título, así que no se repiten.
+  - La galería, y la historia en secciones (`ProjectStorySection`) con una línea fina arriba y el `h2` a la izquierda desde `lg`, el mismo esquema que las secciones de la home. El flujo y la arquitectura ocupan todo el ancho, con el `h2` arriba (`layout="wide"`).
+  - Puntos clave: párrafos cortos de dos en dos, cada uno bajo una línea fina, en una lista sin números (no son pasos). Las métricas, cuando existen, siguen el mismo esquema. El flujo sí es una secuencia, así que sus pasos llevan número; la herramienta de cada paso va en texto gris normal.
+  - Al final, la misma invitación del contacto de la home ("Cuéntame qué quieres desarrollar o automatizar.") con el botón de WhatsApp, y el proyecto anterior y siguiente: un marco de línea fina que se vuelve naranja con el nombre subrayado al pasar el cursor o con el foco (`.link-frame`), como las tarjetas; nada se eleva ni brilla.
 - **CV**: siempre se abre en una pestaña nueva (`target="_blank"`, `rel="noopener noreferrer"` y "se abre en una pestaña nueva" para lectores de pantalla), en el idioma de la página o, si no existe, en español. Nunca se descarga.
-- **WhatsApp** está en el encabezado de todas las páginas, en la portada, en el contacto y en el pie. Los enlaces a redes y los enlaces públicos de los proyectos abren en una pestaña nueva y lo dicen a los lectores de pantalla.
+- **WhatsApp** está en el encabezado de todas las páginas, en la portada, en el contacto, al final de cada caso de estudio y en el pie. Los enlaces a redes y los enlaces públicos de los proyectos abren en una pestaña nueva y lo dicen a los lectores de pantalla.
 
 ## Imágenes
 
-- Todas con `alt` (los logos de tecnologías son decorativos, con su nombre al lado) y con `sizes` igual al ancho real que ocupan en cada punto de corte: la foto de la portada (96, 112 o 160 px), la captura principal de la home (7 de 12 columnas desde `lg`), las demás (2 o 3 columnas) y las de la página de proyectos (3 columnas).
-- **Solo se precarga la imagen LCP.** En la home, en teléfonos, el elemento LCP es la captura del proyecto principal (empieza en la primera pantalla, bajo la portada), así que es la única precargada; en escritorio el LCP es la frase de la portada, que es texto. En `/[lang]/projects`, la primera tarjeta.
+- Todas con `alt` (los logos de tecnologías son decorativos, con su nombre al lado) y con `sizes` igual al ancho real que ocupan en cada punto de corte: la foto de la portada (96, 112 o 160 px), la captura principal de la home (7 de 12 columnas desde `lg`), las demás (2 o 3 columnas), las de la página de proyectos (3 columnas) y el diagrama de arquitectura (el ancho del contenedor).
+- En la galería del caso de estudio, la primera captura de escritorio va completa a todo el ancho; en teléfonos, las demás miniaturas de escritorio también usan 16:9, así que tampoco pierden los costados.
+- **Solo se precarga la imagen LCP.** En la home, la captura del proyecto principal empieza en la primera pantalla, bajo la portada: medido con la frase actual, es el elemento LCP en la mayoría de los teléfonos (de 412 px en adelante, y a 390 px en inglés) y en tabletas, así que es la única imagen precargada; en escritorio y en los teléfonos más chicos el LCP es la frase, que es texto y no necesita precarga. En `/[lang]/projects`, la primera tarjeta.
 - La foto de la portada carga de inmediato pero con `fetchPriority="low"`: así React no la precarga (precarga toda imagen que no sea `lazy` ni de prioridad baja) y no compite con la captura LCP.
 
 ## Radios, sombras y capas
 
-- Radios por función: `rounded-section` (20 px) para los paneles del caso de estudio, `rounded-media` (14 px) para capturas, `rounded-control` (12 px) para botones, `rounded-tag` (píldora) para estados y etiquetas.
-- Brillos: `--glow-accent` y `--glow-accent-soft`, solo en los enlaces anterior/siguiente del caso de estudio y el ícono de los proyectos sin capturas. La sombra nunca se anima: aparece una capa con `opacity` (`.hover-glow`).
+- Radios por función: `rounded-section` (20 px) para el ícono de los proyectos sin capturas, `rounded-media` (14 px) para capturas, pasos del flujo y enlaces con marco, `rounded-control` (12 px) para botones y filtros, `rounded-tag` (píldora) para estados y etiquetas. Ya no hay paneles.
+- Brillo: `--glow-accent-soft`, solo bajo el ícono de los proyectos sin capturas. Ningún elemento brilla al pasar el cursor.
 - Capas (`--layer-*`): brillo de fondo (−1), elementos elevados (1), encabezado (40) y enlace "saltar al contenido" (60). El fondo del encabezado va en `z-index: -1` dentro de su propio contexto, debajo de su fila, para que el panel del menú se posicione contra el encabezado.
 
 ## Movimiento
 
 Tokens: `--ease-standard`, `--ease-emphasized`, `--duration-moderate` (320 ms), `--duration-slow` (700 ms) y `--stagger-step` (90 ms).
 
-- **Entrada de la portada**, el único momento orquestado: el `h1`, la ubicación y la frase suben en cascada **sin fundido** (`.entrance-slide`), así que se pintan desde el primer cuadro (la frase es el LCP en escritorio); el disco de la foto crece (`.entrance-scale`) y los botones suben y aparecen (`.entrance`).
-- **Hover y foco**: en una tarjeta, el marco de la captura se vuelve naranja, la captura se acerca un poco (`scale(1.03)`) y el nombre se subraya (`.project-tile`, también con `:focus-within`). Los botones solo cambian de color; nada se eleva. Los enlaces del encabezado dibujan un subrayado naranja que crece desde la izquierda.
+- **Una entrada por página**, el único momento orquestado. En la portada, el `h1`, la ubicación y la frase suben en cascada **sin fundido** (`.entrance-slide`), así que se pintan desde el primer cuadro (la frase es el LCP en escritorio); el disco de la foto crece (`.entrance-scale`) y los botones suben y aparecen (`.entrance`). En el caso de estudio y en la página de proyectos, su encabezado sube igual, sin fundido.
+- **Hover y foco**: en una tarjeta, el marco de la captura se vuelve naranja, la captura se acerca un poco (`scale(1.03)`) y el nombre se subraya (`.project-tile`, también con `:focus-within`). Los enlaces anterior/siguiente del caso de estudio responden igual (`.link-frame`), y las miniaturas de la galería y los filtros cambian su borde a naranja. Los botones solo cambian de color; nada se eleva. Los enlaces del encabezado dibujan un subrayado naranja que crece desde la izquierda.
 - **Fondo**: un solo brillo naranja quieto arriba a la derecha de la primera pantalla (`.site-backdrop`, absoluto, no fijo: se va con la portada).
-- **Sin aparición al hacer scroll en la home.** El mecanismo (`data-reveal`, `src/components/motion/page-motion.tsx`) sigue disponible y hoy solo lo usan las partes del caso de estudio. Es mejora progresiva: sin JavaScript nada se oculta y lo que ya está en pantalla nunca empieza oculto.
+- **Nada aparece al hacer scroll**, en ninguna página: el contenido simplemente está. El mecanismo de aparición (`data-reveal` y su componente) se quitó del sitio.
 - **`prefers-reduced-motion: reduce`**: las animaciones y transiciones son instantáneas y el desplazamiento suave se apaga.
 
 ## Bordes nítidos
@@ -146,9 +152,7 @@ Los bordes y anillos naranjas se veían borrosos. Había dos causas:
 La solución:
 
 - El anillo ahora **es el borde del propio elemento**: un borde transparente de 1 px con dos fondos, el degradado recortado a `border-box` y el color de la superficie (`--ring-fill`) encima, recortado a `padding-box`. Usa la misma geometría ajustada que cualquier borde, así que queda en un píxel físico exacto a cualquier escala.
-- `--ring-opacity` está registrada con `@property` (`<number>`) para que el anillo aparezca con suavidad, mezclando el degradado con `--ring-rest` (la línea fina) con `color-mix`.
-- La única elevación que queda (los enlaces anterior/siguiente del caso de estudio) usa `--lift-card: 8px`, un múltiplo de 4 px: un número entero de píxeles físicos a 100, 125, 150, 175, 200, 250 y 300 %. En px y no en rem, para que no cambie si el usuario modifica el tamaño de letra del navegador.
-- Las tarjetas de proyecto ya no se elevan: su marco cambia de color en el mismo píxel.
+- Ya nada se eleva al pasar el cursor: las tarjetas, los enlaces con marco, los filtros y las miniaturas cambian el color de su borde en el mismo píxel. Si alguna vez vuelve una elevación, debe medir un múltiplo de 4 px y en px (no en rem): es un número entero de píxeles físicos a 100, 125, 150, 175, 200, 250 y 300 %.
 
 ## Foco y accesibilidad
 
@@ -163,6 +167,8 @@ La solución:
 - Página: `bg-page text-body` (ya están en `body`).
 - Sección de la home: `PageSection` (`layout="split"` por defecto; `"stacked"` para los proyectos).
 - Proyecto: `ProjectCard` (`variant="feature"` para el principal de la home; pasa `mediaSizes` con el ancho real de la cuadrícula).
+- Parte de un caso de estudio: `ProjectStorySection` (`layout="wide"` para el flujo y la arquitectura).
+- Enlace con marco que responde como una tarjeta: `link-frame border` y `link-frame-name` en el texto que se subraya.
 - Botón: `ButtonLink` (`whatsapp` verde con texto negro, `primary` naranja con texto negro o `secondary` con contorno gris).
 - Etiqueta: `Tag` (`accent` solo para "En producción").
 - Anillo de degradado fijo: `gradient-ring border` y, si la superficie no es `raised`, `[--ring-fill:var(--color-page)]` en lugar de una clase `bg-*`.
