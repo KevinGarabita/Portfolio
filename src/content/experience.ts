@@ -35,10 +35,10 @@ export const koblerHighlights = {
     fr: "Neorgana : l'agent oriente chaque patient vers le bon consultant selon la langue, la localisation et la pathologie, partage son agenda pour réserver sur Zoom et, à la fin de l'appel vidéo, déclenche le suivi et le devis.",
   },
   lamauBeach: {
-    es: "Lamau Beach: el agente responde con la disponibilidad de cada estancia de Airbnb y el precio por noche de la temporada, sin revisiones manuales.",
-    en: "Lamau Beach: the agent replies with each Airbnb stay's availability and the nightly rate for the season, with no manual checks.",
-    pt: "Lamau Beach: o agente responde com a disponibilidade de cada hospedagem do Airbnb e o valor da diária da temporada, sem conferências manuais.",
-    fr: "Lamau Beach : l'agent répond avec la disponibilité de chaque logement Airbnb et le prix par nuit de la saison, sans vérification manuelle.",
+    es: "Lamau Beach: el agente responde con la disponibilidad de cada estancia de Airbnb y el precio por noche de la temporada.",
+    en: "Lamau Beach: the agent replies with each Airbnb stay's availability and the nightly rate for the season.",
+    pt: "Lamau Beach: o agente responde com a disponibilidade de cada hospedagem do Airbnb e o valor da diária da temporada.",
+    fr: "Lamau Beach : l'agent répond avec la disponibilité de chaque logement Airbnb et le prix par nuit de la saison.",
   },
   monitoring: {
     es: "Mantuve los flujos funcionando en producción con monitoreo y corrección de fallas, y participé en las reuniones con clientes para definir reglas de negocio y anticipar casos borde.",
