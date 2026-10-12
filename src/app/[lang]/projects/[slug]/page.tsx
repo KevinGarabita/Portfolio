@@ -34,6 +34,7 @@ import {
   getAllProjects,
   getNeighborProjects,
   getProjectBySlug,
+  getProjectCredit,
 } from "@/lib/projects";
 import type { LocalizedText, Project } from "@/types/content";
 
@@ -105,7 +106,7 @@ function NeighborProjectLink({
 }
 
 /**
- * Case study: header (category, status, title, summary, key facts), screenshots, key
+ * Case study: header (credit, status, title, summary, key facts), screenshots, key
  * points, the automation flow, then the story (problem, solution, decisions, failure
  * handling, role, results, next steps), public links and the previous/next projects.
  * Everything after the header fades in on scroll.
@@ -161,7 +162,7 @@ export default async function ProjectPage({
             </p>
             <div className="entrance-slide mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
               <p className="font-mono text-small font-bold tracking-widest text-accent uppercase">
-                {projectTexts.category[project.category]}
+                {projectTexts.credit[getProjectCredit(project)]}
               </p>{" "}
               {project.status ? (
                 <ProjectStatus
