@@ -58,23 +58,23 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 
 - **Static generation everywhere**: `generateStaticParams` lists every language and project, and `dynamicParams = false` rejects anything else. Cache Components stays off: the site is fully static, and with it enabled a missing project answered 200 on its first request.
 - **Real 404s**: `app/global-not-found.tsx` answers any unknown URL with a server-rendered 404 page in all four languages.
-- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths that cover what the layouts draw (never removed, because Google keeps the image URLs it has crawled), `sizes` that match the layout, and `fetchPriority="high"` only on the largest element of the first screen.
+- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths that cover what the layouts draw (never removed, because Google keeps the image URLs it has crawled), `sizes` that match the layout, and only the image that is the Largest Contentful Paint preloaded with `fetchPriority="high"`: the lead project's screenshot on a phone home page (on desktops the LCP is the hero's value line, which is text) and the first card of the projects page. The portrait loads right away with `fetchPriority="low"`, so it never competes with that image.
 - **Lean HTML**: the skill logos are SVG files from a statically generated route instead of inline markup, which cut the home page HTML by more than half.
 - **Self-hosted font** through `next/font`: the font files are downloaded at build time and served from the same domain.
-- **Motion only animates `transform` and `opacity`**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. Scroll reveals are progressive enhancement: the HTML arrives fully visible, and content is hidden only after the script knows what is already on screen. The hero photo, the largest element on the first screen, never starts invisible.
+- **Motion only animates `transform`, `opacity` and colours**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. The hero text arrives in sequence without fading, so it paints on the first frame. Scroll reveals (`data-reveal`, where a page uses them) are progressive enhancement: the HTML arrives fully visible, and content is hidden only after the script knows what is already on screen.
 
 ### Accessibility
 
 - One `h1` per page, ordered headings, landmarks (`header`, `nav`, `main`, `footer`) and a skip-to-content link.
 - A visible focus ring on every interactive element; anchors and focused elements are never hidden behind the sticky header.
-- The language menu and the project filters follow the disclosure pattern (`aria-expanded`, `aria-controls`, Escape closes and returns focus). The screenshot gallery opens in a native `<dialog>` with keyboard navigation; focus stays inside it and returns to the thumbnail that opened it.
+- The navigation menu on smaller screens, the language menu and the project filters follow the disclosure pattern (`aria-expanded`, `aria-controls`, Escape closes and returns focus). The screenshot gallery opens in a native `<dialog>` with keyboard navigation; focus stays inside it and returns to the thumbnail that opened it.
 - Colour contrast is measured and documented in `docs/design.md`; colours below 4.5:1 are never used for small text.
 - Touch targets of at least 24 px, and links that open a new tab say so to screen readers.
 - axe-core reports no violations on any page in the four languages, at phone and desktop sizes.
 
 ## Lighthouse
 
-Measured on a **local production build** (`next build` + `next start`) with Lighthouse 13.5 and mobile emulation on 2026-10-10, median of three runs. Scores on the live site may differ.
+Measured on a **local production build** (`next build` + `next start`) with Lighthouse 13.5 and mobile emulation on 2026-10-10, before the October 12 redesign, median of three runs. Scores on the live site may differ.
 
 | Page                                | Performance | Accessibility | Best Practices | SEO | Largest Contentful Paint |
 | ----------------------------------- | ----------: | ------------: | -------------: | --: | -----------------------: |
@@ -145,11 +145,11 @@ src/
   proxy.ts               sends URLs without a language to the saved language or English
   assets/fonts/          Atkinson Hyperlegible Next TTF files (OFL) for the Open Graph images
   components/
-    layout/              header, footer, language menu, skip link
+    layout/              header, navigation menu, footer, language menu, skip link
     sections/            home page sections
     projects/            cards, filters, gallery, flow diagram and case-study parts
     recruiter/           availability note
-    motion/              scroll reveal and the rotating title
+    motion/              scroll reveal for elements marked data-reveal
     ui/                  building blocks: container, section, button, tag, icons, flags
     seo/                 JSON-LD and the Open Graph image layout
   content/               site data: profile, projects, experience, education, skills, SEO texts
@@ -165,7 +165,7 @@ docs/                    technical and design decisions, deployment guide (in Sp
 
 ## Adding a project
 
-1. Create a file in `src/content/projects/` and add it to the array in `src/content/projects/index.ts` (that order is the order on the site). The `Project` type in `src/types/content.ts` describes every field, and TypeScript flags anything missing. `kind` feeds the "Type" filter on `/[lang]/projects`, `isFeatured: true` also shows the project on the home page, screenshots go in `public/images/projects/<slug>/` and in `images`, automation flows go in `flowDiagram`, and `category` with `teamSetup` sets the credit shown on the case study ("Freelance", "Collaboration with Kobler" or "Built for Kobler y Asociados"). The optional `status` (`"in-production"`, `"in-development"` or `"completed-unreleased"`), `metrics` (before and after) and `architecture` fields only appear on the page when they have data.
+1. Create a file in `src/content/projects/` and add it to the array in `src/content/projects/index.ts` (that order is the order on the site). The `Project` type in `src/types/content.ts` describes every field, and TypeScript flags anything missing. `kind` feeds the "Type" filter on `/[lang]/projects`, `isFeatured: true` also shows the project on the home page, `tagline` is the card's one line of value (90 characters at most), screenshots go in `public/images/projects/<slug>/` and in `images`, automation flows go in `flowDiagram`, and `category` with `teamSetup` sets the credit shown on the case study ("Freelance", "Collaboration with Kobler" or "Built for Kobler y Asociados"). The optional `status` (`"in-production"`, `"in-development"` or `"completed-unreleased"`), `metrics` (before and after) and `architecture` fields only appear on the page when they have data.
 2. Write every text in the four languages, `{ es: "...", en: "...", pt: "...", fr: "..." }`, or use `sameInEveryLanguage("...")` when it reads the same in all of them.
 3. Add its title (60 characters at most, with the key stack) and description (140–160 characters) in the four languages to `src/content/project-seo.ts`; the build fails if they are missing or out of range.
 4. Set `lastUpdated` to the date of the change (`"YYYY-MM-DD"`); the sitemap uses it.
