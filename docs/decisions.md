@@ -78,7 +78,10 @@ Medido con Lighthouse 13.5 (móvil, red y CPU simuladas) sobre `next start` loca
 ### Imágenes
 
 - **AVIF primero y WebP de respaldo** (`images.formats` en `next.config.ts`). La foto de la portada pasó de 58 KB (WebP de 640 px) a 16 KB (AVIF de 480 px) en un teléfono de 412 px.
-- **Anchos candidatos recortados**: `deviceSizes` de 640 a 1920 e `imageSizes` 256, 384 y 480. La imagen más ancha mide 1600 px, así que 2048 y 3840 solo reenviaban el original; 480 y 1440 cubren los huecos donde la foto y las capturas caían entre dos candidatos y bajaban uno mucho más grande.
+- **Anchos candidatos**: los de Next.js por defecto más 480 y 1440, que cubren los huecos donde la foto y las capturas caían entre dos candidatos y bajaban uno mucho más grande.
+  - El 10 de octubre se quitaron los anchos que ningún diseño usa (de 32 a 128, 2048 y 3840; la imagen más ancha mide 1600 px). Fue un error: Google ya había rastreado esas URLs de `/_next/image`, el optimizador responde 400 a un ancho que no está en la lista y Search Console las reportó como "Bloqueada debido a otro problema de tipo 4xx".
+  - Por eso volvieron todos. No cuestan nada: el navegador elige el candidato más chico que cubre el tamaño dibujado, así que nunca baja uno de más.
+  - Regla: **no quites anchos de `deviceSizes` ni de `imageSizes`**. Solo agrega.
 - **`sizes` igual al ancho con que se dibuja cada imagen**:
   - la foto de la portada, el ancho de su columna en cada punto de quiebre (15rem en la mayoría de los teléfonos);
   - las tarjetas, el ancho de su columna menos márgenes y separaciones, y un 11 % más cuando la captura es 16:9 y llena recortada el marco 16:10 (`ProjectVisual`);
