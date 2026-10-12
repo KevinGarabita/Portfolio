@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { FlowDiagram } from "@/components/projects/flow-diagram";
 import { ProjectArchitecture } from "@/components/projects/project-architecture";
-import { ProjectBuildBadge } from "@/components/projects/project-build-badge";
 import { ProjectFacts } from "@/components/projects/project-facts";
 import {
   ProjectGallery,
@@ -23,11 +22,8 @@ import { Container } from "@/components/ui/container";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  WhatsAppLogoIcon,
   ExternalLinkIcon,
-  MailIcon,
 } from "@/components/ui/icons";
-import { profile } from "@/content/profile";
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
@@ -38,8 +34,8 @@ import {
   getAllProjects,
   getNeighborProjects,
   getProjectBySlug,
+  getProjectCredit,
 } from "@/lib/projects";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import type { LocalizedText, Project } from "@/types/content";
 
 /**
@@ -110,10 +106,10 @@ function NeighborProjectLink({
 }
 
 /**
- * Case study: header (category, status, title, summary, key facts), screenshots, key
+ * Case study: header (credit, status, title, summary, key facts), screenshots, key
  * points, the automation flow, then the story (problem, solution, decisions, failure
- * handling, role, results, next steps), public links, the confidentiality note and the
- * previous/next projects. Everything after the header fades in on scroll.
+ * handling, role, results, next steps), public links and the previous/next projects.
+ * Everything after the header fades in on scroll.
  */
 export default async function ProjectPage({
   params,
@@ -164,23 +160,15 @@ export default async function ProjectPage({
                 {projectTexts.backToProjects}
               </Link>
             </p>
-            {/* Above the title, which has its own stacking context (entrance-slide), so the
-                build badge's tooltip opens over it. */}
-            <div className="entrance-slide relative z-(--layer-raised) mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
+            <div className="entrance-slide mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
               <p className="font-mono text-small font-bold tracking-widest text-accent uppercase">
-                {projectTexts.category[project.category]}
+                {projectTexts.credit[getProjectCredit(project)]}
               </p>{" "}
               {project.status ? (
                 <ProjectStatus
                   status={project.status}
                   statusNote={project.statusNote}
                   locale={locale}
-                  dictionary={dictionary}
-                />
-              ) : null}{" "}
-              {project.buildMethod ? (
-                <ProjectBuildBadge
-                  buildMethod={project.buildMethod}
                   dictionary={dictionary}
                 />
               ) : null}
@@ -337,33 +325,6 @@ export default async function ProjectPage({
             </ul>
           </ProjectStorySection>
         ) : null}
-
-        <div
-          data-reveal
-          className="gradient-ring mt-4 rounded-section border p-4 min-[22.5rem]:p-6 sm:p-8"
-        >
-          <p className="max-w-prose">{projectTexts.confidentialityNote}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <ButtonLink
-              variant="secondary"
-              href={`mailto:${profile.email}?subject=${encodeURIComponent(projectName)}`}
-              leadingIcon={<MailIcon className="text-accent" />}
-            >
-              {projectTexts.requestDetails}
-            </ButtonLink>
-            <ButtonLink
-              variant="whatsapp"
-              className="max-[22.5rem]:px-4"
-              href={buildWhatsAppUrl(locale)}
-              target="_blank"
-              rel="noopener noreferrer"
-              leadingIcon={<WhatsAppLogoIcon />}
-            >
-              {dictionary.hero.writeOnWhatsApp}
-              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-            </ButtonLink>
-          </div>
-        </div>
       </article>
 
       <nav

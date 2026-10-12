@@ -239,16 +239,6 @@ export function AppWindowIcon({ className }: IconProps) {
   );
 }
 
-/** Four-point sparkle: marks AI-assisted work ("ai-assisted" build method). */
-export function SparklesIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z" />
-      <path d="M19 15.5l.8 1.7 1.7.8-1.7.8-.8 1.7-.8-1.7-1.7-.8 1.7-.8.8-1.7Z" />
-    </Icon>
-  );
-}
-
 /** Two nodes joined by a line: stands in for an automation without screenshots. */
 export function WorkflowIcon({ className }: IconProps) {
   return (

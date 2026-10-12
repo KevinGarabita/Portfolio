@@ -8,7 +8,6 @@ import { localize } from "@/i18n/localize";
 import { getProjectTechnologies } from "@/lib/projects";
 import type { Project } from "@/types/content";
 
-import { ProjectBuildBadge } from "./project-build-badge";
 import { ProjectStatus } from "./project-status";
 import { ProjectVisual } from "./project-visual";
 
@@ -34,9 +33,9 @@ const mediaSizes =
   "(min-width: 1800px) 427px, (min-width: 1280px) 384px, (min-width: 1024px) calc(33.3vw - 43px), (min-width: 640px) calc(50vw - 34px), calc(100vw - 2rem)";
 
 /**
- * A compact project card (home page and projects page): media on top, then the status
- * and how it was built ("Desarrollo asistido por IA"), name, client, a three-line summary and the main
- * technologies. The full story lives on the case-study page. The name is the only link; its ::after covers the whole card
+ * A compact project card (home page and projects page): media on top, then the status,
+ * name, client, a three-line summary and the main technologies. The full story lives on
+ * the case-study page. The name is the only link; its ::after covers the whole card
  * ("stretched link"), so the card is clickable without nesting interactive elements.
  * On hover or keyboard focus the card lifts, the gradient ring and the glow fade in and
  * the media zooms a little (globals.css, .project-card).
@@ -65,23 +64,15 @@ export function ProjectCard({
       </div>
 
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
-        {project.status || project.buildMethod ? (
+        {project.status ? (
           <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-            {project.status ? (
-              <ProjectStatus
-                status={project.status}
-                statusNote={project.statusNote}
-                locale={locale}
-                dictionary={dictionary}
-                stacked
-              />
-            ) : null}
-            {project.buildMethod ? (
-              <ProjectBuildBadge
-                buildMethod={project.buildMethod}
-                dictionary={dictionary}
-              />
-            ) : null}
+            <ProjectStatus
+              status={project.status}
+              statusNote={project.statusNote}
+              locale={locale}
+              dictionary={dictionary}
+              stacked
+            />
           </div>
         ) : null}
 

@@ -32,22 +32,10 @@ export const frenchDictionary: Dictionary = {
       description:
         "Applications web en freelance, et agents d'IA avec des automatisations n8n réalisés chez Kobler y Asociados.",
     },
-    buildMethod: {
-      "ai-assisted": {
-        label: "Développement assisté par IA",
-        description:
-          "Je prends en charge l'architecture, la revue de code, les tests et la sécurité ; le code est généré par IA sous ma direction.",
-      },
-      "hand-coded": {
-        label: "Codé à la main",
-        description: "Code écrit à la main.",
-      },
-    },
     filters: {
       label: "Filtrer les projets",
       kind: "Type",
       technology: "Technologie",
-      buildMethod: "Développement",
       all: "Tous",
       kinds: {
         "web-app": "Applications web",
@@ -111,9 +99,6 @@ export const frenchDictionary: Dictionary = {
         `Image ${current} sur ${total}`,
     },
     backToProjects: "Retour aux projets",
-    confidentialityNote:
-      "Code privé par confidentialité envers les clients ; captures d'écran, architecture et démonstration disponibles sur demande.",
-    requestDetails: "Demander par e-mail",
     neighborNavigation: {
       label: "Autres projets",
       previous: "Projet précédent",

@@ -100,24 +100,24 @@ export const workshopWeb: Project = {
   integrations: ["Supabase Realtime", "n8n", "WhatsApp"],
   images: [
     {
-      src: "/images/projects/workshop-web/room-results.webp",
+      src: "/images/projects/workshop-web/live-question.webp",
       alt: {
-        es: "Resultados de la sala en la pantalla proyectada con datos de ejemplo: promedio por sección, etapa de las empresas, principales cuellos de botella, agenda predominante, porcentajes de leads en chats y de empresas listas para automatizar, y nube de palabras.",
-        en: "Room results on the projected screen with sample data: average per section, company stage, top bottlenecks, most common scheduling method, the share with leads in chats and the share ready to automate, and a word cloud.",
-        pt: "Resultados da sala na tela projetada com dados de exemplo: média por seção, estágio das empresas, principais gargalos, agenda predominante, percentuais de leads em chats e de empresas prontas para automatizar, e nuvem de palavras.",
-        fr: "Résultats de la salle sur l'écran projeté avec des données d'exemple : moyenne par section, stade des entreprises, principaux goulots d'étranglement, agenda dominant, pourcentages de leads dans les chats et d'entreprises prêtes à automatiser, et nuage de mots.",
+        es: "Pregunta en vivo en la pantalla proyectada con datos de ejemplo: el texto de la pregunta, cuatro opciones con barras, porcentaje y número de personas, la opción más elegida resaltada y el contador de quienes ya respondieron.",
+        en: "Live question on the projected screen with sample data: the question text, four options with bars, percentages and head counts, the most chosen option highlighted, and a counter of who has already answered.",
+        pt: "Pergunta ao vivo na tela projetada com dados de exemplo: o texto da pergunta, quatro opções com barras, percentual e número de pessoas, a opção mais escolhida em destaque e o contador de quem já respondeu.",
+        fr: "Question en direct sur l'écran projeté avec des données d'exemple : l'énoncé de la question, quatre options avec barres, pourcentage et nombre de personnes, l'option la plus choisie mise en avant et le compteur de ceux qui ont déjà répondu.",
       },
       width: 1600,
       height: 900,
       viewport: "desktop",
     },
     {
-      src: "/images/projects/workshop-web/live-question.webp",
+      src: "/images/projects/workshop-web/room-results.webp",
       alt: {
-        es: "Pregunta en vivo en la pantalla proyectada con datos de ejemplo: el texto de la pregunta, cuatro opciones con barras, porcentaje y número de personas, y el contador de quienes ya respondieron.",
-        en: "Live question on the projected screen with sample data: the question text, four options with bars, percentages and head counts, and a counter of who has already answered.",
-        pt: "Pergunta ao vivo na tela projetada com dados de exemplo: o texto da pergunta, quatro opções com barras, percentual e número de pessoas, e o contador de quem já respondeu.",
-        fr: "Question en direct sur l'écran projeté avec des données d'exemple : l'énoncé de la question, quatre options avec barres, pourcentage et nombre de personnes, et le compteur de ceux qui ont déjà répondu.",
+        es: "Resultados de la sala en la pantalla proyectada con datos de ejemplo: promedio por sección, etapa de las empresas, principales cuellos de botella, agenda predominante, porcentajes de leads en chats y de empresas listas para automatizar, y nube de palabras.",
+        en: "Room results on the projected screen with sample data: average per section, company stage, top bottlenecks, most common scheduling method, the share with leads in chats and the share ready to automate, and a word cloud.",
+        pt: "Resultados da sala na tela projetada com dados de exemplo: média por seção, estágio das empresas, principais gargalos, agenda predominante, percentuais de leads em chats e de empresas prontas para automatizar, e nuvem de palavras.",
+        fr: "Résultats de la salle sur l'écran projeté avec des données d'exemple : moyenne par section, stade des entreprises, principaux goulots d'étranglement, agenda dominant, pourcentages de leads dans les chats et d'entreprises prêtes à automatiser, et nuage de mots.",
       },
       width: 1600,
       height: 900,
@@ -136,6 +136,18 @@ export const workshopWeb: Project = {
       viewport: "desktop",
     },
     {
+      src: "/images/projects/workshop-web/section-close-average.webp",
+      alt: {
+        es: "Cierre de sección en la pantalla proyectada con datos de ejemplo: «Sección completada · Visión y liderazgo», el promedio de la sala en la escala del 1 al 5 con su barra, el número de respuestas y la pregunta que sigue.",
+        en: "Section close on the projected screen with sample data: “Section completed · Vision and leadership”, the room's average on the 1-to-5 scale with its bar, the number of answers, and the next question.",
+        pt: "Encerramento de seção na tela projetada com dados de exemplo: “Seção concluída · Visão e liderança”, a média da sala na escala de 1 a 5 com a sua barra, o número de respostas e a próxima pergunta.",
+        fr: "Clôture de section sur l'écran projeté avec des données d'exemple : « Section terminée · Vision et leadership », la moyenne de la salle sur l'échelle de 1 à 5 avec sa barre, le nombre de réponses et la question suivante.",
+      },
+      width: 1600,
+      height: 900,
+      viewport: "desktop",
+    },
+    {
       src: "/images/projects/workshop-web/closing-word-cloud.webp",
       alt: {
         es: "Pregunta de cierre en la pantalla proyectada con datos de ejemplo: «En una palabra, ¿qué necesita tu empresa para crecer?» y una nube de palabras con las respuestas de la sala.",
@@ -146,6 +158,18 @@ export const workshopWeb: Project = {
       width: 1600,
       height: 900,
       viewport: "desktop",
+    },
+    {
+      src: "/images/projects/workshop-web/host-panel.webp",
+      alt: {
+        es: "Panel del host en un celular con datos de ejemplo: la pregunta activa con cuántos respondieron, cuántos van a su ritmo, el indicador «En vivo», las acciones para reenviar, enviar resultados y cerrar la sesión, y el botón «Siguiente».",
+        en: "Host panel on a phone with sample data: the active question with how many have answered, how many are going at their own pace, the “Live” indicator, the actions to resend, send results and close the session, and the “Next” button.",
+        pt: "Painel do host em um celular com dados de exemplo: a pergunta ativa com quantos já responderam, quantos seguem no próprio ritmo, o indicador “Ao vivo”, as ações para reenviar, enviar os resultados e encerrar a sessão, e o botão “Próxima”.",
+        fr: "Panneau de l'animateur sur un téléphone avec des données d'exemple : la question en cours avec le nombre de réponses, les participants qui avancent à leur rythme, l'indicateur « En direct », les actions pour renvoyer, envoyer les résultats et clôturer la session, et le bouton « Suivant ».",
+      },
+      width: 780,
+      height: 1688,
+      viewport: "mobile",
     },
   ],
   links: [],

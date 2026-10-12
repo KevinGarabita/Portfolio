@@ -32,22 +32,10 @@ export const portugueseDictionary: Dictionary = {
       description:
         "Aplicações web freelance e agentes de IA com automações no n8n desenvolvidos na Kobler y Asociados.",
     },
-    buildMethod: {
-      "ai-assisted": {
-        label: "Desenvolvimento assistido por IA",
-        description:
-          "Arquitetura, revisão de código, testes e segurança ficam a meu cargo; o código é gerado com IA sob a minha direção.",
-      },
-      "hand-coded": {
-        label: "Feito à mão",
-        description: "Código escrito à mão.",
-      },
-    },
     filters: {
       label: "Filtrar projetos",
       kind: "Tipo",
       technology: "Tecnologia",
-      buildMethod: "Desenvolvimento",
       all: "Todos",
       kinds: {
         "web-app": "Aplicações web",
@@ -111,9 +99,6 @@ export const portugueseDictionary: Dictionary = {
         `Imagem ${current} de ${total}`,
     },
     backToProjects: "Voltar aos projetos",
-    confidentialityNote:
-      "Código privado por confidencialidade com os clientes; capturas de tela, arquitetura e demonstração disponíveis mediante solicitação.",
-    requestDetails: "Solicitar por e-mail",
     neighborNavigation: {
       label: "Mais projetos",
       previous: "Projeto anterior",
