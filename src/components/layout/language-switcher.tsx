@@ -19,6 +19,7 @@ import {
   supportedLocales,
   type Locale,
 } from "@/i18n/locales";
+import { labelColon } from "@/i18n/localize";
 import { joinClassNames } from "@/lib/class-names";
 
 interface LanguageSwitcherProps {
@@ -140,7 +141,10 @@ export function LanguageSwitcher({
           )}
         >
           <LocaleFlag locale={currentLocale} />
-          <span className="sr-only">{label}: </span>
+          <span className="sr-only">
+            {label}
+            {labelColon(currentLocale)}{" "}
+          </span>
           <span lang={currentLocale} className="max-lg:sr-only">
             {localeNames[currentLocale]}
             {/* Read only below lg, where the code follows: "Español, ES". */}
