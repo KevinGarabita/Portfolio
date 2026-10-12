@@ -6,6 +6,7 @@ export const frenchDictionary: Dictionary = {
   opensInNewTab: "s'ouvre dans un nouvel onglet",
   siteNavigation: {
     label: "Navigation principale",
+    menu: "Menu",
     home: "Accueil",
     projects: "Projets",
     experience: "Expérience",

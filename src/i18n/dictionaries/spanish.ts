@@ -4,6 +4,7 @@ export const spanishDictionary = {
   opensInNewTab: "se abre en una pestaña nueva",
   siteNavigation: {
     label: "Navegación principal",
+    menu: "Menú",
     home: "Inicio",
     projects: "Proyectos",
     experience: "Experiencia",
