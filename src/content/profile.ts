@@ -21,17 +21,17 @@ export const profile: Profile = {
     },
   ],
   heroSubtitle: {
-    es: "Desarrollo backend, agentes de IA y automatizaciones con FastAPI, n8n y la API de OpenAI.",
-    en: "Backend development, AI agents and automations with FastAPI, n8n and the OpenAI API.",
-    pt: "Desenvolvimento backend, agentes de IA e automações com FastAPI, n8n e a API da OpenAI.",
-    fr: "Développement backend, agents d'IA et automatisations avec FastAPI, n8n et l'API d'OpenAI.",
+    es: "Construyo apps web, backends, automatizaciones y agentes de IA que le quitan trabajo manual a tu negocio.",
+    en: "I build web apps, backends, automations and AI agents that take manual work off your team's plate.",
+    pt: "Desenvolvo aplicações web, backends, automações e agentes de IA que tiram trabalho manual do seu negócio.",
+    fr: "Applications web, backends, automatisations et agents IA : je libère votre équipe des tâches manuelles.",
   },
   about: [
     {
-      es: "Estudiante de séptimo semestre de Ingeniería en Desarrollo de Tecnologías y Software. Durante nueve meses desarrollé agentes conversacionales y automatizaciones en n8n con la API de OpenAI para cinco clientes, integrando GoHighLevel, WhatsApp, Zoom y WooCommerce vía APIs REST y webhooks, y me hice cargo del monitoreo y la corrección de fallas en producción. En paralelo construyo aplicaciones web con FastAPI, React, TypeScript y Supabase; una está en producción con usuarios reales.",
-      en: "Seventh-semester student of Software and Technology Development Engineering. Over nine months I built conversational agents and automations in n8n using the OpenAI API for five clients, integrating GoHighLevel, WhatsApp, Zoom, and WooCommerce via REST APIs and webhooks, and I was responsible for monitoring and fixing issues in production. In parallel, I build web applications with FastAPI, React, TypeScript, and Supabase; one is in production with real users.",
-      pt: "Estudante do sétimo semestre de Engenharia em Desenvolvimento de Tecnologias e Software. Durante nove meses, desenvolvi agentes conversacionais e automações no n8n com a API da OpenAI para cinco clientes, integrando GoHighLevel, WhatsApp, Zoom e WooCommerce por meio de APIs REST e webhooks, e fui responsável pelo monitoramento e pela correção de falhas em produção. Paralelamente, desenvolvo aplicações web com FastAPI, React, TypeScript e Supabase; uma delas está em produção com usuários reais.",
-      fr: "Étudiant en septième semestre d'ingénierie en développement de technologies et de logiciels. Pendant neuf mois, j'ai développé des agents conversationnels et des automatisations dans n8n avec l'API d'OpenAI pour cinq clients, en intégrant GoHighLevel, WhatsApp, Zoom et WooCommerce via des API REST et des webhooks, et j'ai assuré la surveillance et la correction des incidents en production. En parallèle, je développe des applications web avec FastAPI, React, TypeScript et Supabase ; l'une d'elles est en production avec de vrais utilisateurs.",
+      es: "Estudiante de 7.º semestre de Ingeniería en Desarrollo de Tecnologías y Software. Durante nueve meses en Kobler y Asociados desarrollé en equipo agentes de IA y automatizaciones con n8n y la API de OpenAI para cinco clientes, y los mantuve funcionando en producción. Además, construyo aplicaciones web de punta a punta con FastAPI, React, TypeScript y Supabase, y desarrollo con Claude Code.",
+      en: "Seventh-semester Software and Technology Development Engineering student. For nine months at Kobler y Asociados, I co-developed AI agents and automations with n8n and the OpenAI API for five clients and kept them running in production. I also build web applications end to end with FastAPI, React, TypeScript, and Supabase, and I develop with Claude Code.",
+      pt: "Estudante do sétimo semestre de Engenharia em Desenvolvimento de Tecnologias e Software. Durante nove meses na Kobler y Asociados, desenvolvi em equipe agentes de IA e automações com n8n e a API da OpenAI para cinco clientes e os mantive funcionando em produção. Também construo aplicações web de ponta a ponta com FastAPI, React, TypeScript e Supabase, e desenvolvo com o Claude Code.",
+      fr: "Étudiant en septième semestre d'ingénierie en développement de technologies et de logiciels. Pendant neuf mois chez Kobler y Asociados, j'ai développé en équipe des agents d'IA et des automatisations avec n8n et l'API d'OpenAI pour cinq clients, et j'en ai assuré le bon fonctionnement en production. Je crée aussi des applications web de bout en bout avec FastAPI, React, TypeScript et Supabase, et je développe avec Claude Code.",
     },
   ],
   location: {
