@@ -31,22 +31,10 @@ export const englishDictionary: Dictionary = {
       description:
         "Freelance web applications, and AI agents with n8n automations built at Kobler y Asociados.",
     },
-    buildMethod: {
-      "ai-assisted": {
-        label: "AI-assisted development",
-        description:
-          "I'm responsible for the architecture, code review, testing and security; the code is generated with AI under my direction.",
-      },
-      "hand-coded": {
-        label: "Hand-coded",
-        description: "Code written by hand.",
-      },
-    },
     filters: {
       label: "Filter projects",
       kind: "Type",
       technology: "Technology",
-      buildMethod: "Development",
       all: "All",
       kinds: {
         "web-app": "Web applications",

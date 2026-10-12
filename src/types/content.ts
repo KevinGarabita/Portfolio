@@ -171,13 +171,6 @@ export type ProjectArchitecture =
   | { kind: "image"; image: ArchitectureImage }
   | { kind: "diagram"; parts: FlowStep[] };
 
-/**
- * How the code was written: "ai-assisted" (generated with AI under Kevin's direction,
- * with the architecture, review, tests and security in his hands) or "hand-coded".
- * Shown as a badge; unset for automations built in n8n.
- */
-export type BuildMethod = "ai-assisted" | "hand-coded";
-
 /** What the project is, for the filters on the projects page. */
 export type ProjectKind = "web-app" | "ai-automation";
 
@@ -196,7 +189,6 @@ export interface Project {
   period?: DateRange;
   /** Featured projects are the ones shown on the home page; the rest only on /projects. */
   isFeatured: boolean;
-  buildMethod?: BuildMethod;
   teamSetup: TeamSetup;
   /**
    * The project card's one line of value: what the work does for the client, in plain

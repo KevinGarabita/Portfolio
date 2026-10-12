@@ -4,13 +4,12 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 
 import { CheckIcon, ChevronDownIcon } from "@/components/ui/icons";
 import { joinClassNames } from "@/lib/class-names";
-import type { BuildMethod, ProjectKind } from "@/types/content";
+import type { ProjectKind } from "@/types/content";
 
 export interface FilterableProject {
   slug: string;
   kind: ProjectKind;
   technologies: string[];
-  buildMethod?: BuildMethod;
   /** The project card, rendered on the server. */
   card: ReactNode;
 }
@@ -24,7 +23,6 @@ export interface ProjectFilterLabels {
   label: string;
   kind: string;
   technology: string;
-  buildMethod: string;
   all: string;
   /** "1 proyecto" and "{count} proyectos". */
   resultsOne: string;
@@ -37,7 +35,6 @@ interface FilterableProjectGridProps {
   projects: FilterableProject[];
   kindOptions: FilterOption<ProjectKind>[];
   technologyOptions: FilterOption<string>[];
-  buildMethodOptions: FilterOption<BuildMethod>[];
   labels: ProjectFilterLabels;
 }
 
@@ -170,35 +167,28 @@ function FilterMenu<Value extends string>({
 
 /**
  * Every project in one grid of columns (one on phones, two from sm, three from lg),
- * under a row of filter pills: type and technology open a list; how it was built is a
- * single on/off pill while only one method exists. Filters combine, and the result
- * count on the right is announced to screen readers. The cards come rendered from the
- * server; filtering only hides the ones that don't match.
+ * under a row of filter pills: type and technology each open a list. Filters combine,
+ * and the result count on the right is announced to screen readers. The cards come
+ * rendered from the server; filtering only hides the ones that don't match.
  */
 export function FilterableProjectGrid({
   projects,
   kindOptions,
   technologyOptions,
-  buildMethodOptions,
   labels,
 }: FilterableProjectGridProps) {
   const [kind, setKind] = useState<ProjectKind | null>(null);
   const [technology, setTechnology] = useState<string | null>(null);
-  const [buildMethod, setBuildMethod] = useState<BuildMethod | null>(null);
 
   const isShown = (project: FilterableProject) =>
     (kind === null || project.kind === kind) &&
-    (technology === null || project.technologies.includes(technology)) &&
-    (buildMethod === null || project.buildMethod === buildMethod);
+    (technology === null || project.technologies.includes(technology));
   const shownCount = projects.filter(isShown).length;
-  const hasFilters =
-    kind !== null || technology !== null || buildMethod !== null;
-  const [onlyBuildMethod] = buildMethodOptions;
+  const hasFilters = kind !== null || technology !== null;
 
   function clearFilters() {
     setKind(null);
     setTechnology(null);
-    setBuildMethod(null);
   }
 
   return (
@@ -223,30 +213,6 @@ export function FilterableProjectGrid({
             selected={technology}
             onSelect={setTechnology}
           />
-          {buildMethodOptions.length > 1 ? (
-            <FilterMenu
-              title={labels.buildMethod}
-              allLabel={labels.all}
-              options={buildMethodOptions}
-              selected={buildMethod}
-              onSelect={setBuildMethod}
-            />
-          ) : onlyBuildMethod ? (
-            <button
-              type="button"
-              aria-pressed={buildMethod === onlyBuildMethod.value}
-              onClick={() =>
-                setBuildMethod((current) =>
-                  current === onlyBuildMethod.value
-                    ? null
-                    : onlyBuildMethod.value,
-                )
-              }
-              className={pillClassNames(buildMethod === onlyBuildMethod.value)}
-            >
-              {onlyBuildMethod.label}
-            </button>
-          ) : null}
           {hasFilters ? (
             <button
               type="button"

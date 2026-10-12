@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { FlowDiagram } from "@/components/projects/flow-diagram";
 import { ProjectArchitecture } from "@/components/projects/project-architecture";
-import { ProjectBuildBadge } from "@/components/projects/project-build-badge";
 import { ProjectFacts } from "@/components/projects/project-facts";
 import {
   ProjectGallery,
@@ -164,9 +163,7 @@ export default async function ProjectPage({
                 {projectTexts.backToProjects}
               </Link>
             </p>
-            {/* Above the title, which has its own stacking context (entrance-slide), so the
-                build badge's tooltip opens over it. */}
-            <div className="entrance-slide relative z-(--layer-raised) mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
+            <div className="entrance-slide mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 [--entrance-order:1] lg:mt-10">
               <p className="font-mono text-small font-bold tracking-widest text-accent uppercase">
                 {projectTexts.category[project.category]}
               </p>{" "}
@@ -175,12 +172,6 @@ export default async function ProjectPage({
                   status={project.status}
                   statusNote={project.statusNote}
                   locale={locale}
-                  dictionary={dictionary}
-                />
-              ) : null}{" "}
-              {project.buildMethod ? (
-                <ProjectBuildBadge
-                  buildMethod={project.buildMethod}
                   dictionary={dictionary}
                 />
               ) : null}
