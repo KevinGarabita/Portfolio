@@ -20,10 +20,20 @@ function parseSiteUrl(value: string, variableName: string): URL {
  * 1. NEXT_PUBLIC_SITE_URL, set in Vercel once the final domain is connected.
  * 2. The production domain Vercel exposes (VERCEL_PROJECT_PRODUCTION_URL, without a scheme).
  * 3. The local development server.
+ *
+ * A production build fails without NEXT_PUBLIC_SITE_URL. Vercel's fallback is the
+ * shortest custom domain (garasoftware.com.mx), which redirects to the primary host
+ * (www), and a canonical URL that redirects makes Google pick a canonical of its own.
  */
 function resolveSiteUrl(): URL {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (configuredUrl) return parseSiteUrl(configuredUrl, "NEXT_PUBLIC_SITE_URL");
+
+  if (process.env.VERCEL_ENV === "production") {
+    throw new Error(
+      "NEXT_PUBLIC_SITE_URL is not set for Production in Vercel. Set it to the primary host (https://www.garasoftware.com.mx) and redeploy.",
+    );
+  }
 
   const vercelProductionHost =
     process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
