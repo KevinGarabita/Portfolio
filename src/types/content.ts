@@ -192,9 +192,9 @@ export interface Project {
   teamSetup: TeamSetup;
   /**
    * The project card's one line of value: what the work does for the client, in plain
-   * words and at most 90 characters. Optional only until every project has one.
+   * words and at most 90 characters.
    */
-  tagline?: LocalizedText;
+  tagline: LocalizedText;
   /** One or two sentences: the case study's lead and the structured data description. */
   summary: LocalizedText;
   problem: LocalizedText;
