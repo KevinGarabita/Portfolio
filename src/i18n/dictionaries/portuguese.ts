@@ -30,7 +30,7 @@ export const portugueseDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projetos",
       description:
-        "Aplicações web freelance e agentes de IA com automações no n8n desenvolvidos na Kobler y Asociados.",
+        "Aplicações web, agentes de IA e automações: projetos freelance e em colaboração com a Kobler y Asociados.",
     },
     filters: {
       label: "Filtrar projetos",
@@ -115,7 +115,7 @@ export const portugueseDictionary: Dictionary = {
   },
   contact: {
     sectionTitle: "Contato",
-    lead: "Conte o que você quer desenvolver ou automatizar.",
+    lead: "Me conte o que você quer desenvolver ou automatizar.",
     email: "E-mail",
     whatsApp: "WhatsApp",
     sendEmail: "Enviar e-mail",

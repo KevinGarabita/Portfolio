@@ -1,6 +1,6 @@
 import { PageSection } from "@/components/ui/page-section";
 import { education } from "@/content/education";
-import { localize } from "@/i18n/localize";
+import { labelColon, localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { formatDateRange, formatYearMonth } from "@/lib/format-date";
 import { homeSectionIds } from "@/lib/home-sections";
@@ -38,7 +38,8 @@ export async function EducationSection() {
               {studies.note ? <li>{localize(studies.note, locale)}</li> : null}
               {studies.expectedGraduation ? (
                 <li>
-                  {dictionary.education.expectedGraduation}:{" "}
+                  {dictionary.education.expectedGraduation}
+                  {labelColon(locale)}{" "}
                   {formatYearMonth(studies.expectedGraduation, locale)}
                 </li>
               ) : null}

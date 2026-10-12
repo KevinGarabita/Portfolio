@@ -29,7 +29,7 @@ export const englishDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projects",
       description:
-        "Freelance web applications, and AI agents with n8n automations built at Kobler y Asociados.",
+        "Web apps, AI agents and automations: freelance projects and collaborations with Kobler y Asociados.",
     },
     filters: {
       label: "Filter projects",

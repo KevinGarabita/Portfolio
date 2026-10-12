@@ -18,10 +18,10 @@ export const profile: Profile = {
   },
   about: [
     {
-      es: "Estudiante de 7.º semestre de Ingeniería en Desarrollo de Tecnologías y Software. Durante nueve meses en Kobler y Asociados desarrollé en equipo agentes de IA y automatizaciones con n8n y la API de OpenAI para cinco clientes, y los mantuve funcionando en producción. Además, construyo aplicaciones web de punta a punta con FastAPI, React, TypeScript y Supabase, y desarrollo con Claude Code.",
-      en: "Seventh-semester Software and Technology Development Engineering student. For nine months at Kobler y Asociados, I co-developed AI agents and automations with n8n and the OpenAI API for five clients and kept them running in production. I also build web applications end to end with FastAPI, React, TypeScript, and Supabase, and I develop with Claude Code.",
-      pt: "Estudante do sétimo semestre de Engenharia em Desenvolvimento de Tecnologias e Software. Durante nove meses na Kobler y Asociados, desenvolvi em equipe agentes de IA e automações com n8n e a API da OpenAI para cinco clientes e os mantive funcionando em produção. Também construo aplicações web de ponta a ponta com FastAPI, React, TypeScript e Supabase, e desenvolvo com o Claude Code.",
-      fr: "Étudiant en septième semestre d'ingénierie en développement de technologies et de logiciels. Pendant neuf mois chez Kobler y Asociados, j'ai développé en équipe des agents d'IA et des automatisations avec n8n et l'API d'OpenAI pour cinq clients, et j'en ai assuré le bon fonctionnement en production. Je crée aussi des applications web de bout en bout avec FastAPI, React, TypeScript et Supabase, et je développe avec Claude Code.",
+      es: "Estudiante de 7.º semestre de Ingeniería en Desarrollo de Tecnologías y Software. Construyo aplicaciones web de punta a punta con FastAPI, React, TypeScript y Supabase, y desarrollo con Claude Code.",
+      en: "Seventh-semester Software and Technology Development Engineering student. I build web applications end to end with FastAPI, React, TypeScript, and Supabase, and I develop with Claude Code.",
+      pt: "Estudante do sétimo semestre de Engenharia em Desenvolvimento de Tecnologias e Software. Construo aplicações web de ponta a ponta com FastAPI, React, TypeScript e Supabase, e desenvolvo com o Claude Code.",
+      fr: "Étudiant en septième semestre d'ingénierie en développement de technologies et de logiciels. Je crée des applications web de bout en bout avec FastAPI, React, TypeScript et Supabase, et je développe avec Claude Code.",
     },
   ],
   location: {
