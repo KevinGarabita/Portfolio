@@ -7,6 +7,7 @@ import { supportedLocales, type Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import type { Project } from "@/types/content";
 
+import { toStructuredDataDateTime } from "./format-date";
 import {
   buildHomeTitle,
   getHomeLastModified,
@@ -217,7 +218,7 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
         name: buildHomeTitle(locale),
         description: localize(homeDescription, locale),
         inLanguage: locale,
-        dateModified: getHomeLastModified(),
+        dateModified: toStructuredDataDateTime(getHomeLastModified()),
         isPartOf: { "@id": websiteId },
         mainEntity: { "@id": personId },
       },
@@ -279,8 +280,10 @@ export function buildProjectStructuredData(
         ...(project.teamSetup === "individual"
           ? { author: kevin, creator: kevin }
           : { contributor: kevin }),
-        ...(project.period ? { dateCreated: project.period.start } : {}),
-        dateModified: project.lastUpdated,
+        ...(project.period
+          ? { dateCreated: toStructuredDataDateTime(project.period.start) }
+          : {}),
+        dateModified: toStructuredDataDateTime(project.lastUpdated),
         keywords: getProjectTechnologies(project),
         image: [
           getShareImagePath(
