@@ -2,46 +2,49 @@ import { sameInEveryLanguage } from "@/i18n/localize";
 import type { LocalizedText, WorkExperience } from "@/types/content";
 
 /**
- * Bullet points of the Kobler y Asociados job as the CV words them (Spanish and English
- * quoted word for word; Portuguese and French translated from them). The case studies in
- * projects/kobler.ts reuse them; the Experience section shows the shorter version below.
+ * Bullet points of the Kobler y Asociados job as the CV words them (docs/cv/: Spanish
+ * and English word for word; Portuguese and French translated from them). Kevin asked
+ * for them to sell the benefit for each client rather than list tasks, so they read
+ * that way, as team work with his own part, and say nothing beyond the case studies in
+ * projects/kobler.ts, which reuse some of them. The Experience section shows the shorter
+ * version below.
  */
 export const koblerHighlights = {
   fiveAgents: {
-    es: "Desarrollé cinco agentes conversacionales en n8n con la API de OpenAI, uno por cliente, integrados con GoHighLevel y WhatsApp: atienden la conversación, califican al prospecto y registran el lead en el CRM.",
-    en: "Built five conversational agents in n8n with the OpenAI API, one per client, integrated with GoHighLevel and WhatsApp: they handle the conversation, qualify the lead, and register it in the CRM.",
-    pt: "Desenvolvi cinco agentes conversacionais no n8n com a API da OpenAI, um por cliente, integrados ao GoHighLevel e ao WhatsApp: eles conduzem a conversa, qualificam o lead e o registram no CRM.",
-    fr: "J'ai développé cinq agents conversationnels dans n8n avec l'API d'OpenAI, un par client, intégrés à GoHighLevel et WhatsApp : ils mènent la conversation, qualifient le prospect et l'enregistrent dans le CRM.",
+    es: "Desarrollé en equipo cinco agentes conversacionales de WhatsApp, uno por cliente, con n8n y la API de OpenAI e integrados con GoHighLevel: atienden cada conversación, califican al prospecto y lo dejan registrado en el CRM.",
+    en: "Co-developed five WhatsApp conversational agents, one per client, with n8n and the OpenAI API, integrated with GoHighLevel: they handle every conversation, qualify the lead and log it in the CRM.",
+    pt: "Desenvolvi em equipe cinco agentes conversacionais de WhatsApp, um por cliente, com n8n e a API da OpenAI e integrados ao GoHighLevel: eles conduzem cada conversa, qualificam o lead e o deixam registrado no CRM.",
+    fr: "J'ai développé en équipe cinq agents conversationnels WhatsApp, un par client, avec n8n et l'API d'OpenAI, intégrés à GoHighLevel : ils mènent chaque conversation, qualifient le prospect et l'enregistrent dans le CRM.",
   },
   motosuresteSuzuki: {
-    es: "Motosureste Suzuki: el agente resuelve dudas de venta y financiamiento y filtra a los prospectos sin intención de compra, así los asesores dejaron de atender todas las conversaciones y se enfocan en cerrar ventas.",
-    en: "Motosureste Suzuki: the agent answers sales and financing questions and filters out prospects with no purchase intent, so sales advisors stopped handling every conversation and could focus on closing sales.",
-    pt: "Motosureste Suzuki: o agente tira dúvidas sobre vendas e financiamento e filtra os leads sem intenção de compra; assim, os consultores deixaram de atender todas as conversas e passaram a se concentrar em fechar vendas.",
-    fr: "Motosureste Suzuki : l'agent répond aux questions sur la vente et le financement et écarte les prospects sans intention d'achat ; les conseillers ont cessé de traiter toutes les conversations et se concentrent sur la conclusion des ventes.",
+    es: "Motosureste Suzuki: el agente cotiza con el catálogo vigente de la tienda y filtra a quien no tiene intención de compra, para que los asesores se enfoquen en cerrar ventas.",
+    en: "Motosureste Suzuki: the agent quotes from the store's current catalog and screens out people with no intention to buy, so advisors can focus on closing sales.",
+    pt: "Motosureste Suzuki: o agente faz orçamentos com o catálogo atual da loja e filtra quem não tem intenção de compra, para que os consultores se concentrem em fechar vendas.",
+    fr: "Motosureste Suzuki : l'agent établit les devis à partir du catalogue à jour de la boutique et écarte les personnes sans intention d'achat, pour que les conseillers se concentrent sur la conclusion des ventes.",
   },
   inventory: {
-    es: "Sustituí la captura manual del inventario de cinco sucursales: el PDF de stock que envía Suzuki se procesa con un modelo de IA que extrae los datos y actualiza WooCommerce vía su API REST.",
-    en: "Replaced manual inventory entry across five branches: the stock PDF sent by Suzuki is processed with an AI model that extracts the data and updates WooCommerce via its REST API.",
-    pt: "Substituí o lançamento manual do estoque de cinco filiais: o PDF de estoque enviado pela Suzuki é processado por um modelo de IA que extrai os dados e atualiza o WooCommerce pela API REST.",
-    fr: "J'ai remplacé la saisie manuelle des stocks de cinq succursales : le PDF de stock envoyé par Suzuki est traité par un modèle d'IA qui en extrait les données et met à jour WooCommerce via son API REST.",
+    es: "Eliminé la captura manual del inventario de cinco sucursales: un modelo de IA extrae las existencias del PDF que envía Suzuki y el flujo actualiza WooCommerce por su API REST.",
+    en: "Eliminated manual stock entry for five branches: an AI model extracts the quantities from the PDF Suzuki sends, and the flow updates WooCommerce through its REST API.",
+    pt: "Eliminei o lançamento manual do estoque de cinco filiais: um modelo de IA extrai as quantidades do PDF enviado pela Suzuki e o fluxo atualiza o WooCommerce pela API REST.",
+    fr: "J'ai supprimé la saisie manuelle des stocks de cinq succursales : un modèle d'IA extrait les quantités du PDF envoyé par Suzuki et le flux met à jour WooCommerce via son API REST.",
   },
   neorgana: {
-    es: "Neorgana: agente que responde a los pacientes y les envía el calendario del doctor para agendar su consulta en Zoom, selecciona al consultor por idioma, ubicación y padecimiento, y al terminar la videollamada dispara el seguimiento y la cotización.",
-    en: "Neorgana: an agent that responds to patients and sends the doctor's calendar to schedule a Zoom consultation, selecting the consultant by language, location, and condition, and triggering follow-up and a quote once the video call ends.",
-    pt: "Neorgana: agente que responde aos pacientes e envia a agenda do médico para marcar a consulta pelo Zoom, escolhe o consultor por idioma, localização e condição de saúde e, ao fim da videochamada, dispara o acompanhamento e o orçamento.",
-    fr: "Neorgana : un agent qui répond aux patients et leur envoie l'agenda du médecin pour réserver leur consultation sur Zoom, choisit le consultant selon la langue, la localisation et la pathologie, et déclenche le suivi et le devis à la fin de l'appel vidéo.",
+    es: "Neorgana: el agente lleva a cada paciente con el consultor adecuado por idioma, ubicación y padecimiento, le comparte su calendario para agendar en Zoom y, al terminar la videollamada, dispara el seguimiento y la cotización.",
+    en: "Neorgana: the agent matches each patient with the right consultant by language, location and condition, shares that consultant's calendar to book on Zoom, and triggers the follow-up and the quote when the call ends.",
+    pt: "Neorgana: o agente leva cada paciente ao consultor certo por idioma, localização e condição de saúde, compartilha a agenda dele para marcar pelo Zoom e, ao fim da videochamada, dispara o acompanhamento e o orçamento.",
+    fr: "Neorgana : l'agent oriente chaque patient vers le bon consultant selon la langue, la localisation et la pathologie, partage son agenda pour réserver sur Zoom et, à la fin de l'appel vidéo, déclenche le suivi et le devis.",
   },
   lamauBeach: {
-    es: "Lamau Beach: automaticé la disponibilidad por estancia de Airbnb y el costo por noche según temporada.",
-    en: "Lamau Beach: automated Airbnb stay availability and nightly rates by season.",
-    pt: "Lamau Beach: automatizei a disponibilidade de cada hospedagem do Airbnb e o valor da diária conforme a temporada.",
-    fr: "Lamau Beach : j'ai automatisé la disponibilité de chaque logement Airbnb et le prix par nuit selon la saison.",
+    es: "Lamau Beach: el agente responde con la disponibilidad de cada estancia de Airbnb y el precio por noche de la temporada, sin revisiones manuales.",
+    en: "Lamau Beach: the agent replies with each Airbnb stay's availability and the nightly rate for the season, with no manual checks.",
+    pt: "Lamau Beach: o agente responde com a disponibilidade de cada hospedagem do Airbnb e o valor da diária da temporada, sem conferências manuais.",
+    fr: "Lamau Beach : l'agent répond avec la disponibilité de chaque logement Airbnb et le prix par nuit de la saison, sans vérification manuelle.",
   },
   monitoring: {
-    es: "Monitoreé y mantuve los flujos en producción corrigiendo las fallas, y participé en las reuniones con el cliente para levantar reglas de negocio e identificar casos borde.",
-    en: "Monitored and maintained the flows in production, fixing issues, and took part in client meetings to gather business rules and identify edge cases.",
-    pt: "Monitorei e mantive os fluxos em produção, corrigindo as falhas, e participei das reuniões com o cliente para levantar regras de negócio e identificar casos extremos.",
-    fr: "J'ai surveillé et maintenu les flux en production en corrigeant les incidents, et j'ai participé aux réunions avec le client pour recueillir les règles métier et identifier les cas limites.",
+    es: "Mantuve los flujos funcionando en producción con monitoreo y corrección de fallas, y participé en las reuniones con clientes para definir reglas de negocio y anticipar casos borde.",
+    en: "Kept the flows running in production by monitoring them and fixing issues, and joined client meetings to define business rules and anticipate edge cases.",
+    pt: "Mantive os fluxos funcionando em produção com monitoramento e correção de falhas, e participei das reuniões com clientes para definir regras de negócio e antecipar casos extremos.",
+    fr: "J'ai assuré le bon fonctionnement des flux en production en les surveillant et en corrigeant les incidents, et j'ai participé aux réunions avec les clients pour définir les règles métier et anticiper les cas limites.",
   },
 } satisfies Record<string, LocalizedText>;
 
@@ -63,40 +66,34 @@ export const workExperience: WorkExperience[] = [
     period: { start: "2025-12", end: "2026-08" },
     highlights: [
       {
-        es: "Cinco agentes conversacionales en n8n con la API de OpenAI, uno por cliente, conectados a GoHighLevel y WhatsApp: atienden, califican al prospecto y lo registran en el CRM.",
-        en: "Five conversational agents in n8n with the OpenAI API, one per client, connected to GoHighLevel and WhatsApp: they reply, qualify the lead and log it in the CRM.",
-        pt: "Cinco agentes conversacionais no n8n com a API da OpenAI, um por cliente, conectados ao GoHighLevel e ao WhatsApp: atendem, qualificam o lead e o registram no CRM.",
-        fr: "Cinq agents conversationnels dans n8n avec l'API d'OpenAI, un par client, connectés à GoHighLevel et WhatsApp : ils répondent, qualifient le prospect et l'enregistrent dans le CRM.",
+        es: "Cinco agentes de WhatsApp desarrollados en equipo con n8n y la API de OpenAI, uno por cliente: atienden, califican al prospecto y lo registran en GoHighLevel.",
+        en: "Five WhatsApp agents co-developed with n8n and the OpenAI API, one per client: they reply, qualify the lead and log it in GoHighLevel.",
+        pt: "Cinco agentes de WhatsApp desenvolvidos em equipe com n8n e a API da OpenAI, um por cliente: atendem, qualificam o lead e o registram no GoHighLevel.",
+        fr: "Cinq agents WhatsApp développés en équipe avec n8n et l'API d'OpenAI, un par client : ils répondent, qualifient le prospect et l'enregistrent dans GoHighLevel.",
       },
       {
-        es: "Motosureste Suzuki: el agente resuelve dudas de venta y financiamiento y filtra a quien no tiene intención de compra; los asesores se enfocan en cerrar ventas.",
-        en: "Motosureste Suzuki: the agent answers sales and financing questions and filters out people with no purchase intent, so advisors focus on closing sales.",
-        pt: "Motosureste Suzuki: o agente tira dúvidas sobre vendas e financiamento e filtra quem não tem intenção de compra; os consultores se concentram em fechar vendas.",
-        fr: "Motosureste Suzuki : l'agent répond aux questions sur la vente et le financement et écarte les personnes sans intention d'achat ; les conseillers se concentrent sur les ventes.",
+        es: "Motosureste Suzuki: el agente cotiza con el catálogo vigente y filtra prospectos para que los asesores se enfoquen en cerrar ventas; el inventario de cinco sucursales se actualiza sin captura manual.",
+        en: "Motosureste Suzuki: the agent quotes from the current catalog and screens leads so advisors focus on closing sales; stock for five branches updates with no manual entry.",
+        pt: "Motosureste Suzuki: o agente faz orçamentos com o catálogo atual e filtra leads para que os consultores se concentrem em fechar vendas; o estoque de cinco filiais é atualizado sem digitação.",
+        fr: "Motosureste Suzuki : l'agent établit les devis à partir du catalogue à jour et trie les prospects pour que les conseillers se concentrent sur les ventes ; les stocks de cinq succursales se mettent à jour sans saisie manuelle.",
       },
       {
-        es: "Inventario de cinco sucursales sin captura manual: un modelo de IA lee el PDF de existencias de Suzuki y actualiza WooCommerce por su API REST.",
-        en: "Stock for five branches with no manual entry: an AI model reads Suzuki's stock PDF and updates WooCommerce through its REST API.",
-        pt: "Estoque de cinco filiais sem lançamento manual: um modelo de IA lê o PDF de estoque da Suzuki e atualiza o WooCommerce pela API REST.",
-        fr: "Stocks de cinq succursales sans saisie manuelle : un modèle d'IA lit le PDF de stock de Suzuki et met à jour WooCommerce via son API REST.",
+        es: "Neorgana: cada paciente llega al consultor adecuado y el seguimiento sale solo al terminar la consulta por Zoom.",
+        en: "Neorgana: each patient reaches the right consultant, and the follow-up goes out on its own when the Zoom consultation ends.",
+        pt: "Neorgana: cada paciente chega ao consultor certo, e o acompanhamento sai automaticamente ao fim da consulta pelo Zoom.",
+        fr: "Neorgana : chaque patient est orienté vers le bon consultant, et le suivi part tout seul à la fin de la consultation sur Zoom.",
       },
       {
-        es: "Neorgana: el agente elige al consultor por idioma, ubicación y padecimiento, envía su calendario para agendar en Zoom y, al terminar la videollamada, dispara el seguimiento y la cotización.",
-        en: "Neorgana: the agent picks the consultant by language, location and condition, sends their calendar to book on Zoom and, when the call ends, triggers the follow-up and the quote.",
-        pt: "Neorgana: o agente escolhe o consultor por idioma, localização e condição de saúde, envia a agenda para marcar pelo Zoom e, ao fim da videochamada, dispara o acompanhamento e o orçamento.",
-        fr: "Neorgana : l'agent choisit le consultant selon la langue, la localisation et la pathologie, envoie son agenda pour réserver sur Zoom et, à la fin de l'appel, déclenche le suivi et le devis.",
+        es: "Lamau Beach: disponibilidad de Airbnb y precio por noche de la temporada, resueltos en la misma conversación.",
+        en: "Lamau Beach: Airbnb availability and the season's nightly rate, answered within the same conversation.",
+        pt: "Lamau Beach: disponibilidade no Airbnb e valor da diária da temporada, respondidos na mesma conversa.",
+        fr: "Lamau Beach : disponibilité Airbnb et prix par nuit de la saison, donnés dans la même conversation.",
       },
       {
-        es: "Lamau Beach: disponibilidad de estancias de Airbnb y costo por noche según la temporada, automatizados.",
-        en: "Lamau Beach: Airbnb stay availability and nightly rates by season, automated.",
-        pt: "Lamau Beach: disponibilidade das hospedagens do Airbnb e valor da diária por temporada, automatizados.",
-        fr: "Lamau Beach : disponibilité des logements Airbnb et prix par nuit selon la saison, automatisés.",
-      },
-      {
-        es: "Monitoreo y corrección de fallas en producción, y reuniones con clientes para definir reglas de negocio y casos borde.",
-        en: "Monitored production and fixed issues; met with clients to define business rules and edge cases.",
-        pt: "Monitoramento e correção de falhas em produção, e reuniões com clientes para definir regras de negócio e casos extremos.",
-        fr: "Surveillance et correction des incidents en production, et réunions avec les clients pour définir les règles métier et les cas limites.",
+        es: "Monitoreo y corrección de fallas en producción, y reuniones con clientes para definir reglas de negocio y anticipar casos borde.",
+        en: "Monitored production and fixed issues; joined client meetings to define business rules and anticipate edge cases.",
+        pt: "Monitoramento e correção de falhas em produção, e reuniões com clientes para definir regras de negócio e antecipar casos extremos.",
+        fr: "Surveillance et correction des incidents en production, et réunions avec les clients pour définir les règles métier et anticiper les cas limites.",
       },
     ],
     relatedProjectSlugs: [
