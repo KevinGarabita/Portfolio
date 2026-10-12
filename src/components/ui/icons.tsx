@@ -50,14 +50,6 @@ export function ArrowLeftIcon({ className }: IconProps) {
   );
 }
 
-export function ArrowDownIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <path d="M12 5v14M6 13l6 6 6-6" />
-    </Icon>
-  );
-}
-
 export function ExternalLinkIcon({ className }: IconProps) {
   return (
     <Icon className={className}>

@@ -536,30 +536,6 @@
   }
 }
 
-/* Scroll reveal. Content is visible by default; the client component adds
- * .js-reveal-ready to <html> only after it has marked what is already on screen, so
- * nothing above the fold starts hidden and nothing hides without JavaScript. */
-@media (prefers-reduced-motion: no-preference) {
-  html.js-reveal-ready [data-reveal] {
-    transition:
-      opacity var(--duration-slow) var(--ease-emphasized),
-      transform var(--duration-slow) var(--ease-emphasized);
-    transition-delay: calc(var(--reveal-order, 0) * var(--stagger-step));
-  }
-
-  html.js-reveal-ready [data-reveal]:not([data-revealed]) {
-    opacity: 0;
-    transform: translate3d(0, 2rem, 0);
-  }
-}
-
-@media print {
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
 @keyframes rise-in {
   from {
     opacity: 0;
