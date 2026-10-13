@@ -2,8 +2,10 @@ import { sameInEveryLanguage } from "@/i18n/localize";
 import type { SkillGroup } from "@/types/content";
 
 /**
- * Skills list. Source: the "Habilidades técnicas" section of Kevin's CV, with the
- * changes he asked for: one tool per entry, the databases under Backend, and Material UI.
+ * Skills list. Source: the "Habilidades" section of Kevin's CV (docs/cv/) and the stacks
+ * of his projects, with the changes he asked for: one tool per entry, the databases under
+ * Backend, Material UI, and Claude Code kept as a tool. No levels. Ordered for clients and
+ * junior software roles: what he builds with comes first, inside each group too.
  * The page shows the tools (logo and name). Entries without a logo (REST APIs,
  * webhooks...) are not shown; they only feed the structured data (knowsAbout).
  */
@@ -14,8 +16,8 @@ export const skillGroups: SkillGroup[] = [
     items: [
       { name: sameInEveryLanguage("Python"), logo: "python" },
       { name: sameInEveryLanguage("FastAPI"), logo: "fastapi" },
-      { name: sameInEveryLanguage("Supabase"), logo: "supabase" },
       { name: sameInEveryLanguage("PostgreSQL"), logo: "postgresql" },
+      { name: sameInEveryLanguage("Supabase"), logo: "supabase" },
       { name: sameInEveryLanguage("MySQL"), logo: "mysql" },
       {
         name: {
@@ -82,6 +84,30 @@ export const skillGroups: SkillGroup[] = [
       { name: sameInEveryLanguage("TypeScript"), logo: "typescript" },
       { name: sameInEveryLanguage("JavaScript"), logo: "javascript" },
       { name: sameInEveryLanguage("Material UI"), logo: "materialUi" },
+      { name: sameInEveryLanguage("Next.js") },
+      { name: sameInEveryLanguage("Tailwind CSS") },
+      { name: sameInEveryLanguage("React Native (Expo)") },
+    ],
+  },
+  {
+    id: "tools",
+    title: { es: "Herramientas", en: "Tools", pt: "Ferramentas", fr: "Outils" },
+    items: [
+      { name: sameInEveryLanguage("Git"), logo: "git" },
+      { name: sameInEveryLanguage("GitHub"), logo: "github" },
+      { name: sameInEveryLanguage("Claude Code"), logo: "claude" },
+      { name: sameInEveryLanguage("Docker"), logo: "docker" },
+      { name: sameInEveryLanguage("Render"), logo: "render" },
+      { name: sameInEveryLanguage("Vercel") },
+      { name: sameInEveryLanguage("GitHub Actions") },
+      {
+        name: {
+          es: "pruebas automatizadas (pytest, Vitest, Testing Library)",
+          en: "automated testing (pytest, Vitest, Testing Library)",
+          pt: "testes automatizados (pytest, Vitest, Testing Library)",
+          fr: "tests automatisés (pytest, Vitest, Testing Library)",
+        },
+      },
     ],
   },
   {
@@ -93,22 +119,11 @@ export const skillGroups: SkillGroup[] = [
       fr: "Intégrations",
     },
     items: [
-      { name: sameInEveryLanguage("GoHighLevel"), logo: "highlevel" },
       { name: sameInEveryLanguage("WhatsApp Cloud API"), logo: "whatsapp" },
-      { name: sameInEveryLanguage("Zoom"), logo: "zoom" },
-      { name: sameInEveryLanguage("WooCommerce"), logo: "woocommerce" },
+      { name: sameInEveryLanguage("GoHighLevel"), logo: "highlevel" },
       { name: sameInEveryLanguage("Google Maps API"), logo: "googleMaps" },
-    ],
-  },
-  {
-    id: "tools",
-    title: { es: "Herramientas", en: "Tools", pt: "Ferramentas", fr: "Outils" },
-    items: [
-      { name: sameInEveryLanguage("Git"), logo: "git" },
-      { name: sameInEveryLanguage("GitHub"), logo: "github" },
-      { name: sameInEveryLanguage("Docker"), logo: "docker" },
-      { name: sameInEveryLanguage("Render"), logo: "render" },
-      { name: sameInEveryLanguage("Claude Code"), logo: "claude" },
+      { name: sameInEveryLanguage("WooCommerce"), logo: "woocommerce" },
+      { name: sameInEveryLanguage("Zoom"), logo: "zoom" },
     ],
   },
   {
@@ -125,10 +140,10 @@ export const skillGroups: SkillGroup[] = [
       },
       {
         name: {
-          es: "Inglés intermedio (B1): leo documentación técnica sin dificultad, conversación en desarrollo",
-          en: "Intermediate English (B1) — I read technical documentation without difficulty, conversational skills in progress",
-          pt: "Inglês intermediário (B1): leio documentação técnica sem dificuldade, conversação em desenvolvimento",
-          fr: "Anglais intermédiaire (B1) : je lis la documentation technique sans difficulté, expression orale en cours d'amélioration",
+          es: "Inglés intermedio (B1, autoevaluado)",
+          en: "Intermediate English (B1, self-assessed) — I read technical documentation without difficulty, conversational skills in progress",
+          pt: "Inglês intermediário (B1, autoavaliado): leio documentação técnica sem dificuldade, conversação em desenvolvimento",
+          fr: "Anglais intermédiaire (B1, auto-évalué) : je lis la documentation technique sans difficulté, expression orale en cours d'amélioration",
         },
       },
     ],

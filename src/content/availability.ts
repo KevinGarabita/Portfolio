@@ -16,12 +16,13 @@ export interface Availability {
 }
 
 /**
- * Kevin's availability, shown in the hero above the calls to action. He has not given
- * it yet, so it stays empty and the site shows nothing. Fill it only with his own
- * answers; the types above list the allowed values.
+ * Kevin's availability, shown in the hero above the calls to action. He accepts every
+ * work arrangement (12 October 2026). His status and start month are not confirmed, so
+ * they stay empty and the whole line stays hidden. Fill them only with his own answers;
+ * the types above list the allowed values.
  */
 export const availability: Availability = {
   status: null,
-  modalities: [],
+  modalities: ["remote", "hybrid", "on-site"],
   availableFrom: null,
 };

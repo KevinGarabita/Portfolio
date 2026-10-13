@@ -7,8 +7,8 @@ Source code of the personal site of **Kevin Garabita**, a Backend, AI & Automati
 **Live site: [www.garasoftware.com.mx](https://www.garasoftware.com.mx)**
 
 <p align="center">
-  <img src="docs/screenshots/home-desktop.png" width="600" alt="English home page on a desktop screen: the heading Kevin Garabita, Backend, AI &amp; Automation Engineer, the word Backend in large orange letters, a summary of his backend, AI agent and automation work, buttons to view his projects, view his résumé, message him on WhatsApp and email him, LinkedIn and GitHub links, and his photo in front of an orange-to-red circle labelled FastAPI, n8n and OpenAI API.">
-  <img src="docs/screenshots/home-phone.png" width="173" alt="The same English home page on a phone: the photo first, then the name and role, the word Backend, the summary and the buttons stacked in one column.">
+  <img src="docs/screenshots/home-desktop.png" width="600" alt="English home page on a desktop screen: a header with the name, the section links, a green WhatsApp button and the language menu; on the left, the name Kevin Garabita, the role Backend, AI &amp; Automation Engineer and Mérida, Yucatán, the value line “I build systems and AI assistants that save your business hours of work” in large type, and buttons to message him on WhatsApp and to view his résumé (PDF); on the right, Kevin's cut-out photo over an orange-to-red disc, with a dashed orbit and the chips FastAPI, n8n and OpenAI API; below, the Featured projects heading and the top of the first project's screenshot.">
+  <img src="docs/screenshots/home-phone.png" width="173" alt="The same English home page on a phone: the header with the menu button, the WhatsApp button and the language menu; the photo first, over the orange-to-red disc with the orbit and the FastAPI, n8n and OpenAI API chips; then the name, the role and Mérida, Yucatán, the value line, the WhatsApp and résumé buttons stacked, and the Featured projects heading.">
 </p>
 
 ## Highlights
@@ -58,23 +58,23 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 
 - **Static generation everywhere**: `generateStaticParams` lists every language and project, and `dynamicParams = false` rejects anything else. Cache Components stays off: the site is fully static, and with it enabled a missing project answered 200 on its first request.
 - **Real 404s**: `app/global-not-found.tsx` answers any unknown URL with a server-rendered 404 page in all four languages.
-- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths that cover what the layouts draw (never removed, because Google keeps the image URLs it has crawled), `sizes` that match the layout, and `fetchPriority="high"` only on the largest element of the first screen.
+- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths that cover what the layouts draw (never removed, because Google keeps the image URLs it has crawled), `sizes` that match the layout, and only the Largest Contentful Paint image preloaded with `fetchPriority="high"`: the hero photo on the home page and the first card on the projects page. Every other image loads lazily.
 - **Lean HTML**: the skill logos are SVG files from a statically generated route instead of inline markup, which cut the home page HTML by more than half.
 - **Self-hosted font** through `next/font`: the font files are downloaded at build time and served from the same domain.
-- **Motion only animates `transform` and `opacity`**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. Scroll reveals are progressive enhancement: the HTML arrives fully visible, and content is hidden only after the script knows what is already on screen. The hero photo, the largest element on the first screen, never starts invisible.
+- **Motion only animates `transform`, `opacity` and colours**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. The hero text arrives in sequence without fading, so it paints on the first frame, and the hero photo, the LCP, never starts invisible: only its decoration fades in. There are no scroll reveals, so every section is in place as soon as the HTML arrives.
 
 ### Accessibility
 
 - One `h1` per page, ordered headings, landmarks (`header`, `nav`, `main`, `footer`) and a skip-to-content link.
 - A visible focus ring on every interactive element; anchors and focused elements are never hidden behind the sticky header.
-- The language menu and the project filters follow the disclosure pattern (`aria-expanded`, `aria-controls`, Escape closes and returns focus). The screenshot gallery opens in a native `<dialog>` with keyboard navigation; focus stays inside it and returns to the thumbnail that opened it.
+- The navigation menu on smaller screens, the language menu and the project filters follow the disclosure pattern (`aria-expanded`, `aria-controls`, Escape closes and returns focus). The screenshot gallery opens in a native `<dialog>` with keyboard navigation; focus stays inside it and returns to the thumbnail that opened it.
 - Colour contrast is measured and documented in `docs/design.md`; colours below 4.5:1 are never used for small text.
 - Touch targets of at least 24 px, and links that open a new tab say so to screen readers.
 - axe-core reports no violations on any page in the four languages, at phone and desktop sizes.
 
 ## Lighthouse
 
-Measured on a **local production build** (`next build` + `next start`) with Lighthouse 13.5 and mobile emulation on 2026-10-10, median of three runs. Scores on the live site may differ.
+Measured on a **local production build** (`next build` + `next start`) with Lighthouse 13.5 and mobile emulation on 2026-10-10, before the October 12 redesign, median of three runs. Scores on the live site may differ.
 
 | Page                                | Performance | Accessibility | Best Practices | SEO | Largest Contentful Paint |
 | ----------------------------------- | ----------: | ------------: | -------------: | --: | -----------------------: |
@@ -120,6 +120,16 @@ Only one variable is ever set by hand; Vercel provides the others.
 
 With none of them set, the site uses `http://localhost:3000`.
 
+### CV
+
+The CVs the site links (`public/cv/kevin-garabita-cv-es.pdf` and `kevin-garabita-cv-en.pdf`) are built from the HTML sources in `docs/cv/`. Edit the HTML, then rebuild both PDFs:
+
+```bash
+npm run cv   # docs/cv/*.html → public/cv/*.pdf with the installed Chrome
+```
+
+`scripts/build-cv.mjs` prints each source with headless Chrome from its default Windows path; set `CHROME_PATH` to use another executable. It fails unless each PDF is exactly one Letter page. Keep the CVs ATS-friendly: one column, standard headings, real text (no tables, icons or images) and one date format. Commit the HTML and the PDFs together.
+
 ## Project structure
 
 ```
@@ -135,11 +145,10 @@ src/
   proxy.ts               sends URLs without a language to the saved language or English
   assets/fonts/          Atkinson Hyperlegible Next TTF files (OFL) for the Open Graph images
   components/
-    layout/              header, footer, language menu, skip link
+    layout/              header, navigation menu, footer, language menu, skip link
     sections/            home page sections
     projects/            cards, filters, gallery, flow diagram and case-study parts
     recruiter/           availability note
-    motion/              scroll reveal and the rotating title
     ui/                  building blocks: container, section, button, tag, icons, flags
     seo/                 JSON-LD and the Open Graph image layout
   content/               site data: profile, projects, experience, education, skills, SEO texts
@@ -155,7 +164,7 @@ docs/                    technical and design decisions, deployment guide (in Sp
 
 ## Adding a project
 
-1. Create a file in `src/content/projects/` and add it to the array in `src/content/projects/index.ts` (that order is the order on the site). The `Project` type in `src/types/content.ts` describes every field, and TypeScript flags anything missing. `kind` feeds the "Type" filter on `/[lang]/projects`, `isFeatured: true` also shows the project on the home page, screenshots go in `public/images/projects/<slug>/` and in `images`, automation flows go in `flowDiagram`, and `buildMethod` (`"ai-assisted"` or `"hand-coded"`) shows the build badge and its filter. The optional `status`, `metrics` (before and after) and `architecture` fields only appear on the page when they have data.
+1. Create a file in `src/content/projects/` and add it to the array in `src/content/projects/index.ts` (that order is the order on the site). The `Project` type in `src/types/content.ts` describes every field, and TypeScript flags anything missing. `kind` feeds the "Type" filter on `/[lang]/projects`, `isFeatured: true` also shows the project on the home page, `tagline` is the card's one line of value (90 characters at most), screenshots go in `public/images/projects/<slug>/` and in `images`, automation flows go in `flowDiagram`, and `category` with `teamSetup` sets the credit shown on the case study ("Freelance", "Collaboration with Kobler" or "Built for Kobler y Asociados"). The optional `status` (`"in-production"`, `"in-development"` or `"completed-unreleased"`), `metrics` (before and after) and `architecture` fields only appear on the page when they have data.
 2. Write every text in the four languages, `{ es: "...", en: "...", pt: "...", fr: "..." }`, or use `sameInEveryLanguage("...")` when it reads the same in all of them.
 3. Add its title (60 characters at most, with the key stack) and description (140–160 characters) in the four languages to `src/content/project-seo.ts`; the build fails if they are missing or out of range.
 4. Set `lastUpdated` to the date of the change (`"YYYY-MM-DD"`); the sitemap uses it.

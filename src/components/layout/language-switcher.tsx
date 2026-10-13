@@ -19,6 +19,7 @@ import {
   supportedLocales,
   type Locale,
 } from "@/i18n/locales";
+import { labelColon } from "@/i18n/localize";
 import { joinClassNames } from "@/lib/class-names";
 
 interface LanguageSwitcherProps {
@@ -42,7 +43,7 @@ function rememberLocale(locale: Locale) {
  * options are plain links, reached with Tab. Escape closes the list and returns focus to
  * the button; a click outside or moving focus out of it also closes it. Below lg the
  * button shrinks to the flag and the language code (EN), so the header row still fits
- * on phones and, from 52rem, on one line with the section links.
+ * on phones next to the menu and WhatsApp buttons.
  *
  * The button's name is "Language: English" from lg and "Language: English, EN" below
  * it: the visible code stays part of the name (WCAG 2.5.3), and the parts are separated
@@ -140,7 +141,10 @@ export function LanguageSwitcher({
           )}
         >
           <LocaleFlag locale={currentLocale} />
-          <span className="sr-only">{label}: </span>
+          <span className="sr-only">
+            {label}
+            {labelColon(currentLocale)}{" "}
+          </span>
           <span lang={currentLocale} className="max-lg:sr-only">
             {localeNames[currentLocale]}
             {/* Read only below lg, where the code follows: "Español, ES". */}
@@ -148,9 +152,7 @@ export function LanguageSwitcher({
           </span>{" "}
           {/* Below lg the code stands in for the name. It is read too, so the visible
               text stays part of the button's accessible name. */}
-          <span className="font-mono lg:hidden">
-            {currentLocale.toUpperCase()}
-          </span>
+          <span className="lg:hidden">{currentLocale.toUpperCase()}</span>
           <ChevronDownIcon
             className={joinClassNames(
               "size-4 text-muted transition-transform",

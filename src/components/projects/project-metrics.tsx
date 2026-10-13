@@ -10,10 +10,10 @@ interface ProjectMetricsProps {
 }
 
 /**
- * Before/after figures of a case study, one panel each (two per row from sm up, like
- * the key points). Each panel is a definition list, so screen readers hear which value
- * is before and which after; the two values sit side by side once the panel is wide
- * enough (container query) and stack otherwise.
+ * Before/after figures of a case study, each under a hairline and without a panel (two
+ * per row from sm up, like the key points). Each one is a definition list, so screen
+ * readers hear which value is before and which after; the two values sit side by side
+ * once there is room (container query) and stack otherwise. The "after" value is bold.
  */
 export function ProjectMetrics({
   metrics,
@@ -21,11 +21,11 @@ export function ProjectMetrics({
   labels,
 }: ProjectMetricsProps) {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:gap-6">
+    <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
       {metrics.map((metric) => (
         <li
           key={metric.label.es}
-          className="@container rounded-section border border-hairline bg-raised p-6 sm:last:odd:col-span-2"
+          className="@container border-t border-hairline pt-4"
         >
           <p className="font-bold text-heading">
             {localize(metric.label, locale)}
@@ -36,9 +36,7 @@ export function ProjectMetrics({
               <dd className="mt-1">{localize(metric.before, locale)}</dd>
             </div>
             <div className="border-t border-hairline pt-4 @xs:border-t-0 @xs:border-l @xs:pt-0 @xs:pl-4">
-              <dt className="text-small font-bold text-accent">
-                {labels.after}
-              </dt>
+              <dt className="text-small text-muted">{labels.after}</dt>
               <dd className="mt-1 font-bold text-heading">
                 {localize(metric.after, locale)}
               </dd>

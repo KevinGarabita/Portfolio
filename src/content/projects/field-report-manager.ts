@@ -1,7 +1,10 @@
 import { sameInEveryLanguage } from "@/i18n/localize";
 import type { Project } from "@/types/content";
 
-/** Field report manager built for UxmalTechnologies (freelance). */
+/**
+ * Field report manager built for UxmalTechnologies (freelance). Finished in August 2026
+ * and never used in production, so no text here may suggest it is live or in use.
+ */
 export const fieldReportManager: Project = {
   slug: "field-report-manager",
   name: {
@@ -13,29 +16,28 @@ export const fieldReportManager: Project = {
   client: "UxmalTechnologies",
   category: "freelance",
   context: sameInEveryLanguage("Freelance"),
-  status: "in-production",
-  statusNote: {
-    es: "desde julio 2026",
-    en: "since July 2026",
-    pt: "desde julho de 2026",
-    fr: "depuis juillet 2026",
-  },
-  period: { start: "2026-06" },
+  status: "completed-unreleased",
+  period: { start: "2026-06", end: "2026-08" },
   kind: "web-app",
   isFeatured: true,
-  buildMethod: "ai-assisted",
   teamSetup: "individual",
+  tagline: {
+    es: "Reportes de campo con fotos desde el celular, revisados y aprobados en un solo lugar.",
+    en: "Field reports with photos from the phone, reviewed and approved in one place.",
+    pt: "Relatórios de campo com fotos pelo celular, revisados e aprovados em um só lugar.",
+    fr: "Rapports de terrain avec photos sur mobile, vérifiés et approuvés au même endroit.",
+  },
   summary: {
-    es: "Aplicación web donde los técnicos de instalación registran cada reporte con sus fotos desde el teléfono y el supervisor lo revisa y aprueba. Reemplazó un flujo de tres pasos basado en WhatsApp y captura manual.",
-    en: "Web app where installation technicians log each report with its photos from their phone, and the supervisor reviews and approves it. It replaced a three-step process built on WhatsApp and manual data entry.",
-    pt: "Aplicação web em que os técnicos de instalação registram cada relatório com as fotos pelo celular, e o supervisor o revisa e aprova. Substituiu um processo de três etapas baseado no WhatsApp e em digitação manual.",
-    fr: "Application web où les techniciens d'installation enregistrent chaque rapport avec ses photos depuis leur téléphone, puis le superviseur le vérifie et l'approuve. Elle a remplacé un processus en trois étapes fondé sur WhatsApp et la saisie manuelle.",
+    es: "Aplicación web para que los técnicos de instalación registren cada reporte con sus fotos desde el teléfono y el supervisor lo revise y apruebe. La diseñé para sustituir un flujo de tres pasos por WhatsApp y captura manual.",
+    en: "Web app for installation technicians to log each report with its photos from their phone, and for the supervisor to review and approve it. I designed it to replace a three-step process built on WhatsApp and manual data entry.",
+    pt: "Aplicação web para os técnicos de instalação registrarem cada relatório com as fotos pelo celular e o supervisor revisá-lo e aprová-lo. Eu a projetei para substituir um processo de três etapas baseado no WhatsApp e em digitação manual.",
+    fr: "Application web qui permet aux techniciens d'installation d'enregistrer chaque rapport avec ses photos depuis leur téléphone, et au superviseur de le vérifier et de l'approuver. Je l'ai conçue pour remplacer un processus en trois étapes fondé sur WhatsApp et la saisie manuelle.",
   },
   problem: {
-    es: "Cada reporte de instalación pasaba por tres pasos: el técnico llenaba un formato por WhatsApp, otra persona capturaba esos datos a mano y las fotos de evidencia se enviaban aparte. La misma información se escribía dos veces y las fotos quedaban separadas del reporte al que pertenecían.",
-    en: "Each installation report went through three steps: the technician filled out a form over WhatsApp, another person typed that data in by hand, and the evidence photos were sent separately. The same information was written twice, and the photos were kept apart from the report they belonged to.",
-    pt: "Cada relatório de instalação passava por três etapas: o técnico preenchia um formulário pelo WhatsApp, outra pessoa digitava esses dados à mão e as fotos de comprovação eram enviadas à parte. A mesma informação era escrita duas vezes, e as fotos ficavam separadas do relatório a que pertenciam.",
-    fr: "Chaque rapport d'installation passait par trois étapes : le technicien remplissait un formulaire sur WhatsApp, une autre personne ressaisissait ces données à la main et les photos justificatives étaient envoyées à part. La même information était saisie deux fois, et les photos restaient séparées du rapport auquel elles appartenaient.",
+    es: "Cada reporte de instalación pasa por tres pasos: el técnico llena un formato por WhatsApp, otra persona captura esos datos a mano y las fotos de evidencia se envían aparte. La misma información se escribe dos veces y las fotos quedan separadas del reporte al que pertenecen.",
+    en: "Each installation report goes through three steps: the technician fills out a form over WhatsApp, another person types that data in by hand, and the evidence photos are sent separately. The same information is written twice, and the photos are kept apart from the report they belong to.",
+    pt: "Cada relatório de instalação passa por três etapas: o técnico preenche um formulário pelo WhatsApp, outra pessoa digita esses dados à mão e as fotos de comprovação são enviadas à parte. A mesma informação é escrita duas vezes, e as fotos ficam separadas do relatório a que pertencem.",
+    fr: "Chaque rapport d'installation passe par trois étapes : le technicien remplit un formulaire sur WhatsApp, une autre personne ressaisit ces données à la main et les photos justificatives sont envoyées à part. La même information est saisie deux fois, et les photos restent séparées du rapport auquel elles appartiennent.",
   },
   solution: {
     es: "El técnico captura el reporte desde el teléfono en cuatro secciones (información general, cliente, instalación y georreferencias) y sube las ocho fotos de evidencia que pide cada instalación. El servidor asigna el técnico, el supervisor y el equipo a partir de la sesión, y el campo de la ONT solo ofrece los equipos que ese técnico tiene asignados. Al enviarlo, el reporte pasa a revisión: el supervisor lo revisa, corrige lo necesario y lo aprueba, y en ese momento el sistema genera el PDF con los datos y las fotos. El historial se exporta a Excel por rango de fechas. Un administrador gestiona usuarios, equipos y el inventario de ONTs, que se importa desde Excel.",
@@ -44,23 +46,23 @@ export const fieldReportManager: Project = {
     fr: "Le technicien remplit le rapport depuis son téléphone en quatre sections (informations générales, client, installation et géolocalisation) et téléverse les huit photos justificatives exigées pour chaque installation. Le serveur attribue le technicien, le superviseur et l'équipe à partir de la session, et le champ ONT ne propose que les équipements attribués à ce technicien. Une fois envoyé, le rapport passe en revue : le superviseur le vérifie, corrige ce qu'il faut et l'approuve, et le système génère alors le PDF avec les données et les photos. L'historique s'exporte vers Excel par période. Un administrateur gère les utilisateurs, les équipes et l'inventaire des ONT, importé depuis Excel.",
   },
   role: {
-    es: "Lo desarrollé solo, de principio a fin: la API en FastAPI, el frontend en React y TypeScript, el modelo de datos y las migraciones en Supabase, la autenticación con Supabase Auth y el acceso por rol, la generación del PDF, la exportación a Excel y el despliegue en Render, con integración continua en GitHub Actions. Hoy le doy mantenimiento.",
-    en: "I built it on my own, end to end: the FastAPI API, the React and TypeScript frontend, the data model and migrations in Supabase, authentication with Supabase Auth and role-based access, PDF generation, the Excel export, and the deployment on Render, with continuous integration on GitHub Actions. I maintain it today.",
-    pt: "Desenvolvi sozinho, de ponta a ponta: a API em FastAPI, o frontend em React e TypeScript, o modelo de dados e as migrações no Supabase, a autenticação com Supabase Auth e o acesso por perfil, a geração do PDF, a exportação para Excel e o deploy no Render, com integração contínua no GitHub Actions. Hoje faço a manutenção.",
-    fr: "Je l'ai développée seul, de bout en bout : l'API FastAPI, le frontend en React et TypeScript, le modèle de données et les migrations dans Supabase, l'authentification avec Supabase Auth et l'accès par rôle, la génération du PDF, l'export vers Excel et le déploiement sur Render, avec intégration continue sur GitHub Actions. J'en assure aujourd'hui la maintenance.",
+    es: "Lo desarrollé solo, de principio a fin: la API en FastAPI, el frontend en React y TypeScript, el modelo de datos y las migraciones en Supabase, la autenticación con Supabase Auth y el acceso por rol, la generación del PDF, la exportación a Excel y la configuración del despliegue en Render, con integración continua en GitHub Actions.",
+    en: "I built it on my own, end to end: the FastAPI API, the React and TypeScript frontend, the data model and migrations in Supabase, authentication with Supabase Auth and role-based access, PDF generation, the Excel export, and the deployment setup on Render, with continuous integration on GitHub Actions.",
+    pt: "Desenvolvi sozinho, de ponta a ponta: a API em FastAPI, o frontend em React e TypeScript, o modelo de dados e as migrações no Supabase, a autenticação com Supabase Auth e o acesso por perfil, a geração do PDF, a exportação para Excel e a configuração do deploy no Render, com integração contínua no GitHub Actions.",
+    fr: "Je l'ai développée seul, de bout en bout : l'API FastAPI, le frontend en React et TypeScript, le modèle de données et les migrations dans Supabase, l'authentification avec Supabase Auth et l'accès par rôle, la génération du PDF, l'export vers Excel et la configuration du déploiement sur Render, avec intégration continue sur GitHub Actions.",
   },
   results: [
     {
-      es: "Lo usan cinco técnicos y un supervisor, y sigo dando mantenimiento.",
-      en: "Used by five technicians and one supervisor, with ongoing maintenance.",
-      pt: "Usado por cinco técnicos e um supervisor, com manutenção contínua.",
-      fr: "Utilisée par cinq techniciens et un superviseur, avec une maintenance continue.",
+      es: "Quedó terminada en agosto de 2026, con el ciclo completo: captura en campo, revisión y aprobación del supervisor, PDF, exportación a Excel e inventario de ONTs.",
+      en: "Finished in August 2026 with the full cycle: field capture, supervisor review and approval, PDF, Excel export, and the ONT inventory.",
+      pt: "Ficou pronta em agosto de 2026, com o ciclo completo: registro em campo, revisão e aprovação do supervisor, PDF, exportação para Excel e inventário de ONTs.",
+      fr: "Terminée en août 2026, avec le cycle complet : saisie sur le terrain, vérification et approbation du superviseur, PDF, export vers Excel et inventaire des ONT.",
     },
     {
-      es: "El técnico registra los datos y las fotos en un solo lugar; ya nadie vuelve a capturar el reporte a mano.",
-      en: "The technician records the data and photos in one place; nobody retypes the report by hand anymore.",
-      pt: "O técnico registra os dados e as fotos em um só lugar; ninguém mais redigita o relatório à mão.",
-      fr: "Le technicien enregistre les données et les photos au même endroit ; plus personne ne ressaisit le rapport à la main.",
+      es: "El diseño elimina la doble captura: los datos y las fotos se registran una sola vez, en el mismo reporte.",
+      en: "The design removes double entry: the data and photos are recorded once, in the same report.",
+      pt: "O design elimina a digitação dupla: os dados e as fotos são registrados uma única vez, no mesmo relatório.",
+      fr: "La conception supprime la double saisie : les données et les photos sont enregistrées une seule fois, dans le même rapport.",
     },
     {
       es: "Cada reporte aprobado queda como un PDF con sus datos y sus ocho fotos, listo para descargar desde el panel del supervisor.",
@@ -71,16 +73,16 @@ export const fieldReportManager: Project = {
   ],
   highlights: [
     {
-      es: "Reemplacé un flujo de tres pasos —formato por WhatsApp, captura manual por otra persona y evidencias aparte— por un formulario único donde el técnico registra el reporte y adjunta sus fotos, con los datos conocidos precargados.",
-      en: "Replaced a three-step workflow — a WhatsApp form, manual data entry by another person, and separate evidence collection — with a single form where the technician logs the report and attaches photos, with known data pre-filled.",
-      pt: "Substituí um fluxo de três etapas (formulário pelo WhatsApp, digitação manual por outra pessoa e comprovações enviadas à parte) por um formulário único em que o técnico registra o relatório e anexa as fotos, com os dados já conhecidos preenchidos.",
-      fr: "J'ai remplacé un processus en trois étapes (formulaire sur WhatsApp, ressaisie manuelle par une autre personne et justificatifs envoyés à part) par un formulaire unique où le technicien enregistre le rapport et joint ses photos, avec les données connues préremplies.",
+      es: "Diseñé un formulario único para sustituir el flujo de tres pasos (formato por WhatsApp, captura manual por otra persona y evidencias aparte): el técnico registra el reporte y adjunta sus fotos, con los datos conocidos precargados.",
+      en: "Designed a single form to replace the three-step workflow (a WhatsApp form, manual data entry by another person, and separate evidence): the technician logs the report and attaches the photos, with known data pre-filled.",
+      pt: "Projetei um formulário único para substituir o fluxo de três etapas (formulário pelo WhatsApp, digitação manual por outra pessoa e comprovações à parte): o técnico registra o relatório e anexa as fotos, com os dados já conhecidos preenchidos.",
+      fr: "J'ai conçu un formulaire unique pour remplacer le processus en trois étapes (formulaire sur WhatsApp, ressaisie manuelle par une autre personne et justificatifs à part) : le technicien enregistre le rapport et joint ses photos, avec les données connues préremplies.",
     },
     {
-      es: "Implementé autenticación con Supabase Auth y acceso por rol: cada técnico ve solo sus reportes y cada supervisor los de sus técnicos asignados. El supervisor revisa, corrige y aprueba; el sistema genera el PDF y exporta el historial a Excel.",
-      en: "Implemented authentication with Supabase Auth and role-based access: each technician sees only their own reports, and each supervisor sees those of their assigned technicians. The supervisor reviews, corrects, and approves; the system generates the PDF and exports the history to Excel.",
-      pt: "Implementei autenticação com Supabase Auth e acesso por perfil: cada técnico vê apenas os próprios relatórios, e cada supervisor vê os dos técnicos atribuídos a ele. O supervisor revisa, corrige e aprova; o sistema gera o PDF e exporta o histórico para Excel.",
-      fr: "J'ai mis en place l'authentification avec Supabase Auth et l'accès par rôle : chaque technicien ne voit que ses propres rapports, et chaque superviseur ceux des techniciens qui lui sont attribués. Le superviseur vérifie, corrige et approuve ; le système génère le PDF et exporte l'historique vers Excel.",
+      es: "Implementé autenticación con Supabase Auth y acceso por rol: cada técnico ve solo sus reportes y cada supervisor, los de sus técnicos asignados.",
+      en: "Implemented authentication with Supabase Auth and role-based access: each technician sees only their own reports, and each supervisor sees those of their assigned technicians.",
+      pt: "Implementei autenticação com Supabase Auth e acesso por perfil: cada técnico vê apenas os próprios relatórios, e cada supervisor vê os dos técnicos atribuídos a ele.",
+      fr: "J'ai mis en place l'authentification avec Supabase Auth et l'accès par rôle : chaque technicien ne voit que ses propres rapports, et chaque superviseur ceux des techniciens qui lui sont attribués.",
     },
     {
       es: "Inventario de ONTs: el administrador las importa desde Excel con una vista previa de nuevas, existentes y repetidas; el supervisor las asigna a cada técnico, y un reporte solo acepta una ONT asignada a quien lo captura.",
@@ -97,12 +99,12 @@ export const fieldReportManager: Project = {
   ],
   stack: [
     "FastAPI",
-    "Python",
     "React",
     "TypeScript",
+    "Supabase",
+    "Python",
     "Next.js",
     "Material UI",
-    "Supabase",
     "PostgreSQL",
     "Docker",
     "Render",
@@ -212,5 +214,5 @@ export const fieldReportManager: Project = {
       fr: "La génération du PDF et l'envoi des photos ont des limites de simultanéité et de fréquence ; quand le serveur est occupé, il répond par un message clair invitant à réessayer au lieu de rester bloqué.",
     },
   ],
-  lastUpdated: "2026-10-10",
+  lastUpdated: "2026-10-12",
 };

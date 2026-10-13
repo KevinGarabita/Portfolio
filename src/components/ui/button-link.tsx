@@ -5,7 +5,8 @@ import { joinClassNames } from "@/lib/class-names";
 
 /**
  * Primary: orange fill with black text (white on orange fails contrast).
- * Secondary: a dark button with the orange-to-red gradient ring.
+ * Secondary: an outline in the control grey (4.17:1 on the page) that turns orange on
+ * hover, with white text.
  * WhatsApp: WhatsApp's official green with black text (white on that green fails contrast).
  */
 type ButtonVariant = "primary" | "secondary" | "whatsapp";
@@ -14,12 +15,11 @@ type ButtonVariant = "primary" | "secondary" | "whatsapp";
 type ButtonSize = "regular" | "compact";
 
 const variantClassNames: Record<ButtonVariant, string> = {
-  primary:
-    "border border-transparent bg-accent text-on-accent hover:bg-accent-hover",
+  primary: "border-transparent bg-accent text-on-accent hover:bg-accent-hover",
   secondary:
-    "gradient-ring border text-heading hover:[--ring-fill:var(--color-raised-strong)]",
+    "border-control-border text-heading hover:border-accent hover:bg-raised",
   whatsapp:
-    "glow-whatsapp border border-transparent bg-whatsapp text-on-whatsapp hover:bg-whatsapp-hover",
+    "border-transparent bg-whatsapp text-on-whatsapp hover:bg-whatsapp-hover",
 };
 
 const sizeClassNames: Record<ButtonSize, string> = {
@@ -33,7 +33,7 @@ type ButtonLinkProps = {
   size?: ButtonSize;
   /** Icon before the text, e.g. the WhatsApp bubble. */
   leadingIcon?: ReactNode;
-  /** Icon after the text; it nudges forward on hover. */
+  /** Icon after the text, e.g. the "opens in a new tab" arrow of the CV. */
   trailingIcon?: ReactNode;
   className?: string;
   children: ReactNode;
@@ -54,8 +54,8 @@ function isInternalPage(href: string, isDownload: boolean): boolean {
 
 /**
  * A link that looks like a button. Pages of the site ("/es#projects") use next/link;
- * anything else (mailto:, wa.me, files such as the CV) is a plain anchor. On hover it
- * lifts slightly and an orange glow fades in.
+ * anything else (mailto:, wa.me, files such as the CV) is a plain anchor. Hover only
+ * changes its colours: nothing lifts or glows.
  */
 export function ButtonLink({
   href,
@@ -68,7 +68,7 @@ export function ButtonLink({
   ...anchorAttributes
 }: ButtonLinkProps) {
   const combinedClassName = joinClassNames(
-    "hover-glow button-motion inline-flex items-center justify-center gap-2 rounded-control text-center font-bold no-underline",
+    "inline-flex items-center justify-center gap-2 rounded-control border text-center font-bold no-underline transition-colors",
     variantClassNames[variant],
     sizeClassNames[size],
     className,
@@ -78,9 +78,7 @@ export function ButtonLink({
     <>
       {leadingIcon}
       <span>{children}</span>
-      {trailingIcon ? (
-        <span className="button-icon">{trailingIcon}</span>
-      ) : null}
+      {trailingIcon}
     </>
   );
 

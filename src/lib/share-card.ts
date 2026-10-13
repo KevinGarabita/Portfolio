@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { profile } from "@/content/profile";
 import { dictionariesByLocale } from "@/i18n/dictionaries-by-locale";
 import type { Locale } from "@/i18n/locales";
-import { localize } from "@/i18n/localize";
+import { labelColon, localize } from "@/i18n/localize";
 import type { Project } from "@/types/content";
 
 import { getProjectTechnologies } from "./projects";
@@ -50,13 +50,11 @@ export function getProjectShareCard(
   locale: Locale,
 ): ShareCardText {
   const clientLabel = dictionariesByLocale[locale].projects.facts.client;
-  // French puts a space before the colon ("Client : Controltec").
-  const colon = locale === "fr" ? " :" : ":";
 
   return {
     eyebrow: profile.displayName,
     title: localize(project.name, locale),
-    subtitle: `${clientLabel}${colon} ${project.client}`,
+    subtitle: `${clientLabel}${labelColon(locale)} ${project.client}`,
     footer: getProjectTechnologies(project).join(" · "),
   };
 }

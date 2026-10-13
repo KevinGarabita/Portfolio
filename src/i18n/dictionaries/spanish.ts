@@ -4,6 +4,7 @@ export const spanishDictionary = {
   opensInNewTab: "se abre en una pestaña nueva",
   siteNavigation: {
     label: "Navegación principal",
+    menu: "Menú",
     home: "Inicio",
     projects: "Proyectos",
     experience: "Experiencia",
@@ -15,7 +16,6 @@ export const spanishDictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
-    viewProjects: "Ver proyectos",
     writeOnWhatsApp: "Escríbeme por WhatsApp",
   },
   resume: {
@@ -27,24 +27,12 @@ export const spanishDictionary = {
     allProjectsPage: {
       title: "Proyectos",
       description:
-        "Aplicaciones web freelance y agentes de IA con automatizaciones en n8n hechos en Kobler y Asociados.",
-    },
-    buildMethod: {
-      "ai-assisted": {
-        label: "Desarrollo asistido por IA",
-        description:
-          "Arquitectura, revisión de código, pruebas y seguridad a mi cargo; código generado con IA bajo mi dirección.",
-      },
-      "hand-coded": {
-        label: "Hecho a mano",
-        description: "Código escrito a mano.",
-      },
+        "Aplicaciones web, agentes de IA y automatizaciones: proyectos freelance y en colaboración con Kobler y Asociados.",
     },
     filters: {
       label: "Filtrar proyectos",
       kind: "Tipo",
       technology: "Tecnología",
-      buildMethod: "Desarrollo",
       all: "Todos",
       kinds: {
         "web-app": "Aplicaciones web",
@@ -55,26 +43,19 @@ export const spanishDictionary = {
       empty: "Ningún proyecto coincide con estos filtros.",
       clear: "Quitar filtros",
     },
-    category: {
-      freelance: "Proyecto freelance",
-      kobler: "Proyecto en Kobler",
-    },
-    viewCaseStudy: "Ver caso de estudio",
-    moreTechnologies: "más",
     status: {
       "in-production": "En producción",
       "in-development": "En desarrollo",
-      delivered: "Entregado",
+      "completed-unreleased": "Completado · no publicado",
     },
-    teamSetup: {
-      individual: "Proyecto individual",
-      team: "Trabajo en equipo",
+    credit: {
+      freelance: "Freelance",
+      "kobler-team": "Colaboración con Kobler",
+      "kobler-individual": "Hecho para Kobler y Asociados",
     },
     facts: {
       client: "Cliente",
-      context: "Contexto",
       period: "Periodo",
-      status: "Estado",
       technologies: "Tecnologías",
     },
     sections: {
@@ -103,9 +84,6 @@ export const spanishDictionary = {
         `Imagen ${current} de ${total}`,
     },
     backToProjects: "Volver a proyectos",
-    confidentialityNote:
-      "Código privado por confidencialidad con los clientes; capturas, arquitectura y demostración disponibles a solicitud.",
-    requestDetails: "Solicitar por correo",
     neighborNavigation: {
       label: "Más proyectos",
       previous: "Proyecto anterior",
@@ -116,6 +94,7 @@ export const spanishDictionary = {
     sectionTitle: "Experiencia",
     present: "actualidad",
     relatedProjects: "Casos de estudio de este trabajo",
+    moreDetails: "Más detalles",
   },
   education: {
     sectionTitle: "Formación",
@@ -127,13 +106,12 @@ export const spanishDictionary = {
   about: {
     sectionTitle: "Sobre mí",
     facts: {
-      location: "Ubicación",
-      focus: "Enfoque",
       languages: "Idiomas",
     },
   },
   contact: {
     sectionTitle: "Contacto",
+    lead: "Cuéntame qué quieres desarrollar o automatizar.",
     email: "Correo",
     whatsApp: "WhatsApp",
     sendEmail: "Enviar correo",
@@ -146,7 +124,6 @@ export const spanishDictionary = {
     backHome: "Volver al inicio",
   },
   recruiter: {
-    email: "Correo",
     metrics: {
       before: "Antes",
       after: "Después",
