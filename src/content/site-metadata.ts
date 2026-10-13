@@ -24,10 +24,10 @@ export const projectsPageTitle: LocalizedText = {
 };
 
 export const projectsPageDescription: LocalizedText = {
-  es: "Casos de estudio de Kevin Garabita: aplicaciones web con FastAPI, React y Supabase, y agentes de WhatsApp con n8n y la API de OpenAI, freelance y en Kobler.",
-  en: "Case studies by Kevin Garabita: web apps built with FastAPI, React and Supabase, and WhatsApp agents built with n8n and the OpenAI API, freelance and at Kobler.",
-  pt: "Estudos de caso de Kevin Garabita: aplicações web com FastAPI, React e Supabase, e agentes de WhatsApp com n8n e a API da OpenAI, freelance e na Kobler.",
-  fr: "Études de cas de Kevin Garabita : applications web avec FastAPI, React et Supabase, et agents WhatsApp avec n8n et l'API d'OpenAI, en freelance et chez Kobler.",
+  es: "Casos de estudio de Kevin Garabita: apps web con FastAPI, React y Supabase, y agentes de WhatsApp con n8n y OpenAI, freelance y en colaboración con Kobler.",
+  en: "Case studies by Kevin Garabita: web apps with FastAPI, React and Supabase, and WhatsApp agents with n8n and OpenAI, freelance and in collaboration with Kobler.",
+  pt: "Estudos de caso de Kevin Garabita: apps web com FastAPI, React e Supabase, e agentes de WhatsApp com n8n e OpenAI, freelance e em colaboração com a Kobler.",
+  fr: "Études de cas de Kevin Garabita : applications web (FastAPI, React, Supabase) et agents WhatsApp (n8n, OpenAI), en freelance et en collaboration avec Kobler.",
 };
 
 /**
@@ -35,4 +35,4 @@ export const projectsPageDescription: LocalizedText = {
  * Update it by hand when that content changes; the sitemap and structured data read it.
  * Projects carry their own `lastUpdated`.
  */
-export const siteLastUpdated: CalendarDate = "2026-10-10";
+export const siteLastUpdated: CalendarDate = "2026-10-12";

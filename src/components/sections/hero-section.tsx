@@ -1,31 +1,25 @@
 import Image from "next/image";
 
-import { RotatingTitle } from "@/components/motion/rotating-title";
 import { AvailabilityNote } from "@/components/recruiter/availability-note";
 import { ButtonLink } from "@/components/ui/button-link";
-import { SocialIconLink } from "@/components/ui/social-icon-link";
 import { Container } from "@/components/ui/container";
 import {
-  ArrowDownIcon,
   ExternalLinkIcon,
-  MailIcon,
-  WhatsAppLogoIcon,
   MapPinIcon,
+  WhatsAppLogoIcon,
 } from "@/components/ui/icons";
 import { profile } from "@/content/profile";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { joinClassNames } from "@/lib/class-names";
-import { getHomeSectionHref, homeSectionIds } from "@/lib/home-sections";
 import { getResumeLink } from "@/lib/resume";
-import { socialNetworkNames } from "@/lib/social-networks";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 import kevinGarabitaCutout from "../../../public/images/kevin-garabita-cutout.png";
 
 /**
- * Decorative chips floating around the photo: the three tools named in the hero
- * subtitle. Hidden from screen readers, which already get them in the subtitle.
+ * Decorative chips floating around the photo: three of the tools Kevin works with.
+ * Hidden from screen readers. Kevin asked to keep them with the photo, as they were.
  */
 const floatingTechnologies = [
   {
@@ -49,19 +43,25 @@ const floatingTechnologies = [
 ];
 
 /**
- * First view of the home page.
+ * First view of the home page, written for clients.
  *
- * Text: location, then the h1 (the name and, on the next line, the role; it reads
- * "Kevin Garabita — <role>"), a large word that rotates through the parts of the role
- * (visual only), the subtitle and four calls to action of the same size: the projects
- * and the CV, then WhatsApp and email. Kevin's availability goes above them once
- * content/availability.ts has it. The profiles sit below.
+ * Text (left from md): the h1, which reads "Kevin Garabita — <role>" (the dash is only
+ * read; on screen the role takes its own line), and the place; then the statement,
+ * profile.heroSubtitle, the value line for clients, in the largest type of the home
+ * page (text-statement, sized for this column); then one primary action, WhatsApp, and
+ * the CV as the secondary one. The CV opens in a new tab, in the page's language or,
+ * when there is none, in Spanish. Kevin's availability goes above the actions once
+ * content/availability.ts has it.
  *
- * Photo: Kevin's cut-out portrait in front of an orange-to-red circle, with an orbit
- * ring and three floating chips. The photo is the LCP element: it is preloaded and
- * never fades in (only the decoration does). The text comes first in the HTML; on
- * phones the photo is placed above it visually (not on short screens, where the text
- * would fall below the fold).
+ * Photo (right from md; first on phones, but not on short screens, where the text
+ * would fall below the fold): Kevin asked to keep his photo as it was before the
+ * redesign. His cut-out portrait in front of the orange-to-red circle, the curls over
+ * the circle's edge, with the dashed orbit ring and its dot and three floating chips.
+ * The photo is the LCP element: it is preloaded with high priority and never fades in
+ * (only the decoration does).
+ *
+ * The text moves in on load without fading (.entrance-slide), so it paints on the
+ * first frame; the actions rise and fade in (.entrance).
  */
 export async function HeroSection() {
   const locale = await getCurrentLocale();
@@ -70,121 +70,60 @@ export async function HeroSection() {
   const { location } = profile;
 
   return (
-    <section
-      aria-labelledby="hero-title"
-      className="relative isolate overflow-x-clip"
-    >
-      <div
-        aria-hidden="true"
-        className="grid-texture absolute inset-x-0 -top-(--header-height) bottom-0 -z-10"
-      />
-
-      <Container className="grid items-center gap-y-8 pt-6 pb-16 md:grid-cols-12 md:gap-x-8 md:pt-10 lg:min-h-[min(calc(100svh-var(--header-height)),52rem)] lg:gap-x-12 lg:py-12 short:pt-4">
+    <section aria-labelledby="hero-title" className="overflow-x-clip">
+      <Container className="grid items-center gap-y-8 pt-6 pb-12 sm:pb-16 md:grid-cols-12 md:gap-x-8 md:pt-10 lg:gap-x-12 lg:pt-12 lg:pb-20 short:pt-4">
         <div className="md:col-span-7">
-          <p className="entrance inline-flex items-center gap-2 rounded-tag border border-hairline bg-raised px-3 py-1.5 text-small text-muted [--entrance-order:0]">
-            <MapPinIcon className="size-4 text-accent" />
-            <span>
-              {location.city}, {location.region}
-            </span>
-          </p>
-
-          {/* Static text, so it moves in without fading: it paints on the first frame. The
-              dash is only read (textContent and accessible name); on screen the role
-              takes its own line. */}
           <h1
             id="hero-title"
-            className="entrance-slide mt-6 font-display [--entrance-order:1] lg:mt-8"
+            className="entrance-slide font-display [--entrance-order:0]"
           >
             <span className="block text-title font-bold text-heading">
               {profile.displayName}
             </span>
             <span className="sr-only">{" — "}</span>
-            <span className="mt-2 block text-subtitle font-bold text-body">
+            <span className="mt-1 block text-base leading-snug font-bold text-muted">
               {localize(profile.role, locale)}
             </span>
           </h1>
+          <p className="entrance-slide mt-2 flex items-center gap-1.5 text-small text-muted [--entrance-order:1]">
+            <MapPinIcon className="size-4 text-accent" />
+            {location.city}, {location.region}
+          </p>
 
-          <RotatingTitle
-            titles={profile.heroTitles.map((title) => localize(title, locale))}
-            className="entrance mt-3 text-headline font-extrabold [--entrance-order:2]"
-            titleClassName="text-gradient-brand pb-[0.08em]"
-          />
-
-          <p className="entrance mt-6 max-w-xl text-subtitle text-body [--entrance-order:3]">
+          <p className="entrance-slide mt-6 font-display text-statement font-bold text-heading [--entrance-order:2] lg:mt-8">
             {localize(profile.heroSubtitle, locale)}
           </p>
 
-          {/* Two pairs of buttons of the same size: see the work (projects, CV), then get in
-              touch (WhatsApp, email). Below lg, where the text column is narrow, each button
-              stretches to fill its line, so the rows wrap cleanly down to 320 px. The CV downloads in the page's language,
-              or in Spanish when there is none (lib/resume.ts); the label says so. */}
-          <div className="entrance mt-8 flex flex-col gap-3 [--entrance-order:4]">
+          <div className="entrance mt-8 flex flex-col gap-3 [--entrance-order:3] sm:flex-row sm:flex-wrap sm:items-center">
             {/* Only when content/availability.ts has a status; renders nothing otherwise. */}
             <AvailabilityNote
               locale={locale}
               dictionary={dictionary}
-              className="mb-1"
+              className="mb-1 sm:basis-full"
             />
-            <div className="flex flex-wrap gap-3">
-              <ButtonLink
-                href={getHomeSectionHref(locale, homeSectionIds.projects)}
-                trailingIcon={<ArrowDownIcon />}
-                className="max-lg:grow"
-              >
-                {dictionary.hero.viewProjects}
-              </ButtonLink>
-              <ButtonLink
-                href={resume.href}
-                hrefLang={resume.language}
-                type="application/pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="secondary"
-                trailingIcon={
-                  <ExternalLinkIcon className="size-4 text-accent" />
-                }
-                className="max-lg:grow max-[22.5rem]:px-4"
-              >
-                {dictionary.resume.view}
-                <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-              </ButtonLink>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <ButtonLink
-                href={buildWhatsAppUrl(locale)}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="whatsapp"
-                leadingIcon={<WhatsAppLogoIcon />}
-                className="max-lg:grow max-[22.5rem]:px-4"
-              >
-                {dictionary.hero.writeOnWhatsApp}
-                <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-              </ButtonLink>
-              <ButtonLink
-                href={`mailto:${profile.email}`}
-                variant="secondary"
-                leadingIcon={<MailIcon className="text-accent" />}
-                className="max-lg:grow"
-              >
-                {dictionary.recruiter.email}
-              </ButtonLink>
-            </div>
+            <ButtonLink
+              href={buildWhatsAppUrl(locale)}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="whatsapp"
+              leadingIcon={<WhatsAppLogoIcon />}
+            >
+              {dictionary.hero.writeOnWhatsApp}
+              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+            </ButtonLink>
+            <ButtonLink
+              href={resume.href}
+              hrefLang={resume.language}
+              type="application/pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="secondary"
+              trailingIcon={<ExternalLinkIcon className="size-4 text-accent" />}
+            >
+              {dictionary.resume.view}
+              <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+            </ButtonLink>
           </div>
-
-          <ul className="entrance mt-6 flex gap-3 [--entrance-order:5]">
-            {profile.socialProfiles.map((socialProfile) => (
-              <li key={socialProfile.network}>
-                <SocialIconLink
-                  network={socialProfile.network}
-                  href={socialProfile.url}
-                  label={socialNetworkNames[socialProfile.network]}
-                  opensInNewTabText={dictionary.opensInNewTab}
-                  rel="me"
-                />
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div className="order-first mx-auto w-full max-w-52 min-[22.5rem]:max-w-60 sm:max-w-80 md:order-0 md:col-span-5 md:max-w-none short:order-0 short:max-w-48">

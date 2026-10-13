@@ -12,9 +12,10 @@ interface FlowDiagramProps {
 }
 
 /**
- * An automation flow as numbered steps, each with the tool involved. A real ordered
- * list, so screen readers get the order and the count. Vertical up to laptops and
- * one horizontal row from xl up; the connecting line is drawn in CSS (.flow-step).
+ * An automation flow as numbered steps, each with the tool involved. The flow is a real
+ * sequence, so it is an ordered list (screen readers get the order and the count) and
+ * the steps carry their numbers. Vertical up to laptops and one horizontal row from xl
+ * up; the connecting line is drawn in CSS (.flow-step).
  */
 export function FlowDiagram({ steps, locale, toolLabel }: FlowDiagramProps) {
   return (
@@ -35,7 +36,7 @@ export function FlowDiagram({ steps, locale, toolLabel }: FlowDiagramProps) {
             {step.tool ? (
               <p className="mt-2 text-small text-muted">
                 <span className="sr-only">{toolLabel}: </span>
-                <span className="font-mono text-accent">{step.tool}</span>
+                {step.tool}
               </p>
             ) : null}
           </div>
@@ -52,8 +53,9 @@ interface FlowPreviewProps {
 
 /**
  * Compact version for project cards without screenshots: the tools of the flow in
- * order, joined by arrows (at most four). Decorative; the case study has the full
- * diagram and the card text lists the technologies.
+ * order, joined by arrows (at most four). It stands in for a screenshot that does not
+ * exist, so nothing made up is shown. Decorative; the case study has the full diagram
+ * and the card text lists the technologies.
  */
 export function FlowPreview({ steps, className }: FlowPreviewProps) {
   const tools = [
@@ -79,7 +81,7 @@ export function FlowPreview({ steps, className }: FlowPreviewProps) {
           className="inline-flex items-center gap-2 whitespace-nowrap"
         >
           {index > 0 ? <ArrowRightIcon className="size-4 text-accent" /> : null}
-          <span className="rounded-tag border border-hairline bg-page px-3 py-1.5 font-mono text-small text-heading">
+          <span className="rounded-tag border border-hairline bg-page px-3 py-1.5 text-small font-bold text-heading">
             {tool}
           </span>
         </span>

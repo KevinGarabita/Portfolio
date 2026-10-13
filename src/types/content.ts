@@ -27,12 +27,6 @@ export interface Profile {
   /** Legal full name, used in structured data. */
   fullName: string;
   role: LocalizedText;
-  /**
-   * Short words that rotate in large type under the hero heading, in order. They are the
-   * parts of `role` (Backend, AI, Automation), so the hero keeps a single positioning.
-   * Decorative: the heading already says the role. The longest word reserves the space.
-   */
-  heroTitles: LocalizedText[];
   /** Short line under the hero title. */
   heroSubtitle: LocalizedText;
   /** Paragraphs for the "About" section. */
@@ -104,10 +98,17 @@ export interface SkillGroup {
 }
 
 /**
- * "delivered" is finished work handed over to a client (e.g. agency work), with no claim
- * about whether it still runs. Not used yet: no project has a confirmed status of this kind.
+ * "completed-unreleased": the work is finished but the delivery never concluded, so it
+ * never ran in production. Nothing on the site may suggest it is live.
  */
-export type ProjectStatus = "in-production" | "in-development" | "delivered";
+export type ProjectStatus =
+  "in-production" | "in-development" | "completed-unreleased";
+
+/**
+ * Who did the work, shown on cards and case studies: freelance work, team work at Kobler
+ * ("Colaboración con Kobler") or work Kevin did alone for Kobler. See getProjectCredit.
+ */
+export type ProjectCredit = "freelance" | "kobler-team" | "kobler-individual";
 
 /** Groups projects on the site: freelance work or work done at Kobler y Asociados. */
 export type ProjectCategory = "freelance" | "kobler";
@@ -164,13 +165,6 @@ export type ProjectArchitecture =
   | { kind: "image"; image: ArchitectureImage }
   | { kind: "diagram"; parts: FlowStep[] };
 
-/**
- * How the code was written: "ai-assisted" (generated with AI under Kevin's direction,
- * with the architecture, review, tests and security in his hands) or "hand-coded".
- * Shown as a badge; unset for automations built in n8n.
- */
-export type BuildMethod = "ai-assisted" | "hand-coded";
-
 /** What the project is, for the filters on the projects page. */
 export type ProjectKind = "web-app" | "ai-automation";
 
@@ -189,9 +183,13 @@ export interface Project {
   period?: DateRange;
   /** Featured projects are the ones shown on the home page; the rest only on /projects. */
   isFeatured: boolean;
-  buildMethod?: BuildMethod;
   teamSetup: TeamSetup;
-  /** One or two sentences for the project card. */
+  /**
+   * The project card's one line of value: what the work does for the client, in plain
+   * words and at most 90 characters.
+   */
+  tagline: LocalizedText;
+  /** One or two sentences: the case study's lead and the structured data description. */
   summary: LocalizedText;
   problem: LocalizedText;
   solution: LocalizedText;

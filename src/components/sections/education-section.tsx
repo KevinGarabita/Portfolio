@@ -1,11 +1,14 @@
 import { PageSection } from "@/components/ui/page-section";
 import { education } from "@/content/education";
-import { localize } from "@/i18n/localize";
+import { labelColon, localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { formatDateRange, formatYearMonth } from "@/lib/format-date";
 import { homeSectionIds } from "@/lib/home-sections";
 
-/** Studies as panels: degree, school and place, then dates, semester and expected graduation. */
+/**
+ * Studies, compact and without a panel: the degree, the school and its place, then the
+ * period, the semester and the expected graduation on one wrapping line.
+ */
 export async function EducationSection() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
@@ -14,24 +17,18 @@ export async function EducationSection() {
     <PageSection
       id={homeSectionIds.education}
       title={dictionary.education.sectionTitle}
-      spacing="compact"
     >
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-10">
         {education.map((studies) => (
-          <article
-            key={studies.id}
-            className="grid gap-4 rounded-section border border-hairline bg-raised p-6 sm:p-8 lg:grid-cols-12 lg:gap-10"
-          >
-            <div className="lg:col-span-8">
-              <h3 className="font-display text-subtitle font-bold">
-                {localize(studies.degree, locale)}
-              </h3>
-              <p className="mt-2">
-                {studies.institution} · {localize(studies.location, locale)}
-              </p>
-            </div>
-            <ul className="flex flex-col gap-1 text-small text-muted lg:col-span-4 lg:items-end lg:text-right">
-              <li className="font-mono font-bold text-accent">
+          <article key={studies.id}>
+            <h3 className="font-display text-subtitle font-bold">
+              {localize(studies.degree, locale)}
+            </h3>
+            <p className="mt-1">
+              {studies.institution}, {localize(studies.location, locale)}
+            </p>
+            <ul className="mt-1 flex flex-wrap gap-x-6 gap-y-1 text-small text-muted">
+              <li>
                 {formatDateRange(
                   studies.period,
                   locale,
@@ -41,7 +38,8 @@ export async function EducationSection() {
               {studies.note ? <li>{localize(studies.note, locale)}</li> : null}
               {studies.expectedGraduation ? (
                 <li>
-                  {dictionary.education.expectedGraduation}:{" "}
+                  {dictionary.education.expectedGraduation}
+                  {labelColon(locale)}{" "}
                   {formatYearMonth(studies.expectedGraduation, locale)}
                 </li>
               ) : null}

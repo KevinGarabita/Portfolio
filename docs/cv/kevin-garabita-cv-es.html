@@ -1,0 +1,261 @@
+<!doctype html>
+<!--
+  Source of public/cv/kevin-garabita-cv-es.pdf. Build it with `npm run cv`
+  (scripts/build-cv.mjs). ATS format: one column, standard headings, no tables,
+  icons or images, real text, one date format (MM/AAAA), one Letter page. This file
+  is the source of truth for the CV text; the site's Experience section condenses
+  the same Kobler bullets. Only facts already on the site: no invented metrics.
+-->
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kevin Emanuel Garabita Córdova – CV</title>
+    <style>
+      @page {
+        size: Letter;
+        margin: 0.4in 0.5in;
+      }
+      html {
+        color: #000;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 9.4pt;
+        line-height: 1.24;
+      }
+      body {
+        margin: 0;
+      }
+      header {
+        text-align: center;
+      }
+      h1 {
+        margin: 0;
+        font-size: 16pt;
+        line-height: 1.15;
+      }
+      h2 {
+        margin: 6pt 0 2pt;
+        padding-bottom: 1pt;
+        border-bottom: 0.75pt solid #000;
+        font-size: 10.2pt;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+      h3 {
+        margin: 3.5pt 0 0;
+        font-size: 9.6pt;
+      }
+      p {
+        margin: 0;
+      }
+      .headline {
+        margin: 1pt 0 2pt;
+        font-size: 10.8pt;
+        font-weight: bold;
+      }
+      ul {
+        margin: 1pt 0 0;
+        padding-left: 11pt;
+        list-style-type: "• ";
+      }
+      li {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Kevin Emanuel Garabita Córdova</h1>
+      <p class="headline">
+        Desarrollador de Software Junior | Backend, IA y Automatización
+      </p>
+      <p>
+        Mérida, Yucatán, México |
+        <a href="tel:+529383894199">+52 938 389 4199</a> |
+        <a href="mailto:kevingarabita0@outlook.com"
+          >kevingarabita0@outlook.com</a
+        >
+        | <a href="https://www.garasoftware.com.mx">www.garasoftware.com.mx</a>
+      </p>
+      <p>
+        <a href="https://www.linkedin.com/in/kevingarabita/"
+          >linkedin.com/in/kevingarabita</a
+        >
+        |
+        <a href="https://github.com/KevinGarabita">github.com/KevinGarabita</a>
+        | Trabajo remoto, híbrido o presencial
+      </p>
+      <p>
+        Disponible de lunes a domingo hasta las 2:00 p.m. (clases por la tarde),
+        fines de semana incluidos
+      </p>
+    </header>
+
+    <main>
+      <section>
+        <h2>Perfil</h2>
+        <p>
+          Estudiante de 7.º semestre de Ingeniería en Desarrollo de Tecnologías
+          y Software. Desarrollo software de punta a punta con Python (FastAPI),
+          React, TypeScript y PostgreSQL, con pruebas automatizadas, Git y
+          Claude Code. En Kobler y Asociados desarrollé en equipo cinco agentes
+          de IA con n8n y OpenAI. Busco un puesto de practicante o desarrollador
+          junior.
+        </p>
+      </section>
+
+      <section>
+        <h2>Experiencia</h2>
+        <h3>Programador de IA y Automatización — Kobler y Asociados</h3>
+        <p>Mérida, Yucatán | 12/2025 – 08/2026</p>
+        <ul>
+          <li>
+            Desarrollé en equipo cinco agentes conversacionales de WhatsApp, uno
+            por cliente, con n8n y la API de OpenAI e integrados con
+            GoHighLevel: atienden cada conversación, califican al prospecto y lo
+            dejan registrado en el CRM.
+          </li>
+          <li>
+            Motosureste Suzuki: el agente cotiza con el catálogo vigente de la
+            tienda y filtra a quien no tiene intención de compra, para que los
+            asesores se enfoquen en cerrar ventas.
+          </li>
+          <li>
+            Eliminé la captura manual del inventario de cinco sucursales: un
+            modelo de IA extrae las existencias del PDF que envía Suzuki y el
+            flujo actualiza WooCommerce por su API REST.
+          </li>
+          <li>
+            Neorgana: el agente lleva a cada paciente con el consultor adecuado
+            por idioma, ubicación y padecimiento, le comparte su calendario para
+            agendar en Zoom y, al terminar la videollamada, dispara el
+            seguimiento y la cotización.
+          </li>
+          <li>
+            Lamau Beach: el agente responde con la disponibilidad de cada
+            estancia de Airbnb y el precio por noche de la temporada.
+          </li>
+          <li>
+            Mantuve los flujos funcionando en producción con monitoreo y
+            corrección de fallas, y participé en las reuniones con clientes para
+            definir reglas de negocio y anticipar casos borde.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Proyectos</h2>
+        <h3>
+          Diagnóstico Appolo: sistema en vivo para un workshop — Kobler y
+          Asociados
+        </h3>
+        <p>
+          En producción | 10/2026 | React, TypeScript, Supabase, n8n, WhatsApp,
+          Vercel, Vitest, Claude Code
+        </p>
+        <ul>
+          <li>
+            Lo construí solo, de punta a punta, con Claude Code: el bot de
+            WhatsApp en n8n, la base de datos en Supabase (RPC y Realtime), la
+            pantalla proyectada en React y el panel del presentador con
+            funciones serverless en Vercel.
+          </li>
+          <li>
+            La sala responde por WhatsApp un diagnóstico de 20 preguntas y ve
+            sus resultados en vivo, solo con datos agregados; la pantalla se
+            reconecta sola si cae la red y un reintento nunca se salta
+            preguntas.
+          </li>
+        </ul>
+
+        <h3>CRM para control de plagas — Controltec Fumigaciones</h3>
+        <p>
+          Freelance | En desarrollo, entrega prevista: 12/2026 | 07/2026 –
+          actualidad | FastAPI, React, React Native, TypeScript, Supabase
+        </p>
+        <ul>
+          <li>
+            Desarrollo por mi cuenta una API en FastAPI que atiende una web de
+            tres vistas (oficina, campo y portal del cliente) y una app en React
+            Native con la que el técnico termina reportes sin señal y los envía
+            sin duplicarlos.
+          </li>
+          <li>
+            Cada reporte firmado se archiva en PDF como evidencia para
+            auditorías y se avisa al cliente por WhatsApp; el backend tiene más
+            de 1,000 pruebas automatizadas y el cliente contrató también el
+            mantenimiento.
+          </li>
+        </ul>
+
+        <h3>Gestor de reportes de campo — UxmalTechnologies</h3>
+        <p>
+          Freelance | Completado, no publicado | 06/2026 – 08/2026 | FastAPI,
+          React, TypeScript, Supabase, Docker, GitHub Actions
+        </p>
+        <ul>
+          <li>
+            Desarrollé por mi cuenta la aplicación completa, pensada para
+            sustituir un flujo de tres pasos por WhatsApp y captura manual:
+            formulario móvil con ocho fotos de evidencia, revisión y aprobación
+            del supervisor, PDF y exportación a Excel.
+          </li>
+          <li>
+            Acceso por rol con Supabase Auth, operaciones críticas en funciones
+            transaccionales de Postgres y pruebas de regresión en pytest que
+            corren en GitHub Actions junto con pip-audit, npm audit y gitleaks.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Educación</h2>
+        <h3>
+          Ingeniería en Desarrollo de Tecnologías y Software — Universidad
+          Modelo
+        </h3>
+        <p>
+          Cholul, Yucatán | 08/2023 – actualidad | 7.º semestre | Titulación
+          prevista: 08/2027
+        </p>
+      </section>
+
+      <section>
+        <h2>Habilidades</h2>
+        <ul>
+          <li>
+            Lenguajes de programación: Python, TypeScript, JavaScript, SQL
+          </li>
+          <li>
+            Backend y datos: FastAPI, APIs REST, webhooks, autenticación y roles
+            (Supabase Auth), PostgreSQL, Supabase, MySQL
+          </li>
+          <li>
+            Frontend y móvil: React, Next.js, Material UI, Tailwind CSS, React
+            Native (Expo)
+          </li>
+          <li>
+            IA y automatización: n8n, API de OpenAI, agentes con tool calling,
+            extracción de datos de documentos con IA, Ollama
+          </li>
+          <li>
+            Herramientas: Git, GitHub, Claude Code, GitHub Actions, Docker,
+            Render, Vercel, pytest, Vitest, Testing Library
+          </li>
+          <li>
+            Integraciones: WhatsApp Cloud API (Meta), GoHighLevel (CRM),
+            WooCommerce, Zoom, Google Maps
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Idiomas</h2>
+        <p>Español: nativo | Inglés: intermedio (B1, autoevaluado)</p>
+      </section>
+    </main>
+  </body>
+</html>

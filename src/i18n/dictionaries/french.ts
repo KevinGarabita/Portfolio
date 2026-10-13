@@ -6,6 +6,7 @@ export const frenchDictionary: Dictionary = {
   opensInNewTab: "s'ouvre dans un nouvel onglet",
   siteNavigation: {
     label: "Navigation principale",
+    menu: "Menu",
     home: "Accueil",
     projects: "Projets",
     experience: "Expérience",
@@ -17,7 +18,6 @@ export const frenchDictionary: Dictionary = {
   },
   hero: {
     photoAlt: "Kevin Garabita, développeur backend, IA et automatisation",
-    viewProjects: "Voir les projets",
     writeOnWhatsApp: "M'écrire sur WhatsApp",
   },
   resume: {
@@ -30,24 +30,12 @@ export const frenchDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projets",
       description:
-        "Applications web en freelance, et agents d'IA avec des automatisations n8n réalisés chez Kobler y Asociados.",
-    },
-    buildMethod: {
-      "ai-assisted": {
-        label: "Développement assisté par IA",
-        description:
-          "Je prends en charge l'architecture, la revue de code, les tests et la sécurité ; le code est généré par IA sous ma direction.",
-      },
-      "hand-coded": {
-        label: "Codé à la main",
-        description: "Code écrit à la main.",
-      },
+        "Applications web, agents d'IA et automatisations : projets en freelance et en collaboration avec Kobler y Asociados.",
     },
     filters: {
       label: "Filtrer les projets",
       kind: "Type",
       technology: "Technologie",
-      buildMethod: "Développement",
       all: "Tous",
       kinds: {
         "web-app": "Applications web",
@@ -58,26 +46,19 @@ export const frenchDictionary: Dictionary = {
       empty: "Aucun projet ne correspond à ces filtres.",
       clear: "Effacer les filtres",
     },
-    category: {
-      freelance: "Projet freelance",
-      kobler: "Projet chez Kobler",
-    },
-    viewCaseStudy: "Voir l'étude de cas",
-    moreTechnologies: "de plus",
     status: {
       "in-production": "En production",
       "in-development": "En développement",
-      delivered: "Livré",
+      "completed-unreleased": "Terminé · non publié",
     },
-    teamSetup: {
-      individual: "Projet individuel",
-      team: "Travail d'équipe",
+    credit: {
+      freelance: "Freelance",
+      "kobler-team": "Collaboration avec Kobler",
+      "kobler-individual": "Réalisé pour Kobler y Asociados",
     },
     facts: {
       client: "Client",
-      context: "Contexte",
       period: "Période",
-      status: "Statut",
       technologies: "Technologies",
     },
     sections: {
@@ -106,9 +87,6 @@ export const frenchDictionary: Dictionary = {
         `Image ${current} sur ${total}`,
     },
     backToProjects: "Retour aux projets",
-    confidentialityNote:
-      "Code privé par confidentialité envers les clients ; captures d'écran, architecture et démonstration disponibles sur demande.",
-    requestDetails: "Demander par e-mail",
     neighborNavigation: {
       label: "Autres projets",
       previous: "Projet précédent",
@@ -119,6 +97,7 @@ export const frenchDictionary: Dictionary = {
     sectionTitle: "Expérience",
     present: "aujourd'hui",
     relatedProjects: "Études de cas issues de ce poste",
+    moreDetails: "Plus de détails",
   },
   education: {
     sectionTitle: "Formation",
@@ -130,13 +109,12 @@ export const frenchDictionary: Dictionary = {
   about: {
     sectionTitle: "À propos",
     facts: {
-      location: "Localisation",
-      focus: "Spécialité",
       languages: "Langues",
     },
   },
   contact: {
     sectionTitle: "Contact",
+    lead: "Dites-moi ce que vous souhaitez développer ou automatiser.",
     email: "E-mail",
     whatsApp: "WhatsApp",
     sendEmail: "Envoyer un e-mail",
@@ -150,7 +128,6 @@ export const frenchDictionary: Dictionary = {
     backHome: "Retour à l'accueil",
   },
   recruiter: {
-    email: "E-mail",
     metrics: {
       before: "Avant",
       after: "Après",

@@ -16,18 +16,25 @@ interface ProjectVisualProps {
   /**
    * Preload the screenshot with high priority instead of loading it lazily. Only for the
    * card whose image is the page's largest paint (LCP): the first card of the projects
-   * page on phones. Never on the home page, where the hero photo is the LCP.
+   * page and, on the home page, the lead project (the LCP on phones).
    */
   preload?: boolean;
 }
 
-/** Aspect ratio of the card's media frame (aspect-16/10 in ProjectCard). */
-const mediaFrameRatio = 16 / 10;
+/**
+ * Aspect ratio of the card's media frame (aspect-video in ProjectCard, every variant).
+ * 16:9 is the widest screenshot the site has, so a desktop screenshot is never cut at
+ * the sides, where text starts: a 16:9 one fits exactly and a 16:10 one keeps its full
+ * width and loses only a strip at the bottom (object-top). With a 16:10 frame, the 16:9
+ * captures of the Appolo workshop lost 5% on each side and the first letters of their
+ * titles.
+ */
+const mediaFrameRatio = 16 / 9;
 
 /**
- * A screenshot wider than the frame (16:9 in 16:10) fills it with object-cover, so it is
- * drawn wider than the card: every width in `sizes` grows by that factor, so the
- * browser still picks a sharp file.
+ * A screenshot wider than the frame would fill it with object-cover and be drawn wider
+ * than the card: every width in `sizes` would grow by that factor, so the browser
+ * still picked a sharp file. With today's screenshots (16:9 and 16:10) the factor is 1.
  */
 function scaleSizes(sizes: string, factor: number): string {
   if (factor <= 1.01) return sizes;
@@ -44,13 +51,13 @@ function scaleSizes(sizes: string, factor: number): string {
 /**
  * The media area of a project card:
  * - the first screenshot, when the project has one (desktop screenshots fill the frame
- *   from the top; phone screenshots are shown whole);
+ *   from the top, at full width; phone screenshots are shown whole);
  * - otherwise the tools of its automation flow, when it has one;
  * - otherwise an icon (an automation for Kobler work, a web application for the rest).
  * Never a made-up screenshot. The icon shrinks on narrow cards and, when a flow
  * follows, is dropped below 20rem so the flow always fits (container query on the frame).
- * It fills the card's media frame (absolutely positioned),
- * so a tall phone screenshot never stretches the card.
+ * It fills the card's media frame (absolutely positioned), so a tall phone screenshot
+ * never stretches the card. The frame and the zoom on hover come from ProjectCard.
  */
 export function ProjectVisual({
   project,
@@ -94,10 +101,9 @@ export function ProjectVisual({
       aria-hidden="true"
       className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[radial-gradient(60%_70%_at_50%_45%,var(--tint-accent),transparent)]"
     >
-      <span className="grid-texture grid-texture-centered absolute inset-0" />
       <span
         className={joinClassNames(
-          "gradient-ring relative flex size-14 shrink-0 items-center justify-center rounded-section border shadow-(--glow-accent-soft) [--ring-fill:var(--color-page)] [--ring-opacity:1] @min-[22rem]:size-20",
+          "gradient-ring relative flex size-14 shrink-0 items-center justify-center rounded-section border shadow-(--glow-accent-soft) [--ring-fill:var(--color-page)] @min-[22rem]:size-20",
           project.flowDiagram?.length ? "@max-[20rem]:hidden" : undefined,
         )}
       >
@@ -106,13 +112,8 @@ export function ProjectVisual({
       {project.flowDiagram?.length ? (
         <FlowPreview steps={project.flowDiagram} className="relative" />
       ) : (
-        <span className="relative px-6 text-center">
-          <span className="block font-display text-subtitle font-bold text-heading">
-            {project.client}
-          </span>
-          <span className="mt-1 block font-mono text-small text-muted">
-            {project.stack.slice(0, 3).join(" · ")}
-          </span>
+        <span className="relative px-6 text-center font-display text-subtitle font-bold text-heading">
+          {project.client}
         </span>
       )}
     </div>

@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipToContentLink } from "@/components/layout/skip-to-content-link";
-import { PageMotion } from "@/components/motion/page-motion";
 import { profile } from "@/content/profile";
 import { supportedLocales } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
@@ -60,7 +59,6 @@ export default async function LocaleRootLayout({
     >
       <body>
         <div aria-hidden="true" className="site-backdrop" />
-        <PageMotion />
         <SkipToContentLink />
         <SiteHeader />
         <main id="main-content" tabIndex={-1} className="focus:outline-none">
