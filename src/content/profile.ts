@@ -11,10 +11,10 @@ export const profile: Profile = {
     fr: "Développeur Backend, IA et Automatisation",
   },
   heroSubtitle: {
-    es: "Construyo apps web, backends, automatizaciones y agentes de IA que le quitan trabajo manual a tu negocio.",
-    en: "I build web apps, backends, automations and AI agents that take the manual work out of your business.",
-    pt: "Desenvolvo aplicações web, backends, automações e agentes de IA que tiram trabalho manual do seu negócio.",
-    fr: "Applications web, backends, automatisations et agents d'IA : je libère votre entreprise des tâches manuelles.",
+    es: "Construyo sistemas y asistentes de IA que le ahorran horas de trabajo a tu negocio",
+    en: "I build systems and AI assistants that save your business hours of work",
+    pt: "Construo sistemas e assistentes de IA que economizam horas de trabalho para o seu negócio",
+    fr: "Je crée des systèmes et des assistants d'IA qui font gagner des heures de travail à votre entreprise",
   },
   about: [
     {
