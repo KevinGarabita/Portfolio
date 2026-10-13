@@ -58,10 +58,10 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 
 - **Static generation everywhere**: `generateStaticParams` lists every language and project, and `dynamicParams = false` rejects anything else. Cache Components stays off: the site is fully static, and with it enabled a missing project answered 200 on its first request.
 - **Real 404s**: `app/global-not-found.tsx` answers any unknown URL with a server-rendered 404 page in all four languages.
-- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths that cover what the layouts draw (never removed, because Google keeps the image URLs it has crawled), `sizes` that match the layout, and only the image that is the Largest Contentful Paint preloaded with `fetchPriority="high"`: the lead project's screenshot on a phone home page (on desktops the LCP is the hero's value line, which is text) and the first card of the projects page. The portrait loads right away with `fetchPriority="low"`, so it never competes with that image.
+- **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths that cover what the layouts draw (never removed, because Google keeps the image URLs it has crawled), `sizes` that match the layout, and only the Largest Contentful Paint image preloaded with `fetchPriority="high"`: the hero photo on the home page and the first card on the projects page. Every other image loads lazily.
 - **Lean HTML**: the skill logos are SVG files from a statically generated route instead of inline markup, which cut the home page HTML by more than half.
 - **Self-hosted font** through `next/font`: the font files are downloaded at build time and served from the same domain.
-- **Motion only animates `transform`, `opacity` and colours**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. The hero text arrives in sequence without fading, so it paints on the first frame. Scroll reveals (`data-reveal`, where a page uses them) are progressive enhancement: the HTML arrives fully visible, and content is hidden only after the script knows what is already on screen.
+- **Motion only animates `transform`, `opacity` and colours**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. The hero text arrives in sequence without fading, so it paints on the first frame, and the hero photo, the LCP, never starts invisible: only its decoration fades in. There are no scroll reveals, so every section is in place as soon as the HTML arrives.
 
 ### Accessibility
 
@@ -149,7 +149,6 @@ src/
     sections/            home page sections
     projects/            cards, filters, gallery, flow diagram and case-study parts
     recruiter/           availability note
-    motion/              scroll reveal for elements marked data-reveal
     ui/                  building blocks: container, section, button, tag, icons, flags
     seo/                 JSON-LD and the Open Graph image layout
   content/               site data: profile, projects, experience, education, skills, SEO texts
