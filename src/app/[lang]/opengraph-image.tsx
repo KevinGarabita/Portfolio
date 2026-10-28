@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 import {
   OpenGraphCard,
-  openGraphImageOptions,
+  getOpenGraphImageOptions,
 } from "@/components/seo/open-graph-card";
 import { isSupportedLocale, supportedLocales } from "@/i18n/locales";
 import {
@@ -39,6 +39,6 @@ export default async function Image({
 
   return new ImageResponse(
     <OpenGraphCard {...getHomeShareCard(lang)} titleSize={96} />,
-    openGraphImageOptions,
+    getOpenGraphImageOptions(),
   );
 }

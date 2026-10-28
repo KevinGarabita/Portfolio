@@ -1,8 +1,9 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
-
 import type { ImageResponse } from "next/og";
 
+import {
+  atkinsonBoldBase64,
+  atkinsonRegularBase64,
+} from "@/assets/fonts/atkinson-hyperlegible-next";
 import { brandColors } from "@/lib/brand-colors";
 import { shareImageSize, type ShareCardText } from "@/lib/share-card";
 
@@ -27,30 +28,32 @@ const brandGradient = `linear-gradient(135deg, ${brandColors.orangeVibrant}, ${b
 
 const fontFamily = "Atkinson Hyperlegible Next";
 
-// Read once per server process. next/og needs TTF or OTF files, not the woff2 that
-// next/font serves to browsers.
-const [regularFont, boldFont] = await Promise.all([
-  readFile(
-    join(
-      process.cwd(),
-      "src/assets/fonts/AtkinsonHyperlegibleNext-Regular.ttf",
-    ),
-  ),
-  readFile(
-    join(process.cwd(), "src/assets/fonts/AtkinsonHyperlegibleNext-Bold.ttf"),
-  ),
-]);
+function decodeBase64(base64: string): ArrayBuffer {
+  return Uint8Array.from(atob(base64), (character) => character.charCodeAt(0))
+    .buffer;
+}
 
-/** The size every preview image has (lib/share-card.ts), plus the fonts. */
-export const openGraphImageOptions: ConstructorParameters<
+/**
+ * The size every preview image has (lib/share-card.ts), plus the fonts. next/og needs
+ * TTF or OTF files, not the woff2 that next/font serves to browsers. The fonts come
+ * embedded in the code (assets/fonts/atkinson-hyperlegible-next.ts) and are decoded
+ * inside each image function, never at module level: Cloudflare Workers have no file
+ * system, and a file read during module evaluation broke every route in the bundle.
+ */
+export function getOpenGraphImageOptions(): ConstructorParameters<
   typeof ImageResponse
->[1] = {
-  ...shareImageSize,
-  fonts: [
-    { name: fontFamily, data: regularFont, weight: 400, style: "normal" },
-    { name: fontFamily, data: boldFont, weight: 700, style: "normal" },
-  ],
-};
+>[1] {
+  const regularFont = decodeBase64(atkinsonRegularBase64);
+  const boldFont = decodeBase64(atkinsonBoldBase64);
+
+  return {
+    ...shareImageSize,
+    fonts: [
+      { name: fontFamily, data: regularFont, weight: 400, style: "normal" },
+      { name: fontFamily, data: boldFont, weight: 700, style: "normal" },
+    ],
+  };
+}
 
 /** The "KG" monogram on the brand gradient, the same mark as the favicon. */
 function Monogram({ size }: { size: number }) {
