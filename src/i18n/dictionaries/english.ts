@@ -12,6 +12,7 @@ export const englishDictionary: Dictionary = {
     experience: "Experience",
     about: "About",
     contact: "Contact",
+    resume: "Résumé",
   },
   languageSwitcher: {
     label: "Language",
@@ -19,6 +20,10 @@ export const englishDictionary: Dictionary = {
   hero: {
     photoAlt: "Kevin Garabita, backend, AI and automation engineer",
     writeOnWhatsApp: "Message me on WhatsApp",
+    facts: {
+      experience: "Experience",
+      education: "Education",
+    },
   },
   resume: {
     view: "View résumé (PDF)",
@@ -29,7 +34,7 @@ export const englishDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projects",
       description:
-        "Web apps, AI agents and automations: freelance projects and collaborations with Kobler y Asociados.",
+        "Web apps, AI agents and automations: freelance projects and my work at Kobler y Asociados.",
     },
     filters: {
       label: "Filter projects",
@@ -52,8 +57,8 @@ export const englishDictionary: Dictionary = {
     },
     credit: {
       freelance: "Freelance",
-      "kobler-team": "Collaboration with Kobler",
-      "kobler-individual": "Built for Kobler y Asociados",
+      "kobler-team": "Team project at Kobler y Asociados",
+      "kobler-individual": "Built at Kobler y Asociados",
     },
     facts: {
       client: "Client",
@@ -93,13 +98,11 @@ export const englishDictionary: Dictionary = {
     },
   },
   experience: {
-    sectionTitle: "Experience",
+    sectionTitle: "Experience and education",
     present: "present",
     relatedProjects: "Case studies from this job",
-    moreDetails: "More details",
   },
   education: {
-    sectionTitle: "Education",
     expectedGraduation: "Expected graduation",
   },
   skills: {
@@ -116,7 +119,6 @@ export const englishDictionary: Dictionary = {
     lead: "Tell me what you want to build or automate.",
     email: "Email",
     whatsApp: "WhatsApp",
-    sendEmail: "Send an email",
     location: "Location",
     profiles: "Profiles",
   },
@@ -144,6 +146,8 @@ export const englishDictionary: Dictionary = {
       status: {
         "open-to-offers": "Open to job offers",
         "open-to-freelance": "Available for freelance projects",
+        "open-to-offers-and-freelance":
+          "Open to full-time roles and freelance projects",
       },
       modality: {
         remote: "remote",

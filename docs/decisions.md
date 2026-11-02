@@ -84,7 +84,7 @@ Medido el 10 de octubre de 2026, antes del rediseño del 12 de octubre, con Ligh
   - Por eso volvieron todos. No cuestan nada: el navegador elige el candidato más chico que cubre el tamaño dibujado, así que nunca baja uno de más.
   - Regla: **no quites anchos de `deviceSizes` ni de `imageSizes`**. Solo agrega.
 - **`sizes` igual al ancho con que se dibuja cada imagen**:
-  - la foto de la portada, el ancho de su columna en cada punto de quiebre: 13rem debajo de 360 px, 15rem en la mayoría de los teléfonos, 20rem desde `sm`, 37vw desde `md`, 30rem desde 1280 px y 33rem desde 1800 px, y 12rem en pantallas de hasta 30rem de alto;
+  - la foto de la portada, el ancho de su columna en cada punto de quiebre: 12rem debajo de 360 px, 13rem en la mayoría de los teléfonos (antes 13rem y 15rem; se achicó el 2 de noviembre de 2026 para que la disponibilidad y los dos botones quepan en la primera pantalla), 20rem desde `sm`, 37vw desde `md`, 30rem desde 1280 px y 33rem desde 1800 px, y 12rem en pantallas de hasta 30rem de alto;
   - las tarjetas, el ancho de su columna menos márgenes y separaciones, y un 11 % más cuando la captura es 16:9 y llena recortada el marco 16:10 (`ProjectVisual`);
   - las miniaturas de la galería, media fila en teléfono y un cuarto desde `sm` las capturas de teléfono (antes pedían el ancho completo: un archivo de 750 px para 315 px de pantalla), y la captura de escritorio que comparte fila con capturas de teléfono, que se estira a su alto y se dibuja más ancha que media fila (antes quedaba borrosa a 1x);
   - la vista ampliada, nunca más ancha que el archivo.

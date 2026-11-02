@@ -17,8 +17,14 @@ export const workExperience: WorkExperience[] = [
       fr: "Développeur IA et Automatisation",
     },
     organization: "Kobler y Asociados",
+    organizationDescription: {
+      es: "agencia de marketing",
+      en: "marketing agency",
+      pt: "agência de marketing",
+      fr: "agence de marketing",
+    },
     location: sameInEveryLanguage("Mérida, Yucatán"),
-    period: { start: "2025-12", end: "2026-08" },
+    period: { start: "2025-12", end: "2026-11" },
     highlights: [
       {
         es: "Cinco agentes de WhatsApp desarrollados en equipo con n8n y la API de OpenAI, uno por cliente: atienden, califican al prospecto y lo registran en GoHighLevel.",

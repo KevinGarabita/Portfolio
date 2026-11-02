@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { AppWindowIcon, WorkflowIcon } from "@/components/ui/icons";
 import type { Locale } from "@/i18n/locales";
 import { localize } from "@/i18n/localize";
 import { joinClassNames } from "@/lib/class-names";
@@ -52,10 +51,9 @@ function scaleSizes(sizes: string, factor: number): string {
  * The media area of a project card:
  * - the first screenshot, when the project has one (desktop screenshots fill the frame
  *   from the top, at full width; phone screenshots are shown whole);
- * - otherwise the tools of its automation flow, when it has one;
- * - otherwise an icon (an automation for Kobler work, a web application for the rest).
- * Never a made-up screenshot. The icon shrinks on narrow cards and, when a flow
- * follows, is dropped below 20rem so the flow always fits (container query on the frame).
+ * - otherwise a plain panel with who it was built for and, when it has one, the tools
+ *   of its automation flow in order (WhatsApp, n8n, OpenAI...): real facts set like a
+ *   caption, never a made-up screenshot or a stand-in icon.
  * It fills the card's media frame (absolutely positioned), so a tall phone screenshot
  * never stretches the card. The frame and the zoom on hover come from ProjectCard.
  */
@@ -93,29 +91,17 @@ export function ProjectVisual({
     );
   }
 
-  const isAutomation = project.category === "kobler";
-  const VisualIcon = isAutomation ? WorkflowIcon : AppWindowIcon;
-
   return (
     <div
       aria-hidden="true"
-      className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[radial-gradient(60%_70%_at_50%_45%,var(--tint-accent),transparent)]"
+      className="absolute inset-0 flex flex-col justify-between gap-4 p-5 @min-[28rem]:p-8"
     >
-      <span
-        className={joinClassNames(
-          "gradient-ring relative flex size-14 shrink-0 items-center justify-center rounded-section border shadow-(--glow-accent-soft) [--ring-fill:var(--color-page)] @min-[22rem]:size-20",
-          project.flowDiagram?.length ? "@max-[20rem]:hidden" : undefined,
-        )}
-      >
-        <VisualIcon className="size-7 text-accent @min-[22rem]:size-10" />
+      <span className="font-display text-title font-bold text-heading">
+        {project.client ?? localize(project.name, locale)}
       </span>
       {project.flowDiagram?.length ? (
-        <FlowPreview steps={project.flowDiagram} className="relative" />
-      ) : (
-        <span className="relative px-6 text-center font-display text-subtitle font-bold text-heading">
-          {project.client}
-        </span>
-      )}
+        <FlowPreview steps={project.flowDiagram} />
+      ) : null}
     </div>
   );
 }

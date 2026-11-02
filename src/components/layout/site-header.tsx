@@ -6,6 +6,7 @@ import { WhatsAppLogoIcon } from "@/components/ui/icons";
 import { profile } from "@/content/profile";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { getHomeSectionHref, homeSectionIds } from "@/lib/home-sections";
+import { getResumeLink } from "@/lib/resume";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 import { LanguageSwitcher } from "./language-switcher";
@@ -13,8 +14,8 @@ import { SiteHeaderFrame } from "./site-header-frame";
 import { SiteNavigation } from "./site-navigation";
 
 /**
- * Sticky header, one row: the name (links home), the section links, the WhatsApp button
- * and the language menu. WhatsApp is always on screen: a green 44 px button with the
+ * Sticky header, one row: the name (links home), the section links and the CV, the
+ * WhatsApp button and the language menu. WhatsApp is always on screen: a green 44 px button with the
  * logo on phones, and with the word "WhatsApp" from sm. Below lg the section links fold
  * into a menu button (SiteNavigation), so the row fits down to 320 px; on the narrowest
  * phones (under 22.5rem) the name steps down to the body size. Its height is
@@ -24,6 +25,7 @@ export async function SiteHeader() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
   const navigation = dictionary.siteNavigation;
+  const resume = getResumeLink(locale);
 
   // "Proyectos" opens the page with every project; the rest are home page sections.
   const navigationLinks = [
@@ -59,6 +61,12 @@ export async function SiteHeader() {
             label={navigation.label}
             menuLabel={navigation.menu}
             links={navigationLinks}
+            resume={{
+              href: resume.href,
+              hrefLang: resume.language,
+              label: navigation.resume,
+              opensInNewTabText: dictionary.opensInNewTab,
+            }}
           />
 
           <ButtonLink
