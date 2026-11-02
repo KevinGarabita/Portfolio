@@ -33,24 +33,42 @@ export async function ExperienceSection() {
           return (
             <li key={job.id}>
               <article>
-                <h3 className="font-display text-subtitle font-bold">
+                <h3
+                  data-build="type"
+                  data-build-tag="h3"
+                  className="font-display text-subtitle font-bold"
+                >
                   {localize(job.role, locale)}
                 </h3>
-                <p className="mt-1">{job.organization}</p>
-                <p className="mt-1 text-small text-muted">
+                <p data-build="type" data-build-tag="p" className="mt-1">
+                  {job.organization}
+                </p>
+                <p
+                  data-build="type"
+                  data-build-tag="p.fecha"
+                  className="mt-1 text-small text-muted"
+                >
                   {formatDateRange(job.period, locale, labels.present)},{" "}
                   {localize(job.location, locale)}
                 </p>
 
                 {firstHighlight ? (
-                  <p className="mt-5 max-w-prose">
+                  <p
+                    data-build="type"
+                    data-build-tag="p"
+                    className="mt-5 max-w-prose"
+                  >
                     {localize(firstHighlight, locale)}
                   </p>
                 ) : null}
 
                 {otherHighlights.length > 0 ? (
                   <details className="group mt-3">
-                    <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 font-bold text-link [&::-webkit-details-marker]:hidden">
+                    <summary
+                      data-build="click"
+                      data-build-tag="summary"
+                      className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 font-bold text-link [&::-webkit-details-marker]:hidden"
+                    >
                       {labels.moreDetails}
                       <ChevronDownIcon className="size-4 transition-transform group-open:rotate-180" />
                     </summary>
@@ -70,10 +88,18 @@ export async function ExperienceSection() {
 
                 {relatedProjects.length > 0 ? (
                   <>
-                    <h4 className="mt-8 text-small font-bold text-muted">
+                    <h4
+                      data-build="type"
+                      data-build-tag="h4"
+                      className="mt-8 text-small font-bold text-muted"
+                    >
                       {labels.relatedProjects}
                     </h4>
-                    <ul className="mt-2 flex flex-col">
+                    <ul
+                      data-build="drag"
+                      data-build-tag="ul.casos"
+                      className="mt-2 flex flex-col"
+                    >
                       {relatedProjects.map((project) => (
                         <li key={project.slug}>
                           <Link

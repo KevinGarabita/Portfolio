@@ -123,7 +123,7 @@ export function LanguageSwitcher({
   }
 
   return (
-    <nav aria-label={label}>
+    <nav aria-label={label} data-build="drag" data-build-tag="nav.idioma">
       <div
         ref={containerRef}
         onBlur={closeWhenFocusLeaves}

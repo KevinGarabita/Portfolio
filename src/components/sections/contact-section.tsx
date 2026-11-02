@@ -18,7 +18,7 @@ interface ContactDetailProps {
 
 function ContactDetail({ label, children }: ContactDetailProps) {
   return (
-    <div>
+    <div data-build="drag" data-build-tag="div.dato">
       <dt className="text-small font-bold text-muted">{label}</dt>
       <dd className="mt-1">{children}</dd>
     </div>
@@ -39,7 +39,11 @@ export async function ContactSection() {
 
   return (
     <PageSection id={homeSectionIds.contact} title={labels.sectionTitle}>
-      <p className="max-w-[18em] font-display text-title font-bold text-heading">
+      <p
+        data-build="type"
+        data-build-tag="p.lead"
+        className="max-w-[18em] font-display text-title font-bold text-heading"
+      >
         {labels.lead}
       </p>
 
@@ -50,6 +54,8 @@ export async function ContactSection() {
           rel="noopener noreferrer"
           variant="whatsapp"
           leadingIcon={<WhatsAppLogoIcon />}
+          data-build="click"
+          data-build-tag="a.cta"
         >
           {dictionary.hero.writeOnWhatsApp}
           <span className="sr-only"> ({dictionary.opensInNewTab})</span>
@@ -58,6 +64,8 @@ export async function ContactSection() {
           href={`mailto:${profile.email}`}
           variant="secondary"
           leadingIcon={<MailIcon className="text-accent" />}
+          data-build="click"
+          data-build-tag="a.btn"
         >
           {labels.sendEmail}
         </ButtonLink>

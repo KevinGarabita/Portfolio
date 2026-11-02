@@ -18,6 +18,8 @@
  *      around the photo, project tiles and framed links, the gradient ring, the header
  *      and the flow diagram.
  *   8. Reduced motion (prefers-reduced-motion).
+ *   9. Scroll build: the home page's blueprint, build cursors and intro
+ *      (components/scroll-build). Its colours belong to the animation, not the site.
  *
  * Contrast (WCAG 2.x, measured): text #f5f5f5 on page 18.15:1, muted #a3a3a3 7.84:1,
  * orange #ff6a00 on page 6.89:1, black text on orange 6.89:1. Red #e5252a reaches only
@@ -609,5 +611,404 @@
   .motion-float,
   .motion-orbit {
     animation: none !important;
+  }
+}
+
+/* 9. Scroll build (components/scroll-build). On the home page a swarm of cursors builds
+ * the page as the visitor scrolls: every element marked with data-build starts as a blue
+ * blueprint box that keeps its real size (nothing shifts) and is revealed by its action.
+ * Everything hangs from html.sb, which the inline script of the layout sets before the
+ * first paint; without it (JavaScript off, reduced motion, already seen this session)
+ * none of this applies. html.sb-intro adds the intro over the page.
+ *
+ * Element states, set by the engine: no data-build-state = blueprint; "run" = revealed
+ * and being built; "done". data-build-working marks the element a cursor is on. */
+@layer base {
+  :root {
+    --blueprint: #3d9bff;
+    --blueprint-fill: rgb(61 155 255 / 0.06);
+    --blueprint-edge: rgb(61 155 255 / 0.5);
+    --blueprint-ink: #cfe6ff;
+    --layer-build-intro: 60;
+    --layer-build-selection: 65;
+    --layer-build-cursor: 70;
+  }
+
+  /* Anchors the blueprint's label and corners. In the base layer, so an element that
+   * positions itself with a utility (absolute chips, the menu panel) keeps its own.
+   * data-build-static opts out: an element that must never become a containing block,
+   * like a project card's title, whose link stretches over the whole card. */
+  html.sb [data-build]:not([data-build-state], [data-build-static]),
+  html.sb [data-build-working]:not([data-build-static]) {
+    position: relative;
+  }
+
+  /* Elements dragged in from the side must not widen the page. */
+  html.sb body {
+    overflow-x: clip;
+  }
+}
+
+@layer components {
+  /* The build replaces the entrance on load; its fill-mode would also hold a transform
+   * over the one a cursor writes. */
+  html.sb :is(.entrance, .entrance-scale, .entrance-lift, .entrance-slide) {
+    animation: none;
+  }
+
+  /* Blueprint box: translucent blue with a 1px edge, white corners and an inspector
+   * label. The content is transparent but keeps its space; links still work. Children
+   * fade with opacity, not visibility, so screen readers still read them. */
+  html.sb [data-build]:not([data-build-state]) {
+    color: transparent !important;
+    text-decoration-color: transparent !important;
+    background: var(--blueprint-fill) !important;
+    border-color: transparent !important;
+    box-shadow: inset 0 0 0 1px var(--blueprint-edge) !important;
+    border-radius: 2px !important;
+  }
+
+  html.sb [data-build]:not([data-build-state]) > * {
+    opacity: 0 !important;
+  }
+
+  /* Screenshots clip their content; their label and corners sit outside the box. */
+  html.sb [data-build="draw"]:not([data-build-state]) {
+    overflow: visible !important;
+  }
+
+  html.sb [data-build]:not([data-build-state])::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    z-index: 3;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--blueprint-ink) 0 0) top left / 5px 5px no-repeat,
+      linear-gradient(var(--blueprint-ink) 0 0) top right / 5px 5px no-repeat,
+      linear-gradient(var(--blueprint-ink) 0 0) bottom left / 5px 5px no-repeat,
+      linear-gradient(var(--blueprint-ink) 0 0) bottom right / 5px 5px no-repeat;
+  }
+
+  html.sb [data-build]:not([data-build-state])::after {
+    content: attr(data-build-tag);
+    position: absolute;
+    top: -18px;
+    left: -1px;
+    z-index: 3;
+    padding: 3px 5px;
+    background: rgb(61 155 255 / 0.25);
+    color: #bfe0ff;
+    font: 500 10px/1 var(--font-mono);
+    letter-spacing: normal;
+    text-transform: none;
+    text-decoration: none;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* A data-build-static element has no box to anchor to: no corners, and the label
+   * sits at its static position, the start of its content, without any inset. */
+  html.sb [data-build-static]:not([data-build-state])::before {
+    content: attr(data-build-tag);
+    inset: auto;
+    margin: -18px 0 0 -1px;
+    padding: 3px 5px;
+    background: rgb(61 155 255 / 0.25);
+    color: #bfe0ff;
+    font: 500 10px/1 var(--font-mono);
+    letter-spacing: normal;
+    white-space: nowrap;
+  }
+
+  html.sb [data-build-static]:not([data-build-state])::after {
+    content: none;
+  }
+
+  html.sb [data-build-working] {
+    outline: 1.5px solid var(--build-color, var(--blueprint));
+    outline-offset: 3px;
+  }
+
+  html.sb [data-build-dragging] {
+    z-index: 5;
+    box-shadow: 0 18px 40px rgb(0 0 0 / 0.55) !important;
+  }
+
+  /* Typing: the original text stays in place (and in the accessibility tree) but
+   * transparent; an aria-hidden copy on top of it is typed letter by letter. The copy
+   * inherits the layout of the element so its lines wrap the same way. */
+  html.sb [data-build="type"][data-build-working],
+  html.sb
+    [data-build="type"][data-build-working]
+    *:not(.sb-type-layer, .sb-type-layer *) {
+    color: transparent !important;
+    text-decoration-color: transparent !important;
+  }
+
+  .sb-type-layer {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    padding: inherit;
+    display: inherit;
+    flex-direction: inherit;
+    flex-wrap: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+    gap: inherit;
+    overflow: inherit;
+    -webkit-box-orient: inherit;
+    -webkit-line-clamp: inherit;
+    pointer-events: none;
+  }
+
+  .sb-type-layer [data-build-unreached] {
+    visibility: hidden;
+  }
+
+  .sb-type-rest {
+    color: transparent !important;
+  }
+
+  .sb-caret {
+    display: inline-block;
+    width: 2px;
+    height: 0.88em;
+    margin-left: 1px;
+    vertical-align: -0.06em;
+  }
+
+  /* Cursors: the arrow turns towards where it moves; the glyph changes with the action. */
+  .sb-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--layer-build-cursor);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s;
+    will-change: transform;
+  }
+
+  .sb-cursor[data-on] {
+    opacity: 1;
+  }
+
+  .sb-glyph {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+  }
+
+  .sb-cursor[data-glyph="arrow"] .sb-glyph-arrow,
+  .sb-cursor[data-glyph="ibeam"] .sb-glyph-ibeam,
+  .sb-cursor[data-glyph="cross"] .sb-glyph-cross,
+  .sb-cursor[data-glyph="resize"] .sb-glyph-resize {
+    display: block;
+  }
+
+  .sb-glyph-arrow {
+    margin: -2px 0 0 -2px;
+    transform-origin: 0 0;
+  }
+
+  .sb-glyph-arrow svg {
+    filter: drop-shadow(0 2px 3px rgb(0 0 0 / 0.55));
+  }
+
+  .sb-glyph-ibeam {
+    margin: -11px 0 0 -5px;
+  }
+
+  .sb-glyph-cross {
+    margin: -9px 0 0 -9px;
+  }
+
+  .sb-glyph-resize {
+    margin: -8px 0 0 -8px;
+  }
+
+  .sb-chip {
+    position: absolute;
+    top: 18px;
+    left: 16px;
+    padding: 4px 7px;
+    border-radius: 999px;
+    color: #0a0a0a;
+    font: 700 10px/1 var(--font-sans);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .sb-cursor[data-acting] .sb-chip {
+    opacity: 1;
+  }
+
+  .sb-ring {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  .sb-cursor[data-clicking] .sb-ring {
+    animation: sb-ring 0.45s ease-out;
+  }
+
+  /* Selection box of a draw or a resize, with its handles and live size. */
+  .sb-selection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--layer-build-selection);
+    display: none;
+    border: 1.5px solid;
+    pointer-events: none;
+  }
+
+  .sb-selection[data-on] {
+    display: block;
+  }
+
+  /* The handles and the size sit at the top left corner; the engine moves them with
+   * transform as the box grows, so they never count as layout shifts. */
+  .sb-handle {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 7px;
+    height: 7px;
+    border: 1.5px solid currentColor;
+    background: #fff;
+  }
+
+  .sb-size {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 4px 6px;
+    border-radius: 3px;
+    color: #0a0a0a;
+    font: 600 10px/1 var(--font-mono);
+    white-space: nowrap;
+  }
+
+  /* Intro: black over the page, the "K." in the middle, then guides and "+" marks. It
+   * takes the clicks while it lasts (a click skips it). */
+  .sb-intro-layer {
+    position: fixed;
+    inset: 0;
+    z-index: var(--layer-build-intro);
+    display: none;
+    overflow: hidden;
+    background: var(--color-page);
+    transition: opacity 0.8s;
+  }
+
+  html.sb-intro .sb-intro-layer {
+    display: block;
+  }
+
+  .sb-intro-layer[data-leaving] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sb-intro-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #3a3a42;
+    font: 800 44px/1 var(--font-display);
+    transform: translate(-50%, -50%);
+    transition: opacity 0.5s;
+  }
+
+  .sb-intro-logo[data-hidden] {
+    opacity: 0;
+  }
+
+  .sb-guide-x,
+  .sb-guide-y {
+    position: absolute;
+    background: rgb(61 155 255 / 0.45);
+    transition: transform 0.7s cubic-bezier(0.6, 0, 0.2, 1);
+  }
+
+  .sb-guide-x {
+    right: 0;
+    left: 0;
+    height: 1px;
+    transform: scaleX(0);
+  }
+
+  .sb-guide-y {
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    transform: scaleY(0);
+  }
+
+  .sb-guide-x[data-on] {
+    transform: scaleX(1);
+  }
+
+  .sb-guide-y[data-on] {
+    transform: scaleY(1);
+  }
+
+  .sb-plus {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    margin: -6px 0 0 -6px;
+  }
+
+  .sb-plus::before,
+  .sb-plus::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+
+  .sb-plus::before {
+    top: 0;
+    left: 6px;
+    width: 1.5px;
+    height: 13px;
+  }
+
+  .sb-plus::after {
+    top: 6px;
+    left: 0;
+    width: 13px;
+    height: 1.5px;
+  }
+}
+
+@keyframes sb-ring {
+  from {
+    opacity: 1;
+    transform: scale(0.3);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sb-cursor,
+  .sb-selection,
+  .sb-intro-layer {
+    display: none !important;
   }
 }

@@ -29,6 +29,8 @@ export async function ProjectsSection() {
         href={`/${locale}/projects`}
         variant="secondary"
         className="mt-12 lg:mt-16"
+        data-build="click"
+        data-build-tag="a.btn"
       >
         {dictionary.projects.viewAll(getAllProjects().length)}
       </ButtonLink>

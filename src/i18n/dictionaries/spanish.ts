@@ -118,6 +118,17 @@ export const spanishDictionary = {
     location: "Ubicación",
     profiles: "Perfiles",
   },
+  scrollBuild: {
+    // Pills of the home page's build cursors (components/scroll-build); decorative.
+    actions: {
+      type: "escribiendo",
+      draw: "insertando imagen",
+      resize: "redimensionando",
+      drag: "moviendo",
+      click: "aplicando estilo",
+      line: "trazando",
+    },
+  },
   notFound: {
     title: "Página no encontrada",
     description: "La página que buscas no existe o cambió de dirección.",
