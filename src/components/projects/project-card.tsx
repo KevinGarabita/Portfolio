@@ -125,7 +125,7 @@ export function ProjectCard({
           // Its link stretches over the whole card: it must never become a containing block.
           data-build-static=""
           className={joinClassNames(
-            "mt-3 font-display font-bold text-pretty",
+            "mt-3 font-display font-bold text-balance",
             isFeature ? "text-subtitle lg:text-title" : "text-subtitle",
           )}
         >

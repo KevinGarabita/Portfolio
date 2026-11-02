@@ -1,13 +1,15 @@
 import type { ReactNode } from "react";
 
+import { AvailabilityNote } from "@/components/recruiter/availability-note";
 import { ButtonLink } from "@/components/ui/button-link";
-import { MailIcon, WhatsAppLogoIcon } from "@/components/ui/icons";
+import { ExternalLinkIcon, WhatsAppLogoIcon } from "@/components/ui/icons";
 import { PageSection } from "@/components/ui/page-section";
 import { SocialNetworkLogo } from "@/components/ui/social-icon-link";
 import { profile } from "@/content/profile";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { homeSectionIds } from "@/lib/home-sections";
+import { getResumeLink } from "@/lib/resume";
 import { socialNetworkNames } from "@/lib/social-networks";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -26,16 +28,18 @@ function ContactDetail({ label, children }: ContactDetailProps) {
 }
 
 /**
- * The close of the page: one line that invites the visitor to say what they need, in
- * the hero's voice and a step smaller, then WhatsApp (the primary action, as in the
- * hero) and email; under them the address, the place and the profiles (which open in
- * a new tab), side by side from sm.
+ * The close of the page, for both audiences: one line that invites the visitor to say
+ * what they need, in the hero's voice and a step smaller; Kevin's availability; then the
+ * same two actions as the hero, WhatsApp (primary) and the CV. Under them the address
+ * (the one email link), the place and the profiles (which open in a new tab), side by
+ * side from sm.
  */
 export async function ContactSection() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
   const labels = dictionary.contact;
   const { location } = profile;
+  const resume = getResumeLink(locale);
 
   return (
     <PageSection id={homeSectionIds.contact} title={labels.sectionTitle}>
@@ -47,7 +51,13 @@ export async function ContactSection() {
         {labels.lead}
       </p>
 
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+      <AvailabilityNote
+        locale={locale}
+        dictionary={dictionary}
+        className="mt-6"
+      />
+
+      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <ButtonLink
           href={buildWhatsAppUrl(locale)}
           target="_blank"
@@ -61,13 +71,18 @@ export async function ContactSection() {
           <span className="sr-only"> ({dictionary.opensInNewTab})</span>
         </ButtonLink>
         <ButtonLink
-          href={`mailto:${profile.email}`}
+          href={resume.href}
+          hrefLang={resume.language}
+          type="application/pdf"
+          target="_blank"
+          rel="noopener noreferrer"
           variant="secondary"
-          leadingIcon={<MailIcon className="text-accent" />}
+          trailingIcon={<ExternalLinkIcon className="size-4 text-accent" />}
           data-build="click"
-          data-build-tag="a.btn"
+          data-build-tag="a.cv"
         >
-          {labels.sendEmail}
+          {dictionary.resume.view}
+          <span className="sr-only"> ({dictionary.opensInNewTab})</span>
         </ButtonLink>
       </div>
 

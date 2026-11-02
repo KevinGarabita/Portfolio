@@ -115,7 +115,7 @@ export default function GlobalNotFound() {
                 aria-hidden="true"
                 className="entrance mt-12 font-display text-giant font-extrabold lg:mt-16"
               >
-                <span className="text-gradient-brand">404</span>
+                <span className="text-accent">404</span>
               </p>
               <div className="entrance mt-10 [--entrance-order:1] lg:mt-14">
                 <NotFoundMessage locale={defaultLocale} isLead />

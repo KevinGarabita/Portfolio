@@ -53,9 +53,10 @@ interface FlowPreviewProps {
 
 /**
  * Compact version for project cards without screenshots: the tools of the flow in
- * order, joined by arrows (at most four). It stands in for a screenshot that does not
- * exist, so nothing made up is shown. Decorative; the case study has the full diagram
- * and the card text lists the technologies.
+ * order, joined by arrows (at most four), aligned to the start like the card's text.
+ * It stands in for a screenshot that does not exist, so nothing made up is shown.
+ * Decorative; the case study has the full diagram and the card text lists the
+ * technologies.
  */
 export function FlowPreview({ steps, className }: FlowPreviewProps) {
   const tools = [
@@ -70,7 +71,7 @@ export function FlowPreview({ steps, className }: FlowPreviewProps) {
     <div
       aria-hidden="true"
       className={joinClassNames(
-        "flex flex-wrap items-center justify-center gap-x-2 gap-y-3 px-6",
+        "flex flex-wrap items-center gap-x-2 gap-y-3",
         className,
       )}
     >

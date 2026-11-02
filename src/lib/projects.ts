@@ -52,7 +52,7 @@ export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
 }
 
-/** Who did the work: freelance, team work at Kobler or Kevin alone for Kobler. */
+/** Who did the work: freelance, team work at Kobler or Kevin alone at Kobler. */
 export function getProjectCredit(project: Project): ProjectCredit {
   if (project.category === "freelance") return "freelance";
   return project.teamSetup === "team" ? "kobler-team" : "kobler-individual";

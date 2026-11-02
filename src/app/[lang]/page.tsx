@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { AboutSection } from "@/components/sections/about-section";
 import { ContactSection } from "@/components/sections/contact-section";
-import { EducationSection } from "@/components/sections/education-section";
 import { ExperienceSection } from "@/components/sections/experience-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
@@ -30,7 +29,6 @@ export default async function HomePage() {
         <HeroSection />
         <ProjectsSection />
         <ExperienceSection />
-        <EducationSection />
         <AboutSection />
         <ContactSection />
       </ScrollBuildProvider>

@@ -30,7 +30,7 @@ export async function AboutSection() {
       id={homeSectionIds.about}
       title={dictionary.about.sectionTitle}
     >
-      <div className="flex max-w-prose flex-col gap-4">
+      <div className="flex max-w-[60ch] flex-col gap-4">
         {profile.about.map((paragraph) => (
           <p key={paragraph.es} data-build="type" data-build-tag="p">
             {localize(paragraph, locale)}

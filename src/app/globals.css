@@ -14,9 +14,9 @@
  *   4. Type, radius and motion tokens.
  *   5. Fonts: mapped to the CSS variables that next/font puts on <html>.
  *   6. Base styles: gradients, glows, layers, header height and element defaults.
- *   7. Components: the backdrop, the hero photo, the entrance on load and the loops
- *      around the photo, project tiles and framed links, the gradient ring, the header
- *      and the flow diagram.
+ *   7. Components: the backdrop, the hero photo, the entrance on load and the loop
+ *      around the photo, project tiles and framed links, the header and the flow
+ *      diagram.
  *   8. Reduced motion (prefers-reduced-motion).
  *   9. Scroll build: the home page's blueprint, build cursors and intro
  *      (components/scroll-build). Its colours belong to the animation, not the site.
@@ -134,7 +134,6 @@
   --text-giant--letter-spacing: -0.03em;
 
   /* 4b. Radius by role */
-  --radius-section: 1.25rem; /* cards and panels */
   --radius-media: 0.875rem; /* images, video, embeds */
   --radius-control: 0.75rem; /* buttons, inputs, selects */
   --radius-tag: 9999px; /* tags/chips only */
@@ -181,9 +180,6 @@
       var(--color-red-signal)
     );
 
-    /* Soft orange glow under the icon of a project without screenshots. */
-    --glow-accent-soft: 0 1rem 2.5rem -1.25rem
-      color-mix(in oklab, var(--color-orange-vibrant) 45%, transparent);
     --tint-accent: color-mix(
       in oklab,
       var(--color-orange-vibrant) 14%,
@@ -294,15 +290,6 @@
 
 /* 7. Components */
 @layer components {
-  /* Large text painted with the brand gradient. Only for text >= 24px (or >= 18.66px
-   * bold): the red end reaches 4.36:1, enough for large text only. */
-  .text-gradient-brand {
-    background-image: var(--gradient-brand);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
   /* One still, soft orange glow at the top right of the first screen, behind the
    * header and the hero. It is absolute, not fixed, so it scrolls away with the hero
    * and never sits behind the projects. */
@@ -370,36 +357,9 @@
     animation-delay: calc(var(--entrance-order, 0) * var(--stagger-step));
   }
 
-  /* Gentle up-and-down float for the chips around the hero photo. */
-  .motion-float {
-    animation: float 7s ease-in-out infinite;
-    animation-delay: var(--float-delay, 0s);
-  }
-
   /* Slow full turn for the orbit ring around the hero photo. */
   .motion-orbit {
     animation: orbit 48s linear infinite;
-  }
-
-  /* Gradient ring painted as the element's own 1px border: the gradient fills the
-   * border box and the surface colour (--ring-fill) covers the padding box on top of it.
-   * Give the element `border` (the width); the class makes it transparent. Today it
-   * frames the icon of a project without screenshots.
-   *
-   * Why not a masked pseudo-element: browsers snap a real border to whole device pixels
-   * (at 125% or 150% scale a 1px border becomes exactly one device pixel), but a mask
-   * cut 1 CSS px wide is not snapped, so its edge fell in the middle of a device pixel
-   * and the ring was antialiased across two rows of pixels: soft and blurry. A border
-   * painted with background-clip uses the same snapped geometry as any other border.
-   *
-   * --ring-fill: the surface inside the ring (default: raised). Set it instead of a
-   * bg-* class, e.g. [--ring-fill:var(--color-page)]. */
-  .gradient-ring {
-    --ring-fill: var(--color-raised);
-    border-color: transparent;
-    background:
-      linear-gradient(var(--ring-fill) 0 0) padding-box,
-      var(--gradient-brand-diagonal) border-box;
   }
 
   /* Project tiles (home and projects page): a screenshot and its caption, no panel
@@ -584,12 +544,6 @@
   }
 }
 
-@keyframes float {
-  50% {
-    transform: translate3d(0, -0.5rem, 0);
-  }
-}
-
 @keyframes orbit {
   to {
     transform: rotate(1turn);
@@ -597,7 +551,7 @@
 }
 
 /* 8. Reduced motion turns every animation and transition into an instant change and
- * stops the loops around the hero photo. */
+ * stops the orbit around the hero photo. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -608,7 +562,6 @@
     scroll-behavior: auto !important;
   }
 
-  .motion-float,
   .motion-orbit {
     animation: none !important;
   }

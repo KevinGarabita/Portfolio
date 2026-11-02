@@ -37,7 +37,9 @@ export function ProjectFacts({
 
   return (
     <dl className="@container border-t border-hairline">
-      <Fact label={labels.client}>{project.client}</Fact>
+      {project.client ? (
+        <Fact label={labels.client}>{project.client}</Fact>
+      ) : null}
 
       {project.period ? (
         <Fact label={labels.period}>
