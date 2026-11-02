@@ -121,6 +121,16 @@ export const portugueseDictionary: Dictionary = {
     location: "Localização",
     profiles: "Perfis",
   },
+  scrollBuild: {
+    actions: {
+      type: "digitando",
+      draw: "inserindo imagem",
+      resize: "redimensionando",
+      drag: "movendo",
+      click: "aplicando estilo",
+      line: "traçando",
+    },
+  },
   notFound: {
     title: "Página não encontrada",
     description: "A página que você procura não existe ou mudou de endereço.",

@@ -48,6 +48,8 @@ export async function SiteHeader() {
         <div className="flex h-16 items-center gap-1 sm:gap-2 lg:h-18 lg:gap-4">
           <Link
             href={`/${locale}`}
+            data-build="type"
+            data-build-tag="a.logo"
             className="mr-auto flex min-h-11 items-center font-display text-subtitle font-bold whitespace-nowrap text-heading no-underline max-[22.5rem]:text-base"
           >
             {profile.displayName}
@@ -67,6 +69,8 @@ export async function SiteHeader() {
             size="compact"
             leadingIcon={<WhatsAppLogoIcon />}
             className="max-sm:size-11 max-sm:gap-0 max-sm:px-0"
+            data-build="click"
+            data-build-tag="a.whatsapp"
           >
             <span className="sr-only sm:not-sr-only">
               {dictionary.contact.whatsApp}

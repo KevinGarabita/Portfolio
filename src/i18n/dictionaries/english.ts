@@ -120,6 +120,16 @@ export const englishDictionary: Dictionary = {
     location: "Location",
     profiles: "Profiles",
   },
+  scrollBuild: {
+    actions: {
+      type: "typing",
+      draw: "inserting image",
+      resize: "resizing",
+      drag: "moving",
+      click: "applying style",
+      line: "tracing",
+    },
+  },
   notFound: {
     title: "Page not found",
     description: "The page you are looking for does not exist or has moved.",

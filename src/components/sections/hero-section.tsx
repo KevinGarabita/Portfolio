@@ -70,11 +70,17 @@ export async function HeroSection() {
   const { location } = profile;
 
   return (
-    <section aria-labelledby="hero-title" className="overflow-x-clip">
+    <section
+      aria-labelledby="hero-title"
+      data-build-section="hero"
+      className="overflow-x-clip"
+    >
       <Container className="grid items-center gap-y-8 pt-6 pb-12 sm:pb-16 md:grid-cols-12 md:gap-x-8 md:pt-10 lg:gap-x-12 lg:pt-12 lg:pb-20 short:pt-4">
         <div className="md:col-span-7">
           <h1
             id="hero-title"
+            data-build="type"
+            data-build-tag="h1"
             className="entrance-slide font-display [--entrance-order:0]"
           >
             <span className="block text-title font-bold text-heading">
@@ -85,12 +91,20 @@ export async function HeroSection() {
               {localize(profile.role, locale)}
             </span>
           </h1>
-          <p className="entrance-slide mt-2 flex items-center gap-1.5 text-small text-muted [--entrance-order:1]">
+          <p
+            data-build="type"
+            data-build-tag="p.lugar"
+            className="entrance-slide mt-2 flex items-center gap-1.5 text-small text-muted [--entrance-order:1]"
+          >
             <MapPinIcon className="size-4 text-accent" />
             {location.city}, {location.region}
           </p>
 
-          <p className="entrance-slide mt-6 font-display text-statement font-bold text-heading [--entrance-order:2] lg:mt-8">
+          <p
+            data-build="type"
+            data-build-tag="p.frase"
+            className="entrance-slide mt-6 font-display text-statement font-bold text-heading [--entrance-order:2] lg:mt-8"
+          >
             {localize(profile.heroSubtitle, locale)}
           </p>
 
@@ -107,6 +121,8 @@ export async function HeroSection() {
               rel="noopener noreferrer"
               variant="whatsapp"
               leadingIcon={<WhatsAppLogoIcon />}
+              data-build="click"
+              data-build-tag="a.cta"
             >
               {dictionary.hero.writeOnWhatsApp}
               <span className="sr-only"> ({dictionary.opensInNewTab})</span>
@@ -119,6 +135,8 @@ export async function HeroSection() {
               rel="noopener noreferrer"
               variant="secondary"
               trailingIcon={<ExternalLinkIcon className="size-4 text-accent" />}
+              data-build="click"
+              data-build-tag="a.cv"
             >
               {dictionary.resume.view}
               <span className="sr-only"> ({dictionary.opensInNewTab})</span>
@@ -127,7 +145,11 @@ export async function HeroSection() {
         </div>
 
         <div className="order-first mx-auto w-full max-w-52 min-[22.5rem]:max-w-60 sm:max-w-80 md:order-0 md:col-span-5 md:max-w-none short:order-0 short:max-w-48">
-          <div className="relative aspect-900/1024">
+          <div
+            data-build="draw"
+            data-build-tag="img.foto"
+            className="relative aspect-900/1024"
+          >
             {/* Soft glow and orbit ring, centred on the circle. */}
             <div
               aria-hidden="true"
@@ -147,6 +169,8 @@ export async function HeroSection() {
             <div className="hero-portrait absolute inset-0">
               <div
                 aria-hidden="true"
+                data-build="resize"
+                data-build-tag="div.circulo"
                 className="entrance-scale absolute inset-x-[4%] top-[10%] aspect-square rounded-full bg-(image:--gradient-brand-diagonal) [--entrance-order:1]"
               />
               <Image
@@ -165,6 +189,8 @@ export async function HeroSection() {
               <div
                 key={technology.name}
                 aria-hidden="true"
+                data-build="drag"
+                data-build-tag="span.tag"
                 className={joinClassNames(
                   "entrance absolute",
                   technology.placement,

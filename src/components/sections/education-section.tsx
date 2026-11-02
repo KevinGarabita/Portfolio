@@ -21,13 +21,21 @@ export async function EducationSection() {
       <div className="flex flex-col gap-10">
         {education.map((studies) => (
           <article key={studies.id}>
-            <h3 className="font-display text-subtitle font-bold">
+            <h3
+              data-build="type"
+              data-build-tag="h3"
+              className="font-display text-subtitle font-bold"
+            >
               {localize(studies.degree, locale)}
             </h3>
-            <p className="mt-1">
+            <p data-build="type" data-build-tag="p" className="mt-1">
               {studies.institution}, {localize(studies.location, locale)}
             </p>
-            <ul className="mt-1 flex flex-wrap gap-x-6 gap-y-1 text-small text-muted">
+            <ul
+              data-build="drag"
+              data-build-tag="ul.datos"
+              className="mt-1 flex flex-wrap gap-x-6 gap-y-1 text-small text-muted"
+            >
               <li>
                 {formatDateRange(
                   studies.period,

@@ -121,6 +121,16 @@ export const frenchDictionary: Dictionary = {
     location: "Localisation",
     profiles: "Profils",
   },
+  scrollBuild: {
+    actions: {
+      type: "saisie",
+      draw: "insertion d'image",
+      resize: "redimensionnement",
+      drag: "déplacement",
+      click: "application du style",
+      line: "tracé",
+    },
+  },
   notFound: {
     title: "Page introuvable",
     description:
