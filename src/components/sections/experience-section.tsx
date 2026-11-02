@@ -1,20 +1,23 @@
 import Link from "next/link";
 
-import { ChevronDownIcon } from "@/components/ui/icons";
 import { PageSection } from "@/components/ui/page-section";
+import { education } from "@/content/education";
 import { workExperience } from "@/content/experience";
-import { localize } from "@/i18n/localize";
+import { labelColon, localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
-import { formatDateRange } from "@/lib/format-date";
+import { formatDateRange, formatYearMonth } from "@/lib/format-date";
 import { homeSectionIds } from "@/lib/home-sections";
 import { getProjectBySlug } from "@/lib/projects";
 import type { Project } from "@/types/content";
 
 /**
- * Work history, compact: per job the role, the employer, the period and place, and the
- * first highlight (the CV's summary of the job). The other highlights wait behind "More
- * details" (a native <details>, so it works without JavaScript and stays in the page
- * for search engines). The related case studies close each job as plain links.
+ * Work and studies in one section, so a thin history does not spread over two empty
+ * bands. Per job: the role, the employer and what it is (a visitor may not know
+ * Kobler y Asociados is a marketing agency), the period and place, the CV's summary of the
+ * job and then every highlight in plain sight (the client outcomes are the strongest
+ * proof on the page, too valuable to sit behind a "More details"). The related case
+ * studies close each job as small links. Then the studies: the degree, the school and
+ * its place, and the period, semester and expected graduation on one wrapping line.
  */
 export async function ExperienceSection() {
   const locale = await getCurrentLocale();
@@ -25,7 +28,7 @@ export async function ExperienceSection() {
     <PageSection id={homeSectionIds.experience} title={labels.sectionTitle}>
       <ol className="flex flex-col gap-16">
         {workExperience.map((job) => {
-          const [firstHighlight, ...otherHighlights] = job.highlights;
+          const [summary, ...highlights] = job.highlights;
           const relatedProjects = job.relatedProjectSlugs
             .map((slug) => getProjectBySlug(slug))
             .filter((project): project is Project => project !== undefined);
@@ -33,47 +36,73 @@ export async function ExperienceSection() {
           return (
             <li key={job.id}>
               <article>
-                <h3 className="font-display text-subtitle font-bold">
+                <h3
+                  data-build="type"
+                  data-build-tag="h3"
+                  className="font-display text-subtitle font-bold"
+                >
                   {localize(job.role, locale)}
                 </h3>
-                <p className="mt-1">{job.organization}</p>
-                <p className="mt-1 text-small text-muted">
+                <p data-build="type" data-build-tag="p" className="mt-1">
+                  {job.organization}
+                  {job.organizationDescription ? (
+                    <span className="text-muted">
+                      , {localize(job.organizationDescription, locale)}
+                    </span>
+                  ) : null}
+                </p>
+                <p
+                  data-build="type"
+                  data-build-tag="p.fecha"
+                  className="mt-1 text-small text-muted"
+                >
                   {formatDateRange(job.period, locale, labels.present)},{" "}
                   {localize(job.location, locale)}
                 </p>
 
-                {firstHighlight ? (
-                  <p className="mt-5 max-w-prose">
-                    {localize(firstHighlight, locale)}
+                {summary ? (
+                  <p
+                    data-build="type"
+                    data-build-tag="p"
+                    className="mt-5 max-w-[60ch] text-heading"
+                  >
+                    {localize(summary, locale)}
                   </p>
                 ) : null}
 
-                {otherHighlights.length > 0 ? (
-                  <details className="group mt-3">
-                    <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 font-bold text-link [&::-webkit-details-marker]:hidden">
-                      {labels.moreDetails}
-                      <ChevronDownIcon className="size-4 transition-transform group-open:rotate-180" />
-                    </summary>
-                    <ul className="mt-3 flex max-w-prose flex-col gap-3">
-                      {otherHighlights.map((highlight) => (
-                        <li key={highlight.es} className="flex gap-3">
-                          <span
-                            aria-hidden="true"
-                            className="mt-[0.6em] size-1.5 shrink-0 rotate-45 bg-accent"
-                          />
-                          <span>{localize(highlight, locale)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
+                {highlights.length > 0 ? (
+                  <ul className="mt-4 flex max-w-[60ch] flex-col gap-3">
+                    {highlights.map((highlight) => (
+                      <li
+                        key={highlight.es}
+                        data-build="type"
+                        data-build-tag="li"
+                        className="flex gap-3"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="mt-[0.6em] size-1.5 shrink-0 rotate-45 bg-accent"
+                        />
+                        <span>{localize(highlight, locale)}</span>
+                      </li>
+                    ))}
+                  </ul>
                 ) : null}
 
                 {relatedProjects.length > 0 ? (
                   <>
-                    <h4 className="mt-8 text-small font-bold text-muted">
+                    <h4
+                      data-build="type"
+                      data-build-tag="h4"
+                      className="mt-8 text-small font-bold text-muted"
+                    >
                       {labels.relatedProjects}
                     </h4>
-                    <ul className="mt-2 flex flex-col">
+                    <ul
+                      data-build="drag"
+                      data-build-tag="ul.casos"
+                      className="mt-1 flex flex-col text-small"
+                    >
                       {relatedProjects.map((project) => (
                         <li key={project.slug}>
                           <Link
@@ -92,6 +121,38 @@ export async function ExperienceSection() {
           );
         })}
       </ol>
+
+      <div className="mt-14 flex flex-col gap-10 border-t border-hairline pt-10">
+        {education.map((studies) => (
+          <article key={studies.id}>
+            <h3
+              data-build="type"
+              data-build-tag="h3"
+              className="font-display text-subtitle font-bold"
+            >
+              {localize(studies.degree, locale)}
+            </h3>
+            <p data-build="type" data-build-tag="p" className="mt-1">
+              {studies.institution}, {localize(studies.location, locale)}
+            </p>
+            <ul
+              data-build="drag"
+              data-build-tag="ul.datos"
+              className="mt-1 flex flex-wrap gap-x-6 gap-y-1 text-small text-muted"
+            >
+              <li>{formatDateRange(studies.period, locale, labels.present)}</li>
+              {studies.note ? <li>{localize(studies.note, locale)}</li> : null}
+              {studies.expectedGraduation ? (
+                <li>
+                  {dictionary.education.expectedGraduation}
+                  {labelColon(locale)}{" "}
+                  {formatYearMonth(studies.expectedGraduation, locale)}
+                </li>
+              ) : null}
+            </ul>
+          </article>
+        ))}
+      </div>
     </PageSection>
   );
 }

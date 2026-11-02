@@ -62,6 +62,8 @@ export interface WorkExperience {
   id: string;
   role: LocalizedText;
   organization: string;
+  /** What the employer is ("marketing agency"), for visitors who do not know it. */
+  organizationDescription?: LocalizedText;
   location: LocalizedText;
   period: DateRange;
   /** Short bullet points: the CV facts, condensed for the Experience section. */
@@ -106,7 +108,7 @@ export type ProjectStatus =
 
 /**
  * Who did the work, shown on cards and case studies: freelance work, team work at Kobler
- * ("Colaboración con Kobler") or work Kevin did alone for Kobler. See getProjectCredit.
+ * ("En equipo en Kobler y Asociados") or work Kevin did alone at Kobler, where he was employed. See getProjectCredit.
  */
 export type ProjectCredit = "freelance" | "kobler-team" | "kobler-individual";
 
@@ -172,7 +174,11 @@ export interface Project {
   /** URL segment: /[lang]/projects/[slug]. Lowercase words joined by hyphens. */
   slug: string;
   name: LocalizedText;
-  client: string;
+  /**
+   * Who the work was for, shown in the case study's facts and the share image. Leave it
+   * out when the client must not be named: the facts then skip the row.
+   */
+  client?: string;
   category: ProjectCategory;
   kind: ProjectKind;
   /** Where the work happened, e.g. "Freelance" or the employer's name. */

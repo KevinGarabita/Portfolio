@@ -84,7 +84,7 @@ Medido el 10 de octubre de 2026, antes del rediseño del 12 de octubre, con Ligh
   - Por eso volvieron todos. No cuestan nada: el navegador elige el candidato más chico que cubre el tamaño dibujado, así que nunca baja uno de más.
   - Regla: **no quites anchos de `deviceSizes` ni de `imageSizes`**. Solo agrega.
 - **`sizes` igual al ancho con que se dibuja cada imagen**:
-  - la foto de la portada, el ancho de su columna en cada punto de quiebre: 13rem debajo de 360 px, 15rem en la mayoría de los teléfonos, 20rem desde `sm`, 37vw desde `md`, 30rem desde 1280 px y 33rem desde 1800 px, y 12rem en pantallas de hasta 30rem de alto;
+  - la foto de la portada, el ancho de su columna en cada punto de quiebre: 12rem debajo de 360 px, 13rem en la mayoría de los teléfonos (antes 13rem y 15rem; se achicó el 2 de noviembre de 2026 para que la disponibilidad y los dos botones quepan en la primera pantalla), 20rem desde `sm`, 37vw desde `md`, 30rem desde 1280 px y 33rem desde 1800 px, y 12rem en pantallas de hasta 30rem de alto;
   - las tarjetas, el ancho de su columna menos márgenes y separaciones, y un 11 % más cuando la captura es 16:9 y llena recortada el marco 16:10 (`ProjectVisual`);
   - las miniaturas de la galería, media fila en teléfono y un cuarto desde `sm` las capturas de teléfono (antes pedían el ancho completo: un archivo de 750 px para 315 px de pantalla), y la captura de escritorio que comparte fila con capturas de teléfono, que se estira a su alto y se dibuja más ancha que media fila (antes quedaba borrosa a 1x);
   - la vista ampliada, nunca más ancha que el archivo.
@@ -121,3 +121,16 @@ Comprobado con scripts de Puppeteer y axe-core 4.14 que viven fuera del reposito
 - Los colores de los bordes semitransparentes se recalcularon con `estimate_foreground_ml` de `pymatting`, para que la pared blanca y la tele no dejen un halo claro u oscuro alrededor del pelo; el alfa se ajustó apenas (umbral 0.04, gamma 1.15).
 - PNG con alfa completo (sin paleta, que dañaría los bordes del pelo), 900 × 1024, unos 880 KB. El navegador recibe la versión que optimiza `next/image`: AVIF (o WebP si no lo admite) del ancho que pide `sizes`; en un teléfono de 412 px son 480 px y unos 16 KB.
 - La foto original se queda: la usan los datos estructurados.
+
+## Animación de construcción de la home
+
+Un enjambre de cursores "construye" la home al hacer scroll (`src/components/scroll-build/`). La referencia de comportamiento es el prototipo `docs/scroll-build-reference.html`; el diseño del sitio no cambia, la animación es una capa encima.
+
+- **El HTML no cambia.** Las secciones siguen siendo Server Components con todo su texto; solo llevan `data-build="type|draw|resize|drag|click|line"` y `data-build-tag`. Sin JavaScript, con `prefers-reduced-motion: reduce` o ya vista en la sesión (`sessionStorage`), la página es la de siempre.
+- **Sin parpadeo.** Un script inline en `<head>` (`ScrollBuildScript`) pone `html.sb` (el plano azul) y `html.sb-intro` antes del primer paint, solo en la home. Si JavaScript no llega en 8 s, el mismo script quita el plano azul. `<html>` lleva `suppressHydrationWarning` por esas clases.
+- **Un solo `requestAnimationFrame`** escribe `transform`, `clip-path`, `opacity` y atributos directo al DOM; nada pasa por estado de React. El bucle duerme cuando no hay nada que mover y despierta con el scroll.
+- **Texto que se escribe:** el original queda en su lugar (transparente) y una copia con `aria-hidden` encima se escribe letra por letra, así el lector de pantalla siempre lee el texto completo y las líneas no se reacomodan.
+- **CLS 0.** Las cajas de plano azul ocupan el tamaño real, todo se mueve con `transform`, y las manijas de la caja de selección también (con `right`/`bottom` contaban como layout shift). El título de cada tarjeta lleva `data-build-static`: su enlace se estira sobre toda la tarjeta, y si el título se volviera `position: relative` ese overlay cambiaría de tamaño al terminar (medido: 0.085 de CLS).
+- **Sin cuadrícula de fondo.** El prototipo pinta una retícula y una regla en cada sección; se quitó porque no se veía bien sobre el sitio.
+- **LCP.** Lighthouse 12 (móvil, `next start` local, tres corridas en `/es` y `/en`, 2 de noviembre de 2026): rendimiento 95, accesibilidad 100, CLS 0, TBT de 20 a 40 ms, LCP de 2.9 a 3.0 s. El LCP que mide es el "K." de la intro, no la foto. En visitas reales la foto aparece cuando un cursor la dibuja (unos segundos después), así que el LCP de campo de la primera visita de cada sesión puede ser mayor si el visitante no interactúa antes.
+- Las constantes ajustables (cursores, colores, duraciones, umbral de scroll, `REPLAY_PER_SESSION`) están en `src/components/scroll-build/config.ts`. `?debug-build` muestra el estado y un botón "Repetir".

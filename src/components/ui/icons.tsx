@@ -231,22 +231,3 @@ export function ExpandIcon({ className }: IconProps) {
 }
 
 /** A browser window: stands in for a web application without screenshots. */
-export function AppWindowIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <rect x="3" y="4" width="18" height="16" rx="2" />
-      <path d="M3 9h18M6.5 6.5h.01M9 6.5h.01M7 13h6M7 16h10" />
-    </Icon>
-  );
-}
-
-/** Two nodes joined by a line: stands in for an automation without screenshots. */
-export function WorkflowIcon({ className }: IconProps) {
-  return (
-    <Icon className={className}>
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
-      <path d="M10 6.5h4.5a2 2 0 0 1 2 2V14" />
-    </Icon>
-  );
-}

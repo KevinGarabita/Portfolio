@@ -10,6 +10,7 @@ export const spanishDictionary = {
     experience: "Experiencia",
     about: "Sobre mí",
     contact: "Contacto",
+    resume: "CV",
   },
   languageSwitcher: {
     label: "Idioma",
@@ -17,6 +18,10 @@ export const spanishDictionary = {
   hero: {
     photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
     writeOnWhatsApp: "Escríbeme por WhatsApp",
+    facts: {
+      experience: "Experiencia",
+      education: "Formación",
+    },
   },
   resume: {
     view: "Ver CV (PDF)",
@@ -27,7 +32,7 @@ export const spanishDictionary = {
     allProjectsPage: {
       title: "Proyectos",
       description:
-        "Aplicaciones web, agentes de IA y automatizaciones: proyectos freelance y en colaboración con Kobler y Asociados.",
+        "Aplicaciones web, agentes de IA y automatizaciones: proyectos freelance y de mi trabajo en Kobler y Asociados.",
     },
     filters: {
       label: "Filtrar proyectos",
@@ -50,8 +55,8 @@ export const spanishDictionary = {
     },
     credit: {
       freelance: "Freelance",
-      "kobler-team": "Colaboración con Kobler",
-      "kobler-individual": "Hecho para Kobler y Asociados",
+      "kobler-team": "En equipo en Kobler y Asociados",
+      "kobler-individual": "Hecho en Kobler y Asociados",
     },
     facts: {
       client: "Cliente",
@@ -91,13 +96,11 @@ export const spanishDictionary = {
     },
   },
   experience: {
-    sectionTitle: "Experiencia",
+    sectionTitle: "Experiencia y formación",
     present: "actualidad",
     relatedProjects: "Casos de estudio de este trabajo",
-    moreDetails: "Más detalles",
   },
   education: {
-    sectionTitle: "Formación",
     expectedGraduation: "Titulación prevista",
   },
   skills: {
@@ -114,9 +117,19 @@ export const spanishDictionary = {
     lead: "Cuéntame qué quieres desarrollar o automatizar.",
     email: "Correo",
     whatsApp: "WhatsApp",
-    sendEmail: "Enviar correo",
     location: "Ubicación",
     profiles: "Perfiles",
+  },
+  scrollBuild: {
+    // Pills of the home page's build cursors (components/scroll-build); decorative.
+    actions: {
+      type: "escribiendo",
+      draw: "insertando imagen",
+      resize: "redimensionando",
+      drag: "moviendo",
+      click: "aplicando estilo",
+      line: "trazando",
+    },
   },
   notFound: {
     title: "Página no encontrada",
@@ -132,6 +145,8 @@ export const spanishDictionary = {
       status: {
         "open-to-offers": "Abierto a ofertas de empleo",
         "open-to-freelance": "Disponible para proyectos freelance",
+        "open-to-offers-and-freelance":
+          "Abierto a empleo y a proyectos freelance",
       },
       modality: {
         remote: "remoto",

@@ -2,10 +2,12 @@ import { sameInEveryLanguage } from "@/i18n/localize";
 import type { Project } from "@/types/content";
 
 /**
- * Team work at Kobler y Asociados, credited as "Colaboración con Kobler": each role says
- * what Kevin built himself. All three are in production (Kevin, 12 October 2026; start
- * dates unknown, so no status note). Sources: Kevin's CV and the n8n workflows of each
- * client, read as they were up to August 2026 (the end of the job). No client data,
+ * Team work at Kobler y Asociados, the marketing agency where Kevin worked (December
+ * 2025 to November 2026), credited as "En equipo en Kobler y Asociados": the agents are
+ * the agency's work for its clients, not Kevin's own projects nor a partnership, and
+ * each role says what Kevin built himself. All three are in production (Kevin, 12
+ * October 2026; start dates unknown, so no status note). Sources: Kevin's CV and the
+ * n8n workflows of each client, read as they were up to August 2026. No client data,
  * credentials or internal links.
  */
 export const koblerProjects: Project[] = [
@@ -22,7 +24,8 @@ export const koblerProjects: Project[] = [
     context: sameInEveryLanguage("Kobler y Asociados"),
     status: "in-production",
     kind: "ai-automation",
-    isFeatured: false,
+    // The one agent on the home page: the hero's AI promise needs a live agent as proof.
+    isFeatured: true,
     teamSetup: "team",
     tagline: {
       es: "Cotiza motos por WhatsApp, filtra prospectos y actualiza el inventario sin captura manual.",
@@ -49,10 +52,10 @@ export const koblerProjects: Project[] = [
       fr: "Quand un message arrive, GoHighLevel l'envoie à n8n et l'agent répond avec un modèle d'OpenAI. Il consulte à ce moment-là les modèles, prix, couleurs et offres dans la boutique WooCommerce : il ne les invente donc pas. Si le client veut un devis, l'agent lui demande ses coordonnées, lui montre un pré-devis à confirmer et génère le devis dans GoHighLevel. Pour les stocks, le PDF arrive par WhatsApp, un modèle d'IA extrait les quantités de chaque modèle et couleur, et le flux les enregistre par succursale dans WooCommerce via son API REST.",
     },
     role: {
-      es: "Colaboración con el equipo de Kobler. Mi aporte: construí en n8n el agente y el flujo de inventario, los cuidé en producción con monitoreo y corrección de fallas, y participé en las reuniones con el cliente para definir las reglas de negocio y anticipar casos borde.",
-      en: "A collaboration with the Kobler team. My part: I built the agent and the inventory flow in n8n, looked after them in production by monitoring them and fixing issues, and joined client meetings to define the business rules and anticipate edge cases.",
-      pt: "Colaboração com a equipe da Kobler. Minha parte: construí no n8n o agente e o fluxo de estoque, cuidei deles em produção com monitoramento e correção de falhas e participei das reuniões com o cliente para definir as regras de negócio e antecipar casos extremos.",
-      fr: "Une collaboration avec l'équipe de Kobler. Ma contribution : j'ai construit dans n8n l'agent et le flux de stocks, je les ai suivis en production en surveillant leur fonctionnement et en corrigeant les incidents, et j'ai participé aux réunions avec le client pour définir les règles métier et anticiper les cas limites.",
+      es: "Proyecto del equipo de Kobler y Asociados, donde trabajé. Mi aporte: construí en n8n el agente y el flujo de inventario, los cuidé en producción con monitoreo y corrección de fallas, y participé en las reuniones con el cliente para definir las reglas de negocio y anticipar casos borde.",
+      en: "A Kobler y Asociados team project, from my time working there. My part: I built the agent and the inventory flow in n8n, looked after them in production by monitoring them and fixing issues, and joined client meetings to define the business rules and anticipate edge cases.",
+      pt: "Projeto da equipe da Kobler y Asociados, onde trabalhei. Minha parte: construí no n8n o agente e o fluxo de estoque, cuidei deles em produção com monitoramento e correção de falhas e participei das reuniões com o cliente para definir as regras de negócio e antecipar casos extremos.",
+      fr: "Un projet de l'équipe de Kobler y Asociados, où j'ai travaillé. Ma contribution : j'ai construit dans n8n l'agent et le flux de stocks, je les ai suivis en production en surveillant leur fonctionnement et en corrigeant les incidents, et j'ai participé aux réunions avec le client pour définir les règles métier et anticiper les cas limites.",
     },
     results: [
       {
@@ -180,7 +183,7 @@ export const koblerProjects: Project[] = [
         fr: "Si la boutique a un emplacement de stock que le flux ne connaît pas, il s'arrête sans rien écrire, car une mise à jour sans lui effacerait le stock de cet emplacement.",
       },
     ],
-    lastUpdated: "2026-10-12",
+    lastUpdated: "2026-11-02",
   },
   {
     slug: "neorgana-agent",
@@ -222,10 +225,10 @@ export const koblerProjects: Project[] = [
       fr: "La solution repose sur trois flux n8n connectés à GoHighLevel. Le premier est l'agent WhatsApp : avec un modèle d'OpenAI, il échange avec le patient, recueille sa pathologie, sa langue et sa localisation, et envoie l'agenda du consultant correspondant. Le deuxième se déclenche quand le patient réserve : il crée l'opportunité dans le CRM et la relie à la réunion Zoom. Le troisième se déclenche à la fin de l'appel vidéo : il vérifie si la consultation a eu lieu, fait passer l'opportunité à l'étape correspondante et déclenche dans GoHighLevel le suivi et le devis.",
     },
     role: {
-      es: "Colaboración con el equipo de Kobler. Mi aporte: construí en n8n el agente y las automatizaciones de Neorgana, los cuidé en producción con monitoreo y corrección de fallas, y participé en las reuniones con el cliente para definir las reglas de negocio y anticipar casos borde.",
-      en: "A collaboration with the Kobler team. My part: I built Neorgana's agent and automations in n8n, looked after them in production by monitoring them and fixing issues, and joined client meetings to define the business rules and anticipate edge cases.",
-      pt: "Colaboração com a equipe da Kobler. Minha parte: construí no n8n o agente e as automações da Neorgana, cuidei deles em produção com monitoramento e correção de falhas e participei das reuniões com o cliente para definir as regras de negócio e antecipar casos extremos.",
-      fr: "Une collaboration avec l'équipe de Kobler. Ma contribution : j'ai construit dans n8n l'agent et les automatisations de Neorgana, je les ai suivis en production en surveillant leur fonctionnement et en corrigeant les incidents, et j'ai participé aux réunions avec le client pour définir les règles métier et anticiper les cas limites.",
+      es: "Proyecto del equipo de Kobler y Asociados, donde trabajé. Mi aporte: construí en n8n el agente y las automatizaciones de Neorgana, los cuidé en producción con monitoreo y corrección de fallas, y participé en las reuniones con el cliente para definir las reglas de negocio y anticipar casos borde.",
+      en: "A Kobler y Asociados team project, from my time working there. My part: I built Neorgana's agent and automations in n8n, looked after them in production by monitoring them and fixing issues, and joined client meetings to define the business rules and anticipate edge cases.",
+      pt: "Projeto da equipe da Kobler y Asociados, onde trabalhei. Minha parte: construí no n8n o agente e as automações da Neorgana, cuidei deles em produção com monitoramento e correção de falhas e participei das reuniões com o cliente para definir as regras de negócio e antecipar casos extremos.",
+      fr: "Un projet de l'équipe de Kobler y Asociados, où j'ai travaillé. Ma contribution : j'ai construit dans n8n l'agent et les automatisations de Neorgana, je les ai suivis en production en surveillant leur fonctionnement et en corrigeant les incidents, et j'ai participé aux réunions avec le client pour définir les règles métier et anticiper les cas limites.",
     },
     results: [
       {
@@ -355,7 +358,7 @@ export const koblerProjects: Project[] = [
         fr: "Si un rendez-vous change de médecin, Zoom crée une autre réunion. Le flux des rendez-vous le détecte et relie de nouveau la nouvelle réunion à son opportunité.",
       },
     ],
-    lastUpdated: "2026-10-12",
+    lastUpdated: "2026-11-02",
   },
   {
     slug: "lamau-beach-automation",
@@ -397,10 +400,10 @@ export const koblerProjects: Project[] = [
       fr: "L'agent repose sur la même base que les autres agents de Kobler : GoHighLevel envoie les messages WhatsApp à n8n et un modèle d'OpenAI répond. Pour Lamau Beach, il dispose de ses propres outils : l'un vérifie la disponibilité du logement aux dates demandées, un autre calcule le devis avec le prix par nuit de la saison, et d'autres répondent aux questions fréquentes et aux conditions d'annulation.",
     },
     role: {
-      es: "Colaboración con el equipo de Kobler. Mi aporte: automaticé la consulta de disponibilidad de cada estancia de Airbnb y el cálculo del precio por noche según la temporada, y monitoreé los flujos en producción.",
-      en: "A collaboration with the Kobler team. My part: I automated the availability check for each Airbnb stay and the nightly rate calculation by season, and monitored the flows in production.",
-      pt: "Colaboração com a equipe da Kobler. Minha parte: automatizei a consulta de disponibilidade de cada hospedagem do Airbnb e o cálculo da diária conforme a temporada, e monitorei os fluxos em produção.",
-      fr: "Une collaboration avec l'équipe de Kobler. Ma contribution : j'ai automatisé la vérification de disponibilité de chaque logement Airbnb et le calcul du prix par nuit selon la saison, et j'ai surveillé les flux en production.",
+      es: "Proyecto del equipo de Kobler y Asociados, donde trabajé. Mi aporte: automaticé la consulta de disponibilidad de cada estancia de Airbnb y el cálculo del precio por noche según la temporada, y monitoreé los flujos en producción.",
+      en: "A Kobler y Asociados team project, from my time working there. My part: I automated the availability check for each Airbnb stay and the nightly rate calculation by season, and monitored the flows in production.",
+      pt: "Projeto da equipe da Kobler y Asociados, onde trabalhei. Minha parte: automatizei a consulta de disponibilidade de cada hospedagem do Airbnb e o cálculo da diária conforme a temporada, e monitorei os fluxos em produção.",
+      fr: "Un projet de l'équipe de Kobler y Asociados, où j'ai travaillé. Ma contribution : j'ai automatisé la vérification de disponibilité de chaque logement Airbnb et le calcul du prix par nuit selon la saison, et j'ai surveillé les flux en production.",
     },
     results: [
       {
@@ -489,6 +492,6 @@ export const koblerProjects: Project[] = [
         tool: "WhatsApp",
       },
     ],
-    lastUpdated: "2026-10-12",
+    lastUpdated: "2026-11-02",
   },
 ];

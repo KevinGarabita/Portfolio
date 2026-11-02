@@ -2,8 +2,9 @@ import { sameInEveryLanguage } from "@/i18n/localize";
 import type { Project } from "@/types/content";
 
 /**
- * Field report manager built for UxmalTechnologies (freelance). Finished in August 2026
- * and never used in production, so no text here may suggest it is live or in use.
+ * Field report manager built freelance. Finished in August 2026 and never used in
+ * production, so no text here may suggest it is live or in use. The case study presents
+ * only the software: no text or image here may name the client or show its logo.
  */
 export const fieldReportManager: Project = {
   slug: "field-report-manager",
@@ -13,7 +14,6 @@ export const fieldReportManager: Project = {
     pt: "Gestor de relatórios de campo",
     fr: "Gestionnaire de rapports de terrain",
   },
-  client: "UxmalTechnologies",
   category: "freelance",
   context: sameInEveryLanguage("Freelance"),
   status: "completed-unreleased",
@@ -113,43 +113,43 @@ export const fieldReportManager: Project = {
   integrations: ["Supabase Auth", "Supabase Storage"],
   images: [
     {
-      src: "/images/projects/field-report-manager/supervisor-validation-panel.webp",
+      src: "/images/projects/field-report-manager/validation-panel-overview.webp",
       alt: {
-        es: "Panel de validación del supervisor con datos de ejemplo: contadores de reportes pendientes y liquidados, botón para exportar a Excel y tabla de reportes con descarga de PDF.",
-        en: "Supervisor validation panel with sample data: counts of pending and settled reports, an Excel export button, and a report table with PDF downloads.",
-        pt: "Painel de validação do supervisor com dados de exemplo: contadores de relatórios pendentes e liquidados, botão para exportar para Excel e tabela de relatórios com download do PDF.",
-        fr: "Tableau de validation du superviseur avec des données d'exemple : compteurs de rapports en attente et soldés, bouton d'export vers Excel et tableau des rapports avec téléchargement du PDF.",
+        es: "Panel de validación del supervisor con datos de ejemplo: contadores de solicitudes pendientes y órdenes liquidadas, botón para exportar a Excel y tabla de reportes con ONT, cliente, técnico, estado y PDF.",
+        en: "Supervisor validation panel with sample data: counts of pending requests and settled orders, an Excel export button, and a report table with the ONT, customer, technician, status, and PDF.",
+        pt: "Painel de validação do supervisor com dados de exemplo: contadores de solicitações pendentes e ordens liquidadas, botão para exportar para Excel e tabela de relatórios com ONT, cliente, técnico, status e PDF.",
+        fr: "Tableau de validation du superviseur avec des données d'exemple : compteurs de demandes en attente et d'ordres soldés, bouton d'export vers Excel et tableau des rapports avec ONT, client, technicien, statut et PDF.",
       },
       width: 1440,
       height: 900,
       viewport: "desktop",
     },
     {
-      src: "/images/projects/field-report-manager/technician-report-form.webp",
+      src: "/images/projects/field-report-manager/technician-installation-form.webp",
       alt: {
-        es: "Formulario del técnico en el teléfono con datos de ejemplo: sección de instalación con tecnología, tipo de orden, ONT asignada, distrito, terminal, par y metraje.",
-        en: "Technician form on a phone with sample data: installation section with technology, order type, assigned ONT, district, terminal, pair, and cable length.",
-        pt: "Formulário do técnico no celular com dados de exemplo: seção de instalação com tecnologia, tipo de ordem, ONT atribuída, distrito, terminal, par e metragem.",
-        fr: "Formulaire du technicien sur téléphone avec des données d'exemple : section installation avec technologie, type d'ordre, ONT attribué, district, terminal, paire et longueur de câble.",
+        es: "Formulario del técnico en el teléfono con datos de ejemplo: las secciones de información general y cliente ya completas, y la de instalación abierta con tecnología, tipo de orden, ONT asignada, distrito, terminal, par y metraje.",
+        en: "Technician form on a phone with sample data: the general information and customer sections already complete, and the installation section open with technology, order type, assigned ONT, district, terminal, pair, and cable length.",
+        pt: "Formulário do técnico no celular com dados de exemplo: as seções de informações gerais e cliente já completas, e a de instalação aberta com tecnologia, tipo de ordem, ONT atribuída, distrito, terminal, par e metragem.",
+        fr: "Formulaire du technicien sur téléphone avec des données d'exemple : les sections informations générales et client déjà complètes, et la section installation ouverte avec technologie, type d'ordre, ONT attribué, district, terminal, paire et longueur de câble.",
       },
       width: 750,
       height: 1624,
       viewport: "mobile",
     },
     {
-      src: "/images/projects/field-report-manager/technician-evidence-photos.webp",
+      src: "/images/projects/field-report-manager/technician-evidence-readings.webp",
       alt: {
-        es: "Paso de evidencias en el teléfono con fotos de ejemplo: cada foto tiene su espacio y el botón para enviar a revisión se activa al completar las ocho.",
-        en: "Evidence step on a phone with sample photos: each photo has its own slot, and the submit-for-review button turns on once all eight are in.",
-        pt: "Etapa de comprovações no celular com fotos de exemplo: cada foto tem seu espaço, e o botão para enviar à revisão é ativado quando as oito estão completas.",
-        fr: "Étape des justificatifs sur téléphone avec des photos d'exemple : chaque photo a son emplacement, et le bouton d'envoi en revue s'active une fois les huit ajoutées.",
+        es: "Paso de evidencias en el teléfono con fotos de ejemplo: las lecturas de potencia en la punta y en la terminal, cada una en su espacio y marcada como completada, con el botón para enviar a revisión ya activo.",
+        en: "Evidence step on a phone with sample photos: the power readings at the line end and at the terminal, each in its own slot and marked complete, with the submit-for-review button already on.",
+        pt: "Etapa de comprovações no celular com fotos de exemplo: as leituras de potência na ponta e na terminal, cada uma em seu espaço e marcada como concluída, com o botão para enviar à revisão já ativo.",
+        fr: "Étape des justificatifs sur téléphone avec des photos d'exemple : les mesures de puissance en bout de ligne et au terminal, chacune dans son emplacement et marquée comme terminée, avec le bouton d'envoi en revue déjà actif.",
       },
       width: 750,
       height: 1624,
       viewport: "mobile",
     },
     {
-      src: "/images/projects/field-report-manager/supervisor-report-review.webp",
+      src: "/images/projects/field-report-manager/supervisor-report-evidence.webp",
       alt: {
         es: "Revisión de un reporte con datos de ejemplo: datos del expediente, del cliente y del personal asignado junto a las ocho fotos de evidencia.",
         en: "Review of a report with sample data: case, customer, and assigned staff details next to the eight evidence photos.",
@@ -214,5 +214,5 @@ export const fieldReportManager: Project = {
       fr: "La génération du PDF et l'envoi des photos ont des limites de simultanéité et de fréquence ; quand le serveur est occupé, il répond par un message clair invitant à réessayer au lieu de rester bloqué.",
     },
   ],
-  lastUpdated: "2026-10-12",
+  lastUpdated: "2026-11-02",
 };

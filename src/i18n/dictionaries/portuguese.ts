@@ -12,6 +12,7 @@ export const portugueseDictionary: Dictionary = {
     experience: "Experiência",
     about: "Sobre mim",
     contact: "Contato",
+    resume: "Currículo",
   },
   languageSwitcher: {
     label: "Idioma",
@@ -19,6 +20,10 @@ export const portugueseDictionary: Dictionary = {
   hero: {
     photoAlt: "Kevin Garabita, desenvolvedor backend, IA e automação",
     writeOnWhatsApp: "Fale comigo no WhatsApp",
+    facts: {
+      experience: "Experiência",
+      education: "Formação",
+    },
   },
   resume: {
     // The Portuguese pages link to the Spanish CV (lib/resume.ts) until one in Portuguese exists.
@@ -30,7 +35,7 @@ export const portugueseDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projetos",
       description:
-        "Aplicações web, agentes de IA e automações: projetos freelance e em colaboração com a Kobler y Asociados.",
+        "Aplicações web, agentes de IA e automações: projetos freelance e do meu trabalho na Kobler y Asociados.",
     },
     filters: {
       label: "Filtrar projetos",
@@ -53,8 +58,8 @@ export const portugueseDictionary: Dictionary = {
     },
     credit: {
       freelance: "Freelance",
-      "kobler-team": "Colaboração com a Kobler",
-      "kobler-individual": "Feito para a Kobler y Asociados",
+      "kobler-team": "Em equipe na Kobler y Asociados",
+      "kobler-individual": "Feito na Kobler y Asociados",
     },
     facts: {
       client: "Cliente",
@@ -94,13 +99,11 @@ export const portugueseDictionary: Dictionary = {
     },
   },
   experience: {
-    sectionTitle: "Experiência",
+    sectionTitle: "Experiência e formação",
     present: "atual",
     relatedProjects: "Estudos de caso deste trabalho",
-    moreDetails: "Mais detalhes",
   },
   education: {
-    sectionTitle: "Formação",
     expectedGraduation: "Conclusão prevista",
   },
   skills: {
@@ -117,9 +120,18 @@ export const portugueseDictionary: Dictionary = {
     lead: "Me conte o que você quer desenvolver ou automatizar.",
     email: "E-mail",
     whatsApp: "WhatsApp",
-    sendEmail: "Enviar e-mail",
     location: "Localização",
     profiles: "Perfis",
+  },
+  scrollBuild: {
+    actions: {
+      type: "digitando",
+      draw: "inserindo imagem",
+      resize: "redimensionando",
+      drag: "movendo",
+      click: "aplicando estilo",
+      line: "traçando",
+    },
   },
   notFound: {
     title: "Página não encontrada",
@@ -135,6 +147,8 @@ export const portugueseDictionary: Dictionary = {
       status: {
         "open-to-offers": "Aberto a propostas de emprego",
         "open-to-freelance": "Disponível para projetos freelance",
+        "open-to-offers-and-freelance":
+          "Aberto a vagas de emprego e a projetos freelance",
       },
       modality: {
         remote: "remoto",

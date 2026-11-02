@@ -25,6 +25,8 @@ const nextConfig: NextConfig = {
     // The root layout lives under app/[lang], so unknown URLs need a 404 page of their own
     // (app/global-not-found.tsx). See docs/decisions.md for why Cache Components stays off.
     globalNotFound: true,
+    // Lets coding agents know this app only wants security upgrades of Next.js.
+    agentUpgrade: "security",
   },
 };
 

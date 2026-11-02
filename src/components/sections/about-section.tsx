@@ -30,13 +30,19 @@ export async function AboutSection() {
       id={homeSectionIds.about}
       title={dictionary.about.sectionTitle}
     >
-      <div className="flex max-w-prose flex-col gap-4">
+      <div className="flex max-w-[60ch] flex-col gap-4">
         {profile.about.map((paragraph) => (
-          <p key={paragraph.es}>{localize(paragraph, locale)}</p>
+          <p key={paragraph.es} data-build="type" data-build-tag="p">
+            {localize(paragraph, locale)}
+          </p>
         ))}
       </div>
 
-      <h3 className="mt-12 font-display text-subtitle font-bold">
+      <h3
+        data-build="type"
+        data-build-tag="h3"
+        className="mt-12 font-display text-subtitle font-bold"
+      >
         {dictionary.skills.sectionTitle}
       </h3>
       <dl className="mt-4 border-t border-hairline">
@@ -48,6 +54,8 @@ export async function AboutSection() {
           return (
             <div
               key={group.id}
+              data-build="drag"
+              data-build-tag="div.grupo"
               className="grid gap-x-6 gap-y-3 border-b border-hairline py-4 sm:grid-cols-[11rem_minmax(0,1fr)]"
             >
               <dt className="text-small font-bold text-muted sm:pt-0.5">
@@ -69,7 +77,11 @@ export async function AboutSection() {
           );
         })}
         {languages.length > 0 ? (
-          <div className="grid gap-x-6 gap-y-3 border-b border-hairline py-4 sm:grid-cols-[11rem_minmax(0,1fr)]">
+          <div
+            data-build="drag"
+            data-build-tag="div.grupo"
+            className="grid gap-x-6 gap-y-3 border-b border-hairline py-4 sm:grid-cols-[11rem_minmax(0,1fr)]"
+          >
             <dt className="text-small font-bold text-muted sm:pt-0.5">
               {dictionary.about.facts.languages}
             </dt>
