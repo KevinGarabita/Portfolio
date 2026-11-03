@@ -11,6 +11,7 @@ export const englishDictionary: Dictionary = {
     projects: "Projects",
     experience: "Experience",
     about: "About",
+    services: "Services",
     contact: "Contact",
     resume: "Résumé",
   },
@@ -20,9 +21,17 @@ export const englishDictionary: Dictionary = {
   hero: {
     photoAlt: "Kevin Garabita, backend, AI and automation engineer",
     writeOnWhatsApp: "Message me on WhatsApp",
-    facts: {
-      experience: "Experience",
-      education: "Education",
+    servicesLink: "Run a business? See my services",
+    stats: {
+      label: "At a glance",
+      agents: "AI agents on WhatsApp, built as a team",
+      inProduction: "projects in production",
+      experience: (organization: string) =>
+        `building AI and automation at ${organization}`,
+      graduation: (institution: string) =>
+        `expected graduation, ${institution}`,
+      years: (count: number) => (count === 1 ? "1 year" : `${count} years`),
+      months: (count: number) => (count === 1 ? "1 month" : `${count} months`),
     },
   },
   resume: {
@@ -117,20 +126,26 @@ export const englishDictionary: Dictionary = {
   contact: {
     sectionTitle: "Contact",
     lead: "Tell me what you want to build or automate.",
+    homeLead: "Hiring for your team, or have a project in mind?",
+    servicesPrompt: "Need a system or an AI agent for your business?",
+    servicesLink: "See services",
     email: "Email",
     whatsApp: "WhatsApp",
     location: "Location",
     profiles: "Profiles",
   },
-  scrollBuild: {
-    actions: {
-      type: "typing",
-      draw: "inserting image",
-      resize: "resizing",
-      drag: "moving",
-      click: "applying style",
-      line: "tracing",
-    },
+  services: {
+    title: "Services",
+    lead: "AI agents, automations and web applications built around your business, backed by real projects.",
+    listLabel: "What I can build for you",
+    includes: "Includes",
+    examples: "Example projects",
+    processTitle: "How we work",
+    pricingTitle: "How much does it cost?",
+    pricingText:
+      "It depends on what we build. Tell me what you need and I will send you a quote with the scope, the timeline and the price.",
+    recruiterPrompt: "Looking for a developer for your team?",
+    recruiterLink: "See my profile and résumé",
   },
   notFound: {
     title: "Page not found",

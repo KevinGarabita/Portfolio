@@ -45,6 +45,16 @@ export function getProjectsShareCard(locale: Locale): ShareCardText {
   };
 }
 
+export function getServicesShareCard(locale: Locale): ShareCardText {
+  const pageTexts = dictionariesByLocale[locale].services;
+
+  return {
+    title: pageTexts.title,
+    subtitle: pageTexts.lead,
+    footer: `${profile.displayName} · ${localize(profile.role, locale)}`,
+  };
+}
+
 export function getProjectShareCard(
   project: Project,
   locale: Locale,

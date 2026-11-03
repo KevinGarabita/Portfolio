@@ -41,11 +41,11 @@ function rememberLocale(locale: Locale) {
  *
  * Disclosure pattern, like the project filters: the button has aria-expanded and the
  * options are plain links, reached with Tab. Escape closes the list and returns focus to
- * the button; a click outside or moving focus out of it also closes it. Below lg the
+ * the button; a click outside or moving focus out of it also closes it. Below xl the
  * button shrinks to the flag and the language code (EN), so the header row still fits
- * on phones next to the menu and WhatsApp buttons.
+ * on phones next to the menu and WhatsApp buttons, and from lg next to the links.
  *
- * The button's name is "Language: English" from lg and "Language: English, EN" below
+ * The button's name is "Language: English" from xl and "Language: English, EN" below
  * it: the visible code stays part of the name (WCAG 2.5.3), and the parts are separated
  * so neither the name nor the text runs words together.
  */
@@ -123,7 +123,7 @@ export function LanguageSwitcher({
   }
 
   return (
-    <nav aria-label={label} data-build="drag" data-build-tag="nav.idioma">
+    <nav aria-label={label}>
       <div
         ref={containerRef}
         onBlur={closeWhenFocusLeaves}
@@ -145,14 +145,15 @@ export function LanguageSwitcher({
             {label}
             {labelColon(currentLocale)}{" "}
           </span>
-          <span lang={currentLocale} className="max-lg:sr-only">
+          <span lang={currentLocale} className="max-xl:sr-only">
             {localeNames[currentLocale]}
-            {/* Read only below lg, where the code follows: "Español, ES". */}
-            <span className="lg:hidden">,</span>
+            {/* Read only below xl, where the code follows: "Español, ES". */}
+            <span className="xl:hidden">,</span>
           </span>{" "}
-          {/* Below lg the code stands in for the name. It is read too, so the visible
-              text stays part of the button's accessible name. */}
-          <span className="lg:hidden">{currentLocale.toUpperCase()}</span>
+          {/* Below xl (where the header row is full of links) the code stands in for
+              the name. It is read too, so the visible text stays part of the button's
+              accessible name. */}
+          <span className="xl:hidden">{currentLocale.toUpperCase()}</span>
           <ChevronDownIcon
             className={joinClassNames(
               "size-4 text-muted transition-transform",

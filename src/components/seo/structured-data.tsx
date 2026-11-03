@@ -2,6 +2,8 @@ import { getCurrentLocale } from "@/i18n/request-locale";
 import {
   buildHomeStructuredData,
   buildProjectStructuredData,
+  buildProjectsStructuredData,
+  buildServicesStructuredData,
   type StructuredDataGraph,
 } from "@/lib/structured-data";
 import type { Project } from "@/types/content";
@@ -33,5 +35,19 @@ export async function ProjectStructuredData({ project }: { project: Project }) {
     <JsonLd
       data={buildProjectStructuredData(project, await getCurrentLocale())}
     />
+  );
+}
+
+/** The services page: each service offered by Kevin, with its case studies. */
+export async function ServicesStructuredData() {
+  return (
+    <JsonLd data={buildServicesStructuredData(await getCurrentLocale())} />
+  );
+}
+
+/** The projects page: the list of every case study. */
+export async function ProjectsStructuredData() {
+  return (
+    <JsonLd data={buildProjectsStructuredData(await getCurrentLocale())} />
   );
 }

@@ -16,6 +16,12 @@ export const profile: Profile = {
     pt: "Construo sistemas e assistentes de IA que economizam horas de trabalho para o seu negócio",
     fr: "Je crée des systèmes et des assistants d'IA qui font gagner des heures de travail à votre entreprise",
   },
+  heroSubtitleHighlight: {
+    es: "horas de trabajo",
+    en: "hours of work",
+    pt: "horas de trabalho",
+    fr: "heures de travail",
+  },
   about: [
     {
       es: "Estudiante de 7.º semestre de Ingeniería en Desarrollo de Tecnologías y Software. Construyo aplicaciones web de punta a punta con FastAPI, React, TypeScript y Supabase, y desarrollo con Claude Code.",

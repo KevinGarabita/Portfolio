@@ -30,9 +30,24 @@ export const projectsPageDescription: LocalizedText = {
   fr: "Études de cas de Kevin Garabita : applications web (FastAPI, React, Supabase) et agents WhatsApp (n8n, OpenAI), en freelance et chez Kobler y Asociados.",
 };
 
+/** Title of the services page, for clients: what Kevin builds and where. */
+export const servicesPageTitle: LocalizedText = {
+  es: "Agentes de IA, automatización y apps web | Kevin Garabita",
+  en: "AI agents, automation and web apps | Kevin Garabita",
+  pt: "Agentes de IA, automação e apps web | Kevin Garabita",
+  fr: "Agents d'IA, automatisation et apps web | Kevin Garabita",
+};
+
+export const servicesPageDescription: LocalizedText = {
+  es: "Agentes de IA para WhatsApp, automatización de procesos y aplicaciones web a la medida para negocios, desde Mérida, Yucatán. Cotización según tu proyecto.",
+  en: "AI agents for WhatsApp, process automation and custom web applications for businesses, from Mérida, Yucatán, Mexico. Quoted to fit your project.",
+  pt: "Agentes de IA para WhatsApp, automação de processos e aplicações web sob medida para empresas, de Mérida, Yucatán, México. Orçamento conforme o projeto.",
+  fr: "Agents d'IA pour WhatsApp, automatisation des processus et applications web sur mesure pour les entreprises, depuis Mérida, au Mexique. Devis selon le projet.",
+};
+
 /**
  * Last real content change of the home page (profile, experience, education, skills).
  * Update it by hand when that content changes; the sitemap and structured data read it.
  * Projects carry their own `lastUpdated`.
  */
-export const siteLastUpdated: CalendarDate = "2026-11-02";
+export const siteLastUpdated: CalendarDate = "2026-11-03";

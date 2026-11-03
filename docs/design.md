@@ -6,15 +6,17 @@ Los tokens viven en `src/app/globals.css`. Este documento explica para qué sirv
 
 > **Reclutadores y clientes por igual (2 de noviembre de 2026).** Kevin pidió mejorar la UX/UI para dos públicos con el mismo peso: reclutadores y quien busca un desarrollador. Tras una crítica con impeccable (`.impeccable/critique/`), la portada sube el rol a subtítulo, muestra la disponibilidad (empleo y freelance; remoto, híbrido o presencial) y un resumen con el último trabajo y la carrera; las etiquetas flotantes se quitaron a pedido suyo; el agente de Motosureste Suzuki entra a los destacados como prueba de los agentes en producción; Experiencia y Formación son una sola sección con todos los logros a la vista; Contacto ofrece WhatsApp y el CV, y el CV está en el menú. La frase de la portada se queda: Kevin la prefiere. El público y los objetivos están en `PRODUCT.md`.
 
+> **Más gancho, primero el reclutador y sin cursores (3 de noviembre de 2026).** Kevin pidió más gancho y profesionalismo, menos adornos que distraigan, quitar la animación de cursores (pesaba en teléfonos) y que en teléfono la página se vea muy bien; también dar más peso a los reclutadores sin dejar a los clientes. Cambios: neutros cálidos con el mismo naranja; en la portada del teléfono, la foto pequeña junto al nombre, para que la frase, el CV y WhatsApp quepan en la primera pantalla de 390 × 664; las palabras clave de la frase en naranja; **el CV como acción principal** (naranja) y WhatsApp como secundaria con su logo verde; una franja de cifras reales (`src/lib/hero-stats.ts`) en lugar del bloque de último trabajo y carrera; WhatsApp del encabezado con contorno en vez de relleno verde; habilidades como píldoras con logo; casos de estudio de la experiencia como enlaces con marco; y una página nueva para clientes, `/[lang]/services`, donde WhatsApp sí es la acción principal. La frase de la portada se queda, a pedido de Kevin.
+
 > **La foto se queda como estaba (pedido de Kevin, 12 de octubre de 2026).** "Quiero mantener lo de mi foto como estaba antes pero combinándolo como está ahorita el hero." La portada vuelve a mostrar la foto grande de antes del rediseño: el recorte sobre el disco con el degradado, el anillo punteado en órbita con su punto y las tres etiquetas flotantes (FastAPI, n8n, OpenAI API). Su pedido manda sobre la recomendación general de evitar etiquetas flotantes y adornos en movimiento; el resto de la portada nueva se queda (nombre, rol, ubicación, la frase de valor, WhatsApp y el CV, y los proyectos justo después).
 
 ## Principios
 
-- **Primero el trabajo.** La portada es corta: en un escritorio de 1440 × 900 los proyectos empiezan en la primera pantalla; en un teléfono de 390 × 844, la foto, la frase y los dos botones caben en ella y los proyectos siguen justo debajo.
+- **Primero el teléfono.** En un teléfono de 390 × 664 (Safari con sus barras), el nombre, el rol, la foto, la frase y los dos botones caben en la primera pantalla. En escritorio, la portada ocupa la primera pantalla y los proyectos siguen justo debajo de las cifras.
 - **La portada carga el peso.** La foto de Kevin con su disco y la frase de valor (`profile.heroSubtitle`), el texto más grande de la home; todo lo demás es tranquilo y ordenado.
 - **Proyectos sin marco.** Cada proyecto es una captura con su pie de foto, sin panel alrededor. El primero va ancho, así que la lista no es un juego de tarjetas idénticas.
-- **El naranja significa algo**: enlaces, foco, la etiqueta "En producción", el marco de una captura al pasar el cursor y el disco de la foto. El verde de WhatsApp solo está en los botones de WhatsApp. El rojo solo acompaña al naranja en el disco de la foto.
-- **Un solo tema oscuro.** Fondo negro profundo, superficies un poco más claras y texto blanco cálido. No hay tema claro ni variantes `dark:`.
+- **El naranja significa algo**: la acción principal (el CV en la home), enlaces, foco, las palabras clave de la frase de la portada, la etiqueta "En producción", el marco de una captura al pasar el cursor y el disco de la foto. El verde de WhatsApp es solo su logo, salvo en la página de servicios y al final de los casos de estudio, donde WhatsApp es la acción principal y lleva su botón verde. El rojo solo acompaña al naranja en el disco de la foto.
+- **Un solo tema oscuro.** Fondo negro profundo, superficies un poco más claras y texto blanco cálido, todo con un tinte cálido mínimo hacia el naranja (3 de noviembre de 2026): con grises neutros puros el naranja quedaba encima de la página; con neutros cálidos se integra. No hay tema claro ni variantes `dark:`.
 - **El movimiento responde.** Un solo momento orquestado por página (su entrada al cargar) y, a pedido de Kevin, el giro lento del anillo y la flotación de las etiquetas alrededor de su foto; lo demás solo responde a la persona (hover, foco, abrir el menú o "Más detalles"). Solo se animan `transform`, `opacity` y colores; nada mueve el layout, y todo se apaga con "reducir movimiento" del sistema.
 - **Sin muletillas de plantilla**: sin números de sección, sin etiquetas en mayúsculas sobre los títulos, sin fechas en monoespaciada, sin "→" al final de cada enlace y sin textos unidos con puntos medios.
 - **La paleta de fábrica de Tailwind está desactivada** (`--color-*: initial`), igual que la escala de texto, radios y sombras: solo existen los tokens del proyecto. Los componentes no llevan colores sueltos; donde CSS no llega (imágenes para compartir, `themeColor`) se usa `src/lib/brand-colors.ts`, copia de la paleta cruda.
@@ -23,19 +25,21 @@ Los tokens viven en `src/app/globals.css`. Este documento explica para qué sirv
 
 ### Paleta cruda
 
-| Token                  | Valor     | Uso                                                     |
-| ---------------------- | --------- | ------------------------------------------------------- |
-| `black-deep`           | `#0a0a0a` | Fondo de la página                                      |
-| `black-surface`        | `#141414` | Pasos del flujo, miniaturas, hover de botones y filtros |
-| `black-surface-strong` | `#1c1c1c` | Fondo de las capturas, hover de menús                   |
-| `black-line`           | `#2a2a2a` | Divisores, marco de las capturas en reposo              |
-| `gray-control`         | `#737373` | Bordes de controles (botón secundario, íconos de redes) |
-| `gray-text`            | `#a3a3a3` | Texto secundario                                        |
-| `white-warm`           | `#f5f5f5` | Texto y títulos                                         |
-| `orange-vibrant`       | `#ff6a00` | Acento de trabajo                                       |
-| `orange-light`         | `#ff8a3d` | Hover del relleno naranja                               |
-| `red-signal`           | `#e5252a` | Solo decoración: extremo del degradado del disco        |
-| `whatsapp-green`       | `#25d366` | Botones de WhatsApp (con texto negro)                   |
+| Token                  | Valor     | Uso                                                      |
+| ---------------------- | --------- | -------------------------------------------------------- |
+| `black-deep`           | `#0b0a09` | Fondo de la página                                       |
+| `black-surface`        | `#151311` | Píldoras de habilidades, pasos del flujo, hovers         |
+| `black-surface-strong` | `#1e1b18` | Fondo de las capturas, hover de menús                    |
+| `black-line`           | `#2c2824` | Divisores, marco de las capturas en reposo               |
+| `gray-control`         | `#7c746d` | Bordes de controles (botón secundario, íconos de redes)  |
+| `gray-text`            | `#aaa39b` | Texto secundario                                         |
+| `white-warm`           | `#f6f3ee` | Texto y títulos                                          |
+| `orange-vibrant`       | `#ff6a00` | Acento de trabajo                                        |
+| `orange-light`         | `#ff8a3d` | Hover del relleno naranja                                |
+| `red-signal`           | `#e5252a` | Solo decoración: extremo del degradado del disco         |
+| `whatsapp-green`       | `#25d366` | Logo de WhatsApp; botón verde (texto negro) en servicios |
+
+Antes del 3 de noviembre de 2026 los neutros eran grises puros (`#0a0a0a`, `#141414`, `#1c1c1c`, `#2a2a2a`, `#737373`, `#a3a3a3`, `#f5f5f5`).
 
 ### Roles
 
@@ -47,28 +51,30 @@ Texto (mínimo 4.5:1):
 
 | Par                                                                | Contraste |
 | ------------------------------------------------------------------ | --------- |
-| Texto `#f5f5f5` sobre la página                                    | 18.16:1   |
-| Texto secundario `#a3a3a3` sobre la página                         | 7.85:1    |
-| Naranja sobre la página (enlaces, "Más detalles")                  | 6.90:1    |
-| Negro sobre naranja ("En producción", botón principal)             | 6.90:1    |
+| Texto `#f6f3ee` sobre la página                                    | 17.87:1   |
+| Texto secundario `#aaa39b` sobre la página                         | 7.93:1    |
+| Naranja sobre la página (enlaces, palabras clave de la portada)    | 6.89:1    |
+| Negro sobre naranja ("En producción", botón principal)             | 6.89:1    |
 | Negro sobre el naranja del hover `#ff8a3d`                         | 8.44:1    |
-| Negro sobre el verde de WhatsApp                                   | 9.98:1    |
+| Negro sobre el verde de WhatsApp                                   | 9.97:1    |
 | Negro sobre el verde del hover `#4ae082`                           | 11.57:1   |
-| Texto sobre `raised` (hover del botón secundario)                  | 16.90:1   |
-| Texto sobre `raised-strong` (hover de las filas del menú)          | 15.63:1   |
-| Texto secundario sobre `raised` (herramienta de un paso del flujo) | 7.30:1    |
-| Texto sobre el brillo de la portada en su punto más intenso        | 15.61:1   |
-| Texto secundario sobre ese brillo                                  | 6.75:1    |
-| Enlace del menú (gris) con el encabezado sobre una captura blanca  | 5.31:1    |
-| Texto blanco con el encabezado sobre una captura blanca            | 12.28:1   |
+| Texto sobre `raised` (píldoras, hover del botón secundario)        | 16.74:1   |
+| Texto sobre `raised-strong` (hover de las filas del menú)          | 15.49:1   |
+| Texto secundario sobre `raised` (herramienta de un paso del flujo) | 7.43:1    |
+| Texto sobre el brillo de la portada en su punto más intenso        | 15.28:1   |
+| Texto secundario sobre ese brillo                                  | 6.78:1    |
+| Enlace del menú (gris) con el encabezado sobre una captura blanca  | 5.38:1    |
+| Texto blanco con el encabezado sobre una captura blanca            | 12.12:1   |
 
 Componentes y bordes (mínimo 3:1):
 
 | Par                                                           | Contraste |
 | ------------------------------------------------------------- | --------- |
-| Borde `#737373` del botón secundario, los filtros y las redes | 4.18:1    |
-| Foco, subrayado del menú y marco naranja (capturas, enlaces)  | 6.90:1    |
-| Naranja con el encabezado sobre una captura blanca            | 4.66:1    |
+| Borde `#7c746d` del botón secundario, los filtros y las redes | 4.31:1    |
+| Foco, subrayado del menú y marco naranja (capturas, enlaces)  | 6.89:1    |
+| Naranja con el encabezado sobre una captura blanca            | 4.67:1    |
+
+"Con el encabezado sobre una captura blanca" es el peor caso, desde `lg` (fondo al 85 %). En teléfonos el fondo del encabezado es más opaco (94 %, sin desenfoque), así que todo sube: el gris a 7.06:1 y el naranja a 6.13:1.
 
 - **Rojo `#e5252a`: 4.36:1** sobre la página. No alcanza 4.5:1, así que **nunca es texto pequeño**: solo el extremo del degradado del disco de la foto.
 - El marco gris de las capturas (`#2a2a2a`, 1.38:1) es decorativo: la captura misma marca el límite de la tarjeta.
@@ -92,29 +98,34 @@ Componentes y bordes (mínimo 3:1):
 
 ```
 Teléfono (390)                         Escritorio (1440)
-[Kevin Garabita    ☰ (wa) ES▾]         Kevin Garabita   Proyectos Experiencia Sobre mí Contacto (wa WhatsApp) Español▾
-(foto) Kevin Garabita                  (foto)  Kevin Garabita
-       ROL / Mérida                            ROL / Mérida
-FRASE DE VALOR                         FRASE DE VALOR, HASTA 64 PX, EN 2 A 4 LÍNEAS
+[Kevin Garabita    ☰ (wa) ES▾]         Kevin Garabita  Proyectos Experiencia Sobre mí Servicios Contacto CV (wa WhatsApp) Español▾
+Kevin Garabita          (foto)         Kevin Garabita                                   (foto grande)
+ROL / Mérida            (chica)        ROL / Mérida
+FRASE DE VALOR (palabras naranjas)     FRASE DE VALOR, HASTA 48 PX, EN 3 A 4 LÍNEAS
 • disponibilidad                       • disponibilidad
-[Escríbeme por WhatsApp]               [Escríbeme por WhatsApp]  [Ver CV (PDF) ↗]
-[Ver CV (PDF) ↗]                       Experiencia | Formación (último trabajo y carrera)
-Experiencia / Formación                Proyectos destacados
-Proyectos destacados                   [captura del proyecto principal  ][estado, crédito / nombre / frase]
-[captura] estado / nombre / frase      [captura         ][captura         ]
+[Ver CV (PDF) ↗]  (naranja)            [Ver CV (PDF) ↗]  [(wa) Escríbeme por WhatsApp]
+[(wa) Escríbeme por WhatsApp]          LinkedIn  GitHub  ¿Tienes un negocio? Mira mis servicios →
+LinkedIn  GitHub                       ─────────────────────────────
+¿Tienes un negocio? Servicios →        5 agentes · 4 en producción · 1 año · 2027
+─────────────                          Proyectos destacados
+5 agentes    4 en producción           [captura del proyecto principal  ][estado, crédito / nombre / frase]
+1 año        2027                      [captura         ][captura         ]
+Proyectos destacados
 ```
 
-- **Encabezado fijo** (`position: sticky`), una sola fila: el nombre (lleva al inicio), los enlaces de sección y el CV (PDF en una pestaña nueva), el botón de WhatsApp y el selector de idioma. El enlace de la página actual lleva `aria-current` y se queda blanco. **WhatsApp siempre está a la vista**: un botón verde de 44 px con el logo en teléfonos y con la palabra "WhatsApp" desde `sm`. Debajo de `lg` los enlaces se guardan en un menú (`SiteNavigation`): un botón de 44 px con tres líneas abre un panel bajo el encabezado, un enlace por fila; Escape, un clic fuera, salir con Tab o seguir un enlace lo cierran, y el foco vuelve al botón con Escape. Arriba de todo el encabezado es transparente; al bajar (o con el menú abierto) aparecen un fondo desenfocado y una línea fina, solo con `opacity`. Mide 64 px debajo de `lg` y 72 px desde `lg` (`--header-height`, que usa `scroll-padding-top` para que las anclas y el foco no queden tapados, WCAG 2.4.11). Cabe desde 320 px; debajo de 360 px el nombre baja al tamaño del texto.
-- **Selector de idioma**: un botón con la bandera y el nombre del idioma (debajo de `lg`, la bandera y el código, `EN`) que despliega los cuatro idiomas, cada uno con su bandera, y marca el actual con una palomita naranja.
-- **Portada**: el texto a la izquierda (7 de 12 columnas desde `md`) y la foto a la derecha, como antes del rediseño; en teléfonos, la foto primero (salvo en pantallas bajas, donde el texto quedaría fuera de la primera pantalla).
-  - Texto: el `h1`, "Kevin Garabita — <rol>" (el nombre en `text-title` y el rol debajo en `text-subtitle` blanco, porque es lo primero que busca un reclutador; la raya solo se lee, `sr-only`), la ubicación, la frase de valor (`profile.heroSubtitle`) en `text-statement`, la disponibilidad (`src/content/availability.ts`: abierto a empleo y a proyectos freelance; remoto, híbrido o presencial) y una sola acción principal, **Escríbeme por WhatsApp**, con el CV como secundaria; justo debajo, LinkedIn y GitHub como enlaces con su logo (los reclutadores los buscan primero). Debajo, tras una línea fina, dos datos en texto pequeño: el último trabajo (puesto, empresa y periodo) y la carrera (escuela y titulación prevista), tomados de `experience.ts` y `education.ts`. Sin cifras grandes ni etiquetas: son los datos que un reclutador tendría que juntar de tres secciones.
+- **Encabezado fijo** (`position: sticky`), una sola fila: el nombre (lleva al inicio), los enlaces de sección y el CV (PDF en una pestaña nueva), el botón de WhatsApp y el selector de idioma. El enlace de la página actual lleva `aria-current` y se queda blanco. **WhatsApp siempre está a la vista**: un botón de 44 px con contorno gris y el logo verde en teléfonos, y con la palabra "WhatsApp" desde `sm` (antes era un botón verde relleno; con contorno, el único relleno de color en la primera pantalla es el CV naranja). Los enlaces son Proyectos, Experiencia, Sobre mí, Servicios, Contacto y CV; no se parten en dos líneas (`whitespace-nowrap`). Debajo de `lg` los enlaces se guardan en un menú (`SiteNavigation`): un botón de 44 px con tres líneas abre un panel bajo el encabezado, un enlace por fila; Escape, un clic fuera, salir con Tab o seguir un enlace lo cierran, y el foco vuelve al botón con Escape. Arriba de todo el encabezado es transparente; al bajar (o con el menú abierto) aparecen su fondo y una línea fina, solo con `opacity`: casi opaco y sin desenfoque debajo de `lg` (el desenfoque cuesta en cada cuadro del scroll en teléfonos), translúcido y desenfocado desde `lg`. Mide 64 px debajo de `lg` y 72 px desde `lg` (`--header-height`, que usa `scroll-padding-top` para que las anclas y el foco no queden tapados, WCAG 2.4.11). Cabe desde 320 px; debajo de 360 px el nombre baja al tamaño del texto.
+- **Selector de idioma**: un botón con la bandera y el nombre del idioma (debajo de `xl`, la bandera y el código, `EN`, para que a 1024 px quepan todos los enlaces) que despliega los cuatro idiomas, cada uno con su bandera, y marca el actual con una palomita naranja.
+- **Portada** (`.hero-grid`): tres áreas de cuadrícula, así la única foto cambia de lugar sin una segunda copia. En teléfonos, el nombre, el rol y el lugar a la izquierda con la foto pequeña al lado (8.5rem; 7rem debajo de 360 px; 10rem desde `sm`), y debajo, a todo el ancho, la frase, la disponibilidad, los botones, los perfiles y las cifras. Desde `md`, el texto a la izquierda (7 de 12 columnas) centrado verticalmente junto a la foto grande a la derecha.
+  - Texto: el `h1`, "Kevin Garabita — <rol>" (el nombre en `text-title` y el rol debajo en `text-subtitle` blanco, porque es lo primero que busca un reclutador; la raya solo se lee, `sr-only`), la ubicación, la frase de valor (`profile.heroSubtitle`) en `text-statement` con sus palabras clave en naranja (`profile.heroSubtitleHighlight`, "horas de trabajo"; el build falla si no son parte de la frase), la disponibilidad (`src/content/availability.ts`) y **el CV como acción principal** (botón naranja), con WhatsApp como secundaria (contorno y logo verde). Debajo, LinkedIn y GitHub con su logo y la entrada para clientes: "¿Tienes un negocio? Mira mis servicios →".
+  - Cifras: tras una línea fina, cuatro datos reales en grande con su explicación en texto pequeño, de dos en dos y en una fila desde `xl`: los agentes de WhatsApp hechos en equipo en Kobler (`src/content/highlights.ts`, del CV), los proyectos en producción (contados de su estado), la duración del último trabajo (de su periodo) y el año de titulación prevista. Salen del contenido (`src/lib/hero-stats.ts`), así que no pueden contradecir al resto del sitio. Reemplazan al bloque de último trabajo y carrera, que decía lo mismo con más texto.
   - Foto: el recorte de Kevin delante de un círculo con el degradado (los rizos pasan por encima de su borde), un brillo suave y un anillo punteado en órbita con un punto naranja que se desvanece detrás de los hombros (`.hero-orbit`). Las etiquetas flotantes (FastAPI, n8n, OpenAI API) se quitaron a pedido de Kevin (2 de noviembre de 2026): eran adorno sin información. Círculo y foto se desvanecen juntos abajo (`.hero-portrait`) y la foto también a los lados (`.hero-photo`). En teléfonos mide 208 px de ancho (192 px debajo de 360 px), así la frase, la disponibilidad y los dos botones caben en la primera pantalla de 390 × 844 en los cuatro idiomas.
 - **Proyectos (home)**: justo después de la portada, solo los destacados (`isFeatured`): el workshop Appolo, el agente de Motosureste Suzuki (la prueba en producción de los agentes de IA que promete la portada), la gestión de servicios de Controltec y el gestor de reportes de campo. El primero va ancho: desde `lg`, la captura en 7 de 12 columnas y el texto al lado, más grande. Los demás, de dos en dos desde `sm` (tres desde `lg` si son tres). Al final, "Ver todos los proyectos (N)".
 - **Tarjeta de proyecto** (`ProjectCard`, también en `/[lang]/projects`): la captura en un marco de 16:9, y debajo el estado (solo "En producción" lleva naranja; "En desarrollo" y "Completado · no publicado" son contornos grises, nunca se leen como en vivo) y para quién fue el trabajo (`getProjectCredit`: "Freelance", "En equipo en Kobler y Asociados", "Hecho en Kobler y Asociados"; Kobler es la agencia de marketing donde Kevin trabajó, así que su trabajo ahí se acredita "en Kobler", nunca "para" ni "con"), el nombre, su frase de valor (`tagline`; mientras falte, el resumen cortado a dos líneas) y hasta cuatro tecnologías. Sin capturas, el marco muestra para quién fue (en `text-title`) y, abajo, las herramientas de su flujo en orden (WhatsApp → n8n → OpenAI…), alineados como el texto de la tarjeta: datos reales en lugar de una captura inventada. Antes era un ícono con anillo de degradado y brillo; se quitó porque se leía como relleno de plantilla. Toda la tarjeta lleva al caso de estudio: el nombre es el único enlace y su `::after` cubre la tarjeta. El marco es de 16:9 porque es la captura más ancha del sitio: una de 16:9 entra completa y una de 16:10 conserva todo su ancho y solo pierde una franja abajo (`object-top`); nunca se corta un costado, donde empieza el texto. Con un marco de 16:10, las capturas del workshop Appolo perdían 5 % por lado y la primera letra de sus títulos.
 - **Secciones después de los proyectos** (Experiencia y formación, Sobre mí, Contacto): una línea fina arriba, el `h2` en una columna angosta a la izquierda y el contenido al lado desde `lg`, como las partes del caso de estudio. Sin números ni etiquetas sobre el título.
-- **Experiencia y formación**, una sola sección (con un solo trabajo y una carrera, dos bandas separadas se veían vacías): puesto, empresa, periodo y lugar, el resumen del trabajo en blanco y todos los logros a la vista, con su rombo naranja (los resultados con clientes son la prueba más fuerte de la página; ya no esperan detrás de "Más detalles"). Cierran los casos de estudio de ese trabajo como enlaces en texto pequeño. Debajo, tras una línea fina, la carrera, la escuela y lugar, y en una línea el periodo, el semestre y la titulación prevista. Sin panel.
-- **Sobre mí**: el párrafo del CV (a 60 caracteres por línea como máximo) y las habilidades en una lista compacta: una fila por grupo del CV (Backend, IA y automatización, Frontend, Integraciones, Herramientas), su nombre a la izquierda desde `sm` y cada herramienta con su logo; Claude Code está en Herramientas. Cierran los idiomas en texto.
-- **Contacto**, para los dos públicos: una frase en `text-title` que invita a contar qué se quiere desarrollar o automatizar, la disponibilidad, y las mismas dos acciones de la portada, WhatsApp y el CV; debajo el correo (un solo enlace, ya no un botón repetido), la ubicación y los perfiles (LinkedIn y GitHub).
+- **Experiencia y formación**, una sola sección (con un solo trabajo y una carrera, dos bandas separadas se veían vacías): puesto, empresa, periodo y lugar, el resumen del trabajo en blanco y todos los logros a la vista, con su rombo naranja (los resultados con clientes son la prueba más fuerte de la página; ya no esperan detrás de "Más detalles"). Cierran los casos de estudio de ese trabajo como enlaces con marco (`.link-frame`), uno por fila, con su flecha naranja: más fáciles de tocar en teléfono que los enlaces en texto pequeño de antes. Debajo, tras una línea fina, la carrera, la escuela y lugar, y en una línea el periodo, el semestre y la titulación prevista. Sin panel.
+- **Sobre mí**: el párrafo del CV (a 60 caracteres por línea como máximo) y las habilidades en una lista compacta: una fila por grupo del CV (Backend, IA y automatización, Frontend, Integraciones, Herramientas), su nombre a la izquierda desde `sm` y cada herramienta como una píldora con su logo (fondo `raised`, línea fina); antes eran nombres sueltos con mucho aire entre ellos. Claude Code está en Herramientas. Cierran los idiomas en texto.
+- **Contacto**, primero para reclutadores: "¿Buscas a alguien para tu equipo o tienes un proyecto en mente?" en `text-title`, la disponibilidad, las mismas dos acciones de la portada (el CV principal y WhatsApp), una línea para clientes que lleva a servicios y, tras una línea fina, el correo (un solo enlace), la ubicación y los perfiles (LinkedIn y GitHub).
+- **Servicios (`/[lang]/services`)**, para clientes: el `h1` en `text-headline`, una frase y WhatsApp como **acción principal** (botón verde) con el correo al lado. Luego los tres servicios (`src/content/services.ts`: agentes de IA para WhatsApp, automatización de procesos y aplicaciones web a la medida), cada uno bajo una línea fina: título y resumen a la izquierda desde `lg`; a la derecha, "Incluye" con rombos naranjas y "Proyectos de ejemplo" como enlaces con marco (`.link-frame`) hacia sus casos de estudio, con un punto naranja solo si están en producción. Después "Cómo trabajamos" en cuatro pasos numerados (número a la izquierda en teléfono, arriba desde `lg`), "¿Cuánto cuesta?" (sin precios: se cotiza cada proyecto, decisión de Kevin) con WhatsApp otra vez, y una línea para reclutadores que lleva a la home.
 - **Pie de página**: nombre y rol, WhatsApp, LinkedIn, GitHub y el CV.
 - **Página de proyectos (`/[lang]/projects`)**: con la escala de la home: el `h1` del tamaño de un título de sección (`text-title`; los tamaños mayores quedan para la frase de la portada y el título del caso de estudio) y la descripción en texto secundario a tamaño de lectura. Debajo, los filtros por tipo y tecnología, dibujados como los botones secundarios (contorno gris que se vuelve naranja; naranja fijo y fondo `raised` mientras el filtro está activo), y todas las tarjetas en 1, 2 y 3 columnas con los mismos espacios que en la home (24 px, 32 px desde `lg`, 48 px entre filas).
 - **Caso de estudio**:
@@ -122,15 +133,15 @@ Proyectos destacados                   [captura del proyecto principal  ][estado
   - A la derecha desde `lg`, los datos clave sin panel, entre líneas finas: cliente, periodo y tecnologías (píldoras grises). El crédito y el estado ya están sobre el título, así que no se repiten.
   - La galería, y la historia en secciones (`ProjectStorySection`) con una línea fina arriba y el `h2` a la izquierda desde `lg`, el mismo esquema que las secciones de la home. El flujo y la arquitectura ocupan todo el ancho, con el `h2` arriba (`layout="wide"`).
   - Puntos clave: párrafos cortos de dos en dos, cada uno bajo una línea fina, en una lista sin números (no son pasos). Las métricas, cuando existen, siguen el mismo esquema. El flujo sí es una secuencia, así que sus pasos llevan número; la herramienta de cada paso va en texto gris normal.
-  - Al final, la misma invitación del contacto de la home ("Cuéntame qué quieres desarrollar o automatizar.") con el botón de WhatsApp, y el proyecto anterior y siguiente: un marco de línea fina que se vuelve naranja con el nombre subrayado al pasar el cursor o con el foco (`.link-frame`), como las tarjetas; nada se eleva ni brilla.
+  - Al final, la invitación para clientes ("Cuéntame qué quieres desarrollar o automatizar.") con el botón de WhatsApp y "Ver servicios →", y el proyecto anterior y siguiente: un marco de línea fina que se vuelve naranja con el nombre subrayado al pasar el cursor o con el foco (`.link-frame`), como las tarjetas; nada se eleva ni brilla.
 - **CV**: siempre se abre en una pestaña nueva (`target="_blank"`, `rel="noopener noreferrer"` y "se abre en una pestaña nueva" para lectores de pantalla), en el idioma de la página o, si no existe, en español. Nunca se descarga.
-- **WhatsApp** está en el encabezado de todas las páginas, en la portada, en el contacto, al final de cada caso de estudio y en el pie. Los enlaces a redes y los enlaces públicos de los proyectos abren en una pestaña nueva y lo dicen a los lectores de pantalla.
+- **WhatsApp** está en el encabezado de todas las páginas, en la portada, en el contacto, en servicios, al final de cada caso de estudio (junto a "Ver servicios →") y en el pie. Los enlaces a redes y los enlaces públicos de los proyectos abren en una pestaña nueva y lo dicen a los lectores de pantalla.
 
 ## Imágenes
 
-- Todas con `alt` (los logos de tecnologías son decorativos, con su nombre al lado) y con `sizes` igual al ancho real que ocupan en cada punto de corte: la foto de la portada (la columna de 5 de 12 desde `md`; 192, 208 o 320 px antes), la captura principal de la home (7 de 12 columnas desde `lg`), las demás (2 o 3 columnas), las de la página de proyectos (3 columnas) y el diagrama de arquitectura (el ancho del contenedor).
+- Todas con `alt` (los logos de tecnologías son decorativos, con su nombre al lado) y con `sizes` igual al ancho real que ocupan en cada punto de corte: la foto de la portada (la columna de 5 de 12 desde `md`; 112, 136 o 160 px antes, junto al nombre), la captura principal de la home (7 de 12 columnas desde `lg`), las demás (2 o 3 columnas), las de la página de proyectos (3 columnas) y el diagrama de arquitectura (el ancho del contenedor).
 - En la galería del caso de estudio, la primera captura de escritorio va completa a todo el ancho; en teléfonos, las demás miniaturas de escritorio también usan 16:9, así que tampoco pierden los costados.
-- **Solo se precarga la imagen LCP.** En la home es la foto de la portada (medido de 360 a 1920 px en tres idiomas; en algunos teléfonos la frase empata o gana por poco, y es texto): se precarga con `fetchPriority="high"` y nunca empieza invisible, solo sube un poco (`.entrance-lift`). La captura del proyecto principal ya no se precarga: queda debajo de la portada. Excepción medida: en una tableta vertical (768 × 1024) la captura es el LCP y carga en modo diferido. En `/[lang]/projects`, la primera tarjeta.
+- **Solo se precarga la imagen LCP.** En la home es la foto de la portada en escritorio; en teléfonos, desde que la foto va pequeña junto al nombre (3 de noviembre de 2026), el LCP es la frase, que es texto y se pinta en el primer cuadro. La foto se precarga con `fetchPriority="high"` y nunca empieza invisible, solo sube un poco (`.entrance-lift`). La captura del proyecto principal ya no se precarga: queda debajo de la portada. Excepción medida: en una tableta vertical (768 × 1024) la captura es el LCP y carga en modo diferido. En `/[lang]/projects`, la primera tarjeta.
 
 ## Radios, sombras y capas
 

@@ -11,6 +11,7 @@ export const portugueseDictionary: Dictionary = {
     projects: "Projetos",
     experience: "Experiência",
     about: "Sobre mim",
+    services: "Serviços",
     contact: "Contato",
     resume: "Currículo",
   },
@@ -20,9 +21,16 @@ export const portugueseDictionary: Dictionary = {
   hero: {
     photoAlt: "Kevin Garabita, desenvolvedor backend, IA e automação",
     writeOnWhatsApp: "Fale comigo no WhatsApp",
-    facts: {
-      experience: "Experiência",
-      education: "Formação",
+    servicesLink: "Tem um negócio? Veja meus serviços",
+    stats: {
+      label: "Em números",
+      agents: "agentes de IA no WhatsApp, feitos em equipe",
+      inProduction: "projetos em produção",
+      experience: (organization: string) =>
+        `como desenvolvedor de IA na ${organization}`,
+      graduation: (institution: string) => `formatura prevista, ${institution}`,
+      years: (count: number) => (count === 1 ? "1 ano" : `${count} anos`),
+      months: (count: number) => (count === 1 ? "1 mês" : `${count} meses`),
     },
   },
   resume: {
@@ -118,20 +126,27 @@ export const portugueseDictionary: Dictionary = {
   contact: {
     sectionTitle: "Contato",
     lead: "Me conte o que você quer desenvolver ou automatizar.",
+    homeLead: "Procurando alguém para o seu time ou tem um projeto em mente?",
+    servicesPrompt:
+      "Precisa de um sistema ou de um agente de IA para o seu negócio?",
+    servicesLink: "Ver serviços",
     email: "E-mail",
     whatsApp: "WhatsApp",
     location: "Localização",
     profiles: "Perfis",
   },
-  scrollBuild: {
-    actions: {
-      type: "digitando",
-      draw: "inserindo imagem",
-      resize: "redimensionando",
-      drag: "movendo",
-      click: "aplicando estilo",
-      line: "traçando",
-    },
+  services: {
+    title: "Serviços",
+    lead: "Agentes de IA, automações e aplicações web sob medida para o seu negócio, com projetos reais que comprovam.",
+    listLabel: "O que posso construir para você",
+    includes: "Inclui",
+    examples: "Projetos de exemplo",
+    processTitle: "Como trabalhamos",
+    pricingTitle: "Quanto custa?",
+    pricingText:
+      "Depende do que vamos construir. Me conte o que você precisa e eu preparo um orçamento com o escopo, os prazos e o preço.",
+    recruiterPrompt: "Procurando um desenvolvedor para o seu time?",
+    recruiterLink: "Ver meu perfil e currículo",
   },
   notFound: {
     title: "Página não encontrada",

@@ -29,6 +29,11 @@ export interface Profile {
   role: LocalizedText;
   /** Short line under the hero title. */
   heroSubtitle: LocalizedText;
+  /**
+   * The words of heroSubtitle drawn in orange, copied exactly from it in each language.
+   * The build fails if one is not part of its subtitle (lib/highlight.ts).
+   */
+  heroSubtitleHighlight?: LocalizedText;
   /** Paragraphs for the "About" section. */
   about: LocalizedText[];
   location: {

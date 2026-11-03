@@ -38,7 +38,6 @@ export function SiteHeaderFrame({ children }: { children: ReactNode }) {
         className="site-header"
         data-at-top={isAtTop ? "" : undefined}
         // The home page's scroll build builds the header with the hero.
-        data-build-section="header"
       >
         {children}
       </header>

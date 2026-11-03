@@ -6,6 +6,8 @@ import {
   homeDescription,
   projectsPageDescription,
   projectsPageTitle,
+  servicesPageDescription,
+  servicesPageTitle,
   siteLastUpdated,
 } from "@/content/site-metadata";
 import {
@@ -24,6 +26,7 @@ import {
   getShareCardVersion,
   getProjectShareCard,
   getProjectsShareCard,
+  getServicesShareCard,
   shareImageSize,
   shareImageType,
   type ShareCardText,
@@ -114,6 +117,18 @@ function assertSearchTexts(): void {
     descriptionMinLength,
     descriptionMaxLength,
     `projectsPageDescription in ${siteSource}`,
+  );
+  assertLength(
+    servicesPageTitle,
+    1,
+    titleMaxLength,
+    `servicesPageTitle in ${siteSource}`,
+  );
+  assertLength(
+    servicesPageDescription,
+    descriptionMinLength,
+    descriptionMaxLength,
+    `servicesPageDescription in ${siteSource}`,
   );
 }
 
@@ -293,6 +308,18 @@ export function buildProjectsPageMetadata(locale: Locale): Metadata {
     locale,
     type: "website",
     shareCard: getProjectsShareCard(locale),
+  });
+}
+
+/** The services page, for clients. */
+export function buildServicesPageMetadata(locale: Locale): Metadata {
+  return buildPageMetadata({
+    title: localize(servicesPageTitle, locale),
+    description: localize(servicesPageDescription, locale),
+    pathWithoutLocale: "/services",
+    locale,
+    type: "website",
+    shareCard: getServicesShareCard(locale),
   });
 }
 

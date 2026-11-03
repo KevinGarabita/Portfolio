@@ -33,28 +33,18 @@ export function PageSection({
 }: PageSectionProps) {
   const titleId = `${id}-title`;
   const heading = (
-    <h2
-      id={titleId}
-      data-build="type"
-      data-build-tag="h2"
-      className="font-display text-title font-bold"
-    >
+    <h2 id={titleId} className="font-display text-title font-bold">
       {title}
     </h2>
   );
 
   return (
-    <section id={id} aria-labelledby={titleId} data-build-section={id}>
+    <section id={id} aria-labelledby={titleId}>
       <Container>
         {layout === "split" ? (
           <>
             {/* The hairline is an element of its own so the scroll build can trace it. */}
-            <div
-              aria-hidden="true"
-              data-build="line"
-              data-build-tag="hr"
-              className="h-px bg-hairline"
-            />
+            <div aria-hidden="true" className="h-px bg-hairline" />
             <div className="grid gap-6 py-14 lg:grid-cols-12 lg:gap-10 lg:py-24">
               <div className="lg:col-span-4">{heading}</div>
               <div className="min-w-0 lg:col-span-8">{children}</div>

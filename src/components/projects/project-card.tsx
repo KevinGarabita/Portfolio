@@ -79,8 +79,6 @@ export function ProjectCard({
       )}
     >
       <div
-        data-build="draw"
-        data-build-tag="img.captura"
         className={joinClassNames(
           "project-tile-media @container relative aspect-video overflow-hidden rounded-media border bg-raised-strong",
           isFeature && "lg:col-span-7",
@@ -100,11 +98,7 @@ export function ProjectCard({
           isFeature && "lg:col-span-5 lg:pt-0",
         )}
       >
-        <p
-          data-build="drag"
-          data-build-tag="span.badge"
-          className="flex min-h-7 flex-wrap items-center gap-x-3 gap-y-2 text-small text-muted"
-        >
+        <p className="flex min-h-7 flex-wrap items-center gap-x-3 gap-y-2 text-small text-muted">
           {project.status ? (
             <>
               <ProjectStatus
@@ -120,10 +114,7 @@ export function ProjectCard({
         </p>
 
         <Heading
-          data-build="type"
-          data-build-tag={Heading}
           // Its link stretches over the whole card: it must never become a containing block.
-          data-build-static=""
           className={joinClassNames(
             "mt-3 font-display font-bold text-balance",
             isFeature ? "text-subtitle lg:text-title" : "text-subtitle",
@@ -138,8 +129,6 @@ export function ProjectCard({
         </Heading>
 
         <p
-          data-build="type"
-          data-build-tag="p"
           className={joinClassNames(
             "mt-2 text-body",
             isFeature ? "line-clamp-2 lg:line-clamp-3" : "line-clamp-2",
@@ -152,11 +141,7 @@ export function ProjectCard({
           {dictionary.projects.facts.technologies}
           {labelColon(locale)}
         </p>
-        <ul
-          data-build="drag"
-          data-build-tag="ul.stack"
-          className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-small text-muted"
-        >
+        <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-small text-muted">
           {technologies.map((technology) => (
             <li key={technology}>{technology}</li>
           ))}

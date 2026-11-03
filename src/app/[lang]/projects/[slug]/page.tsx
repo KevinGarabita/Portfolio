@@ -320,17 +320,26 @@ export default async function ProjectPage({
         <p className="max-w-[18em] font-display text-title font-bold text-heading">
           {dictionary.contact.lead}
         </p>
-        <ButtonLink
-          href={buildWhatsAppUrl(locale)}
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="whatsapp"
-          leadingIcon={<WhatsAppLogoIcon />}
-          className="mt-6 max-sm:w-full"
-        >
-          {dictionary.hero.writeOnWhatsApp}
-          <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-        </ButtonLink>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+          <ButtonLink
+            href={buildWhatsAppUrl(locale)}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="whatsapp"
+            leadingIcon={<WhatsAppLogoIcon />}
+            className="max-sm:w-full"
+          >
+            {dictionary.hero.writeOnWhatsApp}
+            <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+          </ButtonLink>
+          <Link
+            href={`/${locale}/services`}
+            className="group inline-flex min-h-11 items-center gap-1.5 font-bold"
+          >
+            {dictionary.contact.servicesLink}
+            <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
       </div>
 
       <nav aria-label={projectTexts.neighborNavigation.label}>
