@@ -12,14 +12,14 @@ const homePathPattern = `^/(${supportedLocales.join("|")})/?$`;
 
 /**
  * Runs before the first paint, in <head>: on the home page it sets html.sb (the
- * blueprint) and html.sb-intro (the intro), so the page never flashes built and then
+ * elements waiting, hidden) and html.sb-intro (the intro), so the page never flashes built and then
  * turns blue. It skips the build with reduced motion and once seen in this session
  * (unless REPLAY_PER_SESSION or ?debug-build), and the intro when the visitor lands on a
  * section (#contact) or comes back with the browser's back button (the browser restores
  * the scroll). Any error leaves the page as it is.
  *
  * If ScrollBuildProvider has not marked data-sb-ready after START_TIMEOUT (JavaScript
- * failed or is very slow), the blueprint is removed and data-sb-timeout tells the
+ * failed or is very slow), the build is called off and data-sb-timeout tells the
  * provider not to start later.
  */
 const script = `(function () {

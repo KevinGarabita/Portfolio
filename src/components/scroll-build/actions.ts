@@ -82,7 +82,21 @@ export interface ActionCursor {
   color: string;
   setGlyph(glyph: CursorGlyph): void;
   click(): void;
-  showSelection(box: Box): void;
+  /** Frames the box in the cursor's colour; `measure` adds its live size (W × H). */
+  showSelection(box: Box, measure?: boolean): void;
+}
+
+/** Room between a selected element and its selection frame, in px. */
+const SELECTION_GAP = 4;
+
+/** The cursor's selection around the element it is working on. */
+function select(cursor: ActionCursor, box: Box) {
+  cursor.showSelection({
+    left: box.left - SELECTION_GAP,
+    top: box.top - SELECTION_GAP,
+    width: box.width + SELECTION_GAP * 2,
+    height: box.height + SELECTION_GAP * 2,
+  });
 }
 
 const buildActions: readonly string[] = [
@@ -118,7 +132,7 @@ const animatedProperties = [
   "--build-color",
 ] as const;
 
-/** A target in its blueprint state, with the random choices of its action. */
+/** A target waiting to be built (hidden in place), with the random choices of its action. */
 export function createTarget(
   element: HTMLElement,
   action: BuildAction,
@@ -149,7 +163,7 @@ export function createTarget(
   };
 }
 
-/** Back to the blueprint (the debug "Replay"): no state, no inline styles. */
+/** Back to waiting, hidden (the debug "Replay"): no state, no inline styles. */
 export function resetTarget(target: BuildTarget) {
   clearAction(target);
   delete target.element.dataset.buildState;
@@ -207,7 +221,7 @@ export function getStartPoint(target: BuildTarget, box: Box): [number, number] {
   }
 }
 
-/** Leaves the blueprint: from here on the element shows (and the action shapes it). */
+/** Stops waiting: from here on the element shows (and the action shapes it). */
 function reveal(target: BuildTarget) {
   target.isRevealed = true;
   target.element.dataset.buildState = "run";
@@ -226,7 +240,7 @@ export function beginAction(
 
   switch (target.action) {
     case "type": {
-      // The layer copies the element's colour: out of the blueprint (transparent text)
+      // The layer copies the element's colour: visible again (it was hidden while waiting)
       // and before data-build-working (transparent again while it is typed).
       reveal(target);
       target.typing = createTypingLayer(element, cursor.color);
@@ -291,6 +305,7 @@ export function stepAction(
   switch (target.action) {
     case "type": {
       if (target.typing) updateTyping(target.typing, q);
+      select(cursor, box);
       // The hand stays where it clicked, with a slight tremor, while the caret moves.
       return [
         box.left + 2 + Math.sin(q * 20) * 0.6,
@@ -301,7 +316,11 @@ export function stepAction(
       const drawn = easeInOut(clamp(q / DRAW_RELEASE_AT));
       const width = box.width * drawn;
       const height = box.height * drawn;
-      cursor.showSelection({ left: box.left, top: box.top, width, height });
+      // Dragging out the frame of the image, with its live size.
+      cursor.showSelection(
+        { left: box.left, top: box.top, width, height },
+        true,
+      );
       if (q > DRAW_RELEASE_AT) {
         if (!target.isRevealed) reveal(target);
         const fade = easeOut(
@@ -317,11 +336,15 @@ export function stepAction(
       element.style.transform = `scale(${scale.toFixed(4)})`;
       const width = box.width * scale;
       const height = box.height * scale;
-      cursor.showSelection({ left: box.left, top: box.top, width, height });
+      cursor.showSelection(
+        { left: box.left, top: box.top, width, height },
+        true,
+      );
       return [box.left + width, box.top + height];
     }
     case "line": {
       const traced = easeInOut(q);
+      select(cursor, box);
       element.style.clipPath = `inset(0 ${((1 - traced) * 100).toFixed(2)}% 0 0)`;
       return [box.left + box.width * traced, box.top + box.height / 2];
     }
@@ -343,12 +366,19 @@ export function stepAction(
           easeOut(clamp((q - CLICK_AT) / (1 - CLICK_AT))) * farthest;
         element.style.clipPath = `circle(${radius.toFixed(1)}px at ${x}px ${y}px)`;
       }
+      select(cursor, box);
       const hover = q < CLICK_AT ? Math.sin(q * 30) * 1.5 : 0;
       return [box.left + x + hover, box.top + y];
     }
     case "drag": {
       const left = 1 - easeInOut(q);
       setDragTransform(target, left);
+      // The selection travels with the element (its tilt aside).
+      select(cursor, {
+        ...box,
+        left: box.left + target.offsetX * left,
+        top: box.top + target.offsetY * left,
+      });
       if (q > 0.92) delete element.dataset.buildDragging;
       return [
         box.left + target.grabX + target.offsetX * left,

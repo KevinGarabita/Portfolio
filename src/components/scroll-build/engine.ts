@@ -51,7 +51,7 @@ export interface ScrollBuildOptions {
 
 export interface ScrollBuild {
   start(withIntro: boolean): void;
-  /** Stops and leaves the page built, without the blueprint (unmount, route change). */
+  /** Stops and leaves the page built, nothing hidden (unmount, route change). */
   destroy(): void;
 }
 
@@ -215,7 +215,7 @@ export function createScrollBuild(options: ScrollBuildOptions): ScrollBuild {
         void root.offsetWidth;
         root.dataset.clicking = "";
       },
-      showSelection(box: Box) {
+      showSelection(box: Box, measure = false) {
         if (!selection) return;
         selection.dataset.on = "";
         selection.style.transform = `translate3d(${box.left.toFixed(1)}px, ${box.top.toFixed(1)}px, 0)`;
@@ -229,6 +229,7 @@ export function createScrollBuild(options: ScrollBuildOptions): ScrollBuild {
           handle.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
         });
         if (cursor.sizeLabel) {
+          cursor.sizeLabel.hidden = !measure;
           cursor.sizeLabel.textContent = `${Math.round(width)} × ${Math.round(height)}`;
           cursor.sizeLabel.style.transform = `translate(${(width / 2).toFixed(1)}px, ${(height + 8).toFixed(1)}px) translateX(-50%)`;
         }
@@ -535,7 +536,7 @@ export function createScrollBuild(options: ScrollBuildOptions): ScrollBuild {
     for (const mark of Array.from(intro.querySelectorAll("i"))) mark.remove();
   }
 
-  /** The intro fades out over the blueprint and the build starts. */
+  /** The intro fades out over the waiting page and the build starts. */
   function endIntro(now: number) {
     if (phase !== "intro") return;
     phase = "build";
@@ -621,7 +622,7 @@ export function createScrollBuild(options: ScrollBuildOptions): ScrollBuild {
     html.classList.add("sb");
     targets = collectTargets();
     // A previous engine may have left them built (React's development double effect
-    // destroys the first one): every element starts from the blueprint.
+    // destroys the first one): every element starts hidden again.
     for (const target of targets) resetTarget(target);
 
     const centerX = window.innerWidth / 2;

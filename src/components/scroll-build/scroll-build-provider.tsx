@@ -83,7 +83,7 @@ function decide(): BuildDecision {
  * simply the page.
  *
  * Starts in a layout effect, before the browser paints, so a client-side navigation
- * shows the blueprint from its first frame too. Leaving the page (or switching
+ * hides the elements from its first frame too. Leaving the page (or switching
  * language) destroys the engine and leaves everything built.
  */
 export function ScrollBuildProvider({
