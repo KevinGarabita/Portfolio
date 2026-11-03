@@ -69,7 +69,7 @@ export async function ExperienceSection() {
           return (
             <li key={job.id}>
               <article>
-                <div className="card card-accent reveal p-6 sm:p-8">
+                <div className="card reveal p-6 sm:p-8">
                   <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                     <div>
                       <h4 className="font-display text-subtitle font-bold">

@@ -106,7 +106,7 @@ export async function AboutSection() {
               key={group.id}
               className={joinClassNames(
                 "card reveal p-5 sm:p-6",
-                isWide && "card-accent sm:col-span-2",
+                isWide && "sm:col-span-2",
               )}
             >
               <div className="flex items-baseline justify-between gap-4">

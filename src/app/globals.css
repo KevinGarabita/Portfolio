@@ -651,8 +651,8 @@
     inset: 0 -12% auto auto;
   }
 
-  /* A panel on the page: raised surface, hairline border and an orange-to-red line on
-   * top. As a link (.card-link) it lifts a little and its border warms on hover. */
+  /* A panel on the page: raised surface, hairline border and a faint top-down gradient.
+   * As a link (.card-link) it lifts a little and its border warms on hover. */
   .card {
     position: relative;
     overflow: hidden;
@@ -663,14 +663,6 @@
       var(--color-raised-strong),
       var(--color-raised) 60%
     );
-  }
-
-  .card-accent::before {
-    content: "";
-    position: absolute;
-    inset: 0 0 auto;
-    height: 3px;
-    background: var(--gradient-brand);
   }
 
   .card-link {
