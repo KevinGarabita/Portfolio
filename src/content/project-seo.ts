@@ -63,16 +63,16 @@ export const projectSeo: Record<string, ProjectSeo> = {
   },
   "neorgana-agent": {
     title: {
-      es: "Agente de agendado para Neorgana · n8n + OpenAI",
-      en: "Neorgana scheduling agent · n8n + OpenAI",
-      pt: "Agente de agendamento para a Neorgana · n8n + OpenAI",
-      fr: "Agent de prise de rendez-vous pour Neorgana · n8n + OpenAI",
+      es: "Recorrido del paciente para Neorgana · n8n + OpenAI",
+      en: "Patient journey for Neorgana · n8n + OpenAI",
+      pt: "Jornada do paciente da Neorgana · n8n + OpenAI",
+      fr: "Parcours patient pour Neorgana · n8n + OpenAI",
     },
     description: {
-      es: "Agente de WhatsApp en producción para Neorgana, hecho en n8n con OpenAI: lleva a cada paciente con el consultor adecuado para agendar una consulta por Zoom.",
-      en: "WhatsApp agent in production for Neorgana, built in n8n with OpenAI: it matches each patient with the right consultant to book a consultation on Zoom.",
-      pt: "Agente de WhatsApp em produção para a Neorgana, feito no n8n com OpenAI: leva cada paciente ao consultor certo para marcar uma consulta pelo Zoom.",
-      fr: "Agent WhatsApp en production pour Neorgana, créé dans n8n avec OpenAI : il oriente chaque patient vers le bon consultant pour réserver une consultation Zoom.",
+      es: "Sistema en producción para Neorgana, en n8n con OpenAI, Appolo y Zoom: un agente de WhatsApp asigna consultor, agenda la videollamada y envía la cotización.",
+      en: "System in production for Neorgana, built in n8n with OpenAI, Appolo and Zoom: a WhatsApp agent assigns the consultant, books the video call and sends the quote.",
+      pt: "Sistema em produção para a Neorgana, feito no n8n com OpenAI, Appolo e Zoom: um agente de WhatsApp atribui o consultor, agenda a chamada e envia o orçamento.",
+      fr: "Système en production pour Neorgana, créé avec n8n, OpenAI, Appolo et Zoom : un agent WhatsApp attribue le consultant, réserve l'appel et envoie le devis.",
     },
   },
   "lamau-beach-automation": {

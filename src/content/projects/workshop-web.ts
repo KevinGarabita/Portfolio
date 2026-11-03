@@ -13,6 +13,12 @@ import type { Project } from "@/types/content";
  * projected screens from the app's own demo mode (simulated data, labelled as such) and the
  * host panel against a local Supabase with a fictional room. No credentials, keys, internal
  * URLs or participant data.
+ * The event and its outcome come from Kevin (3 November 2026): Raúl Salas, owner of Kobler,
+ * used it at the Yucatán Tech Week (Enterwork, 23 October 2026, 33 attendees, the companies
+ * named in `event`) to present Appolo; the answers were saved as GoHighLevel custom fields
+ * on each contact; each attendee got their diagnostic, a 20% discount on their first Appolo
+ * implementation and a link to book a meeting with Raúl; and Kobler now uses it to diagnose
+ * new clients, not only at events. The team photo is Kobler's and is credited to it.
  */
 export const workshopWeb: Project = {
   slug: "workshop-web",
@@ -36,22 +42,22 @@ export const workshopWeb: Project = {
     fr: "Le public répond à un diagnostic sur WhatsApp et voit les résultats en direct à l'écran.",
   },
   summary: {
-    es: "Sistema para un workshop presencial: la sala responde un diagnóstico por WhatsApp y la pantalla proyecta sus respuestas en vivo.",
-    en: "A system for an in-person workshop: the audience answers a diagnostic on WhatsApp and the projected screen shows their answers live.",
-    pt: "Sistema para um workshop presencial: o público responde a um diagnóstico pelo WhatsApp e a tela projetada mostra as respostas ao vivo.",
-    fr: "Un système pour un atelier en présentiel : la salle répond à un diagnostic sur WhatsApp et l'écran projeté affiche ses réponses en direct.",
+    es: "Sistema con el que Kobler presentó Appolo en la Yucatán Tech Week: la sala responde un diagnóstico por WhatsApp y la pantalla proyecta sus respuestas en vivo.",
+    en: "The system Kobler used to present Appolo at the Yucatán Tech Week: the audience answers a diagnostic on WhatsApp and the projected screen shows their answers live.",
+    pt: "Sistema com o qual a Kobler apresentou o Appolo na Yucatán Tech Week: o público responde a um diagnóstico pelo WhatsApp e a tela projetada mostra as respostas ao vivo.",
+    fr: "Le système avec lequel Kobler a présenté Appolo à la Yucatán Tech Week : la salle répond à un diagnostic sur WhatsApp et l'écran projeté affiche ses réponses en direct.",
   },
   problem: {
-    es: "El workshop necesitaba proyectar en vivo lo que responde la sala, entre las láminas de la presentación, y que el presentador lo condujera desde el celular sin exponer las claves del backend.",
-    en: "The workshop needed to project the room's answers live, between the presentation's slides, and let the presenter run it from a phone without exposing the backend keys.",
-    pt: "O workshop precisava projetar ao vivo as respostas da sala, entre os slides da apresentação, e deixar o apresentador conduzi-lo pelo celular sem expor as chaves do backend.",
-    fr: "L'atelier devait projeter en direct les réponses de la salle, entre les diapositives, et laisser l'animateur tout piloter depuis un téléphone sans exposer les clés du backend.",
+    es: "Raúl Salas, dueño de Kobler, quería mostrar Appolo con un workshop entre presentación y concurso: láminas, las preguntas del diagnóstico en pantalla y las respuestas de la sala en vivo.",
+    en: "Raúl Salas, Kobler's owner, wanted to show Appolo in a workshop that mixed a presentation with a live quiz: slides, the diagnostic's questions on screen and the room's answers live.",
+    pt: "Raúl Salas, dono da Kobler, queria mostrar o Appolo com um workshop entre apresentação e quiz: slides, as perguntas do diagnóstico na tela e as respostas da sala ao vivo.",
+    fr: "Raúl Salas, dirigeant de Kobler, voulait montrer Appolo dans un atelier mêlant présentation et quiz : diapositives, questions du diagnostic à l'écran et réponses de la salle en direct.",
   },
   solution: {
-    es: "Un bot de WhatsApp en n8n recoge las respuestas, Supabase calcula el diagnóstico y una web en React muestra la pantalla en vivo y el panel del presentador.",
-    en: "A WhatsApp bot in n8n collects the answers, Supabase works out the diagnostic, and a React web app shows the live screen and the presenter's panel.",
-    pt: "Um bot de WhatsApp no n8n coleta as respostas, o Supabase calcula o diagnóstico e uma aplicação web em React mostra a tela ao vivo e o painel do apresentador.",
-    fr: "Un bot WhatsApp dans n8n recueille les réponses, Supabase calcule le diagnostic et une application web React affiche l'écran en direct et le panneau de l'animateur.",
+    es: "Un agente de IA en n8n manda cada pregunta por WhatsApp y entiende la respuesta, sea una letra o un texto libre; Supabase calcula el diagnóstico y una web en React proyecta todo en vivo.",
+    en: "An AI agent in n8n sends each question on WhatsApp and understands the answer, a letter or free text; Supabase works out the diagnostic and a React web app projects it all live.",
+    pt: "Um agente de IA no n8n envia cada pergunta pelo WhatsApp e entende a resposta, seja uma letra ou um texto livre; o Supabase calcula o diagnóstico e uma aplicação React projeta tudo ao vivo.",
+    fr: "Un agent d'IA dans n8n envoie chaque question sur WhatsApp et comprend la réponse, une lettre ou un texte libre ; Supabase calcule le diagnostic et une application React projette tout en direct.",
   },
   howItWorks: [
     {
@@ -59,6 +65,12 @@ export const workshopWeb: Project = {
       en: "The system joins three pieces: the WhatsApp bot in n8n, the Supabase database, which also works out each person's diagnostic, and a web app with two views. The live screen is read-only and follows a script: the presentation's slides and quotes, the QR code to join with a snapshot of the audience, each question with its bars, each dimension's average with its maturity traffic light and, at the end, the room's results. The host panel walks through that script in order: one tap projects the next screen and, if it is a question, sends it on WhatsApp in that same tap. It is also used to resend, send the results, moderate the word cloud, and close or open a session. The app reads the state through a Supabase RPC, listens for notices over Supabase Realtime, and sends the host's commands through serverless functions on Vercel.",
       pt: "O sistema une três peças: o bot de WhatsApp no n8n, o banco de dados no Supabase, que também calcula o diagnóstico de cada pessoa, e uma aplicação web com duas visões. A tela ao vivo, somente leitura, segue um roteiro: slides e frases da apresentação, o QR code de entrada com o raio-x do público, cada pergunta com suas barras, a média de cada dimensão com o seu semáforo de maturidade e, no final, os resultados da sala. O painel do host percorre esse roteiro em ordem: um toque projeta a tela seguinte e, se for uma pergunta, envia-a pelo WhatsApp nesse mesmo toque. Por ali também se reenvia, se enviam os resultados, se modera a nuvem de palavras e se encerra ou se abre uma sessão. A aplicação lê o estado com uma RPC do Supabase, recebe avisos pelo Supabase Realtime e envia os comandos do host por meio de funções serverless na Vercel.",
       fr: "Le système réunit trois éléments : le bot WhatsApp dans n8n, la base de données Supabase, qui calcule aussi le diagnostic de chaque personne, et une application web à deux vues. L'écran en direct, en lecture seule, suit un déroulé : les diapositives et citations de la présentation, le QR code d'entrée avec la radiographie du public, chaque question avec ses barres, la moyenne de chaque dimension avec son feu de maturité et, à la fin, les résultats de la salle. Le panneau de l'animateur parcourt ce déroulé dans l'ordre : une touche projette l'écran suivant et, s'il s'agit d'une question, l'envoie sur WhatsApp dans la même action. Il sert aussi à renvoyer, envoyer les résultats, modérer le nuage de mots, et clôturer ou ouvrir une session. L'application lit l'état via une RPC Supabase, reçoit des notifications par Supabase Realtime et transmet les commandes de l'animateur via des fonctions serverless sur Vercel.",
+    },
+    {
+      es: "Cuando el host abre una pregunta, el agente de IA se la manda a cada asistente por WhatsApp. Cada quien puede contestar con la letra de una opción o con sus propias palabras: el agente interpreta la respuesta, la compara con las opciones, registra la más adecuada y la pantalla la muestra en ese momento. Como el sistema está conectado con GoHighLevel, las respuestas quedan en campos personalizados del contacto de cada asistente; al final, cada quien recibe su diagnóstico, el descuento y el enlace para agendar con Raúl Salas.",
+      en: "When the host opens a question, the AI agent sends it to each attendee on WhatsApp. People can reply with an option's letter or in their own words: the agent interprets the answer, compares it with the options, records the best match and the screen shows it right away. Because the system is connected to GoHighLevel, the answers are saved in custom fields on each attendee's contact; at the end, everyone gets their diagnostic, the discount and the link to book a meeting with Raúl Salas.",
+      pt: "Quando o host abre uma pergunta, o agente de IA a envia a cada participante pelo WhatsApp. Cada um pode responder com a letra de uma opção ou com as próprias palavras: o agente interpreta a resposta, compara-a com as opções, registra a mais adequada e a tela a mostra na hora. Como o sistema está conectado ao GoHighLevel, as respostas ficam em campos personalizados do contato de cada participante; no final, cada um recebe o seu diagnóstico, o desconto e o link para agendar com Raúl Salas.",
+      fr: "Quand l'animateur ouvre une question, l'agent d'IA l'envoie à chaque participant sur WhatsApp. Chacun peut répondre par la lettre d'une option ou avec ses propres mots : l'agent interprète la réponse, la compare aux options, enregistre la plus proche et l'écran l'affiche aussitôt. Comme le système est connecté à GoHighLevel, les réponses sont enregistrées dans des champs personnalisés du contact de chaque participant ; à la fin, chacun reçoit son diagnostic, la remise et le lien pour prendre rendez-vous avec Raúl Salas.",
     },
   ],
   role: {
@@ -69,22 +81,22 @@ export const workshopWeb: Project = {
   },
   results: [
     {
-      es: "El presentador conduce el evento desde el celular y la sala ve sus respuestas en vivo, sin nombres ni teléfonos.",
-      en: "The presenter runs the event from a phone and the room sees its answers live, with no names or phone numbers.",
-      pt: "O apresentador conduz o evento pelo celular e a sala vê as respostas ao vivo, sem nomes nem telefones.",
-      fr: "L'animateur pilote l'événement depuis un téléphone et la salle voit ses réponses en direct, sans noms ni numéros.",
+      es: "33 asistentes lo usaron en vivo en la Yucatán Tech Week, el 23 de octubre de 2026.",
+      en: "33 attendees used it live at the Yucatán Tech Week, on 23 October 2026.",
+      pt: "33 participantes o usaram ao vivo na Yucatán Tech Week, em 23 de outubro de 2026.",
+      fr: "33 participants l'ont utilisé en direct à la Yucatán Tech Week, le 23 octobre 2026.",
     },
     {
-      es: "Cada asistente recibe por WhatsApp su diagnóstico personal, con acciones a 30 días, a mediano y a largo plazo.",
-      en: "Each attendee gets a personal diagnostic on WhatsApp, with actions for the next 30 days, the medium and the long term.",
-      pt: "Cada participante recebe pelo WhatsApp o seu diagnóstico pessoal, com ações para 30 dias, médio e longo prazo.",
-      fr: "Chaque participant reçoit sur WhatsApp son diagnostic personnel, avec des actions à 30 jours, à moyen et à long terme.",
+      es: "Cada asistente recibió su diagnóstico, un 20% de descuento en su primera implementación de Appolo y un enlace para agendar.",
+      en: "Each attendee got their diagnostic, 20% off their first Appolo implementation and a link to book a meeting.",
+      pt: "Cada participante recebeu o seu diagnóstico, 20% de desconto na primeira implementação do Appolo e um link para agendar.",
+      fr: "Chaque participant a reçu son diagnostic, 20 % de remise sur sa première mise en place d'Appolo et un lien pour prendre rendez-vous.",
     },
     {
-      es: "Un solo sistema cubre el evento completo: bot, base de datos, pantalla y panel.",
-      en: "One system covers the whole event: bot, database, screen and panel.",
-      pt: "Um único sistema cobre o evento inteiro: bot, banco de dados, tela e painel.",
-      fr: "Un seul système couvre tout l'événement : bot, base de données, écran et panneau.",
+      es: "Hoy Kobler lo usa para diagnosticar a los clientes nuevos que llegan, no solo en eventos.",
+      en: "Kobler now uses it to diagnose every new client that comes in, not only at events.",
+      pt: "Hoje a Kobler o usa para diagnosticar os novos clientes que chegam, não só em eventos.",
+      fr: "Kobler l'utilise désormais pour diagnostiquer chaque nouveau client, pas seulement lors d'événements.",
     },
   ],
   highlights: [
@@ -107,10 +119,10 @@ export const workshopWeb: Project = {
       fr: "Chacun répond à son rythme : ceux qui prennent du retard ou arrivent tard rattrapent la salle tout seuls.",
     },
     {
-      es: "Modo demo con una sala inventada de 48 personas para revisar todas las vistas sin un evento real.",
-      en: "A demo mode with a made-up room of 48 people to review every view without a real event.",
-      pt: "Modo demo com uma sala fictícia de 48 pessoas para revisar todas as telas sem um evento real.",
-      fr: "Un mode démo avec une salle fictive de 48 personnes pour vérifier toutes les vues sans vrai événement.",
+      es: "Conectado con GoHighLevel: las respuestas de cada asistente quedan guardadas en campos personalizados de su contacto.",
+      en: "Connected to GoHighLevel: each attendee's answers are saved in custom fields on their contact.",
+      pt: "Conectado ao GoHighLevel: as respostas de cada participante ficam salvas em campos personalizados do seu contato.",
+      fr: "Connecté à GoHighLevel : les réponses de chaque participant sont enregistrées dans des champs personnalisés de son contact.",
     },
   ],
   stack: [
@@ -187,6 +199,26 @@ export const workshopWeb: Project = {
       viewport: "desktop",
     },
   ],
+  event: {
+    description: {
+      es: "Se usó en la Yucatán Tech Week, en Enterwork, el 23 de octubre de 2026: 33 asistentes, entre ellos Motosureste Suzuki, Grupo Fiat, el Gobierno del Estado de Yucatán, Noox, Anáhuac y ViaMX.",
+      en: "It was used at the Yucatán Tech Week, at Enterwork, on 23 October 2026: 33 attendees, among them Motosureste Suzuki, Grupo Fiat, the Government of the State of Yucatán, Noox, Anáhuac and ViaMX.",
+      pt: "Foi usado na Yucatán Tech Week, no Enterwork, em 23 de outubro de 2026: 33 participantes, entre eles Motosureste Suzuki, Grupo Fiat, o Governo do Estado de Yucatán, Noox, Anáhuac e ViaMX.",
+      fr: "Il a servi à la Yucatán Tech Week, à Enterwork, le 23 octobre 2026 : 33 participants, dont Motosureste Suzuki, Grupo Fiat, le gouvernement de l'État du Yucatán, Noox, Anáhuac et ViaMX.",
+    },
+    photo: {
+      src: "/images/projects/workshop-web/team-yucatan-tech-week.webp",
+      alt: {
+        es: "El equipo de Kobler y Asociados, siete personas con camisas negras y blancas, de pie en una oficina con plantas colgantes; al centro, Raúl Salas sostiene un letrero con el logotipo de Kobler.",
+        en: "The Kobler y Asociados team, seven people in black and white shirts, standing in an office with hanging plants; in the middle, Raúl Salas holds a sign with the Kobler logo.",
+        pt: "A equipe da Kobler y Asociados, sete pessoas de camisas pretas e brancas, em pé em um escritório com plantas penduradas; no centro, Raúl Salas segura uma placa com o logotipo da Kobler.",
+        fr: "L'équipe de Kobler y Asociados, sept personnes en chemises noires et blanches, debout dans un bureau aux plantes suspendues ; au centre, Raúl Salas tient un panneau avec le logo de Kobler.",
+      },
+      width: 1600,
+      height: 1062,
+      credit: "Kobler y Asociados",
+    },
+  },
   links: [],
   decisions: [
     {
@@ -258,5 +290,5 @@ export const workshopWeb: Project = {
       fr: "Si le bot ne parvient pas à comprendre une réponse après deux demandes de précision, il la laisse en attente, passe à la question suivante et y revient quand la salle n'a plus de questions à ouvrir.",
     },
   ],
-  lastUpdated: "2026-11-02",
+  lastUpdated: "2026-11-03",
 };

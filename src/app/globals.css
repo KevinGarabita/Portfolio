@@ -55,6 +55,11 @@
   --color-whatsapp-green: #25d366; /* WhatsApp's official green; ink text on it 9.98:1 */
   --color-whatsapp-green-light: #4ae082; /* hover of the WhatsApp button */
   --color-linkedin-blue: #0a66c2; /* LinkedIn's official blue; 3.48:1 on the page (logo only) */
+  /* Instagram's official gradient, bottom left to top right (logo only) */
+  --color-instagram-yellow: #feda75;
+  --color-instagram-orange: #fa7e1e;
+  --color-instagram-pink: #d62976;
+  --color-instagram-purple: #962fbf;
 
   /* 3. Roles ------------------------------------------------------------------- */
   --color-page: var(--color-black-deep); /* page background */
@@ -381,27 +386,22 @@
     }
   }
 
-  /* Hero photo, as Kevin asked to keep it: the circle and the cut-out fade into the
-   * page together at the bottom, where the original photo was cropped, so no straight
-   * edge shows. */
-  .hero-portrait {
-    mask-image: linear-gradient(to bottom, black 78%, transparent 99%);
+  /* Hero photo: the cut-out fades into the page at the bottom and the lower corners,
+   * where the original photo was cropped, with the fade baked into its PNG. Behind it,
+   * an orange backlight instead of a solid disc (Kevin, 3 November 2026: the disc
+   * showed through the faded shirt): strongest behind the head, gone before the edge. */
+  .hero-backlight {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-accent) 70%, transparent),
+      color-mix(in oklab, var(--color-accent) 30%, transparent) 55%,
+      transparent
+    );
   }
 
   /* The orbit ring fades out behind the shoulders instead of crossing the shirt. */
   .hero-orbit {
     mask-image: linear-gradient(to bottom, black 50%, transparent 78%);
-  }
-
-  /* The photo's lower corners were cut by the original frame: fade the sides too. */
-  .hero-photo {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 9%,
-      black 91%,
-      transparent
-    );
   }
 
   /* The one orchestrated moment of each page: its first view arrives in sequence on

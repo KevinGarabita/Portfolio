@@ -93,8 +93,11 @@ export const portugueseDictionary: Dictionary = {
       technicalDetails: "Detalhes técnicos",
       technicalDetailsHint:
         "Como funciona, decisões técnicas e tratamento de falhas",
+      event: "No evento",
     },
     flowStepTool: "Ferramenta",
+    /** Credit under a photo someone else took. */
+    photoCredit: (author: string) => `Foto: ${author}`,
     gallery: {
       enlarge: "Ampliar",
       dialogLabel: "Capturas de tela do projeto",

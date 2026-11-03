@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -110,7 +111,8 @@ function NeighborProjectLink({
 /**
  * Case study, short enough to scan on a phone: header (credit, status, title, a
  * one-sentence summary, key facts), screenshots, the case at a glance (problem, solution
- * and results in a sentence or two each), the automation flow, at most four key points,
+ * and results in a sentence or two each), the event it was used at with its credited
+ * photo, the automation flow, at most four key points,
  * Kevin's role, public links, then the technical details (how it works, decisions,
  * failure handling, next steps) collapsed in a <details>, an invitation to write on
  * WhatsApp and the previous/next projects. lib/projects.ts keeps the visible texts
@@ -230,6 +232,35 @@ export default async function ProjectPage({
             </ProjectOverviewPart>
           </div>
         </ProjectStorySection>
+
+        {/* The real event, only when the project has one: the photo with its credit
+            under it, and where and when beside it from lg. */}
+        {project.event ? (
+          <ProjectStorySection
+            id="event"
+            title={sectionTitles.event}
+            layout="wide"
+          >
+            <div className="grid gap-6 lg:grid-cols-12 lg:gap-10">
+              <figure className="flex flex-col gap-3 lg:col-span-8">
+                <Image
+                  src={project.event.photo.src}
+                  alt={localize(project.event.photo.alt, locale)}
+                  width={project.event.photo.width}
+                  height={project.event.photo.height}
+                  sizes="(min-width: 1800px) 880px, (min-width: 1280px) 790px, (min-width: 1024px) 66vw, 100vw"
+                  className="h-auto w-full rounded-media border border-hairline"
+                />
+                <figcaption className="text-small text-muted">
+                  {projectTexts.photoCredit(project.event.photo.credit)}
+                </figcaption>
+              </figure>
+              <p className="max-w-prose lg:col-span-4">
+                {localize(project.event.description, locale)}
+              </p>
+            </div>
+          </ProjectStorySection>
+        ) : null}
 
         {project.flowDiagram?.length ? (
           <ProjectStorySection

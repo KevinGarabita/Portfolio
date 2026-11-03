@@ -4,5 +4,3 @@ build/
 coverage/
 package-lock.json
 next-env.d.ts
-# Kept byte for byte: the behaviour reference of the scroll build.
-docs/scroll-build-reference.html

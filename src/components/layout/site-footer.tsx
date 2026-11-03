@@ -19,9 +19,11 @@ export async function SiteFooter() {
   return (
     <footer className="border-t border-hairline">
       <Container className="flex flex-col gap-6 py-10 text-small sm:flex-row sm:items-center sm:justify-between">
-        {/* Read as "Kevin Garabita — <role>"; on screen the role takes its own line. */}
+        {/* Read as "Kevin Garabita · Garasoftware — <role>"; on screen the role takes
+            its own line. The brand is in text so search engines tie it to the site. */}
         <p>
           <span className="font-bold text-heading">{profile.displayName}</span>
+          <span className="text-muted"> · {profile.brandName}</span>
           <span className="sr-only">{" — "}</span>
           <span className="block text-muted">
             {localize(profile.role, locale)}

@@ -80,7 +80,7 @@ export async function HeroSection() {
 
         <div className="[grid-area:photo]">
           <div className="hero-photo-frame relative mx-auto aspect-900/1024">
-            {/* Soft glow and orbit ring, centred on the disc. */}
+            {/* Soft glow and orbit ring, centred on the portrait. */}
             <div
               aria-hidden="true"
               className="entrance-scale absolute -inset-x-[14%] -top-[6%] aspect-square rounded-full bg-[radial-gradient(closest-side,var(--tint-accent),transparent)] [--entrance-order:1]"
@@ -94,25 +94,24 @@ export async function HeroSection() {
               </div>
             </div>
 
-            {/* Disc and photo fade out together at the bottom (.hero-portrait). The top
-                curls overlap the disc's edge, which gives the photo its depth. */}
-            <div className="hero-portrait absolute inset-0">
-              <div
-                aria-hidden="true"
-                className="entrance-scale absolute inset-x-[4%] top-[10%] aspect-square rounded-full bg-(image:--gradient-brand-diagonal) [--entrance-order:1]"
-              />
-              <Image
-                src={kevinGarabitaCutout}
-                alt={dictionary.hero.photoAlt}
-                preload
-                fetchPriority="high"
-                // The width the photo really takes (.hero-photo-frame in globals.css):
-                // 7rem under 360 px, 8.5rem on phones and 10rem from sm beside the name; from md its column
-                // (5 of 12), capped at 30rem (33rem from 1800 px); 12rem on short screens.
-                sizes="(max-height: 30rem) 12rem, (min-width: 1800px) 33rem, (min-width: 1280px) 30rem, (min-width: 768px) 37vw, (min-width: 640px) 10rem, (min-width: 360px) 8.5rem, 7rem"
-                className="hero-photo entrance-lift absolute inset-0 size-full"
-              />
-            </div>
+            {/* An orange backlight behind the head and shoulders, like a studio light,
+                instead of a solid disc: nothing shows through the shirt, whose fade
+                is baked into the photo's PNG (it looks right without CSS masks). */}
+            <div
+              aria-hidden="true"
+              className="hero-backlight entrance-scale absolute inset-x-[12%] top-[2%] aspect-square rounded-full [--entrance-order:1]"
+            />
+            <Image
+              src={kevinGarabitaCutout}
+              alt={dictionary.hero.photoAlt}
+              preload
+              fetchPriority="high"
+              // The width the photo really takes (.hero-photo-frame in globals.css):
+              // 7rem under 360 px, 8.5rem on phones and 10rem from sm beside the name; from md its column
+              // (5 of 12), capped at 30rem (33rem from 1800 px); 12rem on short screens.
+              sizes="(max-height: 30rem) 12rem, (min-width: 1800px) 33rem, (min-width: 1280px) 30rem, (min-width: 768px) 37vw, (min-width: 640px) 10rem, (min-width: 360px) 8.5rem, 7rem"
+              className="entrance-lift absolute inset-0 size-full"
+            />
           </div>
         </div>
 
@@ -155,8 +154,8 @@ export async function HeroSection() {
             </ButtonLink>
           </div>
 
-          {/* LinkedIn and GitHub right under the actions (recruiters look for them
-              first), then the way in for clients. */}
+          {/* LinkedIn, GitHub and Instagram right under the actions (recruiters look
+              for them first), then the way in for clients. */}
           <ul className="entrance mt-3 flex flex-wrap items-center gap-x-6 [--entrance-order:3]">
             {profile.socialProfiles.map((socialProfile) => (
               <li key={socialProfile.network}>

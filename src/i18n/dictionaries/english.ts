@@ -93,8 +93,11 @@ export const englishDictionary: Dictionary = {
       technicalDetails: "Technical details",
       technicalDetailsHint:
         "How it works, technical decisions and failure handling",
+      event: "At the event",
     },
     flowStepTool: "Tool",
+    /** Credit under a photo someone else took. */
+    photoCredit: (author: string) => `Photo: ${author}`,
     gallery: {
       enlarge: "Enlarge",
       dialogLabel: "Project screenshots",

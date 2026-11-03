@@ -33,7 +33,7 @@ Desarrollador Backend, IA y Automatización en Mérida, Yucatán, que ya tiene a
 
 - Next.js 16 (App Router), React 19, Tailwind CSS 4, TypeScript; desplegado en Vercel.
 - Todo el texto vive en `src/content/` y `src/i18n/dictionaries/`; cualquier texto nuevo necesita las cuatro traducciones.
-- La animación de construcción con cursores se quitó el 3 de noviembre de 2026: a Kevin ya no le gustaba y hacía pesada la página en teléfonos. La home no tiene JavaScript propio.
+- La home no tiene JavaScript propio: solo los componentes del encabezado (menú, selector de idioma y fondo al hacer scroll).
 - Los precios no se publican: dependen de lo que se va a construir y Kevin cotiza cada proyecto.
 - Rendimiento y accesibilidad medidos: Lighthouse 95+ y accesibilidad 100, CLS 0, axe sin violaciones (ver `docs/decisions.md`).
 

@@ -43,7 +43,6 @@ export function PageSection({
       <Container>
         {layout === "split" ? (
           <>
-            {/* The hairline is an element of its own so the scroll build can trace it. */}
             <div aria-hidden="true" className="h-px bg-hairline" />
             <div className="grid gap-6 py-14 lg:grid-cols-12 lg:gap-10 lg:py-24">
               <div className="lg:col-span-4">{heading}</div>

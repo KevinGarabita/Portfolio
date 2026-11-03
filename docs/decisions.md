@@ -140,10 +140,6 @@ Kevin sentía que los casos de estudio tenían demasiado texto: repetían lo mis
 - **Galería compacta en teléfonos**: la primera captura grande y las demás como miniaturas cuadradas, cuatro por fila, que piden archivos de un cuarto del ancho de la pantalla (`sizes` con `25vw`).
 - Medido con Lighthouse 12 (móvil, `next start` local): los casos dan 97–99 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO, con CLS 0.
 
-## Animación de construcción de la home (quitada)
-
-Del 2 al 3 de noviembre de 2026 la home tuvo un enjambre de cursores que la "construía" al hacer scroll (`src/components/scroll-build/`). Kevin pidió quitarla el 3 de noviembre: ya no le gustaba y sentía que hacía pesada la página en teléfonos. Se quitaron los componentes, el script en `<head>` (y con él el `suppressHydrationWarning` de `<html>`), los atributos `data-build` de todas las secciones, sus estilos, sus textos en los cuatro diccionarios y el prototipo `docs/scroll-build-reference.html`. La home no tiene JavaScript propio: solo los componentes del encabezado (menú, selector de idioma y fondo al hacer scroll).
-
 ## Rediseño para teléfono (3 de noviembre de 2026)
 
 - **La portada cabe en la primera pantalla del teléfono.** Antes, en un teléfono de 390 × 664, la foto ocupaba un tercio de la pantalla y los botones quedaban abajo. Ahora la foto va pequeña junto al nombre y la frase, el CV y WhatsApp caben arriba. Una sola foto se mueve con áreas de cuadrícula (`.hero-grid`), sin una segunda copia que también se descargaría.

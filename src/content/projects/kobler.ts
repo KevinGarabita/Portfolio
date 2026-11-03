@@ -5,8 +5,9 @@ import type { Project } from "@/types/content";
  * Team work at Kobler y Asociados, the marketing agency where Kevin worked (December
  * 2025 to November 2026), credited as "En equipo en Kobler y Asociados": the agents are
  * the agency's work for its clients, not Kevin's own projects nor a partnership, and
- * each role says what Kevin built himself. All three are in production (Kevin, 12
- * October 2026; start dates unknown, so no status note). Sources: Kevin's CV and the
+ * each role says what Kevin built himself. Both are in production (Kevin, 12
+ * October 2026; start dates unknown, so no status note). Neorgana, also team work there,
+ * has its own file (neorgana-agent.ts) because its case study is longer. Sources: Kevin's CV and the
  * n8n workflows of each client, read as they were up to August 2026. No client data,
  * credentials or internal links.
  */
@@ -24,8 +25,8 @@ export const koblerProjects: Project[] = [
     context: sameInEveryLanguage("Kobler y Asociados"),
     status: "in-production",
     kind: "ai-automation",
-    // The one agent on the home page: the hero's AI promise needs a live agent as proof.
-    isFeatured: true,
+    // Off the home page since 3 November 2026 (Kevin): Neorgana is the featured agent.
+    isFeatured: false,
     teamSetup: "team",
     tagline: {
       es: "Cotiza motos por WhatsApp, filtra prospectos y actualiza el inventario sin captura manual.",
@@ -189,195 +190,6 @@ export const koblerProjects: Project[] = [
         en: "If the store has an inventory location the flow does not know, it stops without writing anything, because updating without it would wipe that location's stock.",
         pt: "Se a loja tiver um local de estoque que o fluxo não conhece, ele para sem gravar nada, porque atualizar sem ele apagaria o estoque desse local.",
         fr: "Si la boutique a un emplacement de stock que le flux ne connaît pas, il s'arrête sans rien écrire, car une mise à jour sans lui effacerait le stock de cet emplacement.",
-      },
-    ],
-    lastUpdated: "2026-11-02",
-  },
-  {
-    slug: "neorgana-agent",
-    name: {
-      es: "Agente de agendado y seguimiento para Neorgana",
-      en: "Scheduling and follow-up agent for Neorgana",
-      pt: "Agente de agendamento e acompanhamento para a Neorgana",
-      fr: "Agent de prise de rendez-vous et de suivi pour Neorgana",
-    },
-    client: "Neorgana",
-    category: "kobler",
-    context: sameInEveryLanguage("Kobler y Asociados"),
-    status: "in-production",
-    kind: "ai-automation",
-    isFeatured: false,
-    teamSetup: "team",
-    tagline: {
-      es: "Lleva a cada paciente con el consultor adecuado y envía el seguimiento tras la consulta.",
-      en: "Matches each patient with the right consultant and sends the follow-up after the call.",
-      pt: "Leva cada paciente ao consultor certo e envia o acompanhamento depois da consulta.",
-      fr: "Oriente chaque patient vers le bon consultant et envoie le suivi après la consultation.",
-    },
-    summary: {
-      es: "Agente de WhatsApp para una clínica: lleva a cada paciente con el consultor adecuado, le comparte su calendario para agendar por Zoom y envía el seguimiento al terminar la consulta.",
-      en: "A WhatsApp agent for a clinic: it matches each patient with the right consultant, shares the calendar to book a Zoom call and sends the follow-up when the consultation ends.",
-      pt: "Agente de WhatsApp para uma clínica: leva cada paciente ao consultor certo, compartilha a agenda para marcar pelo Zoom e envia o acompanhamento ao fim da consulta.",
-      fr: "Un agent WhatsApp pour une clinique : il oriente chaque patient vers le bon consultant, partage l'agenda pour réserver sur Zoom et envoie le suivi à la fin de la consultation.",
-    },
-    problem: {
-      es: "Los pacientes escriben en distintos idiomas y desde distintas regiones. Cada uno debe llegar al consultor correcto y, tras la consulta, recibir seguimiento y cotización.",
-      en: "Patients write in different languages and from different regions. Each one must reach the right consultant and, after the consultation, get a follow-up and a quote.",
-      pt: "Os pacientes escrevem em idiomas diferentes e de regiões diferentes. Cada um precisa chegar ao consultor certo e, depois da consulta, receber acompanhamento e orçamento.",
-      fr: "Les patients écrivent dans différentes langues et depuis différentes régions. Chacun doit être orienté vers le bon consultant et, après la consultation, recevoir un suivi et un devis.",
-    },
-    solution: {
-      es: "Tres flujos en n8n con GoHighLevel: el agente reúne padecimiento, idioma y ubicación y envía el calendario; al agendar se crea la oportunidad; al terminar el Zoom sale el seguimiento.",
-      en: "Three n8n flows with GoHighLevel: the agent gathers condition, language and location and sends the calendar; booking creates the opportunity; when the Zoom call ends, the follow-up goes out.",
-      pt: "Três fluxos no n8n com o GoHighLevel: o agente reúne condição, idioma e localização e envia a agenda; o agendamento cria a oportunidade; ao fim do Zoom, sai o acompanhamento.",
-      fr: "Trois flux n8n avec GoHighLevel : l'agent recueille pathologie, langue et localisation et envoie l'agenda ; la réservation crée l'opportunité ; à la fin du Zoom, le suivi part.",
-    },
-    howItWorks: [
-      {
-        es: "La solución son tres flujos en n8n conectados con GoHighLevel. El primero es el agente de WhatsApp: con un modelo de OpenAI conversa con el paciente, reúne su padecimiento, idioma y ubicación, y le envía el calendario del consultor que corresponde. El segundo se activa cuando el paciente agenda: crea la oportunidad en el CRM y la vincula con la reunión de Zoom. El tercero se activa cuando termina la videollamada: revisa si la consulta se realizó, mueve la oportunidad a la etapa correspondiente y dispara en GoHighLevel el seguimiento y la cotización.",
-        en: "The solution is three n8n flows connected to GoHighLevel. The first is the WhatsApp agent: using an OpenAI model, it talks with the patient, collects their condition, language and location, and sends the calendar of the matching consultant. The second runs when the patient books: it creates the opportunity in the CRM and links it to the Zoom meeting. The third runs when the video call ends: it checks whether the consultation took place, moves the opportunity to the right stage and triggers the follow-up and the quote in GoHighLevel.",
-        pt: "A solução são três fluxos no n8n conectados ao GoHighLevel. O primeiro é o agente de WhatsApp: com um modelo da OpenAI, conversa com o paciente, reúne a condição de saúde, o idioma e a localização e envia a agenda do consultor correspondente. O segundo é acionado quando o paciente agenda: cria a oportunidade no CRM e a vincula à reunião do Zoom. O terceiro é acionado quando a videochamada termina: verifica se a consulta aconteceu, move a oportunidade para a etapa correspondente e dispara no GoHighLevel o acompanhamento e o orçamento.",
-        fr: "La solution repose sur trois flux n8n connectés à GoHighLevel. Le premier est l'agent WhatsApp : avec un modèle d'OpenAI, il échange avec le patient, recueille sa pathologie, sa langue et sa localisation, et envoie l'agenda du consultant correspondant. Le deuxième se déclenche quand le patient réserve : il crée l'opportunité dans le CRM et la relie à la réunion Zoom. Le troisième se déclenche à la fin de l'appel vidéo : il vérifie si la consultation a eu lieu, fait passer l'opportunité à l'étape correspondante et déclenche dans GoHighLevel le suivi et le devis.",
-      },
-    ],
-    role: {
-      es: "Proyecto en equipo en Kobler y Asociados. Construí en n8n el agente y las automatizaciones, los mantuve en producción y participé con el cliente en definir las reglas de negocio.",
-      en: "A team project at Kobler y Asociados. I built the agent and the automations in n8n, kept them running in production and helped define the business rules with the client.",
-      pt: "Projeto em equipe na Kobler y Asociados. Construí no n8n o agente e as automações, mantive-os em produção e ajudei a definir as regras de negócio com o cliente.",
-      fr: "Un projet d'équipe chez Kobler y Asociados. J'ai construit dans n8n l'agent et les automatisations, je les ai maintenus en production et j'ai aidé à définir les règles métier avec le client.",
-    },
-    results: [
-      {
-        es: "Cada paciente llega al consultor que habla su idioma, atiende su región y conoce su padecimiento.",
-        en: "Each patient reaches the consultant who speaks their language, covers their region and handles their condition.",
-        pt: "Cada paciente chega ao consultor que fala seu idioma, atende sua região e conhece sua condição de saúde.",
-        fr: "Chaque patient est orienté vers le consultant qui parle sa langue, couvre sa région et connaît sa pathologie.",
-      },
-      {
-        es: "El seguimiento y la cotización salen solos al terminar la videollamada.",
-        en: "The follow-up and the quote go out on their own when the video call ends.",
-        pt: "O acompanhamento e o orçamento são enviados automaticamente quando a videochamada termina.",
-        fr: "Le suivi et le devis partent d'eux-mêmes à la fin de l'appel vidéo.",
-      },
-      {
-        es: "El CRM se mantiene al día solo, según si la consulta se realizó o no.",
-        en: "The CRM keeps itself up to date, based on whether the consultation took place.",
-        pt: "O CRM se mantém em dia sozinho, conforme a consulta tenha acontecido ou não.",
-        fr: "Le CRM reste à jour de lui-même, selon que la consultation a eu lieu ou non.",
-      },
-    ],
-    highlights: [
-      {
-        es: "Responde en el idioma del paciente y no da diagnósticos ni consejos médicos.",
-        en: "It replies in the patient's language and gives no diagnoses or medical advice.",
-        pt: "Responde no idioma do paciente e não dá diagnósticos nem conselhos médicos.",
-        fr: "Il répond dans la langue du patient et ne donne ni diagnostic ni conseil médical.",
-      },
-      {
-        es: "Si ningún consultor coincide o la duda sale de su alcance, pasa la conversación a una persona del equipo.",
-        en: "If no consultant matches or the question is out of scope, it hands the conversation to a team member.",
-        pt: "Se nenhum consultor corresponder ou a dúvida estiver fora do seu alcance, passa a conversa a uma pessoa da equipe.",
-        fr: "Si aucun consultant ne correspond ou si la question dépasse son périmètre, il transmet la conversation à un membre de l'équipe.",
-      },
-      {
-        es: "Al terminar el Zoom, el flujo revisa duración y participantes y marca la consulta como realizada o cancelada.",
-        en: "When the Zoom call ends, the flow checks duration and participants and marks the consultation as completed or cancelled.",
-        pt: "Ao fim do Zoom, o fluxo verifica a duração e os participantes e marca a consulta como realizada ou cancelada.",
-        fr: "À la fin du Zoom, le flux vérifie la durée et les participants et marque la consultation comme réalisée ou annulée.",
-      },
-    ],
-    stack: ["n8n", "OpenAI API"],
-    integrations: ["WhatsApp", "Zoom", "GoHighLevel"],
-    images: [],
-    links: [],
-    flowDiagram: [
-      {
-        label: {
-          es: "El paciente escribe por WhatsApp",
-          en: "The patient writes on WhatsApp",
-          pt: "O paciente escreve pelo WhatsApp",
-          fr: "Le patient écrit sur WhatsApp",
-        },
-        tool: "WhatsApp",
-      },
-      {
-        label: {
-          es: "El agente pregunta padecimiento, idioma y ubicación",
-          en: "The agent asks about condition, language and location",
-          pt: "O agente pergunta a condição de saúde, o idioma e a localização",
-          fr: "L'agent demande la pathologie, la langue et la localisation",
-        },
-        tool: "OpenAI",
-      },
-      {
-        label: {
-          es: "Envía el calendario del consultor que corresponde",
-          en: "Sends the matching consultant's calendar",
-          pt: "Envia a agenda do consultor correspondente",
-          fr: "Envoie l'agenda du consultant correspondant",
-        },
-        tool: "GoHighLevel",
-      },
-      {
-        label: {
-          es: "El paciente agenda y se crea la oportunidad en el CRM",
-          en: "The patient books and the opportunity is created in the CRM",
-          pt: "O paciente agenda e a oportunidade é criada no CRM",
-          fr: "Le patient réserve et l'opportunité est créée dans le CRM",
-        },
-        tool: "GoHighLevel",
-      },
-      {
-        label: {
-          es: "La consulta se hace por videollamada",
-          en: "The consultation happens over video call",
-          pt: "A consulta acontece por videochamada",
-          fr: "La consultation a lieu par appel vidéo",
-        },
-        tool: "Zoom",
-      },
-      {
-        label: {
-          es: "Al terminar, se actualiza la oportunidad y sale el seguimiento",
-          en: "When it ends, the opportunity is updated and the follow-up goes out",
-          pt: "Ao terminar, a oportunidade é atualizada e o acompanhamento é enviado",
-          fr: "À la fin, l'opportunité est mise à jour et le suivi est envoyé",
-        },
-        tool: "GoHighLevel",
-      },
-    ],
-    decisions: [
-      {
-        es: "Cada vez que envía un calendario, el agente etiqueta al contacto en GoHighLevel con el envío y su idioma. Si ningún consultor coincide o la duda sale de su alcance, pasa la conversación a una persona del equipo.",
-        en: "Each time it sends a calendar, the agent tags the contact in GoHighLevel with the send and their language. If no consultant matches or the question is out of scope, it hands the conversation to a team member.",
-        pt: "Sempre que envia uma agenda, o agente etiqueta o contato no GoHighLevel com o envio e o idioma. Se nenhum consultor corresponder ou a dúvida estiver fora do seu alcance, passa a conversa a uma pessoa da equipe.",
-        fr: "Chaque fois qu'il envoie un agenda, l'agent étiquette le contact dans GoHighLevel avec l'envoi et sa langue. Si aucun consultant ne correspond ou si la question dépasse son périmètre, il transmet la conversation à un membre de l'équipe.",
-      },
-      {
-        es: "Cuando el paciente agenda, un flujo crea la oportunidad en el CRM y guarda su referencia en la reunión de Zoom, para saber después a qué oportunidad corresponde cada videollamada.",
-        en: "When the patient books, a flow creates the opportunity in the CRM and stores its reference in the Zoom meeting, so each video call can later be matched to its opportunity.",
-        pt: "Quando o paciente agenda, um fluxo cria a oportunidade no CRM e guarda a referência dela na reunião do Zoom, para saber depois a que oportunidade corresponde cada videochamada.",
-        fr: "Quand le patient réserve, un flux crée l'opportunité dans le CRM et enregistre sa référence dans la réunion Zoom, afin de relier ensuite chaque appel vidéo à son opportunité.",
-      },
-      {
-        es: "Los datos de Zoom de cada doctor viven en una tabla. Sumar un doctor es agregar una fila, sin modificar el flujo.",
-        en: "Each doctor's Zoom details live in a table. Adding a doctor means adding a row, with no changes to the flow.",
-        pt: "Os dados do Zoom de cada médico ficam em uma tabela. Incluir um médico é adicionar uma linha, sem alterar o fluxo.",
-        fr: "Les informations Zoom de chaque médecin sont dans une table. Ajouter un médecin revient à ajouter une ligne, sans modifier le flux.",
-      },
-    ],
-    failureHandling: [
-      {
-        es: "Zoom vuelve a enviar el aviso si no recibe respuesta en tres segundos, así que el flujo responde primero y hace el resto del trabajo después.",
-        en: "Zoom resends its notification if it gets no response within three seconds, so the flow responds first and does the rest of the work afterwards.",
-        pt: "O Zoom reenvia o aviso se não receber resposta em três segundos; por isso, o fluxo responde primeiro e faz o restante do trabalho depois.",
-        fr: "Zoom renvoie sa notification s'il n'obtient pas de réponse en trois secondes : le flux répond donc d'abord et effectue le reste du travail ensuite.",
-      },
-      {
-        es: "Si una cita cambia de doctor, Zoom genera otra reunión. El flujo de citas lo detecta y vuelve a vincular la reunión nueva con su oportunidad.",
-        en: "If an appointment is moved to another doctor, Zoom creates a new meeting. The appointments flow detects it and links the new meeting to its opportunity again.",
-        pt: "Se uma consulta muda de médico, o Zoom cria outra reunião. O fluxo de agendamentos detecta isso e vincula novamente a nova reunião à sua oportunidade.",
-        fr: "Si un rendez-vous change de médecin, Zoom crée une autre réunion. Le flux des rendez-vous le détecte et relie de nouveau la nouvelle réunion à son opportunité.",
       },
     ],
     lastUpdated: "2026-11-02",

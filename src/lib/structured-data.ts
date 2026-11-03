@@ -78,8 +78,22 @@ interface WebSite {
   "@type": "WebSite";
   "@id": string;
   url: string;
+  /** The brand, which Google can show as the site name in results. */
   name: string;
+  alternateName: string[];
   inLanguage: string[];
+  publisher: NodeReference;
+}
+
+/** Kevin's brand, founded by him: ties the domain, the site and the Instagram account. */
+interface Organization {
+  "@type": "Organization";
+  "@id": string;
+  name: string;
+  url: string;
+  logo: string;
+  founder: NodeReference;
+  sameAs: string[];
 }
 
 interface ProfilePage {
@@ -180,6 +194,7 @@ export interface StructuredDataGraph {
   "@context": "https://schema.org";
   "@graph": (
     | WebSite
+    | Organization
     | ProfilePage
     | Person
     | PersonSummary
@@ -213,14 +228,37 @@ function getPersonId(): string {
   return toAbsoluteUrl("/#person");
 }
 
-function buildWebSite(): WebSite {
-  return {
-    "@type": "WebSite",
-    "@id": getWebsiteId(),
-    url: toAbsoluteUrl("/"),
-    name: profile.displayName,
-    inLanguage: [...supportedLocales],
-  };
+function getOrganizationId(): string {
+  return toAbsoluteUrl("/#organization");
+}
+
+/** Brand profiles (Instagram) go on the Organization; Kevin's own stay on the Person. */
+const brandNetworks = new Set(["instagram"]);
+
+/** The WebSite and the brand behind it, the same on every page. */
+function buildSiteNodes(): [WebSite, Organization] {
+  return [
+    {
+      "@type": "WebSite",
+      "@id": getWebsiteId(),
+      url: toAbsoluteUrl("/"),
+      name: profile.brandName,
+      alternateName: [profile.displayName],
+      inLanguage: [...supportedLocales],
+      publisher: { "@id": getOrganizationId() },
+    },
+    {
+      "@type": "Organization",
+      "@id": getOrganizationId(),
+      name: profile.brandName,
+      url: toAbsoluteUrl("/"),
+      logo: toAbsoluteUrl("/apple-icon.png"),
+      founder: { "@id": getPersonId() },
+      sameAs: profile.socialProfiles
+        .filter((socialProfile) => brandNetworks.has(socialProfile.network))
+        .map((socialProfile) => socialProfile.url),
+    },
+  ];
 }
 
 /** The home page as a ProfilePage about Kevin, inside the WebSite. */
@@ -256,7 +294,9 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
       addressRegion: profile.location.region,
       addressCountry: profile.location.countryCode,
     },
-    sameAs: profile.socialProfiles.map((socialProfile) => socialProfile.url),
+    sameAs: profile.socialProfiles
+      .filter((socialProfile) => !brandNetworks.has(socialProfile.network))
+      .map((socialProfile) => socialProfile.url),
     ...(schools.length > 0 ? { alumniOf: schools } : {}),
     ...(currentSchools.length > 0 ? { affiliation: currentSchools } : {}),
     knowsAbout: skillGroups
@@ -271,7 +311,7 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
   return {
     "@context": "https://schema.org",
     "@graph": [
-      buildWebSite(),
+      ...buildSiteNodes(),
       {
         "@type": "ProfilePage",
         "@id": `${homeUrl}#profile-page`,
@@ -313,7 +353,7 @@ export function buildProjectStructuredData(
   return {
     "@context": "https://schema.org",
     "@graph": [
-      buildWebSite(),
+      ...buildSiteNodes(),
       {
         "@type": "Person",
         "@id": getPersonId(),
@@ -394,7 +434,7 @@ export function buildServicesStructuredData(
   return {
     "@context": "https://schema.org",
     "@graph": [
-      buildWebSite(),
+      ...buildSiteNodes(),
       {
         "@type": "Person",
         "@id": getPersonId(),
@@ -446,7 +486,7 @@ export function buildProjectsStructuredData(
   return {
     "@context": "https://schema.org",
     "@graph": [
-      buildWebSite(),
+      ...buildSiteNodes(),
       {
         "@type": "BreadcrumbList",
         "@id": breadcrumbId,

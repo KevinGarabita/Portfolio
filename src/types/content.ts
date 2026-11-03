@@ -17,7 +17,7 @@ export interface DateRange {
 }
 
 export interface SocialProfile {
-  network: "linkedin" | "github";
+  network: "linkedin" | "github" | "instagram";
   url: string;
 }
 
@@ -26,6 +26,11 @@ export interface Profile {
   displayName: string;
   /** Legal full name, used in structured data. */
   fullName: string;
+  /**
+   * Kevin's brand: the site's name for search engines (WebSite, Open Graph), the home
+   * title and the footer, so a search for it finds the site and the Instagram account.
+   */
+  brandName: string;
   role: LocalizedText;
   /** Short line under the hero title. */
   heroSubtitle: LocalizedText;
@@ -172,6 +177,23 @@ export type ProjectArchitecture =
   | { kind: "image"; image: ArchitectureImage }
   | { kind: "diagram"; parts: FlowStep[] };
 
+/**
+ * The real event a project was used at, with a photo stored under
+ * public/images/projects/<slug>/. The photo is credited to whoever took it.
+ */
+export interface ProjectEvent {
+  /** Where, when and who was there, in a sentence or two. */
+  description: LocalizedText;
+  photo: {
+    src: string;
+    alt: LocalizedText;
+    width: number;
+    height: number;
+    /** Who took the photo, shown under it ("Foto: Kobler y Asociados"). */
+    credit: string;
+  };
+}
+
 /** What the project is, for the filters on the projects page. */
 export type ProjectKind = "web-app" | "ai-automation";
 
@@ -229,6 +251,8 @@ export interface Project {
   metrics?: ProjectMetric[];
   /** How the system is built; the case study shows it only when it is set. */
   architecture?: ProjectArchitecture;
+  /** The event the project was used at; the case study shows it only when it is set. */
+  event?: ProjectEvent;
   /** Optional details that add credibility when the information exists. */
   decisions?: LocalizedText[];
   failureHandling?: LocalizedText[];

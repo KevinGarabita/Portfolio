@@ -7,7 +7,18 @@ import type { CalendarDate, LocalizedText } from "@/types/content";
  * named in the profile and projects. Case studies have theirs in project-seo.ts.
  */
 
-/** Home page description. Its title is the name and the role (buildHomeTitle). */
+/**
+ * The role, shortened for the home title so the name, the brand and the role fit in 60
+ * characters (buildHomeTitle). The full role stays in the description and on the page.
+ */
+export const homeTitleRole: LocalizedText = {
+  es: "Backend, IA y Automatización",
+  en: "Backend, AI & Automation",
+  pt: "Backend, IA e Automação",
+  fr: "Backend, IA, Automatisation",
+};
+
+/** Home page description. Its title is the name, the brand and the role (buildHomeTitle). */
 export const homeDescription: LocalizedText = {
   es: "Desarrollador Backend, IA y Automatización en Mérida, Yucatán, México. Agentes conversacionales en n8n con la API de OpenAI y aplicaciones con FastAPI y React.",
   en: "Backend, AI & Automation Engineer in Mérida, Yucatán, Mexico. Conversational agents in n8n with the OpenAI API and web applications with FastAPI and React.",

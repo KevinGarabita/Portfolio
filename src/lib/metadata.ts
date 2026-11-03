@@ -4,6 +4,7 @@ import { profile } from "@/content/profile";
 import { projectSeo } from "@/content/project-seo";
 import {
   homeDescription,
+  homeTitleRole,
   projectsPageDescription,
   projectsPageTitle,
   servicesPageDescription,
@@ -96,7 +97,7 @@ function assertSearchTexts(): void {
     homeTitle,
     1,
     titleMaxLength,
-    "The home title (displayName and role in src/content/profile.ts)",
+    "The home title (displayName and brandName in src/content/profile.ts, homeTitleRole in src/content/site-metadata.ts)",
   );
 
   const siteSource = "src/content/site-metadata.ts";
@@ -170,7 +171,7 @@ export function getShareImagePath(
 
 /** Home page title for search results and link previews: the name and the role. */
 export function buildHomeTitle(locale: Locale): string {
-  return `${profile.displayName} | ${localize(profile.role, locale)}`;
+  return `${profile.displayName} · ${profile.brandName} | ${localize(homeTitleRole, locale)}`;
 }
 
 /**
@@ -221,7 +222,7 @@ export function buildBaseOpenGraph(
   locale: Locale,
 ): NonNullable<Metadata["openGraph"]> {
   return {
-    siteName: profile.displayName,
+    siteName: profile.brandName,
     type: "website",
     locale: toOpenGraphLocale(locale),
     alternateLocale: supportedLocales
