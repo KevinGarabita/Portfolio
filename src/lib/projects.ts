@@ -1,5 +1,5 @@
 import { projects } from "@/content/projects";
-import type { Project, ProjectCredit } from "@/types/content";
+import type { LocalizedText, Project, ProjectCredit } from "@/types/content";
 
 const slugFormat = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -18,6 +18,70 @@ function assertValidProjectSlugs(projectList: Project[]): void {
 }
 
 assertValidProjectSlugs(projects);
+
+/**
+ * Longest a visible case-study text may be, in characters, in any language (French runs
+ * longest). The full story lives in howItWorks, decisions and failureHandling, which the
+ * page collapses under "Technical details"; these limits keep the rest scannable on a
+ * phone (3 November 2026: Kevin found the case studies too long to read).
+ */
+const visibleTextLimits = {
+  summary: 210,
+  problem: 230,
+  solution: 240,
+  role: 240,
+  result: 140,
+  highlight: 150,
+} as const;
+const maxResults = 3;
+const maxHighlights = 4;
+
+/** Fails the build when a case study's visible text grows past the limits above. */
+function assertShortCaseStudies(projectList: Project[]): void {
+  for (const project of projectList) {
+    const source = `src/content/projects: "${project.slug}"`;
+    const checks: [keyof typeof visibleTextLimits, LocalizedText][] = [
+      ["summary", project.summary],
+      ["problem", project.problem],
+      ["solution", project.solution],
+      ["role", project.role],
+      ...project.results.map(
+        (text): [keyof typeof visibleTextLimits, LocalizedText] => [
+          "result",
+          text,
+        ],
+      ),
+      ...project.highlights.map(
+        (text): [keyof typeof visibleTextLimits, LocalizedText] => [
+          "highlight",
+          text,
+        ],
+      ),
+    ];
+
+    for (const [field, text] of checks) {
+      for (const [locale, value] of Object.entries(text)) {
+        if (value.length > visibleTextLimits[field]) {
+          throw new Error(
+            `${source}: a ${field} (${locale}) has ${value.length} characters; keep it under ${visibleTextLimits[field]} and move the detail to howItWorks: "${value}"`,
+          );
+        }
+      }
+    }
+    if (project.results.length > maxResults) {
+      throw new Error(
+        `${source} has ${project.results.length} results; show at most ${maxResults}`,
+      );
+    }
+    if (project.highlights.length > maxHighlights) {
+      throw new Error(
+        `${source} has ${project.highlights.length} key points; show at most ${maxHighlights}`,
+      );
+    }
+  }
+}
+
+assertShortCaseStudies(projects);
 
 export function getAllProjects(): Project[] {
   return projects;

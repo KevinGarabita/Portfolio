@@ -86,6 +86,11 @@ export const spanishDictionary = {
       nextSteps: "Siguientes pasos",
       metrics: "Antes y después",
       architecture: "Arquitectura",
+      overview: "En resumen",
+      howItWorks: "Cómo funciona",
+      technicalDetails: "Detalles técnicos",
+      technicalDetailsHint:
+        "Cómo funciona, decisiones técnicas y manejo de fallas",
     },
     flowStepTool: "Herramienta",
     gallery: {

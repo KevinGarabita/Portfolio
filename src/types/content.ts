@@ -202,11 +202,19 @@ export interface Project {
   tagline: LocalizedText;
   /** One or two sentences: the case study's lead and the structured data description. */
   summary: LocalizedText;
+  /** The visible texts below are short on purpose; lib/projects.ts checks their length. */
   problem: LocalizedText;
+  /** The solution in one or two sentences; the full explanation goes in howItWorks. */
   solution: LocalizedText;
+  /**
+   * How the system works in detail, one paragraph each. Shown under "Technical details",
+   * which is collapsed by default.
+   */
+  howItWorks?: LocalizedText[];
   role: LocalizedText;
+  /** At most 3 short results. */
   results: LocalizedText[];
-  /** 3 to 5 key points, from the CV or from the project's own documentation. */
+  /** At most 4 short key points, from the CV or from the project's own documentation. */
   highlights: LocalizedText[];
   /** Main technologies; integrations are listed separately. */
   stack: string[];

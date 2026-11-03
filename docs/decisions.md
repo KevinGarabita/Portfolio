@@ -130,6 +130,16 @@ Comprobado con scripts de Puppeteer y axe-core 4.14 que viven fuera del reposito
 - PNG con alfa completo (sin paleta, que dañaría los bordes del pelo), 1350 × 1536 (1.5 veces el marco de 900:1024, para pantallas de alta densidad: se dibuja hasta 528 px de ancho), unos 2.3 MB. El navegador recibe la versión que optimiza `next/image`: AVIF (o WebP si no lo admite) del ancho que pide `sizes`.
 - `public/images/kevin-garabita.jpg` es el mismo encuadre con su fondo, 900 × 1024: la usan los datos estructurados.
 
+## Casos de estudio cortos (3 de noviembre de 2026)
+
+Kevin sentía que los casos de estudio tenían demasiado texto: repetían lo mismo en el resumen, el problema, la solución, los puntos clave y los resultados, con párrafos de hasta mil caracteres, y en teléfono el del workshop medía unos 7,500 px.
+
+- **Textos visibles cortos en los cuatro idiomas**, escritos solo con hechos que ya estaban en cada caso: un resumen de una frase, problema y solución en una o dos, el rol en una, hasta 3 resultados y 4 puntos clave. Visibles quedaron entre 303 y 377 palabras por caso (antes, de 384 a 1,226).
+- **Nada se borró**: la solución completa de antes pasó a `howItWorks` ("Cómo funciona"), junto con los puntos clave de Controltec que traían funciones de la oficina, las cotizaciones y las integraciones; los puntos técnicos del workshop (sincronización) y de Neorgana (etiquetas y referencia en Zoom) pasaron a sus decisiones técnicas. Todo eso vive en "Detalles técnicos", un `<details>` cerrado por defecto: sin JavaScript, con su texto en el HTML para los buscadores.
+- **Límites en el build** (`assertShortCaseStudies` en `src/lib/projects.ts`): el build falla si un texto visible pasa su límite en cualquier idioma, para que los casos no vuelvan a crecer. El primer build ya encontró un resultado de Lamau Beach de 144 caracteres en francés.
+- **Galería compacta en teléfonos**: la primera captura grande y las demás como miniaturas cuadradas, cuatro por fila, que piden archivos de un cuarto del ancho de la pantalla (`sizes` con `25vw`).
+- Medido con Lighthouse 12 (móvil, `next start` local): los casos dan 97–99 en rendimiento y 100 en accesibilidad, buenas prácticas y SEO, con CLS 0.
+
 ## Animación de construcción de la home (quitada)
 
 Del 2 al 3 de noviembre de 2026 la home tuvo un enjambre de cursores que la "construía" al hacer scroll (`src/components/scroll-build/`). Kevin pidió quitarla el 3 de noviembre: ya no le gustaba y sentía que hacía pesada la página en teléfonos. Se quitaron los componentes, el script en `<head>` (y con él el `suppressHydrationWarning` de `<html>`), los atributos `data-build` de todas las secciones, sus estilos, sus textos en los cuatro diccionarios y el prototipo `docs/scroll-build-reference.html`. La home no tiene JavaScript propio: solo los componentes del encabezado (menú, selector de idioma y fondo al hacer scroll).

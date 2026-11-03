@@ -88,6 +88,11 @@ export const frenchDictionary: Dictionary = {
       nextSteps: "Prochaines étapes",
       metrics: "Avant et après",
       architecture: "Architecture",
+      overview: "En bref",
+      howItWorks: "Fonctionnement",
+      technicalDetails: "Détails techniques",
+      technicalDetailsHint:
+        "Fonctionnement, choix techniques et gestion des erreurs",
     },
     flowStepTool: "Outil",
     gallery: {

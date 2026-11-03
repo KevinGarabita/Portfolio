@@ -582,7 +582,7 @@
     content: "";
     position: absolute;
     top: 2.5rem;
-    bottom: -1rem;
+    bottom: -0.75rem; /* the gap between steps below xl (gap-3) */
     left: calc(1.25rem - 1px);
     width: 2px;
     background: linear-gradient(

@@ -88,6 +88,11 @@ export const portugueseDictionary: Dictionary = {
       nextSteps: "Próximos passos",
       metrics: "Antes e depois",
       architecture: "Arquitetura",
+      overview: "Em resumo",
+      howItWorks: "Como funciona",
+      technicalDetails: "Detalhes técnicos",
+      technicalDetailsHint:
+        "Como funciona, decisões técnicas e tratamento de falhas",
     },
     flowStepTool: "Ferramenta",
     gallery: {
