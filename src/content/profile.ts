@@ -4,6 +4,8 @@ import type { Profile } from "@/types/content";
 export const profile: Profile = {
   displayName: "Kevin Garabita",
   fullName: "Kevin Emanuel Garabita Córdova",
+  // The name of the domain (garasoftware.com.mx) and the Instagram account (Kevin, 3 November 2026).
+  brandName: "Garasoftware",
   role: {
     es: "Desarrollador Backend, IA y Automatización",
     en: "Backend, AI & Automation Engineer",
@@ -15,6 +17,12 @@ export const profile: Profile = {
     en: "I build systems and AI assistants that save your business hours of work",
     pt: "Construo sistemas e assistentes de IA que economizam horas de trabalho para o seu negócio",
     fr: "Je crée des systèmes et des assistants d'IA qui font gagner des heures de travail à votre entreprise",
+  },
+  heroSubtitleHighlight: {
+    es: "horas de trabajo",
+    en: "hours of work",
+    pt: "horas de trabalho",
+    fr: "heures de travail",
   },
   about: [
     {
@@ -47,6 +55,7 @@ export const profile: Profile = {
   socialProfiles: [
     { network: "linkedin", url: "https://www.linkedin.com/in/kevingarabita/" },
     { network: "github", url: "https://github.com/KevinGarabita" },
+    { network: "instagram", url: "https://www.instagram.com/garasoftwaremx/" },
   ],
   // Only Spanish and English exist; Portuguese and French pages get the Spanish CV.
   resumeFiles: {

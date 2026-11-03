@@ -9,6 +9,7 @@ export const spanishDictionary = {
     projects: "Proyectos",
     experience: "Experiencia",
     about: "Sobre mí",
+    services: "Servicios",
     contact: "Contacto",
     resume: "CV",
   },
@@ -18,9 +19,17 @@ export const spanishDictionary = {
   hero: {
     photoAlt: "Kevin Garabita, desarrollador backend, IA y automatización",
     writeOnWhatsApp: "Escríbeme por WhatsApp",
-    facts: {
-      experience: "Experiencia",
-      education: "Formación",
+    servicesLink: "¿Tienes un negocio? Mira mis servicios",
+    stats: {
+      label: "En cifras",
+      agents: "agentes de IA en WhatsApp, hechos en equipo",
+      inProduction: "proyectos en producción",
+      experience: (organization: string) =>
+        `como programador de IA en ${organization}`,
+      graduation: (institution: string) =>
+        `titulación prevista, ${institution}`,
+      years: (count: number) => (count === 1 ? "1 año" : `${count} años`),
+      months: (count: number) => (count === 1 ? "1 mes" : `${count} meses`),
     },
   },
   resume: {
@@ -77,8 +86,16 @@ export const spanishDictionary = {
       nextSteps: "Siguientes pasos",
       metrics: "Antes y después",
       architecture: "Arquitectura",
+      overview: "En resumen",
+      howItWorks: "Cómo funciona",
+      technicalDetails: "Detalles técnicos",
+      technicalDetailsHint:
+        "Cómo funciona, decisiones técnicas y manejo de fallas",
+      event: "En el evento",
     },
     flowStepTool: "Herramienta",
+    /** Credit under a photo someone else took. */
+    photoCredit: (author: string) => `Foto: ${author}`,
     gallery: {
       enlarge: "Ampliar",
       dialogLabel: "Capturas del proyecto",
@@ -115,21 +132,26 @@ export const spanishDictionary = {
   contact: {
     sectionTitle: "Contacto",
     lead: "Cuéntame qué quieres desarrollar o automatizar.",
+    homeLead: "¿Buscas a alguien para tu equipo o tienes un proyecto en mente?",
+    servicesPrompt: "¿Necesitas un sistema o un agente de IA para tu negocio?",
+    servicesLink: "Ver servicios",
     email: "Correo",
     whatsApp: "WhatsApp",
     location: "Ubicación",
     profiles: "Perfiles",
   },
-  scrollBuild: {
-    // Pills of the home page's build cursors (components/scroll-build); decorative.
-    actions: {
-      type: "escribiendo",
-      draw: "insertando imagen",
-      resize: "redimensionando",
-      drag: "moviendo",
-      click: "aplicando estilo",
-      line: "trazando",
-    },
+  services: {
+    title: "Servicios",
+    lead: "Agentes de IA, automatizaciones y aplicaciones web a la medida de tu negocio, con proyectos reales que lo respaldan.",
+    listLabel: "Lo que puedo construir para ti",
+    includes: "Incluye",
+    examples: "Proyectos de ejemplo",
+    processTitle: "Cómo trabajamos",
+    pricingTitle: "¿Cuánto cuesta?",
+    pricingText:
+      "Depende de lo que se va a construir. Cuéntame qué necesitas y te preparo una cotización con el alcance, los tiempos y el precio.",
+    recruiterPrompt: "¿Buscas a un desarrollador para tu equipo?",
+    recruiterLink: "Ver mi perfil y CV",
   },
   notFound: {
     title: "Página no encontrada",

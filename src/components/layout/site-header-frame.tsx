@@ -34,12 +34,7 @@ export function SiteHeaderFrame({ children }: { children: ReactNode }) {
         aria-hidden="true"
         className="pointer-events-none absolute top-0 left-0 h-2 w-px"
       />
-      <header
-        className="site-header"
-        data-at-top={isAtTop ? "" : undefined}
-        // The home page's scroll build builds the header with the hero.
-        data-build-section="header"
-      >
+      <header className="site-header" data-at-top={isAtTop ? "" : undefined}>
         {children}
       </header>
     </>

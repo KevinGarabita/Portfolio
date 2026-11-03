@@ -43,7 +43,7 @@ interface SiteNavigationProps {
  * it. data-menu-open keeps the header's background solid while the panel is open.
  */
 const navigationLinkClassName =
-  "nav-link flex min-h-12 items-center rounded-control px-4 font-bold text-heading transition-colors max-lg:hover:bg-raised-strong lg:min-h-11 lg:px-3 lg:text-small lg:text-muted lg:hover:text-heading lg:aria-[current=page]:text-heading";
+  "nav-link flex min-h-12 items-center rounded-control whitespace-nowrap px-4 font-bold text-heading transition-colors max-lg:hover:bg-raised-strong lg:min-h-11 lg:px-3 lg:text-small lg:text-muted lg:hover:text-heading lg:aria-[current=page]:text-heading";
 
 export function SiteNavigation({
   label,
@@ -103,8 +103,6 @@ export function SiteNavigation({
         aria-expanded={isOpen}
         aria-controls={listId}
         onClick={() => setIsOpen((open) => !open)}
-        data-build="drag"
-        data-build-tag="button.menu"
         className="inline-flex size-11 cursor-pointer items-center justify-center rounded-control text-heading transition-colors hover:bg-raised-strong lg:hidden"
       >
         <ToggleIcon className="size-6" />
@@ -116,8 +114,6 @@ export function SiteNavigation({
       <ul
         id={listId}
         data-open={isOpen ? "" : undefined}
-        data-build="drag"
-        data-build-tag="ul.nav"
         className="max-lg:absolute max-lg:inset-x-0 max-lg:top-full max-lg:hidden max-lg:flex-col max-lg:border-b max-lg:border-hairline max-lg:bg-page max-lg:px-0 max-lg:py-2 max-lg:shadow-(--shadow-floating) max-lg:data-open:flex sm:max-lg:px-2 lg:flex lg:items-center"
       >
         {links.map((link) => (

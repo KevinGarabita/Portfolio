@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { ArrowRightIcon } from "@/components/ui/icons";
 import { PageSection } from "@/components/ui/page-section";
 import { education } from "@/content/education";
 import { workExperience } from "@/content/experience";
@@ -36,14 +37,10 @@ export async function ExperienceSection() {
           return (
             <li key={job.id}>
               <article>
-                <h3
-                  data-build="type"
-                  data-build-tag="h3"
-                  className="font-display text-subtitle font-bold"
-                >
+                <h3 className="font-display text-subtitle font-bold">
                   {localize(job.role, locale)}
                 </h3>
-                <p data-build="type" data-build-tag="p" className="mt-1">
+                <p className="mt-1">
                   {job.organization}
                   {job.organizationDescription ? (
                     <span className="text-muted">
@@ -51,21 +48,13 @@ export async function ExperienceSection() {
                     </span>
                   ) : null}
                 </p>
-                <p
-                  data-build="type"
-                  data-build-tag="p.fecha"
-                  className="mt-1 text-small text-muted"
-                >
+                <p className="mt-1 text-small text-muted">
                   {formatDateRange(job.period, locale, labels.present)},{" "}
                   {localize(job.location, locale)}
                 </p>
 
                 {summary ? (
-                  <p
-                    data-build="type"
-                    data-build-tag="p"
-                    className="mt-5 max-w-[60ch] text-heading"
-                  >
+                  <p className="mt-5 max-w-[60ch] text-heading">
                     {localize(summary, locale)}
                   </p>
                 ) : null}
@@ -73,12 +62,7 @@ export async function ExperienceSection() {
                 {highlights.length > 0 ? (
                   <ul className="mt-4 flex max-w-[60ch] flex-col gap-3">
                     {highlights.map((highlight) => (
-                      <li
-                        key={highlight.es}
-                        data-build="type"
-                        data-build-tag="li"
-                        className="flex gap-3"
-                      >
+                      <li key={highlight.es} className="flex gap-3">
                         <span
                           aria-hidden="true"
                           className="mt-[0.6em] size-1.5 shrink-0 rotate-45 bg-accent"
@@ -91,25 +75,20 @@ export async function ExperienceSection() {
 
                 {relatedProjects.length > 0 ? (
                   <>
-                    <h4
-                      data-build="type"
-                      data-build-tag="h4"
-                      className="mt-8 text-small font-bold text-muted"
-                    >
+                    <h4 className="mt-8 text-small font-bold text-muted">
                       {labels.relatedProjects}
                     </h4>
-                    <ul
-                      data-build="drag"
-                      data-build-tag="ul.casos"
-                      className="mt-1 flex flex-col text-small"
-                    >
+                    <ul className="mt-3 grid max-w-[60ch] gap-2">
                       {relatedProjects.map((project) => (
                         <li key={project.slug}>
                           <Link
                             href={`/${locale}/projects/${project.slug}`}
-                            className="inline-flex min-h-11 items-center"
+                            className="link-frame flex min-h-12 items-center justify-between gap-4 rounded-media border px-4 py-3 no-underline"
                           >
-                            {localize(project.name, locale)}
+                            <span className="link-frame-name font-bold text-heading decoration-accent decoration-2">
+                              {localize(project.name, locale)}
+                            </span>
+                            <ArrowRightIcon className="size-4 shrink-0 text-accent" />
                           </Link>
                         </li>
                       ))}
@@ -125,21 +104,13 @@ export async function ExperienceSection() {
       <div className="mt-14 flex flex-col gap-10 border-t border-hairline pt-10">
         {education.map((studies) => (
           <article key={studies.id}>
-            <h3
-              data-build="type"
-              data-build-tag="h3"
-              className="font-display text-subtitle font-bold"
-            >
+            <h3 className="font-display text-subtitle font-bold">
               {localize(studies.degree, locale)}
             </h3>
-            <p data-build="type" data-build-tag="p" className="mt-1">
+            <p className="mt-1">
               {studies.institution}, {localize(studies.location, locale)}
             </p>
-            <ul
-              data-build="drag"
-              data-build-tag="ul.datos"
-              className="mt-1 flex flex-wrap gap-x-6 gap-y-1 text-small text-muted"
-            >
+            <ul className="mt-1 flex flex-wrap gap-x-6 gap-y-1 text-small text-muted">
               <li>{formatDateRange(studies.period, locale, labels.present)}</li>
               {studies.note ? <li>{localize(studies.note, locale)}</li> : null}
               {studies.expectedGraduation ? (

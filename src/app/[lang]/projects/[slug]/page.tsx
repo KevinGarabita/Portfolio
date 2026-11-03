@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -13,8 +14,10 @@ import { ProjectMetrics } from "@/components/projects/project-metrics";
 import { ProjectStatus } from "@/components/projects/project-status";
 import {
   ProjectKeyPoints,
+  ProjectOverviewPart,
   ProjectStoryList,
   ProjectStorySection,
+  ProjectTechnicalDetails,
 } from "@/components/projects/project-story-section";
 import { ProjectStructuredData } from "@/components/seo/structured-data";
 import { ButtonLink } from "@/components/ui/button-link";
@@ -106,10 +109,14 @@ function NeighborProjectLink({
 }
 
 /**
- * Case study: header (credit, status, title, summary, key facts), screenshots, key
- * points, the automation flow, then the story (problem, solution, decisions, failure
- * handling, role, results, next steps), public links, an invitation to write on
- * WhatsApp and the previous/next projects.
+ * Case study, short enough to scan on a phone: header (credit, status, title, a
+ * one-sentence summary, key facts), screenshots, the case at a glance (problem, solution
+ * and results in a sentence or two each), the event it was used at with its credited
+ * photo, the automation flow, at most four key points,
+ * Kevin's role, public links, then the technical details (how it works, decisions,
+ * failure handling, next steps) collapsed in a <details>, an invitation to write on
+ * WhatsApp and the previous/next projects. lib/projects.ts keeps the visible texts
+ * short.
  *
  * The header arrives in sequence on load without fading (.entrance-slide): the one
  * motion of the page, like the hero of the home page. Everything after it is simply
@@ -206,18 +213,52 @@ export default async function ProjectPage({
           </section>
         ) : null}
 
-        <ProjectStorySection id="highlights" title={sectionTitles.highlights}>
-          <ProjectKeyPoints items={localizeEach(project.highlights)} />
+        {/* The case in three short parts, side by side from lg: what was wrong, what
+            was built and what changed. */}
+        <ProjectStorySection
+          id="overview"
+          title={sectionTitles.overview}
+          layout="wide"
+        >
+          <div className="grid gap-8 lg:grid-cols-3 lg:gap-10">
+            <ProjectOverviewPart title={sectionTitles.problem}>
+              <p>{localize(project.problem, locale)}</p>
+            </ProjectOverviewPart>
+            <ProjectOverviewPart title={sectionTitles.solution}>
+              <p>{localize(project.solution, locale)}</p>
+            </ProjectOverviewPart>
+            <ProjectOverviewPart title={sectionTitles.results}>
+              <ProjectStoryList items={localizeEach(project.results)} />
+            </ProjectOverviewPart>
+          </div>
         </ProjectStorySection>
 
-        {/* Before/after figures, only when the project has real ones. */}
-        {project.metrics?.length ? (
-          <ProjectStorySection id="metrics" title={sectionTitles.metrics}>
-            <ProjectMetrics
-              metrics={project.metrics}
-              locale={locale}
-              labels={dictionary.recruiter.metrics}
-            />
+        {/* The real event, only when the project has one: the photo with its credit
+            under it, and where and when beside it from lg. */}
+        {project.event ? (
+          <ProjectStorySection
+            id="event"
+            title={sectionTitles.event}
+            layout="wide"
+          >
+            <div className="grid gap-6 lg:grid-cols-12 lg:gap-10">
+              <figure className="flex flex-col gap-3 lg:col-span-8">
+                <Image
+                  src={project.event.photo.src}
+                  alt={localize(project.event.photo.alt, locale)}
+                  width={project.event.photo.width}
+                  height={project.event.photo.height}
+                  sizes="(min-width: 1800px) 880px, (min-width: 1280px) 790px, (min-width: 1024px) 66vw, 100vw"
+                  className="h-auto w-full rounded-media border border-hairline"
+                />
+                <figcaption className="text-small text-muted">
+                  {projectTexts.photoCredit(project.event.photo.credit)}
+                </figcaption>
+              </figure>
+              <p className="max-w-prose lg:col-span-4">
+                {localize(project.event.description, locale)}
+              </p>
+            </div>
           </ProjectStorySection>
         ) : null}
 
@@ -235,13 +276,20 @@ export default async function ProjectPage({
           </ProjectStorySection>
         ) : null}
 
-        <ProjectStorySection id="problem" title={sectionTitles.problem}>
-          <p className="max-w-prose">{localize(project.problem, locale)}</p>
+        <ProjectStorySection id="highlights" title={sectionTitles.highlights}>
+          <ProjectKeyPoints items={localizeEach(project.highlights)} />
         </ProjectStorySection>
 
-        <ProjectStorySection id="solution" title={sectionTitles.solution}>
-          <p className="max-w-prose">{localize(project.solution, locale)}</p>
-        </ProjectStorySection>
+        {/* Before/after figures, only when the project has real ones. */}
+        {project.metrics?.length ? (
+          <ProjectStorySection id="metrics" title={sectionTitles.metrics}>
+            <ProjectMetrics
+              metrics={project.metrics}
+              locale={locale}
+              labels={dictionary.recruiter.metrics}
+            />
+          </ProjectStorySection>
+        ) : null}
 
         {/* Full width, like the automation flow; only when the project has one. */}
         {project.architecture ? (
@@ -258,34 +306,9 @@ export default async function ProjectPage({
           </ProjectStorySection>
         ) : null}
 
-        {project.decisions?.length ? (
-          <ProjectStorySection id="decisions" title={sectionTitles.decisions}>
-            <ProjectStoryList items={localizeEach(project.decisions)} />
-          </ProjectStorySection>
-        ) : null}
-
-        {project.failureHandling?.length ? (
-          <ProjectStorySection
-            id="failure-handling"
-            title={sectionTitles.failureHandling}
-          >
-            <ProjectStoryList items={localizeEach(project.failureHandling)} />
-          </ProjectStorySection>
-        ) : null}
-
         <ProjectStorySection id="role" title={sectionTitles.role}>
           <p className="max-w-prose">{localize(project.role, locale)}</p>
         </ProjectStorySection>
-
-        <ProjectStorySection id="results" title={sectionTitles.results}>
-          <ProjectStoryList items={localizeEach(project.results)} />
-        </ProjectStorySection>
-
-        {project.nextSteps ? (
-          <ProjectStorySection id="next-steps" title={sectionTitles.nextSteps}>
-            <p className="max-w-prose">{localize(project.nextSteps, locale)}</p>
-          </ProjectStorySection>
-        ) : null}
 
         {project.links.length > 0 ? (
           <ProjectStorySection id="links" title={sectionTitles.links}>
@@ -312,6 +335,35 @@ export default async function ProjectPage({
             </ul>
           </ProjectStorySection>
         ) : null}
+
+        <ProjectTechnicalDetails
+          title={sectionTitles.technicalDetails}
+          hint={sectionTitles.technicalDetailsHint}
+          parts={[
+            {
+              id: "how-it-works",
+              title: sectionTitles.howItWorks,
+              paragraphs: localizeEach(project.howItWorks ?? []),
+            },
+            {
+              id: "decisions",
+              title: sectionTitles.decisions,
+              items: localizeEach(project.decisions ?? []),
+            },
+            {
+              id: "failure-handling",
+              title: sectionTitles.failureHandling,
+              items: localizeEach(project.failureHandling ?? []),
+            },
+            {
+              id: "next-steps",
+              title: sectionTitles.nextSteps,
+              paragraphs: project.nextSteps
+                ? [localize(project.nextSteps, locale)]
+                : [],
+            },
+          ]}
+        />
       </article>
 
       {/* The next step for a client who has read this far, with the words and the
@@ -320,17 +372,26 @@ export default async function ProjectPage({
         <p className="max-w-[18em] font-display text-title font-bold text-heading">
           {dictionary.contact.lead}
         </p>
-        <ButtonLink
-          href={buildWhatsAppUrl(locale)}
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="whatsapp"
-          leadingIcon={<WhatsAppLogoIcon />}
-          className="mt-6 max-sm:w-full"
-        >
-          {dictionary.hero.writeOnWhatsApp}
-          <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-        </ButtonLink>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+          <ButtonLink
+            href={buildWhatsAppUrl(locale)}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="whatsapp"
+            leadingIcon={<WhatsAppLogoIcon />}
+            className="max-sm:w-full"
+          >
+            {dictionary.hero.writeOnWhatsApp}
+            <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+          </ButtonLink>
+          <Link
+            href={`/${locale}/services`}
+            className="group inline-flex min-h-11 items-center gap-1.5 font-bold"
+          >
+            {dictionary.contact.servicesLink}
+            <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
       </div>
 
       <nav aria-label={projectTexts.neighborNavigation.label}>

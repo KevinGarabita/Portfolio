@@ -19,7 +19,7 @@ interface FlowDiagramProps {
  */
 export function FlowDiagram({ steps, locale, toolLabel }: FlowDiagramProps) {
   return (
-    <ol className="grid gap-4 xl:auto-cols-fr xl:grid-flow-col xl:gap-8">
+    <ol className="grid gap-3 xl:auto-cols-fr xl:grid-flow-col xl:gap-8">
       {steps.map((step, index) => (
         <li
           key={step.label.es}
@@ -29,12 +29,12 @@ export function FlowDiagram({ steps, locale, toolLabel }: FlowDiagramProps) {
             {index + 1}
           </span>
           {/* Text reads "1 El cliente…", not "1El cliente…"; a flex container never draws it. */}{" "}
-          <div className="min-w-0 flex-1 rounded-media border border-hairline bg-raised p-4">
+          <div className="min-w-0 flex-1 rounded-media border border-hairline bg-raised px-4 py-2.5 xl:p-4">
             <p className="font-bold wrap-break-word hyphens-auto text-heading">
               {localize(step.label, locale)}
             </p>
             {step.tool ? (
-              <p className="mt-2 text-small text-muted">
+              <p className="mt-0.5 text-small text-muted xl:mt-2">
                 <span className="sr-only">{toolLabel}: </span>
                 {step.tool}
               </p>

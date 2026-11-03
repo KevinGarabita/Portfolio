@@ -1,6 +1,12 @@
 import { education } from "@/content/education";
 import { profile } from "@/content/profile";
-import { homeDescription } from "@/content/site-metadata";
+import {
+  homeDescription,
+  projectsPageDescription,
+  projectsPageTitle,
+  servicesPageDescription,
+  servicesPageTitle,
+} from "@/content/site-metadata";
 import { skillGroups } from "@/content/skills";
 import { dictionariesByLocale } from "@/i18n/dictionaries-by-locale";
 import { supportedLocales, type Locale } from "@/i18n/locales";
@@ -15,7 +21,8 @@ import {
   localizePath,
   toAbsoluteUrl,
 } from "./metadata";
-import { getProjectTechnologies } from "./projects";
+import { getAllProjects, getProjectTechnologies } from "./projects";
+import { getAllServices, getServiceExamples } from "./services";
 import { getProjectShareCard } from "./share-card";
 
 /*
@@ -71,8 +78,22 @@ interface WebSite {
   "@type": "WebSite";
   "@id": string;
   url: string;
+  /** The brand, which Google can show as the site name in results. */
   name: string;
+  alternateName: string[];
   inLanguage: string[];
+  publisher: NodeReference;
+}
+
+/** Kevin's brand, founded by him: ties the domain, the site and the Instagram account. */
+interface Organization {
+  "@type": "Organization";
+  "@id": string;
+  name: string;
+  url: string;
+  logo: string;
+  founder: NodeReference;
+  sameAs: string[];
 }
 
 interface ProfilePage {
@@ -118,15 +139,70 @@ interface CreativeWork {
   isPartOf: NodeReference;
 }
 
+interface Place {
+  "@type": "City" | "Country";
+  name: string;
+}
+
+/** A kind of work Kevin offers on the services page. */
+interface ServiceNode {
+  "@type": "Service";
+  "@id": string;
+  name: string;
+  serviceType: string;
+  description: string;
+  url: string;
+  provider: NodeReference;
+  areaServed: Place[];
+  /** Case studies that show the service, by their pages. */
+  subjectOf: string[];
+}
+
+/** The projects page: the list of every case study. */
+interface CollectionPage {
+  "@type": "CollectionPage";
+  "@id": string;
+  url: string;
+  name: string;
+  description: string;
+  inLanguage: string;
+  isPartOf: NodeReference;
+  breadcrumb: NodeReference;
+  mainEntity: ItemList;
+}
+
+interface ItemList {
+  "@type": "ItemList";
+  numberOfItems: number;
+  itemListElement: ListItem[];
+}
+
+/** The services page itself, about the services it lists. */
+interface WebPage {
+  "@type": "WebPage";
+  "@id": string;
+  url: string;
+  name: string;
+  description: string;
+  inLanguage: string;
+  isPartOf: NodeReference;
+  breadcrumb: NodeReference;
+  about: NodeReference[];
+}
+
 export interface StructuredDataGraph {
   "@context": "https://schema.org";
   "@graph": (
     | WebSite
+    | Organization
     | ProfilePage
     | Person
     | PersonSummary
     | BreadcrumbList
     | CreativeWork
+    | ServiceNode
+    | WebPage
+    | CollectionPage
   )[];
 }
 
@@ -152,14 +228,37 @@ function getPersonId(): string {
   return toAbsoluteUrl("/#person");
 }
 
-function buildWebSite(): WebSite {
-  return {
-    "@type": "WebSite",
-    "@id": getWebsiteId(),
-    url: toAbsoluteUrl("/"),
-    name: profile.displayName,
-    inLanguage: [...supportedLocales],
-  };
+function getOrganizationId(): string {
+  return toAbsoluteUrl("/#organization");
+}
+
+/** Brand profiles (Instagram) go on the Organization; Kevin's own stay on the Person. */
+const brandNetworks = new Set(["instagram"]);
+
+/** The WebSite and the brand behind it, the same on every page. */
+function buildSiteNodes(): [WebSite, Organization] {
+  return [
+    {
+      "@type": "WebSite",
+      "@id": getWebsiteId(),
+      url: toAbsoluteUrl("/"),
+      name: profile.brandName,
+      alternateName: [profile.displayName],
+      inLanguage: [...supportedLocales],
+      publisher: { "@id": getOrganizationId() },
+    },
+    {
+      "@type": "Organization",
+      "@id": getOrganizationId(),
+      name: profile.brandName,
+      url: toAbsoluteUrl("/"),
+      logo: toAbsoluteUrl("/apple-icon.png"),
+      founder: { "@id": getPersonId() },
+      sameAs: profile.socialProfiles
+        .filter((socialProfile) => brandNetworks.has(socialProfile.network))
+        .map((socialProfile) => socialProfile.url),
+    },
+  ];
 }
 
 /** The home page as a ProfilePage about Kevin, inside the WebSite. */
@@ -195,7 +294,9 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
       addressRegion: profile.location.region,
       addressCountry: profile.location.countryCode,
     },
-    sameAs: profile.socialProfiles.map((socialProfile) => socialProfile.url),
+    sameAs: profile.socialProfiles
+      .filter((socialProfile) => !brandNetworks.has(socialProfile.network))
+      .map((socialProfile) => socialProfile.url),
     ...(schools.length > 0 ? { alumniOf: schools } : {}),
     ...(currentSchools.length > 0 ? { affiliation: currentSchools } : {}),
     knowsAbout: skillGroups
@@ -210,7 +311,7 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
   return {
     "@context": "https://schema.org",
     "@graph": [
-      buildWebSite(),
+      ...buildSiteNodes(),
       {
         "@type": "ProfilePage",
         "@id": `${homeUrl}#profile-page`,
@@ -252,7 +353,7 @@ export function buildProjectStructuredData(
   return {
     "@context": "https://schema.org",
     "@graph": [
-      buildWebSite(),
+      ...buildSiteNodes(),
       {
         "@type": "Person",
         "@id": getPersonId(),
@@ -294,6 +395,132 @@ export function buildProjectStructuredData(
           ...project.images.map((image) => image.src),
         ].map((path) => toAbsoluteUrl(path)),
         isPartOf: { "@id": getWebsiteId() },
+      },
+    ],
+  };
+}
+
+/**
+ * The services page: a WebPage about each service, every service offered by Kevin in
+ * Mérida and Mexico, with the case studies that show it. The breadcrumb, the WebSite and
+ * a short Person go in the same graph so every @id reference resolves on the page.
+ */
+export function buildServicesStructuredData(
+  locale: Locale,
+): StructuredDataGraph {
+  const pageUrl = toAbsoluteUrl(localizePath("/services", locale));
+  const homeUrl = toAbsoluteUrl(localizePath("/", locale));
+  const { siteNavigation } = dictionariesByLocale[locale];
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+  const areaServed: Place[] = [
+    { "@type": "City", name: profile.location.city },
+    { "@type": "Country", name: localize(profile.location.country, locale) },
+  ];
+
+  const serviceNodes: ServiceNode[] = getAllServices().map((service) => ({
+    "@type": "Service",
+    "@id": `${pageUrl}#${service.id}`,
+    name: localize(service.title, locale),
+    serviceType: localize(service.title, locale),
+    description: localize(service.summary, locale),
+    url: `${pageUrl}#${service.id}`,
+    provider: { "@id": getPersonId() },
+    areaServed,
+    subjectOf: getServiceExamples(service).map((project) =>
+      toAbsoluteUrl(localizePath(`/projects/${project.slug}`, locale)),
+    ),
+  }));
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      ...buildSiteNodes(),
+      {
+        "@type": "Person",
+        "@id": getPersonId(),
+        name: profile.displayName,
+        url: homeUrl,
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          [siteNavigation.home, homeUrl],
+          [siteNavigation.services, pageUrl],
+        ].map(([name = "", url = ""], index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name,
+          item: url,
+        })),
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#page`,
+        url: pageUrl,
+        name: localize(servicesPageTitle, locale),
+        description: localize(servicesPageDescription, locale),
+        inLanguage: locale,
+        isPartOf: { "@id": getWebsiteId() },
+        breadcrumb: { "@id": breadcrumbId },
+        about: serviceNodes.map((service) => ({ "@id": service["@id"] })),
+      },
+      ...serviceNodes,
+    ],
+  };
+}
+
+/**
+ * The projects page: a CollectionPage whose main entity is the list of case studies, in
+ * site order, with its breadcrumb (home → projects).
+ */
+export function buildProjectsStructuredData(
+  locale: Locale,
+): StructuredDataGraph {
+  const pageUrl = toAbsoluteUrl(localizePath("/projects", locale));
+  const homeUrl = toAbsoluteUrl(localizePath("/", locale));
+  const { siteNavigation } = dictionariesByLocale[locale];
+  const breadcrumbId = `${pageUrl}#breadcrumb`;
+  const projects = getAllProjects();
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      ...buildSiteNodes(),
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          [siteNavigation.home, homeUrl],
+          [siteNavigation.projects, pageUrl],
+        ].map(([name = "", url = ""], index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name,
+          item: url,
+        })),
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": `${pageUrl}#page`,
+        url: pageUrl,
+        name: localize(projectsPageTitle, locale),
+        description: localize(projectsPageDescription, locale),
+        inLanguage: locale,
+        isPartOf: { "@id": getWebsiteId() },
+        breadcrumb: { "@id": breadcrumbId },
+        mainEntity: {
+          "@type": "ItemList",
+          numberOfItems: projects.length,
+          itemListElement: projects.map((project, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: localize(project.name, locale),
+            item: toAbsoluteUrl(
+              localizePath(`/projects/${project.slug}`, locale),
+            ),
+          })),
+        },
       },
     ],
   };
