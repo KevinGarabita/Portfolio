@@ -11,7 +11,7 @@ import { shareImageSize, type ShareCardText } from "@/lib/share-card";
  * Shared layout of the generated link-preview images (app/[lang]/opengraph-image.tsx and
  * app/[lang]/projects/[slug]/opengraph-image.tsx). next/og only understands flexbox and
  * inline styles and cannot read CSS variables, so the palette comes from
- * lib/brand-colors.ts: deep black background, warm white text, the orange-to-red
+ * lib/brand-colors.ts: deep black background, warm white text, the royal-to-navy
  * gradient on the monogram and a thin bar at the top. No photo: with the photo the PNG
  * weighed 470-600 KB, and WhatsApp tends to drop preview images over ~300 KB.
  */
@@ -21,10 +21,10 @@ const colors = {
   heading: brandColors.whiteWarm,
   body: brandColors.whiteWarm,
   muted: brandColors.grayText,
-  onAccent: brandColors.blackDeep,
+  onAccent: "#ffffff",
 };
 
-const brandGradient = `linear-gradient(135deg, ${brandColors.orangeVibrant}, ${brandColors.redSignal})`;
+const brandGradient = `linear-gradient(135deg, ${brandColors.royal}, ${brandColors.navy})`;
 
 const fontFamily = "Atkinson Hyperlegible Next";
 
@@ -99,8 +99,8 @@ export function OpenGraphCard({
         height: "100%",
         padding: "72px 80px",
         backgroundColor: colors.page,
-        // A faint orange glow in the top-right corner, like the site's background.
-        backgroundImage: `radial-gradient(circle at 100% 0%, ${brandColors.orangeVibrant}33, transparent 55%)`,
+        // A faint blue glow in the top-right corner, like the site's background.
+        backgroundImage: `radial-gradient(circle at 100% 0%, ${brandColors.royal}44, transparent 55%)`,
         fontFamily,
       }}
     >

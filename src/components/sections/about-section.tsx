@@ -1,28 +1,30 @@
-import { MapPinIcon } from "@/components/ui/icons";
-import { PageSection } from "@/components/ui/page-section";
+import { Container } from "@/components/ui/container";
 import { TechnologyLogo } from "@/components/ui/technology-logo";
 import { profile } from "@/content/profile";
 import { skillGroups } from "@/content/skills";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
-import { joinClassNames } from "@/lib/class-names";
 import { homeSectionIds } from "@/lib/home-sections";
 
-/** The CV lists languages among the skills; here they sit in the panel, as plain text. */
+/** The CV lists languages among the skills; here they sit on the blue field. */
 const languagesGroupId = "languages";
 
 /**
- * The one orange block of the home page, so the page is not black from top to bottom:
- * the CV paragraph at a large size in black on orange, what Kevin builds as keyword
- * chips, and a dark card with his place and spoken languages. Below it the skills as a
- * bento grid, one card per CV group (Backend, AI & automation...), the first one wide,
- * each tool with its logo. Tools without a logo (REST APIs, webhooks...) only feed the
+ * The one royal blue field of the home page, full width, so the page is not black from
+ * top to bottom: the heading, the CV paragraph at statement size in white, and below a
+ * hairline what Kevin builds (four short phrases) beside his place and languages, set as
+ * plain columns rather than chips.
+ *
+ * Then, back on black, the skills as a dense index like a sitemap: one column per CV
+ * group (Backend, AI & automation...), its name in muted text and its tools under it,
+ * each with its logo. Tools without a logo (REST APIs, webhooks...) only feed the
  * structured data.
  */
 export async function AboutSection() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
   const { location } = profile;
+  const titleId = `${homeSectionIds.about}-title`;
 
   const technicalSkillGroups = skillGroups.filter(
     (group) => group.id !== languagesGroupId,
@@ -31,112 +33,100 @@ export async function AboutSection() {
     skillGroups.find((group) => group.id === languagesGroupId)?.items ?? [];
 
   return (
-    <PageSection
-      id={homeSectionIds.about}
-      title={dictionary.about.sectionTitle}
-      eyebrow={dictionary.about.eyebrow}
-      layout="stacked"
-    >
-      <div className="panel-accent reveal grid gap-8 p-6 sm:p-10 lg:grid-cols-12 lg:gap-12 lg:p-14">
-        <div className="lg:col-span-7">
+    <section id={homeSectionIds.about} aria-labelledby={titleId}>
+      <div className="bg-accent-fill text-on-accent">
+        <Container className="py-16 lg:py-28">
+          <h2
+            id={titleId}
+            className="font-display text-title font-bold text-on-accent"
+          >
+            {dictionary.about.sectionTitle}
+          </h2>
           {profile.about.map((paragraph) => (
             <p
               key={paragraph.es}
-              className="font-display text-subtitle leading-snug font-bold lg:text-[1.75rem]"
+              className="mt-8 max-w-[28ch] font-display text-statement font-bold text-on-accent lg:mt-10"
             >
               {localize(paragraph, locale)}
             </p>
           ))}
 
-          <h3 className="sr-only">{dictionary.about.focusAreas}</h3>
-          <ul className="mt-8 flex flex-wrap gap-2.5">
-            {profile.focusAreas.map((area) => (
-              <li
-                key={area.es}
-                className="rounded-tag bg-page px-4 py-2 text-small font-bold text-heading"
-              >
-                {localize(area, locale)}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <dl className="flex flex-col gap-5 self-end rounded-media bg-page p-6 text-body lg:col-span-5">
-          <div>
-            <dt className="text-small font-bold tracking-[0.12em] text-accent uppercase">
-              {dictionary.contact.location}
-            </dt>
-            <dd className="mt-1.5 inline-flex items-center gap-2 font-bold text-heading">
-              <MapPinIcon className="size-4 text-accent" />
-              {location.city}, {location.region},{" "}
-              {localize(location.country, locale)}
-            </dd>
-          </div>
-          {languages.length > 0 ? (
-            <div>
-              <dt className="text-small font-bold tracking-[0.12em] text-accent uppercase">
-                {dictionary.about.facts.languages}
-              </dt>
-              <dd>
-                <ul className="mt-1.5 flex flex-col gap-1.5">
-                  {languages.map((language) => (
-                    <li key={language.name.es} className="text-small">
-                      {localize(language.name, locale)}
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
-          ) : null}
-        </dl>
-      </div>
-
-      <h3 className="mt-16 font-display text-subtitle font-bold lg:mt-20">
-        {dictionary.skills.sectionTitle}
-      </h3>
-      <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {technicalSkillGroups.map((group, index) => {
-          const tools = group.items.flatMap((item) =>
-            item.logo ? [{ name: item.name, logo: item.logo }] : [],
-          );
-          const isWide = index === 0;
-
-          return (
-            <li
-              key={group.id}
-              className={joinClassNames(
-                "card reveal p-5 sm:p-6",
-                isWide && "sm:col-span-2",
-              )}
-            >
-              <div className="flex items-baseline justify-between gap-4">
-                <h4 className="font-bold text-heading">
-                  {localize(group.title, locale)}
-                </h4>
-                <p className="text-small text-muted">
-                  {dictionary.skills.toolCount(tools.length)}
-                </p>
-              </div>
-              <ul
-                className={joinClassNames(
-                  "mt-5 gap-2",
-                  isWide ? "grid grid-cols-2 sm:grid-cols-3" : "flex flex-wrap",
-                )}
-              >
-                {tools.map((tool) => (
+          <div className="mt-14 grid gap-10 border-t border-on-accent/30 pt-8 lg:mt-20 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-7">
+              <h3 className="sr-only">{dictionary.about.focusAreas}</h3>
+              <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                {profile.focusAreas.map((area) => (
                   <li
-                    key={tool.logo}
-                    className="flex min-h-11 items-center gap-2.5 rounded-control border border-hairline bg-page px-3 py-2 text-small font-bold text-heading"
+                    key={area.es}
+                    className="text-subtitle font-bold text-on-accent"
                   >
-                    <TechnologyLogo logo={tool.logo} className="size-5" />
-                    {localize(tool.name, locale)}
+                    {localize(area, locale)}
                   </li>
                 ))}
               </ul>
-            </li>
-          );
-        })}
-      </ul>
-    </PageSection>
+            </div>
+            <dl className="grid gap-6 sm:grid-cols-2 lg:col-span-5">
+              <div>
+                <dt className="text-small text-on-accent-muted">
+                  {dictionary.contact.location}
+                </dt>
+                <dd className="mt-1 font-bold">
+                  {location.city}, {location.region},{" "}
+                  {localize(location.country, locale)}
+                </dd>
+              </div>
+              {languages.length > 0 ? (
+                <div>
+                  <dt className="text-small text-on-accent-muted">
+                    {dictionary.about.facts.languages}
+                  </dt>
+                  <dd>
+                    <ul className="mt-1 flex flex-col gap-1">
+                      {languages.map((language) => (
+                        <li key={language.name.es} className="text-small">
+                          {localize(language.name, locale)}
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
+              ) : null}
+            </dl>
+          </div>
+        </Container>
+      </div>
+
+      <Container className="py-14 lg:py-24">
+        <h3 className="font-display text-subtitle font-bold">
+          {dictionary.skills.sectionTitle}
+        </h3>
+        <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-hairline pt-8 md:grid-cols-3 lg:grid-cols-5">
+          {technicalSkillGroups.map((group) => {
+            const tools = group.items.flatMap((item) =>
+              item.logo ? [{ name: item.name, logo: item.logo }] : [],
+            );
+
+            return (
+              <div key={group.id}>
+                <h4 className="text-small text-muted">
+                  {localize(group.title, locale)}
+                </h4>
+                <ul className="mt-4 flex flex-col gap-3">
+                  {tools.map((tool) => (
+                    <li
+                      key={tool.logo}
+                      className="flex items-center gap-2.5 text-small font-bold text-heading"
+                    >
+                      <TechnologyLogo logo={tool.logo} className="size-5" />
+                      {localize(tool.name, locale)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </Container>
+    </section>
   );
 }

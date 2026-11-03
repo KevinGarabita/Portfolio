@@ -47,12 +47,7 @@ export async function ContactSection() {
   const resume = getResumeLink(locale);
 
   return (
-    <PageSection
-      id={homeSectionIds.contact}
-      title={labels.sectionTitle}
-      eyebrow={labels.eyebrow}
-      glow="right"
-    >
+    <PageSection id={homeSectionIds.contact} title={labels.sectionTitle}>
       <p className="max-w-[20em] font-display text-title font-bold text-heading">
         {labels.homeLead}
       </p>

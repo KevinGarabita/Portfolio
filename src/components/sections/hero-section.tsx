@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { AvailabilityNote } from "@/components/recruiter/availability-note";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
 import { SocialNetworkLogo } from "@/components/ui/social-icon-link";
@@ -35,12 +34,12 @@ import kevinGarabitaCutout from "../../../public/images/kevin-garabita-cutout.pn
  *
  * Text: the h1 reads "Kevin Garabita — <role>" (the dash is only read; on screen the
  * role takes its own line), then the place; the statement, profile.heroSubtitle, the
- * largest type of the home page, with its key words in orange; the availability; the CV
- * as the one primary action (what a recruiter looks for first) and WhatsApp beside it;
+ * largest type of the home page, with its key words in blue; the CV as the one primary
+ * action (what a recruiter looks for first) and WhatsApp beside it;
  * LinkedIn, GitHub and the way in for clients (the services page); and a strip of real
  * figures (lib/hero-stats.ts) under a hairline.
  *
- * Photo: his cut-out portrait in front of the orange-to-red disc, the curls over its
+ * Photo: his cut-out portrait in front of the royal-to-navy backlight, the curls over its
  * edge, with the dashed orbit ring and its dot, as Kevin asked to keep it. It is the LCP
  * element: preloaded with high priority and never fades in (only the decoration does).
  */
@@ -90,11 +89,11 @@ export async function HeroSection() {
               className="hero-orbit entrance-scale absolute -inset-x-[3%] top-[4%] aspect-square [--entrance-order:3]"
             >
               <div className="motion-orbit size-full rounded-full border border-dashed border-control-border">
-                <span className="absolute top-[14.6%] left-[14.6%] size-2 -translate-1/2 rounded-full bg-accent shadow-[0_0_1rem_var(--color-accent)] md:size-3" />
+                <span className="absolute top-[14.6%] left-[14.6%] size-2 -translate-1/2 rounded-full bg-accent md:size-3" />
               </div>
             </div>
 
-            {/* An orange backlight behind the head and shoulders, like a studio light,
+            {/* A royal blue backlight behind the head and shoulders, like a studio light,
                 instead of a solid disc: nothing shows through the shirt, whose fade
                 is baked into the photo's PNG (it looks right without CSS masks). */}
             <div
@@ -125,12 +124,6 @@ export async function HeroSection() {
           </p>
 
           <div className="entrance mt-7 flex flex-col gap-3 [--entrance-order:3] sm:flex-row sm:flex-wrap sm:items-center md:mt-8">
-            {/* Only when content/availability.ts has a status; renders nothing otherwise. */}
-            <AvailabilityNote
-              locale={locale}
-              dictionary={dictionary}
-              className="mb-1 sm:basis-full"
-            />
             <ButtonLink
               href={resume.href}
               hrefLang={resume.language}

@@ -15,7 +15,8 @@ type ButtonVariant = "primary" | "secondary" | "whatsapp";
 type ButtonSize = "regular" | "compact";
 
 const variantClassNames: Record<ButtonVariant, string> = {
-  primary: "border-transparent bg-accent text-on-accent hover:bg-accent-hover",
+  primary:
+    "border-transparent bg-accent-fill text-on-accent hover:bg-accent-fill-hover",
   secondary:
     "border-control-border text-heading hover:border-accent hover:bg-raised",
   whatsapp:

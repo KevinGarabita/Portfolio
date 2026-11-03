@@ -1,42 +1,66 @@
 import Link from "next/link";
-import type { CSSProperties } from "react";
 
-import { ArrowRightIcon, CheckIcon, MapPinIcon } from "@/components/ui/icons";
+import { ArrowRightIcon } from "@/components/ui/icons";
 import { PageSection } from "@/components/ui/page-section";
 import { TechnologyLogo } from "@/components/ui/technology-logo";
 import { education } from "@/content/education";
 import { workExperience } from "@/content/experience";
 import { technologyLogos } from "@/content/technology-logos";
+import type { Locale } from "@/i18n/locales";
 import { labelColon, localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import {
   countMonths,
-  formatDateRange,
+  formatShortYearMonth,
   formatYearMonth,
-  getPeriodProgress,
 } from "@/lib/format-date";
 import { splitAroundPhrase } from "@/lib/highlight";
 import { homeSectionIds } from "@/lib/home-sections";
 import { getProjectBySlug } from "@/lib/projects";
+import type { DateRange } from "@/types/content";
 
-/** A small label inside the section: muted capitals, quieter than the orange eyebrow. */
-function BlockLabel({ children }: { children: string }) {
+interface LedgerPeriodProps {
+  period: DateRange;
+  locale: Locale;
+  ongoingLabel: string;
+  /** A second line under the dates: the job's length, the current semester. */
+  detail?: string;
+}
+
+/** The left column of a ledger row: the period in Geist Mono, since it is data. */
+function LedgerPeriod({
+  period,
+  locale,
+  ongoingLabel,
+  detail,
+}: LedgerPeriodProps) {
   return (
-    <h3 className="text-small font-bold tracking-[0.12em] text-muted uppercase">
-      {children}
-    </h3>
+    <p className="font-mono text-small text-muted tabular-nums">
+      <span className="block whitespace-nowrap">
+        {formatShortYearMonth(period.start, locale)} –{" "}
+        {period.end ? formatShortYearMonth(period.end, locale) : ongoingLabel}
+      </span>
+      {detail ? (
+        <span className="mt-1 block text-heading">{detail}</span>
+      ) : null}
+    </p>
   );
 }
 
 /**
- * Work and studies in one section, so a thin history does not spread over two empty
- * bands, and shaped so it can be skimmed. Per job, one card: the role, the employer and
- * what it is (a visitor may not know Kobler y Asociados is a marketing agency), the
- * period with its length and the place, the summary with its key words in orange, and
- * the tools as logos. Then one card per client, keywords first and the outcome in a
- * line, each leading to its case study (the client outcomes are the strongest proof on
- * the page); then the rest of the job as short checks. The studies close the section as
- * a card with a timeline from the first year to the expected graduation.
+ * Work and studies as one ledger, the way a deployment list or a well-set menu reads:
+ * each entry is a row across the full width, the period on the left in mono and the
+ * entry on the right, rows split by hairlines. No cards.
+ *
+ * The job: the role, the employer and what it is (a visitor may not know Kobler y
+ * Asociados is a marketing agency), the summary at a large size with its key words in
+ * blue, and the tools as a line of logos. Then a table of the clients, one row each:
+ * the name, two or three keywords and the outcome in a short muted line; the row is the
+ * link to the case study and fills royal blue from the left on hover or focus (the one
+ * motion of the section). The rest of the job closes it in two plain lines.
+ *
+ * The studies: one more row of the same ledger, with the semester as its detail and
+ * the expected graduation.
  */
 export async function ExperienceSection() {
   const locale = await getCurrentLocale();
@@ -48,11 +72,9 @@ export async function ExperienceSection() {
     <PageSection
       id={homeSectionIds.experience}
       title={labels.sectionTitle}
-      eyebrow={labels.eyebrow}
-      glow="left"
+      layout="stacked"
     >
-      <BlockLabel>{labels.work}</BlockLabel>
-      <ol className="mt-4 flex flex-col gap-12">
+      <ol className="border-t border-hairline">
         {workExperience.map((job) => {
           const months = countMonths(job.period);
           const duration = months
@@ -67,116 +89,101 @@ export async function ExperienceSection() {
             );
 
           return (
-            <li key={job.id}>
-              <article>
-                <div className="card reveal p-6 sm:p-8">
-                  <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-                    <div>
-                      <h4 className="font-display text-subtitle font-bold">
-                        {localize(job.role, locale)}
-                      </h4>
-                      <p className="mt-1 font-bold text-accent">
-                        {job.organization}
-                        {job.organizationDescription ? (
-                          <span className="font-normal text-muted">
-                            {" "}
-                            · {localize(job.organizationDescription, locale)}
-                          </span>
-                        ) : null}
-                      </p>
-                    </div>
-                    <div className="flex shrink-0 flex-col gap-1.5 xl:items-end">
-                      <p className="inline-flex w-fit flex-wrap items-center gap-x-2 rounded-tag border border-accent/40 bg-[var(--tint-accent)] px-3 py-1 text-small font-bold text-heading">
-                        {formatDateRange(job.period, locale, labels.present)}
-                        {duration ? (
-                          <span className="whitespace-nowrap text-accent">
-                            · {duration}
-                          </span>
-                        ) : null}
-                      </p>
-                      <p className="inline-flex items-center gap-1.5 text-small text-muted">
-                        <MapPinIcon className="size-4" />
-                        {localize(job.location, locale)}
-                      </p>
-                    </div>
-                  </div>
+            <li
+              key={job.id}
+              className="ledger-row border-b border-hairline py-10 lg:py-14"
+            >
+              <LedgerPeriod
+                period={job.period}
+                locale={locale}
+                ongoingLabel={labels.present}
+                detail={duration}
+              />
 
-                  <p className="mt-6 max-w-[56ch] text-subtitle leading-snug text-heading">
-                    {beforeHighlight}
-                    <strong className="text-accent">{highlight}</strong>
-                    {afterHighlight}
-                  </p>
+              <article className="min-w-0">
+                <h3 className="font-display text-subtitle font-bold">
+                  {localize(job.role, locale)}
+                </h3>
+                <p className="mt-1 text-muted">
+                  <span className="text-heading">{job.organization}</span>
+                  {job.organizationDescription
+                    ? `, ${localize(job.organizationDescription, locale)}`
+                    : null}
+                  {" · "}
+                  {localize(job.location, locale)}
+                </p>
 
-                  {job.stack.length > 0 ? (
-                    <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-hairline pt-5">
-                      <p className="text-small font-bold text-muted">
-                        {labels.stack}
-                      </p>
-                      <ul className="flex flex-wrap gap-2">
-                        {job.stack.map((logo) => (
-                          <li
-                            key={logo}
-                            className="inline-flex min-h-9 items-center gap-2 rounded-tag border border-hairline bg-page py-1 pr-3 pl-2 text-small font-bold text-heading"
-                          >
-                            <TechnologyLogo logo={logo} className="size-5" />
-                            {technologyLogos[logo].title}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-                </div>
+                <p className="mt-8 max-w-[34ch] font-display text-title leading-tight font-bold text-heading">
+                  {beforeHighlight}
+                  <span className="text-accent">{highlight}</span>
+                  {afterHighlight}
+                </p>
+
+                {job.stack.length > 0 ? (
+                  <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+                    {job.stack.map((logo) => (
+                      <li
+                        key={logo}
+                        className="inline-flex items-center gap-2 text-small font-bold text-heading"
+                      >
+                        <TechnologyLogo logo={logo} className="size-5" />
+                        {technologyLogos[logo].title}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
 
                 {job.clientResults.length > 0 ? (
                   <>
-                    <div className="mt-10">
-                      <BlockLabel>{labels.clientResults}</BlockLabel>
-                    </div>
-                    <ul className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                    <h4 className="mt-12 text-small font-bold text-muted">
+                      {labels.clientResults}
+                    </h4>
+                    <ul className="mt-3 border-t border-hairline">
                       {job.clientResults.map((clientResult) => {
                         const project = clientResult.projectSlug
                           ? getProjectBySlug(clientResult.projectSlug)
                           : undefined;
+                        const keywords = clientResult.keywords
+                          .map((keyword) => localize(keyword, locale))
+                          .join(" · ");
+                        const content = (
+                          <>
+                            <span className="client-row-name font-display text-subtitle font-bold">
+                              {clientResult.client}
+                            </span>
+                            <span className="client-row-text">
+                              <span className="client-row-keywords block font-bold">
+                                {keywords}
+                              </span>
+                              <span className="client-row-result mt-1 block text-small">
+                                {localize(clientResult.result, locale)}
+                              </span>
+                            </span>
+                            {project ? (
+                              <ArrowRightIcon className="client-row-arrow size-5" />
+                            ) : null}
+                          </>
+                        );
 
                         return (
                           <li
                             key={clientResult.client}
-                            className="card card-link reveal flex flex-col p-5"
+                            className="border-b border-hairline"
                           >
-                            <h4 className="font-display text-subtitle font-bold">
-                              {project ? (
-                                <Link
-                                  href={`/${locale}/projects/${project.slug}`}
-                                  className="text-heading no-underline after:absolute after:inset-0 after:content-['']"
-                                >
-                                  {clientResult.client}
-                                </Link>
-                              ) : (
-                                clientResult.client
-                              )}
-                            </h4>
-                            <ul className="mt-3 flex flex-wrap gap-1.5">
-                              {clientResult.keywords.map((keyword) => (
-                                <li
-                                  key={keyword.es}
-                                  className="rounded-tag bg-[var(--tint-accent)] px-2.5 py-0.5 text-small font-bold text-accent"
-                                >
-                                  {localize(keyword, locale)}
-                                </li>
-                              ))}
-                            </ul>
-                            <p className="mt-4 text-small text-muted">
-                              {localize(clientResult.result, locale)}
-                            </p>
                             {project ? (
-                              <p
-                                aria-hidden="true"
-                                className="mt-auto inline-flex items-center gap-1.5 pt-5 text-small font-bold text-accent"
+                              <Link
+                                href={`/${locale}/projects/${project.slug}`}
+                                className="client-row"
                               >
-                                {labels.caseStudy}
-                                <ArrowRightIcon className="size-4" />
-                              </p>
-                            ) : null}
+                                {content}
+                                <span className="sr-only">
+                                  {" "}
+                                  ({labels.caseStudy})
+                                </span>
+                              </Link>
+                            ) : (
+                              <div className="client-row">{content}</div>
+                            )}
                           </li>
                         );
                       })}
@@ -185,15 +192,14 @@ export async function ExperienceSection() {
                 ) : null}
 
                 {job.responsibilities.length > 0 ? (
-                  <div className="reveal mt-8 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:gap-6">
-                    <p className="shrink-0 text-small font-bold text-muted">
+                  <div className="mt-10 grid gap-2 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6">
+                    <h4 className="text-small font-bold text-muted sm:pt-0.5">
                       {labels.responsibilities}
-                    </p>
-                    <ul className="flex flex-col gap-2">
+                    </h4>
+                    <ul className="flex flex-col gap-1.5 text-muted">
                       {job.responsibilities.map((responsibility) => (
-                        <li key={responsibility.es} className="flex gap-2.5">
-                          <CheckIcon className="mt-1 size-4 shrink-0 text-accent" />
-                          <span>{localize(responsibility, locale)}</span>
+                        <li key={responsibility.es}>
+                          {localize(responsibility, locale)}
                         </li>
                       ))}
                     </ul>
@@ -203,72 +209,44 @@ export async function ExperienceSection() {
             </li>
           );
         })}
-      </ol>
 
-      <div className="mt-16">
-        <BlockLabel>{dictionary.education.label}</BlockLabel>
-      </div>
-      <div className="mt-4 flex flex-col gap-6">
-        {education.map((studies) => {
-          const graduation = studies.expectedGraduation;
-          const progress = graduation
-            ? getPeriodProgress(studies.period.start, graduation)
-            : undefined;
-
-          return (
-            <article key={studies.id} className="card reveal p-6 sm:p-8">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <h4 className="font-display text-subtitle font-bold">
-                    {localize(studies.degree, locale)}
-                  </h4>
-                  <p className="mt-1 font-bold text-accent">
-                    {studies.institution}
-                    <span className="font-normal text-muted">
-                      {" "}
-                      · {localize(studies.location, locale)}
-                    </span>
-                  </p>
-                </div>
-                {studies.note ? (
-                  <p className="w-fit shrink-0 rounded-tag bg-accent px-3 py-1 text-small font-bold text-on-accent">
-                    {localize(studies.note, locale)}
-                  </p>
-                ) : null}
-              </div>
-
-              {graduation && progress !== undefined ? (
-                <div className="mt-8">
-                  <p className="mb-3 text-small font-bold text-heading">
-                    {dictionary.education.timeline}
-                  </p>
-                  <div
-                    aria-hidden="true"
-                    className="study-track"
-                    style={{ "--progress": progress } as CSSProperties}
-                  >
-                    <div className="study-track-fill" />
-                  </div>
-                  <div className="mt-3 flex justify-between gap-4 text-small text-muted">
-                    <span>{formatYearMonth(studies.period.start, locale)}</span>
-                    <span className="text-right">
-                      {dictionary.education.expectedGraduation}
-                      {labelColon(locale)}{" "}
-                      <strong className="text-heading">
-                        {formatYearMonth(graduation, locale)}
-                      </strong>
-                    </span>
-                  </div>
-                </div>
-              ) : (
+        {education.map((studies) => (
+          <li
+            key={studies.id}
+            className="ledger-row border-b border-hairline py-10 lg:py-14"
+          >
+            <LedgerPeriod
+              period={
+                studies.expectedGraduation
+                  ? { ...studies.period, end: studies.expectedGraduation }
+                  : studies.period
+              }
+              locale={locale}
+              ongoingLabel={labels.present}
+              detail={studies.note ? localize(studies.note, locale) : undefined}
+            />
+            <article className="min-w-0">
+              <h3 className="font-display text-subtitle font-bold">
+                {localize(studies.degree, locale)}
+              </h3>
+              <p className="mt-1 text-muted">
+                <span className="text-heading">{studies.institution}</span>
+                {" · "}
+                {localize(studies.location, locale)}
+              </p>
+              {studies.expectedGraduation ? (
                 <p className="mt-4 text-small text-muted">
-                  {formatDateRange(studies.period, locale, labels.present)}
+                  {dictionary.education.expectedGraduation}
+                  {labelColon(locale)}{" "}
+                  <span className="text-heading">
+                    {formatYearMonth(studies.expectedGraduation, locale)}
+                  </span>
                 </p>
-              )}
+              ) : null}
             </article>
-          );
-        })}
-      </div>
+          </li>
+        ))}
+      </ol>
     </PageSection>
   );
 }

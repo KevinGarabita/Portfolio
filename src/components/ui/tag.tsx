@@ -10,7 +10,7 @@ import { joinClassNames } from "@/lib/class-names";
 type TagTone = "accent" | "quiet";
 
 const toneClassNames: Record<TagTone, string> = {
-  accent: "border-transparent bg-accent font-bold text-on-accent",
+  accent: "border-transparent bg-accent-fill font-bold text-on-accent",
   quiet: "border-hairline text-muted",
 };
 

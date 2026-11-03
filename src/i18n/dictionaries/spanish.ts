@@ -36,7 +36,6 @@ export const spanishDictionary = {
     view: "Ver CV (PDF)",
   },
   projects: {
-    eyebrow: "Trabajo real",
     sectionTitle: "Proyectos destacados",
     viewAll: (count: number) => `Ver todos los proyectos (${count})`,
     allProjectsPage: {
@@ -115,26 +114,18 @@ export const spanishDictionary = {
   },
   experience: {
     sectionTitle: "Experiencia y formación",
-    eyebrow: "Trayectoria",
     present: "actualidad",
-    work: "Experiencia",
     clientResults: "Resultados por cliente",
     caseStudy: "Ver caso de estudio",
     responsibilities: "Además",
-    stack: "Stack",
   },
   education: {
     expectedGraduation: "Titulación prevista",
-    label: "Formación",
-    timeline: "Avance de la carrera",
   },
   skills: {
     sectionTitle: "Habilidades",
-    toolCount: (count: number) =>
-      count === 1 ? "1 herramienta" : `${count} herramientas`,
   },
   about: {
-    eyebrow: "Perfil",
     focusAreas: "Áreas de enfoque",
     sectionTitle: "Sobre mí",
     facts: {
@@ -142,7 +133,6 @@ export const spanishDictionary = {
     },
   },
   contact: {
-    eyebrow: "Hablemos",
     sectionTitle: "Contacto",
     lead: "Cuéntame qué quieres desarrollar o automatizar.",
     homeLead: "¿Buscas a alguien para tu equipo o tienes un proyecto en mente?",

@@ -1,14 +1,22 @@
-import { Atkinson_Hyperlegible_Next } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 
 /**
- * Atkinson Hyperlegible Next, from the Braille Institute: one variable family (weights
- * 200–800) for text and headings, chosen for legibility. Self-hosted by next/font at build time.
+ * Geist, Vercel's typeface (OFL): one variable family for text and headings, the
+ * technical voice Kevin asked for on 4 November 2026. Geist Mono only sets data:
+ * dates, periods and counts, never labels. Both are self-hosted by next/font at build
+ * time.
  */
-export const atkinsonHyperlegibleNext = Atkinson_Hyperlegible_Next({
+export const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-atkinson",
-  // next 16.4 has no fallback metrics for this font; without these two options Turbopack warns.
-  adjustFontFallback: false,
-  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
+  variable: "--font-geist",
   display: "swap",
 });
+
+export const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
+
+/** Both font variables, for the class of <html>. */
+export const fontVariables = `${geist.variable} ${geistMono.variable}`;

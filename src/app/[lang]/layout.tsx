@@ -11,7 +11,7 @@ import { brandColors } from "@/lib/brand-colors";
 import { buildBaseOpenGraph } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site-config";
 
-import { atkinsonHyperlegibleNext } from "../fonts";
+import { fontVariables } from "../fonts";
 
 import "../globals.css";
 
@@ -68,7 +68,7 @@ export default async function LocaleRootLayout({
   return (
     <html
       lang={locale}
-      className={atkinsonHyperlegibleNext.variable}
+      className={fontVariables}
       // Lets Next.js turn smooth scrolling off during route changes (globals.css turns it on).
       data-scroll-behavior="smooth"
     >

@@ -25,7 +25,7 @@ export function FlowDiagram({ steps, locale, toolLabel }: FlowDiagramProps) {
           key={step.label.es}
           className="flow-step flex gap-4 xl:flex-col xl:gap-4"
         >
-          <span className="relative z-(--layer-raised) flex size-10 shrink-0 items-center justify-center rounded-full bg-accent font-bold text-on-accent ring-4 ring-page">
+          <span className="relative z-(--layer-raised) flex size-10 shrink-0 items-center justify-center rounded-full bg-accent-fill font-bold text-on-accent ring-4 ring-page">
             {index + 1}
           </span>
           {/* Text reads "1 El cliente…", not "1El cliente…"; a flex container never draws it. */}{" "}

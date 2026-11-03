@@ -64,3 +64,19 @@ export function getPeriodProgress(
     (today.getTime() - toTime(start)) / (toTime(end) - toTime(start));
   return Math.min(1, Math.max(0, progress));
 }
+
+/** "2026-07" → "jul 2026": the compact form for the periods of the experience ledger. */
+export function formatShortYearMonth(
+  yearMonth: YearMonth,
+  locale: Locale,
+): string {
+  const [year = 0, month = 1] = yearMonth.split("-").map(Number);
+
+  return new Intl.DateTimeFormat(regionalLocaleTags[locale], {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  })
+    .format(new Date(Date.UTC(year, month - 1, 1)))
+    .replace(".", "");
+}

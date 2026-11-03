@@ -38,7 +38,6 @@ export const portugueseDictionary: Dictionary = {
     view: "Ver currículo (PDF, em espanhol)",
   },
   projects: {
-    eyebrow: "Trabalho real",
     sectionTitle: "Projetos em destaque",
     viewAll: (count: number) => `Ver todos os projetos (${count})`,
     allProjectsPage: {
@@ -117,26 +116,18 @@ export const portugueseDictionary: Dictionary = {
   },
   experience: {
     sectionTitle: "Experiência e formação",
-    eyebrow: "Trajetória",
     present: "atual",
-    work: "Experiência",
     clientResults: "Resultados por cliente",
     caseStudy: "Ver estudo de caso",
     responsibilities: "Além disso",
-    stack: "Stack",
   },
   education: {
     expectedGraduation: "Conclusão prevista",
-    label: "Formação",
-    timeline: "Progresso do curso",
   },
   skills: {
     sectionTitle: "Habilidades",
-    toolCount: (count: number) =>
-      count === 1 ? "1 ferramenta" : `${count} ferramentas`,
   },
   about: {
-    eyebrow: "Perfil",
     focusAreas: "Áreas de foco",
     sectionTitle: "Sobre mim",
     facts: {
@@ -144,7 +135,6 @@ export const portugueseDictionary: Dictionary = {
     },
   },
   contact: {
-    eyebrow: "Vamos conversar",
     sectionTitle: "Contato",
     lead: "Me conte o que você quer desenvolver ou automatizar.",
     homeLead: "Procurando alguém para o seu time ou tem um projeto em mente?",

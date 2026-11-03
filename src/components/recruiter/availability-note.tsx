@@ -53,7 +53,7 @@ export function AvailabilityNote({
     >
       <span
         aria-hidden="true"
-        className="mt-[0.45em] size-2 shrink-0 rounded-full bg-accent shadow-[0_0_0.75rem_var(--color-accent)]"
+        className="mt-[0.45em] size-2 shrink-0 rounded-full bg-accent"
       />
       <span>
         <strong className="font-bold text-heading">

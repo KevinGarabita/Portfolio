@@ -4,11 +4,12 @@
  * sync with section 2 of src/app/globals.css; components use the CSS roles instead.
  */
 export const brandColors = {
-  blackDeep: "#0b0a09",
-  blackSurface: "#151311",
-  blackLine: "#2c2824",
-  grayText: "#aaa39b",
-  whiteWarm: "#f6f3ee",
-  orangeVibrant: "#ff6a00",
-  redSignal: "#e5252a",
+  blackDeep: "#0a0a0b",
+  blackSurface: "#121214",
+  blackLine: "#27272b",
+  grayText: "#a3a3a8",
+  whiteWarm: "#f4f3ee",
+  royal: "#1a43cf",
+  royalInk: "#6b8cff",
+  navy: "#0b1a3a",
 } as const;

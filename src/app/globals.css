@@ -8,7 +8,8 @@
  *   1. Resets: Tailwind's stock palette, type scale, radii and shadows are removed,
  *      so only the tokens below can be used (bg-orange-500, text-xl, rounded-lg,
  *      shadow-md... no longer exist).
- *   2. Raw palette: orange + black + red. Change a colour here and every role follows.
+ *   2. Raw palette: black + ivory + royal blue + navy. Change a colour here and every
+ *      role follows.
  *   3. Roles: what a colour is FOR (page, body, muted, accent...). The site has one
  *      dark theme; components use roles, never raw colours or hex values.
  *   4. Type, radius and motion tokens.
@@ -19,11 +20,11 @@
  *      diagram.
  *   8. Reduced motion (prefers-reduced-motion).
  *
- * Contrast (WCAG 2.x, measured): text #f6f3ee on page 17.87:1, muted #aaa39b 7.93:1,
- * orange #ff6a00 on page 6.89:1, black text on orange 6.89:1. Red #e5252a reaches only
- * 4.36:1 on the page and with black or white text on it, so red is for gradients,
- * borders, glows, hovers and large text, never for small text. White on orange fails
- * (2.63:1). Glows stay under 20% opacity so text on top keeps its contrast.
+ * Contrast (WCAG 2.x, measured): text #f4f3ee on page 17.81:1, muted #a3a3a8 7.88:1,
+ * blue text #6b8cff on page 6.43:1, white on the royal fill #1a43cf 7.64:1 (on its
+ * hover #2350e6 6.25:1), #dbe4ff on royal 6.02:1. The royal fill itself is only 2.59:1
+ * on the page: it fills areas with white text on them and never draws text, lines or
+ * rings on black; those use the lighter blue. Navy #0b1a3a is depth only.
  * Every pair is listed with its ratio in docs/design.md.
  */
 
@@ -38,18 +39,22 @@
   --text-shadow-*: initial; /* separate namespace: --text-*: initial does not remove it */
 
   /* 2. Raw palette -------------------------------------------------------------- */
-  /* Warm neutrals (3 November 2026): the blacks and greys lean a touch towards the
-   * orange, so the accent sits in the page instead of on top of it. */
-  --color-black-deep: #0b0a09; /* main background */
-  --color-black-surface: #151311; /* surfaces on the page */
-  --color-black-surface-strong: #1e1b18; /* raised surfaces, hovers */
-  --color-black-line: #2c2824; /* decorative dividers */
-  --color-gray-control: #7c746d; /* control borders, 4.31:1 on the page */
-  --color-gray-text: #aaa39b; /* secondary text, 7.93:1 on the page */
-  --color-white-warm: #f6f3ee; /* main text, 17.87:1 on the page */
-  --color-orange-vibrant: #ff6a00; /* primary accent */
-  --color-orange-light: #ff8a3d; /* hover of the orange fill, black text 8.44:1 */
-  --color-red-signal: #e5252a; /* secondary accent: gradients, glows, details */
+  /* Black, ivory and royal blue (4 November 2026): Kevin found the orange typical of
+   * AI-made pages and asked for Vercel's black and white with a royal blue, mixed with
+   * The Palace Company's blue and ivory: premium and technical. Neutrals are neutral
+   * (no warm tint); the ivory text is the one warm note. */
+  --color-black-deep: #0a0a0b; /* main background */
+  --color-black-surface: #121214; /* surfaces on the page */
+  --color-black-surface-strong: #1a1a1d; /* raised surfaces, hovers */
+  --color-black-line: #27272b; /* decorative dividers */
+  --color-gray-control: #6f6f76; /* control borders, 3.97:1 on the page */
+  --color-gray-text: #a3a3a8; /* secondary text, 7.88:1 on the page */
+  --color-white-warm: #f4f3ee; /* main text (Palace ivory), 17.81:1 on the page */
+  --color-royal: #1a43cf; /* royal blue fill, white text 7.64:1 */
+  --color-royal-light: #2350e6; /* hover of the royal fill, white text 6.25:1 */
+  --color-royal-ink: #6b8cff; /* blue text, links and lines on black, 6.43:1 */
+  --color-royal-mist: #dbe4ff; /* secondary text on the royal fill, 6.02:1 */
+  --color-navy: #0b1a3a; /* depth: the far end of blue gradients */
 
   /* Brand colours of the social networks, used only for their logos and the WhatsApp button. */
   --color-whatsapp-green: #25d366; /* WhatsApp's official green; ink text on it 9.98:1 */
@@ -79,16 +84,21 @@
   --color-control-hover: var(
     --color-black-line
   ); /* hover of options and pills on raised-strong: white text 13.17:1 (on control-border it was 4.35:1) */
-  --color-accent: var(--color-orange-vibrant); /* orange fill and orange text */
-  --color-accent-hover: var(
-    --color-orange-light
-  ); /* hover state of the orange fill */
-  --color-accent-secondary: var(
-    --color-red-signal
-  ); /* red: decoration and large text only */
-  --color-on-accent: var(--color-black-deep); /* text on the orange fill */
-  --color-link: var(--color-orange-vibrant); /* links are always underlined */
-  --color-focus: var(--color-orange-vibrant); /* keyboard focus ring */
+  --color-accent: var(
+    --color-royal-ink
+  ); /* blue text, lines, rings and underlines on black */
+  --color-accent-fill: var(
+    --color-royal
+  ); /* royal blue fill (white text on it) */
+  --color-accent-fill-hover: var(
+    --color-royal-light
+  ); /* hover state of the royal fill */
+  --color-on-accent: #ffffff; /* text on the royal fill */
+  --color-on-accent-muted: var(
+    --color-royal-mist
+  ); /* secondary text on the royal fill */
+  --color-link: var(--color-royal-ink); /* links are always underlined */
+  --color-focus: var(--color-royal-ink); /* keyboard focus ring */
   --color-whatsapp: var(
     --color-whatsapp-green
   ); /* WhatsApp button fill and logo */
@@ -157,17 +167,19 @@
 
 /* 5. Fonts. `inline` makes utilities use the next/font variables directly, so they
  * resolve on whatever element next/font's `.variable` class is on.
- * next/font name (set in src/app/fonts.ts): --font-atkinson.
+ * next/font names (set in src/app/fonts.ts): --font-geist and --font-geist-mono.
  * Text and headings share the family; headings get their hierarchy from size and weight.
- * Code uses the system monospace font, so it downloads nothing.
+ * Data (dates, periods, counts) uses Geist Mono, never as a costume for labels.
  * Never name a next/font variable --font-sans/--font-mono: that clashes with these tokens.
  * The fallback inside var() keeps the stack valid if a font variable is missing. */
 @theme inline {
   --font-sans:
-    var(--font-atkinson, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+    var(--font-geist, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    var(--font-atkinson, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    var(--font-geist, ui-sans-serif), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    var(--font-geist-mono, ui-monospace), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
 }
 
 /* 6. Base styles */
@@ -176,20 +188,16 @@
     /* Brand gradients: borders, underlines, glows, large text and decoration only. */
     --gradient-brand: linear-gradient(
       90deg,
-      var(--color-orange-vibrant),
-      var(--color-red-signal)
+      var(--color-royal-ink),
+      var(--color-royal)
     );
     --gradient-brand-diagonal: linear-gradient(
       135deg,
-      var(--color-orange-vibrant),
-      var(--color-red-signal)
+      var(--color-royal),
+      var(--color-navy)
     );
 
-    --tint-accent: color-mix(
-      in oklab,
-      var(--color-orange-vibrant) 14%,
-      transparent
-    );
+    --tint-accent: color-mix(in oklab, var(--color-royal) 22%, transparent);
     --shadow-floating: 0 0.75rem 2rem -1rem
       color-mix(in oklab, var(--color-black-deep) 90%, transparent);
 
@@ -281,21 +289,21 @@
     text-decoration-thickness: 2px;
   }
 
-  /* 2px offset leaves a page-coloured gap between the ring and an orange fill. */
+  /* 2px offset leaves a page-coloured gap between the ring and a royal fill. */
   :focus-visible {
     outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
 
   ::selection {
-    background-color: var(--color-accent);
+    background-color: var(--color-accent-fill);
     color: var(--color-on-accent);
   }
 }
 
 /* 7. Components */
 @layer components {
-  /* One still, soft orange glow at the top right of the first screen, behind the
+  /* One still, soft blue glow at the top right of the first screen, behind the
    * header and the hero. It is absolute, not fixed, so it scrolls away with the hero
    * and never sits behind the projects. */
   .site-backdrop {
@@ -388,13 +396,14 @@
 
   /* Hero photo: the cut-out fades into the page at the bottom and the lower corners,
    * where the original photo was cropped, with the fade baked into its PNG. Behind it,
-   * an orange backlight instead of a solid disc (Kevin, 3 November 2026: the disc
-   * showed through the faded shirt): strongest behind the head, gone before the edge. */
+   * a royal blue backlight instead of a solid disc (Kevin, 3 November 2026: the disc
+   * showed through the faded shirt): strongest behind the head, sinking into navy and
+   * gone before the edge. */
   .hero-backlight {
     background: radial-gradient(
       closest-side,
-      color-mix(in oklab, var(--color-accent) 70%, transparent),
-      color-mix(in oklab, var(--color-accent) 30%, transparent) 55%,
+      color-mix(in oklab, var(--color-royal) 85%, transparent),
+      color-mix(in oklab, var(--color-navy) 70%, transparent) 60%,
       transparent
     );
   }
@@ -437,7 +446,7 @@
   }
 
   /* Project tiles (home and projects page): a screenshot and its caption, no panel
-   * around them. On hover or keyboard focus the screenshot's frame turns orange, the
+   * around them. On hover or keyboard focus the screenshot's frame turns blue, the
    * screenshot comes a little closer and the name is underlined: the answer to the
    * pointer, with nothing else moving. The frame's colour and the name's underline are
    * set here, not with utilities: utilities sit in a later layer and would win over the
@@ -491,7 +500,7 @@
     }
   }
 
-  /* Section links of the header. In the header row (from lg) an orange underline grows
+  /* Section links of the header. In the header row (from lg) a blue underline grows
    * from the left on hover or focus, drawn with transform; in the menu panel below lg
    * the row's background changes instead. */
   .nav-link {
@@ -587,8 +596,8 @@
     width: 2px;
     background: linear-gradient(
       to bottom,
-      var(--color-orange-vibrant),
-      var(--color-red-signal)
+      var(--color-royal-ink),
+      var(--color-royal)
     );
   }
 
@@ -604,179 +613,125 @@
     }
   }
 
-  /* Home sections (4 November 2026): Kevin found them flat and too alike, all black text
-   * in the same two columns. Each section now has an orange label over its title, its
-   * own shape (cards, a filled orange panel, a bento grid) and blocks that rise in as
-   * they scroll into view. */
-
-  /* The label over a section title: orange capitals after a short gradient bar. Orange
-   * on the page is 6.89:1. */
-  .section-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    margin-bottom: 0.75rem;
-    color: var(--color-accent);
-    font-size: var(--text-small);
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+  /* Experience ledger: each entry is a row, its period in a narrow column on the left
+   * from md and above the entry on phones. */
+  .ledger-row {
+    display: grid;
+    gap: 1.25rem;
   }
 
-  .section-eyebrow::before {
-    content: "";
-    width: 1.75rem;
-    height: 2px;
-    border-radius: 1px;
-    background: var(--gradient-brand);
-  }
-
-  /* A soft, still glow behind a section, on one side; under 20% so text keeps contrast. */
-  .section-glow::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: 10% auto auto -10%;
-    width: min(46rem, 90vw);
-    aspect-ratio: 1;
-    pointer-events: none;
-    background: radial-gradient(
-      closest-side,
-      color-mix(in oklab, var(--color-orange-vibrant) 11%, transparent),
-      transparent
-    );
-  }
-
-  .section-glow-right::before {
-    inset: 0 -12% auto auto;
-  }
-
-  /* A panel on the page: raised surface, hairline border and a faint top-down gradient.
-   * As a link (.card-link) it lifts a little and its border warms on hover. */
-  .card {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--color-hairline);
-    border-radius: var(--radius-media);
-    background: linear-gradient(
-      180deg,
-      var(--color-raised-strong),
-      var(--color-raised) 60%
-    );
-  }
-
-  .card-link {
-    transition:
-      transform var(--duration-moderate) var(--ease-emphasized),
-      border-color var(--duration-moderate) var(--ease-standard);
-  }
-
-  .card-link:focus-within {
-    border-color: var(--color-accent);
-  }
-
-  @media (hover: hover) {
-    .card-link:hover {
-      transform: translate3d(0, -0.25rem, 0);
-      border-color: color-mix(in oklab, var(--color-accent) 60%, transparent);
+  @media (width >= 48rem) {
+    .ledger-row {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      gap: 2.5rem;
     }
   }
 
-  /* The About panel: an orange fill with black text (6.89:1 on #ff6a00, 8.44:1 on
-   * #ff8a3d), a faint grid and a red glow in one corner, away from the text. */
-  .panel-accent {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    border-radius: calc(var(--radius-media) * 1.5);
-    color: var(--color-on-accent);
-    background: linear-gradient(
-      135deg,
-      var(--color-orange-light),
-      var(--color-orange-vibrant) 55%
-    );
+  @media (width >= 64rem) {
+    .ledger-row {
+      grid-template-columns: 14rem minmax(0, 1fr);
+    }
   }
 
-  .panel-accent::before {
+  /* A client row: name, keywords and outcome, arrow. As a link it fills royal blue from
+   * the left on hover or keyboard focus, the text turning white (7.64:1) and the arrow
+   * advancing: the one motion of the section. Phones stack name over text. */
+  .client-row {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.5rem 1.5rem;
+    padding: 1.25rem 0.75rem;
+    margin-inline: -0.75rem;
+    color: var(--color-heading);
+    text-decoration: none;
+  }
+
+  .client-row-name,
+  .client-row-text {
+    grid-column: 1;
+  }
+
+  .client-row-arrow {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    color: var(--color-accent);
+    transition: transform var(--duration-moderate) var(--ease-emphasized);
+  }
+
+  .client-row-keywords {
+    color: var(--color-accent);
+  }
+
+  .client-row-result {
+    color: var(--color-muted);
+  }
+
+  @media (width >= 48rem) {
+    .client-row {
+      grid-template-columns: 12rem minmax(0, 1fr) auto;
+      align-items: baseline;
+    }
+
+    .client-row-text {
+      grid-column: 2;
+    }
+
+    .client-row-arrow {
+      grid-column: 3;
+      grid-row: 1;
+      align-self: center;
+    }
+  }
+
+  a.client-row::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
-    background-image:
-      linear-gradient(
-        color-mix(in oklab, var(--color-black-deep) 9%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        90deg,
-        color-mix(in oklab, var(--color-black-deep) 9%, transparent) 1px,
-        transparent 1px
-      );
-    background-size: 2.5rem 2.5rem;
-    mask-image: linear-gradient(110deg, transparent 35%, black);
+    background: var(--color-accent-fill);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-moderate) var(--ease-emphasized);
   }
 
-  .panel-accent::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    right: -12rem;
-    bottom: -14rem;
-    width: 30rem;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(
-      closest-side,
-      color-mix(in oklab, var(--color-red-signal) 55%, transparent),
-      transparent
-    );
+  a.client-row:focus-visible {
+    outline-offset: 0;
   }
 
-  .panel-accent :is(h2, h3, h4) {
+  a.client-row:focus-visible::before {
+    transform: scaleX(1);
+  }
+
+  a.client-row:focus-visible :is(.client-row-keywords, .client-row-arrow) {
     color: var(--color-on-accent);
   }
 
-  /* Studies timeline: a track from the first year to the expected graduation, filled
-   * up to today (--progress, 0 to 1, set inline). */
-  .study-track {
-    position: relative;
-    height: 0.5rem;
-    border-radius: 9999px;
-    background: var(--color-hairline);
+  a.client-row:focus-visible .client-row-result {
+    color: var(--color-on-accent-muted);
   }
 
-  .study-track-fill {
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: calc(var(--progress) * 100%);
-    border-radius: inherit;
-    background: var(--gradient-brand);
+  a.client-row:focus-visible .client-row-arrow {
+    transform: translateX(0.25rem);
   }
 
-  .study-track-fill::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 0;
-    width: 1.125rem;
-    aspect-ratio: 1;
-    border: 3px solid var(--color-page);
-    border-radius: 50%;
-    background: var(--color-white-warm);
-    box-shadow: 0 0 0 4px
-      color-mix(in oklab, var(--color-orange-vibrant) 35%, transparent);
-    transform: translate(50%, -50%);
-  }
+  @media (hover: hover) {
+    a.client-row:hover::before {
+      transform: scaleX(1);
+    }
 
-  /* Rise in while scrolling into view. CSS only: browsers without scroll-driven
-   * animations, and visitors who ask for reduced motion, see the block in place. */
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .reveal {
-        animation: rise-in linear both;
-        animation-timeline: view();
-        animation-range: entry 0% entry 35%;
-      }
+    a.client-row:hover :is(.client-row-keywords, .client-row-arrow) {
+      color: var(--color-on-accent);
+    }
+
+    a.client-row:hover .client-row-result {
+      color: var(--color-on-accent-muted);
+    }
+
+    a.client-row:hover .client-row-arrow {
+      transform: translateX(0.25rem);
     }
   }
 }

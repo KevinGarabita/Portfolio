@@ -10,7 +10,7 @@ import { dictionariesByLocale } from "@/i18n/dictionaries-by-locale";
 import { defaultLocale, supportedLocales, type Locale } from "@/i18n/locales";
 import { brandColors } from "@/lib/brand-colors";
 
-import { atkinsonHyperlegibleNext } from "./fonts";
+import { fontVariables } from "./fonts";
 import "./globals.css";
 
 /** English (the default language) leads; the other languages follow in site order. */
@@ -90,7 +90,7 @@ export default function GlobalNotFound() {
   return (
     <html
       lang={defaultLocale}
-      className={atkinsonHyperlegibleNext.variable}
+      className={fontVariables}
       data-scroll-behavior="smooth"
     >
       <body>
