@@ -117,10 +117,12 @@ Comprobado con scripts de Puppeteer y axe-core 4.14 que viven fuera del reposito
 
 ## Foto recortada de la portada
 
-- `public/images/kevin-garabita-cutout.png` sale de `kevin-garabita.jpg` con `rembg` (modelo `birefnet-portrait`), en un entorno de Python aparte, fuera del proyecto. Se compararon `isnet-general-use` (dejaba un pedazo de la televisión del fondo pegado al pelo) y el alpha matting de `rembg` (bordes en escalones); `birefnet-portrait` separa bien los rizos.
-- Los colores de los bordes semitransparentes se recalcularon con `estimate_foreground_ml` de `pymatting`, para que la pared blanca y la tele no dejen un halo claro u oscuro alrededor del pelo; el alfa se ajustó apenas (umbral 0.04, gamma 1.15).
-- PNG con alfa completo (sin paleta, que dañaría los bordes del pelo), 900 × 1024, unos 880 KB. El navegador recibe la versión que optimiza `next/image`: AVIF (o WebP si no lo admite) del ancho que pide `sizes`; en un teléfono de 412 px son 480 px y unos 16 KB.
-- La foto original se queda: la usan los datos estructurados.
+- Foto nueva desde el 2 de noviembre de 2026: un retrato de busto sobre fondo gris liso, de 1856 × 2304, que Kevin eligió para reemplazar la anterior.
+- `public/images/kevin-garabita-cutout.png` sale de ese retrato con `rembg` (modelo `birefnet-portrait`), en un entorno de Python aparte, fuera del proyecto. Con la foto anterior se compararon `isnet-general-use` (dejaba un pedazo del fondo pegado al pelo) y el alpha matting de `rembg` (bordes en escalones); `birefnet-portrait` separa bien los rizos.
+- Los colores de los bordes semitransparentes se recalcularon con `estimate_foreground_ml` de `pymatting`, para que el fondo no deje un halo claro u oscuro alrededor del pelo; el alfa se ajustó apenas (umbral 0.04, gamma 1.15).
+- Encuadre igual al de la foto anterior, para que los rizos sigan pasando por encima del círculo: el pelo toca el borde de arriba y ocupa cerca del 73 % del ancho (recorte de 1545 × 1758 desde x 172, y 95 del retrato).
+- PNG con alfa completo (sin paleta, que dañaría los bordes del pelo), 1350 × 1536 (1.5 veces el marco de 900:1024, para pantallas de alta densidad: se dibuja hasta 528 px de ancho), unos 2.3 MB. El navegador recibe la versión que optimiza `next/image`: AVIF (o WebP si no lo admite) del ancho que pide `sizes`.
+- `public/images/kevin-garabita.jpg` es el mismo encuadre con su fondo, 900 × 1024: la usan los datos estructurados.
 
 ## Animación de construcción de la home
 
