@@ -42,10 +42,13 @@ export function PageSection({
     <section id={id} aria-labelledby={titleId}>
       <Container>
         {layout === "split" ? (
-          <div className="grid gap-6 border-t border-hairline py-14 lg:grid-cols-12 lg:gap-10 lg:py-24">
-            <div className="lg:col-span-4">{heading}</div>
-            <div className="min-w-0 lg:col-span-8">{children}</div>
-          </div>
+          <>
+            <div aria-hidden="true" className="h-px bg-hairline" />
+            <div className="grid gap-6 py-14 lg:grid-cols-12 lg:gap-10 lg:py-24">
+              <div className="lg:col-span-4">{heading}</div>
+              <div className="min-w-0 lg:col-span-8">{children}</div>
+            </div>
+          </>
         ) : (
           <div className="pb-14 lg:pb-24">
             <div className="mb-8 lg:mb-10">{heading}</div>

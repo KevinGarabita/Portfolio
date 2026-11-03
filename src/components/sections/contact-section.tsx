@@ -1,13 +1,20 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { AvailabilityNote } from "@/components/recruiter/availability-note";
 import { ButtonLink } from "@/components/ui/button-link";
-import { MailIcon, WhatsAppLogoIcon } from "@/components/ui/icons";
+import {
+  ArrowRightIcon,
+  ExternalLinkIcon,
+  WhatsAppLogoIcon,
+} from "@/components/ui/icons";
 import { PageSection } from "@/components/ui/page-section";
 import { SocialNetworkLogo } from "@/components/ui/social-icon-link";
 import { profile } from "@/content/profile";
 import { localize } from "@/i18n/localize";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { homeSectionIds } from "@/lib/home-sections";
+import { getResumeLink } from "@/lib/resume";
 import { socialNetworkNames } from "@/lib/social-networks";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -26,44 +33,67 @@ function ContactDetail({ label, children }: ContactDetailProps) {
 }
 
 /**
- * The close of the page: one line that invites the visitor to say what they need, in
- * the hero's voice and a step smaller, then WhatsApp (the primary action, as in the
- * hero) and email; under them the address, the place and the profiles (which open in
- * a new tab), side by side from sm.
+ * The close of the page. Recruiters first: one line that speaks to both audiences, in
+ * the hero's voice and a step smaller; Kevin's availability; the same two actions as the
+ * hero, the CV (primary) and WhatsApp; and a short way in for clients, to the services
+ * page. Under them the address (the one email link), the place and the profiles (which
+ * open in a new tab), side by side from sm.
  */
 export async function ContactSection() {
   const locale = await getCurrentLocale();
   const dictionary = await getDictionary();
   const labels = dictionary.contact;
   const { location } = profile;
+  const resume = getResumeLink(locale);
 
   return (
     <PageSection id={homeSectionIds.contact} title={labels.sectionTitle}>
-      <p className="max-w-[18em] font-display text-title font-bold text-heading">
-        {labels.lead}
+      <p className="max-w-[20em] font-display text-title font-bold text-heading">
+        {labels.homeLead}
       </p>
 
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+      <AvailabilityNote
+        locale={locale}
+        dictionary={dictionary}
+        className="mt-6"
+      />
+
+      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <ButtonLink
+          href={resume.href}
+          hrefLang={resume.language}
+          type="application/pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          trailingIcon={<ExternalLinkIcon className="size-4" />}
+        >
+          {dictionary.resume.view}
+          <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+        </ButtonLink>
         <ButtonLink
           href={buildWhatsAppUrl(locale)}
           target="_blank"
           rel="noopener noreferrer"
-          variant="whatsapp"
-          leadingIcon={<WhatsAppLogoIcon />}
+          variant="secondary"
+          leadingIcon={<WhatsAppLogoIcon colors="brand" />}
         >
           {dictionary.hero.writeOnWhatsApp}
           <span className="sr-only"> ({dictionary.opensInNewTab})</span>
         </ButtonLink>
-        <ButtonLink
-          href={`mailto:${profile.email}`}
-          variant="secondary"
-          leadingIcon={<MailIcon className="text-accent" />}
-        >
-          {labels.sendEmail}
-        </ButtonLink>
       </div>
 
-      <dl className="mt-12 grid gap-8 sm:grid-cols-3 sm:gap-6">
+      <p className="mt-6 flex flex-wrap items-center gap-x-2 text-muted">
+        <span>{labels.servicesPrompt}</span>
+        <Link
+          href={`/${locale}/services`}
+          className="group inline-flex min-h-11 items-center gap-1.5 font-bold"
+        >
+          {labels.servicesLink}
+          <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+        </Link>
+      </p>
+
+      <dl className="mt-10 grid gap-8 border-t border-hairline pt-10 sm:grid-cols-3 sm:gap-6">
         <ContactDetail label={labels.email}>
           <a href={`mailto:${profile.email}`} className="wrap-anywhere">
             {profile.email}

@@ -7,7 +7,18 @@ import type { CalendarDate, LocalizedText } from "@/types/content";
  * named in the profile and projects. Case studies have theirs in project-seo.ts.
  */
 
-/** Home page description. Its title is the name and the role (buildHomeTitle). */
+/**
+ * The role, shortened for the home title so the name, the brand and the role fit in 60
+ * characters (buildHomeTitle). The full role stays in the description and on the page.
+ */
+export const homeTitleRole: LocalizedText = {
+  es: "Backend, IA y Automatización",
+  en: "Backend, AI & Automation",
+  pt: "Backend, IA e Automação",
+  fr: "Backend, IA, Automatisation",
+};
+
+/** Home page description. Its title is the name, the brand and the role (buildHomeTitle). */
 export const homeDescription: LocalizedText = {
   es: "Desarrollador Backend, IA y Automatización en Mérida, Yucatán, México. Agentes conversacionales en n8n con la API de OpenAI y aplicaciones con FastAPI y React.",
   en: "Backend, AI & Automation Engineer in Mérida, Yucatán, Mexico. Conversational agents in n8n with the OpenAI API and web applications with FastAPI and React.",
@@ -24,10 +35,25 @@ export const projectsPageTitle: LocalizedText = {
 };
 
 export const projectsPageDescription: LocalizedText = {
-  es: "Casos de estudio de Kevin Garabita: apps web con FastAPI, React y Supabase, y agentes de WhatsApp con n8n y OpenAI, freelance y en colaboración con Kobler.",
-  en: "Case studies by Kevin Garabita: web apps with FastAPI, React and Supabase, and WhatsApp agents with n8n and OpenAI, freelance and in collaboration with Kobler.",
-  pt: "Estudos de caso de Kevin Garabita: apps web com FastAPI, React e Supabase, e agentes de WhatsApp com n8n e OpenAI, freelance e em colaboração com a Kobler.",
-  fr: "Études de cas de Kevin Garabita : applications web (FastAPI, React, Supabase) et agents WhatsApp (n8n, OpenAI), en freelance et en collaboration avec Kobler.",
+  es: "Casos de estudio de Kevin Garabita: apps web con FastAPI, React y Supabase, y agentes de WhatsApp con n8n y OpenAI, freelance y en Kobler y Asociados.",
+  en: "Case studies by Kevin Garabita: web apps with FastAPI, React and Supabase, and WhatsApp agents with n8n and OpenAI, freelance and at Kobler y Asociados.",
+  pt: "Estudos de caso de Kevin Garabita: apps web com FastAPI, React e Supabase, e agentes de WhatsApp com n8n e OpenAI, freelance e na Kobler y Asociados.",
+  fr: "Études de cas de Kevin Garabita : applications web (FastAPI, React, Supabase) et agents WhatsApp (n8n, OpenAI), en freelance et chez Kobler y Asociados.",
+};
+
+/** Title of the services page, for clients: what Kevin builds and where. */
+export const servicesPageTitle: LocalizedText = {
+  es: "Agentes de IA, automatización y apps web | Kevin Garabita",
+  en: "AI agents, automation and web apps | Kevin Garabita",
+  pt: "Agentes de IA, automação e apps web | Kevin Garabita",
+  fr: "Agents d'IA, automatisation et apps web | Kevin Garabita",
+};
+
+export const servicesPageDescription: LocalizedText = {
+  es: "Agentes de IA para WhatsApp, automatización de procesos y aplicaciones web a la medida para negocios, desde Mérida, Yucatán. Cotización según tu proyecto.",
+  en: "AI agents for WhatsApp, process automation and custom web applications for businesses, from Mérida, Yucatán, Mexico. Quoted to fit your project.",
+  pt: "Agentes de IA para WhatsApp, automação de processos e aplicações web sob medida para empresas, de Mérida, Yucatán, México. Orçamento conforme o projeto.",
+  fr: "Agents d'IA pour WhatsApp, automatisation des processus et applications web sur mesure pour les entreprises, depuis Mérida, au Mexique. Devis selon le projet.",
 };
 
 /**
@@ -35,4 +61,4 @@ export const projectsPageDescription: LocalizedText = {
  * Update it by hand when that content changes; the sitemap and structured data read it.
  * Projects carry their own `lastUpdated`.
  */
-export const siteLastUpdated: CalendarDate = "2026-10-12";
+export const siteLastUpdated: CalendarDate = "2026-11-03";

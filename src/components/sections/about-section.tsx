@@ -30,7 +30,7 @@ export async function AboutSection() {
       id={homeSectionIds.about}
       title={dictionary.about.sectionTitle}
     >
-      <div className="flex max-w-prose flex-col gap-4">
+      <div className="flex max-w-[60ch] flex-col gap-4">
         {profile.about.map((paragraph) => (
           <p key={paragraph.es}>{localize(paragraph, locale)}</p>
         ))}
@@ -48,19 +48,20 @@ export async function AboutSection() {
           return (
             <div
               key={group.id}
-              className="grid gap-x-6 gap-y-3 border-b border-hairline py-4 sm:grid-cols-[11rem_minmax(0,1fr)]"
+              className="grid gap-x-6 gap-y-3 border-b border-hairline py-5 sm:grid-cols-[11rem_minmax(0,1fr)]"
             >
-              <dt className="text-small font-bold text-muted sm:pt-0.5">
+              <dt className="text-small font-bold text-muted sm:pt-2.5">
                 {localize(group.title, locale)}
               </dt>
               <dd>
-                <ul className="flex flex-wrap gap-x-5 gap-y-3">
+                <ul className="flex flex-wrap gap-2">
                   {tools.map((tool) => (
-                    <li key={tool.logo} className="flex items-center gap-2">
-                      <TechnologyLogo logo={tool.logo} />
-                      <span className="font-bold text-heading">
-                        {localize(tool.name, locale)}
-                      </span>
+                    <li
+                      key={tool.logo}
+                      className="inline-flex min-h-10 items-center gap-2 rounded-tag border border-hairline bg-raised py-1.5 pr-3.5 pl-2.5 text-small font-bold text-heading"
+                    >
+                      <TechnologyLogo logo={tool.logo} className="size-5" />
+                      {localize(tool.name, locale)}
                     </li>
                   ))}
                 </ul>

@@ -40,6 +40,21 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${profile.displayName}`,
     },
     description: localize(profile.role, locale),
+    // Lets Google show the large link-preview images and full snippets in results.
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+    // Sets the author meta tag; pages keep their own titles and descriptions.
+    authors: [{ name: profile.displayName }],
+    creator: profile.displayName,
     openGraph: buildBaseOpenGraph(locale),
     twitter: { card: "summary_large_image" },
   };

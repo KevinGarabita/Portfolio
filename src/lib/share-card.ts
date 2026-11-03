@@ -6,7 +6,7 @@ import type { Locale } from "@/i18n/locales";
 import { labelColon, localize } from "@/i18n/localize";
 import type { Project } from "@/types/content";
 
-import { getProjectTechnologies } from "./projects";
+import { getProjectCredit, getProjectTechnologies } from "./projects";
 
 /**
  * What each link-preview image says. The images (opengraph-image.tsx next to each page)
@@ -45,16 +45,29 @@ export function getProjectsShareCard(locale: Locale): ShareCardText {
   };
 }
 
+export function getServicesShareCard(locale: Locale): ShareCardText {
+  const pageTexts = dictionariesByLocale[locale].services;
+
+  return {
+    title: pageTexts.title,
+    subtitle: pageTexts.lead,
+    footer: `${profile.displayName} · ${localize(profile.role, locale)}`,
+  };
+}
+
 export function getProjectShareCard(
   project: Project,
   locale: Locale,
 ): ShareCardText {
-  const clientLabel = dictionariesByLocale[locale].projects.facts.client;
+  const dictionary = dictionariesByLocale[locale];
 
   return {
     eyebrow: profile.displayName,
     title: localize(project.name, locale),
-    subtitle: `${clientLabel}${labelColon(locale)} ${project.client}`,
+    // Without a client to name, the card says who did the work instead (Freelance...).
+    subtitle: project.client
+      ? `${dictionary.projects.facts.client}${labelColon(locale)} ${project.client}`
+      : dictionary.projects.credit[getProjectCredit(project)],
     footer: getProjectTechnologies(project).join(" · "),
   };
 }

@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Impeccable design-tool workspace (critiques, sketches, local config): internal, never published.
+.impeccable/
+
+# Raw screenshots, not for the public repo
+.capturas/

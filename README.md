@@ -2,19 +2,20 @@
 
 [![CI](https://github.com/KevinGarabita/Portfolio/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/KevinGarabita/Portfolio/actions/workflows/ci.yml)
 
-Source code of the personal site of **Kevin Garabita**, a Backend, AI & Automation Engineer based in Mérida, Yucatán, Mexico. It presents his case studies, experience, education and contact details in four languages: English (the default), Spanish, Portuguese and French.
+Source code of the personal site of **Kevin Garabita**, a Backend, AI & Automation Engineer based in Mérida, Yucatán, Mexico. It presents his case studies, experience, education and contact details for recruiters, and a services page for businesses, in four languages: English (the default), Spanish, Portuguese and French.
 
 **Live site: [www.garasoftware.com.mx](https://www.garasoftware.com.mx)**
 
 <p align="center">
-  <img src="docs/screenshots/home-desktop.png" width="600" alt="English home page on a desktop screen: a header with the name, the section links, a green WhatsApp button and the language menu; on the left, the name Kevin Garabita, the role Backend, AI &amp; Automation Engineer and Mérida, Yucatán, the value line “I build systems and AI assistants that save your business hours of work” in large type, and buttons to message him on WhatsApp and to view his résumé (PDF); on the right, Kevin's cut-out photo over an orange-to-red disc, with a dashed orbit and the chips FastAPI, n8n and OpenAI API; below, the Featured projects heading and the top of the first project's screenshot.">
-  <img src="docs/screenshots/home-phone.png" width="173" alt="The same English home page on a phone: the header with the menu button, the WhatsApp button and the language menu; the photo first, over the orange-to-red disc with the orbit and the FastAPI, n8n and OpenAI API chips; then the name, the role and Mérida, Yucatán, the value line, the WhatsApp and résumé buttons stacked, and the Featured projects heading.">
+  <img src="docs/screenshots/home-desktop.png" width="600" alt="English home page on a desktop screen: a header with the name, the links Projects, Experience, About, Services, Contact and Résumé, an outlined WhatsApp button and the language menu; on the left, the name Kevin Garabita, the role Backend, AI &amp; Automation Engineer and Mérida, Yucatán, the value line “I build systems and AI assistants that save your business hours of work” in large type with “hours of work” in orange, an orange View résumé (PDF) button, an outlined Message me on WhatsApp button, LinkedIn, GitHub and a link for businesses to the services page, and a row of figures: 5 AI agents on WhatsApp built as a team, 4 projects in production, 1 year at Kobler y Asociados and expected graduation in 2027; on the right, Kevin's cut-out photo over an orange-to-red disc with a dashed orbit.">
+  <img src="docs/screenshots/home-phone.png" width="173" alt="The same English home page on a phone: the header with the menu button, an outlined WhatsApp button and the language menu; the name, the role and Mérida, Yucatán with the small photo over its orange-to-red disc beside them; then the value line with “hours of work” in orange, the availability, the orange View résumé (PDF) button and the outlined WhatsApp button stacked, LinkedIn and GitHub, the link to the services page and the first figures.">
 </p>
 
 ## Highlights
 
 - **Four languages without an i18n library**, with types that fail the build when a text is missing in any of them.
-- **Every page is static HTML**, generated at build time for each language and project.
+- **Every page is static HTML**, generated at build time for each language and project. The home page ships no JavaScript of its own.
+- **Phone first**: on a 390 × 664 phone the name, the photo, the value line and both actions (the résumé and WhatsApp) fit the first screen.
 - **SEO built from the content**: complete metadata on every page (titles and descriptions whose length the build checks), `hreflang`, a sitemap dated by the content, Open Graph images rendered at build time and JSON-LD structured data on every page.
 - **Accessibility as a gate**: the full `jsx-a11y` recommended rule set with zero warnings allowed, keyboard and screen-reader support in the menus, filters and gallery, and measured colour contrast.
 - **Three runtime dependencies**: `next`, `react` and `react-dom`. No UI kit, animation library or i18n package.
@@ -51,7 +52,8 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 - **`x-default` points to the English page**, which answers 200, in the `<head>` and in the sitemap; both come from the same function.
 - **The sitemap is dated by the content**: each project uses its `lastUpdated` date and the home page the most recent content date, never the build date, so a redeploy does not claim that every page changed.
 - **Open Graph images are rendered at build time** with `next/og`, one per language and project. They are text only (60–80 KB) because WhatsApp tends to drop link previews heavier than about 300 KB; a version with the photo weighed 470–600 KB. Each one has alt text in its page's language, and its URL carries a hash of the text it draws, so social networks fetch it again when the content changes.
-- **JSON-LD structured data** is built in `src/lib/structured-data.ts` from the same content files as the pages; the home page describes Kevin as a schema.org `Person` on a `ProfilePage`, and every case study adds a `BreadcrumbList` and a `CreativeWork`.
+- **JSON-LD structured data** is built in `src/lib/structured-data.ts` from the same content files as the pages; the home page describes Kevin as a schema.org `Person` on a `ProfilePage`, the projects page is a `CollectionPage` with an `ItemList`, the services page a `WebPage` about three `Service` nodes, and every case study adds a `BreadcrumbList` and a `CreativeWork`.
+- **Google may show large image previews and full snippets** (`max-image-preview: large`, set once in the layout), and a web app manifest names the site and its icons for the phone's home screen.
 - **Descriptions only use facts from the CV**, kept with the rest of the content in `src/content/`.
 
 ### Performance
@@ -61,6 +63,7 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 - **`next/image`** for every photo and screenshot: AVIF first, then WebP, srcset widths that cover what the layouts draw (never removed, because Google keeps the image URLs it has crawled), `sizes` that match the layout, and only the Largest Contentful Paint image preloaded with `fetchPriority="high"`: the hero photo on the home page and the first card on the projects page. Every other image loads lazily.
 - **Lean HTML**: the skill logos are SVG files from a statically generated route instead of inline markup, which cut the home page HTML by more than half.
 - **Self-hosted font** through `next/font`: the font files are downloaded at build time and served from the same domain.
+- **No blur on phones**: the sticky header is nearly opaque below `lg` instead of using `backdrop-filter`, which costs a repaint on every scroll frame on modest phones.
 - **Motion only animates `transform`, `opacity` and colours**, so nothing moves the layout, and it stops with the system's `prefers-reduced-motion` setting. The hero text arrives in sequence without fading, so it paints on the first frame, and the hero photo, the LCP, never starts invisible: only its decoration fades in. There are no scroll reveals, so every section is in place as soon as the HTML arrives.
 
 ### Accessibility
@@ -74,15 +77,16 @@ Each decision is written down with its reason in [`docs/decisions.md`](docs/deci
 
 ## Lighthouse
 
-Measured on a **local production build** (`next build` + `next start`) with Lighthouse 13.5 and mobile emulation on 2026-10-10, before the October 12 redesign, median of three runs. Scores on the live site may differ.
+Measured on a **local production build** (`next build` + `next start`) with Lighthouse 12 and mobile emulation on 2026-11-03, after the cursor animation was removed and the phone layout redesigned; median of three runs. Scores on the live site may differ.
 
 | Page                                | Performance | Accessibility | Best Practices | SEO | Largest Contentful Paint |
 | ----------------------------------- | ----------: | ------------: | -------------: | --: | -----------------------: |
-| `/es`                               |          96 |           100 |            100 | 100 |                    2.7 s |
-| `/en`                               |          96 |           100 |            100 | 100 |                    2.7 s |
-| `/es/projects/field-report-manager` |          97 |           100 |            100 | 100 |                    2.7 s |
+| `/es`                               |          97 |           100 |            100 | 100 |                    2.6 s |
+| `/en`                               |          96 |           100 |            100 | 100 |                    2.6 s |
+| `/es/services`                      |          98 |           100 |            100 | 100 |                    2.2 s |
+| `/es/projects/field-report-manager` |          99 |           100 |            100 | 100 |                    2.1 s |
 
-The same pages scored 93, 94 and 94 in performance before the image and HTML work described above, with a Largest Contentful Paint of 2.9–3.1 s. Cumulative Layout Shift is 0 on every page.
+Cumulative Layout Shift is 0 on every page and Total Blocking Time stays under 200 ms. Before the image and HTML work described above (October 2026), the home pages scored 93 and 94 in performance, with a Largest Contentful Paint of 2.9–3.1 s.
 
 ## Getting started
 

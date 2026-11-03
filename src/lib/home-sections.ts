@@ -7,7 +7,6 @@ import type { Locale } from "@/i18n/locales";
 export const homeSectionIds = {
   projects: "projects",
   experience: "experience",
-  education: "education",
   about: "about",
   contact: "contact",
 } as const;

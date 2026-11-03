@@ -34,10 +34,15 @@ interface ProjectGalleryProps {
   labels: GalleryLabels;
 }
 
-/** Grid placement: the first desktop screenshot spans the row; phone screenshots take one column. */
+/**
+ * Grid placement. Phones: the first desktop screenshot spans the row and every other
+ * image is a small square thumbnail, four per row, so five screenshots take one large
+ * image and one row instead of five screens. From sm: the first desktop screenshot spans
+ * the row, other desktop screenshots take half of it and phone screenshots a quarter.
+ */
 function getThumbnailClassNames(image: GalleryImage, index: number): string {
   if (image.viewport === "mobile") return "col-span-1";
-  return index === 0 ? "col-span-2 sm:col-span-4" : "col-span-2";
+  return index === 0 ? "col-span-4" : "col-span-1 sm:col-span-2";
 }
 
 /** Columns each thumbnail takes from sm up (getThumbnailClassNames). */
@@ -75,7 +80,7 @@ function getThumbnailSizes(images: GalleryImage[]): string[] {
 
   return images.map((image, index) => {
     if (image.viewport === "mobile") {
-      return "(min-width: 1800px) 314px, (min-width: 1280px) 282px, (min-width: 640px) 25vw, 50vw";
+      return "(min-width: 1800px) 314px, (min-width: 1280px) 282px, 25vw";
     }
     if (getWideColumnSpan(image, index) === 4) {
       return "(min-width: 1800px) 1328px, (min-width: 1280px) 1200px, 100vw";
@@ -85,15 +90,16 @@ function getThumbnailSizes(images: GalleryImage[]): string[] {
       ? (16 / 9) * (image.width / image.height)
       : 0;
     if (croppedColumns <= 2) {
-      return "(min-width: 1800px) 652px, (min-width: 1280px) 588px, (min-width: 640px) 50vw, 100vw";
+      return "(min-width: 1800px) 652px, (min-width: 1280px) 588px, (min-width: 640px) 50vw, 25vw";
     }
-    return `(min-width: 1800px) ${Math.round(314 * croppedColumns)}px, (min-width: 1280px) ${Math.round(282 * croppedColumns)}px, (min-width: 640px) ${Math.round(25 * croppedColumns)}vw, 100vw`;
+    return `(min-width: 1800px) ${Math.round(314 * croppedColumns)}px, (min-width: 1280px) ${Math.round(282 * croppedColumns)}px, (min-width: 640px) ${Math.round(25 * croppedColumns)}vw, 25vw`;
   });
 }
 
 /**
  * Screenshots of a case study. Every image is visible in the page as a thumbnail (the
- * first desktop one at full width), so nothing depends on JavaScript. Each thumbnail
+ * first desktop one at full width; on phones the others are small squares), so nothing
+ * depends on JavaScript. Each thumbnail
  * is a button that opens a larger view in a native modal <dialog> (the page behind
  * becomes inert):
  * - focus moves to the close button when it opens, and Tab / Shift+Tab cycle through
@@ -185,7 +191,7 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
 
   return (
     <>
-      <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:gap-6">
+      <ul className="grid grid-cols-4 gap-2 sm:gap-4 lg:gap-6">
         {images.map((image, index) => (
           <li key={image.src} className={getThumbnailClassNames(image, index)}>
             <button
@@ -209,13 +215,16 @@ export function ProjectGallery({ images, labels }: ProjectGalleryProps) {
                   index === 0 && image.viewport === "desktop"
                     ? "h-auto"
                     : image.viewport === "mobile"
-                      ? "aspect-9/16 object-cover object-top"
-                      : "aspect-video object-cover object-top sm:aspect-auto sm:h-full",
+                      ? "aspect-square object-cover object-top sm:aspect-9/16"
+                      : "aspect-square object-cover object-top sm:aspect-auto sm:h-full",
                 )}
               />
               <span
                 aria-hidden="true"
-                className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-tag border border-hairline bg-page px-2 py-1 text-small font-bold text-heading opacity-90 transition-opacity group-hover:opacity-100 sm:px-3"
+                className={joinClassNames(
+                  index > 0 && "max-sm:hidden",
+                  "absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-tag border border-hairline bg-page px-2 py-1 text-small font-bold text-heading opacity-90 transition-opacity group-hover:opacity-100 sm:px-3",
+                )}
               >
                 <ExpandIcon className="size-4 text-accent" />
                 {/* Only the large thumbnail spells it out; on small ones it would hide the shot. */}

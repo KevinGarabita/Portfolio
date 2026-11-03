@@ -14,12 +14,12 @@
  *   4. Type, radius and motion tokens.
  *   5. Fonts: mapped to the CSS variables that next/font puts on <html>.
  *   6. Base styles: gradients, glows, layers, header height and element defaults.
- *   7. Components: the backdrop, the hero photo, the entrance on load and the loops
- *      around the photo, project tiles and framed links, the gradient ring, the header
- *      and the flow diagram.
+ *   7. Components: the backdrop, the hero photo, the entrance on load and the loop
+ *      around the photo, project tiles and framed links, the header and the flow
+ *      diagram.
  *   8. Reduced motion (prefers-reduced-motion).
  *
- * Contrast (WCAG 2.x, measured): text #f5f5f5 on page 18.15:1, muted #a3a3a3 7.84:1,
+ * Contrast (WCAG 2.x, measured): text #f6f3ee on page 17.87:1, muted #aaa39b 7.93:1,
  * orange #ff6a00 on page 6.89:1, black text on orange 6.89:1. Red #e5252a reaches only
  * 4.36:1 on the page and with black or white text on it, so red is for gradients,
  * borders, glows, hovers and large text, never for small text. White on orange fails
@@ -38,13 +38,15 @@
   --text-shadow-*: initial; /* separate namespace: --text-*: initial does not remove it */
 
   /* 2. Raw palette -------------------------------------------------------------- */
-  --color-black-deep: #0a0a0a; /* main background */
-  --color-black-surface: #141414; /* surfaces on the page */
-  --color-black-surface-strong: #1c1c1c; /* raised surfaces, hovers */
-  --color-black-line: #2a2a2a; /* decorative dividers */
-  --color-gray-control: #737373; /* control borders, 4.17:1 on the page */
-  --color-gray-text: #a3a3a3; /* secondary text, 7.84:1 on the page */
-  --color-white-warm: #f5f5f5; /* main text, 18.15:1 on the page */
+  /* Warm neutrals (3 November 2026): the blacks and greys lean a touch towards the
+   * orange, so the accent sits in the page instead of on top of it. */
+  --color-black-deep: #0b0a09; /* main background */
+  --color-black-surface: #151311; /* surfaces on the page */
+  --color-black-surface-strong: #1e1b18; /* raised surfaces, hovers */
+  --color-black-line: #2c2824; /* decorative dividers */
+  --color-gray-control: #7c746d; /* control borders, 4.31:1 on the page */
+  --color-gray-text: #aaa39b; /* secondary text, 7.93:1 on the page */
+  --color-white-warm: #f6f3ee; /* main text, 17.87:1 on the page */
   --color-orange-vibrant: #ff6a00; /* primary accent */
   --color-orange-light: #ff8a3d; /* hover of the orange fill, black text 8.44:1 */
   --color-red-signal: #e5252a; /* secondary accent: gradients, glows, details */
@@ -53,6 +55,11 @@
   --color-whatsapp-green: #25d366; /* WhatsApp's official green; ink text on it 9.98:1 */
   --color-whatsapp-green-light: #4ae082; /* hover of the WhatsApp button */
   --color-linkedin-blue: #0a66c2; /* LinkedIn's official blue; 3.48:1 on the page (logo only) */
+  /* Instagram's official gradient, bottom left to top right (logo only) */
+  --color-instagram-yellow: #feda75;
+  --color-instagram-orange: #fa7e1e;
+  --color-instagram-pink: #d62976;
+  --color-instagram-purple: #962fbf;
 
   /* 3. Roles ------------------------------------------------------------------- */
   --color-page: var(--color-black-deep); /* page background */
@@ -132,7 +139,6 @@
   --text-giant--letter-spacing: -0.03em;
 
   /* 4b. Radius by role */
-  --radius-section: 1.25rem; /* cards and panels */
   --radius-media: 0.875rem; /* images, video, embeds */
   --radius-control: 0.75rem; /* buttons, inputs, selects */
   --radius-tag: 9999px; /* tags/chips only */
@@ -179,9 +185,6 @@
       var(--color-red-signal)
     );
 
-    /* Soft orange glow under the icon of a project without screenshots. */
-    --glow-accent-soft: 0 1rem 2.5rem -1.25rem
-      color-mix(in oklab, var(--color-orange-vibrant) 45%, transparent);
     --tint-accent: color-mix(
       in oklab,
       var(--color-orange-vibrant) 14%,
@@ -292,15 +295,6 @@
 
 /* 7. Components */
 @layer components {
-  /* Large text painted with the brand gradient. Only for text >= 24px (or >= 18.66px
-   * bold): the red end reaches 4.36:1, enough for large text only. */
-  .text-gradient-brand {
-    background-image: var(--gradient-brand);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
   /* One still, soft orange glow at the top right of the first screen, behind the
    * header and the hero. It is absolute, not fixed, so it scrolls away with the hero
    * and never sits behind the projects. */
@@ -318,27 +312,96 @@
     );
   }
 
-  /* Hero photo, as Kevin asked to keep it: the circle and the cut-out fade into the
-   * page together at the bottom, where the original photo was cropped, so no straight
-   * edge shows. */
-  .hero-portrait {
-    mask-image: linear-gradient(to bottom, black 78%, transparent 99%);
+  /* Hero layout: three areas, so the one photo moves without a second copy of it.
+   * Phones: name and role on the left, the small photo beside them, the rest below at
+   * full width. From md: the text on the left (7 of 12) and the large photo on the right,
+   * the text block centred on it by the two empty rows around it. */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title photo"
+      "body body";
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 1.75rem;
+  }
+
+  @media (width >= 48rem) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      grid-template-rows: 1fr auto auto 1fr;
+      grid-template-areas:
+        ". photo"
+        "title photo"
+        "body photo"
+        ". photo";
+      column-gap: 2rem;
+      row-gap: 0;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .hero-grid {
+      column-gap: 3rem;
+    }
+  }
+
+  /* Width of the photo: small beside the name on phones, its whole column from md
+   * (capped, so it never outgrows the text), small again on short screens. The image's
+   * `sizes` in hero-section.tsx follows these widths. */
+  .hero-photo-frame {
+    width: 7rem;
+  }
+
+  @media (width >= 22.5rem) {
+    .hero-photo-frame {
+      width: 8.5rem;
+    }
+  }
+
+  @media (width >= 40rem) {
+    .hero-photo-frame {
+      width: 10rem;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .hero-photo-frame {
+      width: 100%;
+      max-width: 30rem;
+    }
+  }
+
+  @media (width >= 112.5rem) {
+    .hero-photo-frame {
+      max-width: 33rem;
+    }
+  }
+
+  @media (max-height: 30rem) {
+    .hero-photo-frame {
+      width: 100%;
+      max-width: 12rem;
+    }
+  }
+
+  /* Hero photo: the cut-out fades into the page at the bottom and the lower corners,
+   * where the original photo was cropped, with the fade baked into its PNG. Behind it,
+   * an orange backlight instead of a solid disc (Kevin, 3 November 2026: the disc
+   * showed through the faded shirt): strongest behind the head, gone before the edge. */
+  .hero-backlight {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-accent) 70%, transparent),
+      color-mix(in oklab, var(--color-accent) 30%, transparent) 55%,
+      transparent
+    );
   }
 
   /* The orbit ring fades out behind the shoulders instead of crossing the shirt. */
   .hero-orbit {
     mask-image: linear-gradient(to bottom, black 50%, transparent 78%);
-  }
-
-  /* The photo's lower corners were cut by the original frame: fade the sides too. */
-  .hero-photo {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 9%,
-      black 91%,
-      transparent
-    );
   }
 
   /* The one orchestrated moment of each page: its first view arrives in sequence on
@@ -368,36 +431,9 @@
     animation-delay: calc(var(--entrance-order, 0) * var(--stagger-step));
   }
 
-  /* Gentle up-and-down float for the chips around the hero photo. */
-  .motion-float {
-    animation: float 7s ease-in-out infinite;
-    animation-delay: var(--float-delay, 0s);
-  }
-
   /* Slow full turn for the orbit ring around the hero photo. */
   .motion-orbit {
     animation: orbit 48s linear infinite;
-  }
-
-  /* Gradient ring painted as the element's own 1px border: the gradient fills the
-   * border box and the surface colour (--ring-fill) covers the padding box on top of it.
-   * Give the element `border` (the width); the class makes it transparent. Today it
-   * frames the icon of a project without screenshots.
-   *
-   * Why not a masked pseudo-element: browsers snap a real border to whole device pixels
-   * (at 125% or 150% scale a 1px border becomes exactly one device pixel), but a mask
-   * cut 1 CSS px wide is not snapped, so its edge fell in the middle of a device pixel
-   * and the ring was antialiased across two rows of pixels: soft and blurry. A border
-   * painted with background-clip uses the same snapped geometry as any other border.
-   *
-   * --ring-fill: the surface inside the ring (default: raised). Set it instead of a
-   * bg-* class, e.g. [--ring-fill:var(--color-page)]. */
-  .gradient-ring {
-    --ring-fill: var(--color-raised);
-    border-color: transparent;
-    background:
-      linear-gradient(var(--ring-fill) 0 0) padding-box,
-      var(--gradient-brand-diagonal) border-box;
   }
 
   /* Project tiles (home and projects page): a screenshot and its caption, no panel
@@ -518,10 +554,17 @@
     inset: 0;
     z-index: -1;
     border-bottom: 1px solid var(--color-hairline);
-    background: color-mix(in oklab, var(--color-page) 85%, transparent);
-    backdrop-filter: blur(14px) saturate(140%);
+    /* Phones: nearly solid and without blur, which costs every frame while scrolling. */
+    background: color-mix(in oklab, var(--color-page) 94%, transparent);
     transition: opacity var(--duration-moderate) var(--ease-standard);
     pointer-events: none;
+  }
+
+  @media (width >= 64rem) {
+    .site-header::before {
+      background: color-mix(in oklab, var(--color-page) 85%, transparent);
+      backdrop-filter: blur(14px) saturate(140%);
+    }
   }
 
   /* The open menu keeps the solid background even at the top of the page. */
@@ -539,7 +582,7 @@
     content: "";
     position: absolute;
     top: 2.5rem;
-    bottom: -1rem;
+    bottom: -0.75rem; /* the gap between steps below xl (gap-3) */
     left: calc(1.25rem - 1px);
     width: 2px;
     background: linear-gradient(
@@ -582,12 +625,6 @@
   }
 }
 
-@keyframes float {
-  50% {
-    transform: translate3d(0, -0.5rem, 0);
-  }
-}
-
 @keyframes orbit {
   to {
     transform: rotate(1turn);
@@ -595,7 +632,7 @@
 }
 
 /* 8. Reduced motion turns every animation and transition into an instant change and
- * stops the loops around the hero photo. */
+ * stops the orbit around the hero photo. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -606,7 +643,6 @@
     scroll-behavior: auto !important;
   }
 
-  .motion-float,
   .motion-orbit {
     animation: none !important;
   }

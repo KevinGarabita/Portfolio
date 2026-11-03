@@ -11,7 +11,9 @@ export const englishDictionary: Dictionary = {
     projects: "Projects",
     experience: "Experience",
     about: "About",
+    services: "Services",
     contact: "Contact",
+    resume: "Résumé",
   },
   languageSwitcher: {
     label: "Language",
@@ -19,6 +21,18 @@ export const englishDictionary: Dictionary = {
   hero: {
     photoAlt: "Kevin Garabita, backend, AI and automation engineer",
     writeOnWhatsApp: "Message me on WhatsApp",
+    servicesLink: "Run a business? See my services",
+    stats: {
+      label: "At a glance",
+      agents: "AI agents on WhatsApp, built as a team",
+      inProduction: "projects in production",
+      experience: (organization: string) =>
+        `building AI and automation at ${organization}`,
+      graduation: (institution: string) =>
+        `expected graduation, ${institution}`,
+      years: (count: number) => (count === 1 ? "1 year" : `${count} years`),
+      months: (count: number) => (count === 1 ? "1 month" : `${count} months`),
+    },
   },
   resume: {
     view: "View résumé (PDF)",
@@ -29,7 +43,7 @@ export const englishDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projects",
       description:
-        "Web apps, AI agents and automations: freelance projects and collaborations with Kobler y Asociados.",
+        "Web apps, AI agents and automations: freelance projects and my work at Kobler y Asociados.",
     },
     filters: {
       label: "Filter projects",
@@ -52,8 +66,8 @@ export const englishDictionary: Dictionary = {
     },
     credit: {
       freelance: "Freelance",
-      "kobler-team": "Collaboration with Kobler",
-      "kobler-individual": "Built for Kobler y Asociados",
+      "kobler-team": "Team project at Kobler y Asociados",
+      "kobler-individual": "Built at Kobler y Asociados",
     },
     facts: {
       client: "Client",
@@ -74,8 +88,16 @@ export const englishDictionary: Dictionary = {
       nextSteps: "Next steps",
       metrics: "Before and after",
       architecture: "Architecture",
+      overview: "At a glance",
+      howItWorks: "How it works",
+      technicalDetails: "Technical details",
+      technicalDetailsHint:
+        "How it works, technical decisions and failure handling",
+      event: "At the event",
     },
     flowStepTool: "Tool",
+    /** Credit under a photo someone else took. */
+    photoCredit: (author: string) => `Photo: ${author}`,
     gallery: {
       enlarge: "Enlarge",
       dialogLabel: "Project screenshots",
@@ -93,13 +115,11 @@ export const englishDictionary: Dictionary = {
     },
   },
   experience: {
-    sectionTitle: "Experience",
+    sectionTitle: "Experience and education",
     present: "present",
     relatedProjects: "Case studies from this job",
-    moreDetails: "More details",
   },
   education: {
-    sectionTitle: "Education",
     expectedGraduation: "Expected graduation",
   },
   skills: {
@@ -114,11 +134,26 @@ export const englishDictionary: Dictionary = {
   contact: {
     sectionTitle: "Contact",
     lead: "Tell me what you want to build or automate.",
+    homeLead: "Hiring for your team, or have a project in mind?",
+    servicesPrompt: "Need a system or an AI agent for your business?",
+    servicesLink: "See services",
     email: "Email",
     whatsApp: "WhatsApp",
-    sendEmail: "Send an email",
     location: "Location",
     profiles: "Profiles",
+  },
+  services: {
+    title: "Services",
+    lead: "AI agents, automations and web applications built around your business, backed by real projects.",
+    listLabel: "What I can build for you",
+    includes: "Includes",
+    examples: "Example projects",
+    processTitle: "How we work",
+    pricingTitle: "How much does it cost?",
+    pricingText:
+      "It depends on what we build. Tell me what you need and I will send you a quote with the scope, the timeline and the price.",
+    recruiterPrompt: "Looking for a developer for your team?",
+    recruiterLink: "See my profile and résumé",
   },
   notFound: {
     title: "Page not found",
@@ -134,6 +169,8 @@ export const englishDictionary: Dictionary = {
       status: {
         "open-to-offers": "Open to job offers",
         "open-to-freelance": "Available for freelance projects",
+        "open-to-offers-and-freelance":
+          "Open to full-time roles and freelance projects",
       },
       modality: {
         remote: "remote",

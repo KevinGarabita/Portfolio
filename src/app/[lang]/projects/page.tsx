@@ -5,6 +5,7 @@ import {
   type FilterableProject,
 } from "@/components/projects/filterable-project-grid";
 import { ProjectCard } from "@/components/projects/project-card";
+import { ProjectsStructuredData } from "@/components/seo/structured-data";
 import { Container } from "@/components/ui/container";
 import { getCurrentLocale, getDictionary } from "@/i18n/request-locale";
 import { buildProjectsPageMetadata } from "@/lib/metadata";
@@ -62,6 +63,7 @@ export default async function ProjectsPage() {
 
   return (
     <Container className="pt-8 pb-16 sm:pt-10 lg:pt-12 lg:pb-24">
+      <ProjectsStructuredData />
       <header className="max-w-prose">
         <h1 className="entrance-slide font-display text-title font-bold [--entrance-order:0]">
           {allProjectsPage.title}

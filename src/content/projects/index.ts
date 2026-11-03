@@ -3,6 +3,7 @@ import type { Project } from "@/types/content";
 import { controltecPestControlCrm } from "./controltec-pest-control-crm";
 import { fieldReportManager } from "./field-report-manager";
 import { koblerProjects } from "./kobler";
+import { neorganaAgent } from "./neorgana-agent";
 import { workshopWeb } from "./workshop-web";
 
 /** A Kobler case study by its slug; the build fails if there is none. */
@@ -18,13 +19,13 @@ function koblerProject(slug: string): Project {
  * Every case study, one page each at /[lang]/projects/[slug].
  * The order here is the order on the site: the best work first, so live projects and the
  * strongest cases lead, and web apps alternate with AI agents. Each project lives in its
- * own file in this folder (the Kobler agents share kobler.ts).
+ * own file in this folder (the Kobler team agents share kobler.ts).
  */
 export const projects: Project[] = [
   workshopWeb,
   koblerProject("motosureste-suzuki-agent"),
   controltecPestControlCrm,
-  koblerProject("neorgana-agent"),
+  neorganaAgent,
   fieldReportManager,
   koblerProject("lamau-beach-automation"),
 ];
