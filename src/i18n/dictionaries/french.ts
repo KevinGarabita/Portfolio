@@ -38,6 +38,7 @@ export const frenchDictionary: Dictionary = {
     view: "Voir le CV (PDF, en espagnol)",
   },
   projects: {
+    eyebrow: "Travail réel",
     sectionTitle: "Projets phares",
     viewAll: (count: number) => `Voir tous les projets (${count})`,
     allProjectsPage: {
@@ -116,22 +117,33 @@ export const frenchDictionary: Dictionary = {
   },
   experience: {
     sectionTitle: "Expérience et formation",
+    eyebrow: "Parcours",
     present: "aujourd'hui",
-    relatedProjects: "Études de cas issues de ce poste",
+    work: "Expérience",
+    clientResults: "Résultats par client",
+    caseStudy: "Voir l'étude de cas",
+    responsibilities: "Également",
+    stack: "Stack",
   },
   education: {
     expectedGraduation: "Diplôme prévu",
+    label: "Formation",
+    timeline: "Avancement du cursus",
   },
   skills: {
     sectionTitle: "Compétences",
+    toolCount: (count: number) => (count === 1 ? "1 outil" : `${count} outils`),
   },
   about: {
+    eyebrow: "Profil",
+    focusAreas: "Domaines de prédilection",
     sectionTitle: "À propos",
     facts: {
       languages: "Langues",
     },
   },
   contact: {
+    eyebrow: "Parlons-en",
     sectionTitle: "Contact",
     lead: "Dites-moi ce que vous souhaitez développer ou automatiser.",
     homeLead: "Vous recrutez ou vous avez un projet en tête ?",

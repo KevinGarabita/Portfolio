@@ -38,6 +38,7 @@ export const englishDictionary: Dictionary = {
     view: "View résumé (PDF)",
   },
   projects: {
+    eyebrow: "Real work",
     sectionTitle: "Featured projects",
     viewAll: (count: number) => `View all projects (${count})`,
     allProjectsPage: {
@@ -116,22 +117,33 @@ export const englishDictionary: Dictionary = {
   },
   experience: {
     sectionTitle: "Experience and education",
+    eyebrow: "Career",
     present: "present",
-    relatedProjects: "Case studies from this job",
+    work: "Experience",
+    clientResults: "Results by client",
+    caseStudy: "View case study",
+    responsibilities: "Also",
+    stack: "Stack",
   },
   education: {
     expectedGraduation: "Expected graduation",
+    label: "Education",
+    timeline: "Degree progress",
   },
   skills: {
     sectionTitle: "Skills",
+    toolCount: (count: number) => (count === 1 ? "1 tool" : `${count} tools`),
   },
   about: {
+    eyebrow: "Profile",
+    focusAreas: "Focus areas",
     sectionTitle: "About",
     facts: {
       languages: "Languages",
     },
   },
   contact: {
+    eyebrow: "Let's talk",
     sectionTitle: "Contact",
     lead: "Tell me what you want to build or automate.",
     homeLead: "Hiring for your team, or have a project in mind?",

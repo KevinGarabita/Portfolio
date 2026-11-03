@@ -18,6 +18,7 @@ export async function ProjectsSection() {
     <PageSection
       id={homeSectionIds.projects}
       title={dictionary.projects.sectionTitle}
+      eyebrow={dictionary.projects.eyebrow}
       layout="stacked"
     >
       <ProjectGrid

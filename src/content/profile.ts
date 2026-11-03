@@ -32,6 +32,33 @@ export const profile: Profile = {
       fr: "Étudiant en septième semestre d'ingénierie en développement de technologies et de logiciels. Je crée des applications web de bout en bout avec FastAPI, React, TypeScript et Supabase, et je développe avec Claude Code.",
     },
   ],
+  // The CV's role and skills, as keywords: nothing beyond them.
+  focusAreas: [
+    {
+      es: "APIs con FastAPI",
+      en: "APIs with FastAPI",
+      pt: "APIs com FastAPI",
+      fr: "API avec FastAPI",
+    },
+    {
+      es: "Agentes de IA",
+      en: "AI agents",
+      pt: "Agentes de IA",
+      fr: "Agents d'IA",
+    },
+    {
+      es: "Automatización con n8n",
+      en: "Automation with n8n",
+      pt: "Automação com n8n",
+      fr: "Automatisation avec n8n",
+    },
+    {
+      es: "Apps web de punta a punta",
+      en: "End-to-end web apps",
+      pt: "Apps web de ponta a ponta",
+      fr: "Applications web de bout en bout",
+    },
+  ],
   location: {
     city: "Mérida",
     region: "Yucatán",

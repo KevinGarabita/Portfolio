@@ -603,6 +603,190 @@
       background: var(--gradient-brand);
     }
   }
+
+  /* Home sections (4 November 2026): Kevin found them flat and too alike, all black text
+   * in the same two columns. Each section now has an orange label over its title, its
+   * own shape (cards, a filled orange panel, a bento grid) and blocks that rise in as
+   * they scroll into view. */
+
+  /* The label over a section title: orange capitals after a short gradient bar. Orange
+   * on the page is 6.89:1. */
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-accent);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .section-eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--gradient-brand);
+  }
+
+  /* A soft, still glow behind a section, on one side; under 20% so text keeps contrast. */
+  .section-glow::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 10% auto auto -10%;
+    width: min(46rem, 90vw);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-orange-vibrant) 11%, transparent),
+      transparent
+    );
+  }
+
+  .section-glow-right::before {
+    inset: 0 -12% auto auto;
+  }
+
+  /* A panel on the page: raised surface, hairline border and an orange-to-red line on
+   * top. As a link (.card-link) it lifts a little and its border warms on hover. */
+  .card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-media);
+    background: linear-gradient(
+      180deg,
+      var(--color-raised-strong),
+      var(--color-raised) 60%
+    );
+  }
+
+  .card-accent::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: var(--gradient-brand);
+  }
+
+  .card-link {
+    transition:
+      transform var(--duration-moderate) var(--ease-emphasized),
+      border-color var(--duration-moderate) var(--ease-standard);
+  }
+
+  .card-link:focus-within {
+    border-color: var(--color-accent);
+  }
+
+  @media (hover: hover) {
+    .card-link:hover {
+      transform: translate3d(0, -0.25rem, 0);
+      border-color: color-mix(in oklab, var(--color-accent) 60%, transparent);
+    }
+  }
+
+  /* The About panel: an orange fill with black text (6.89:1 on #ff6a00, 8.44:1 on
+   * #ff8a3d), a faint grid and a red glow in one corner, away from the text. */
+  .panel-accent {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: calc(var(--radius-media) * 1.5);
+    color: var(--color-on-accent);
+    background: linear-gradient(
+      135deg,
+      var(--color-orange-light),
+      var(--color-orange-vibrant) 55%
+    );
+  }
+
+  .panel-accent::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(
+        color-mix(in oklab, var(--color-black-deep) 9%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in oklab, var(--color-black-deep) 9%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 2.5rem 2.5rem;
+    mask-image: linear-gradient(110deg, transparent 35%, black);
+  }
+
+  .panel-accent::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    right: -12rem;
+    bottom: -14rem;
+    width: 30rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--color-red-signal) 55%, transparent),
+      transparent
+    );
+  }
+
+  .panel-accent :is(h2, h3, h4) {
+    color: var(--color-on-accent);
+  }
+
+  /* Studies timeline: a track from the first year to the expected graduation, filled
+   * up to today (--progress, 0 to 1, set inline). */
+  .study-track {
+    position: relative;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: var(--color-hairline);
+  }
+
+  .study-track-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: calc(var(--progress) * 100%);
+    border-radius: inherit;
+    background: var(--gradient-brand);
+  }
+
+  .study-track-fill::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 1.125rem;
+    aspect-ratio: 1;
+    border: 3px solid var(--color-page);
+    border-radius: 50%;
+    background: var(--color-white-warm);
+    box-shadow: 0 0 0 4px
+      color-mix(in oklab, var(--color-orange-vibrant) 35%, transparent);
+    transform: translate(50%, -50%);
+  }
+
+  /* Rise in while scrolling into view. CSS only: browsers without scroll-driven
+   * animations, and visitors who ask for reduced motion, see the block in place. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        animation: rise-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 35%;
+      }
+    }
+  }
 }
 
 @keyframes rise-in {

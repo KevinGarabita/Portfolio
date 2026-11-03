@@ -41,6 +41,8 @@ export interface Profile {
   heroSubtitleHighlight?: LocalizedText;
   /** Paragraphs for the "About" section. */
   about: LocalizedText[];
+  /** What Kevin builds, in two or three words each: the keywords of the About panel. */
+  focusAreas: LocalizedText[];
   location: {
     city: string;
     region: string;
@@ -76,10 +78,25 @@ export interface WorkExperience {
   organizationDescription?: LocalizedText;
   location: LocalizedText;
   period: DateRange;
-  /** Short bullet points: the CV facts, condensed for the Experience section. */
-  highlights: LocalizedText[];
-  /** Slugs of the projects that came out of this job. */
-  relatedProjectSlugs: string[];
+  /** The job in one sentence: the CV facts, condensed for the Experience section. */
+  summary: LocalizedText;
+  /** Words of the summary drawn in orange, so a skimming eye catches them first. */
+  summaryHighlight: LocalizedText;
+  /** Tools of the job, shown as logos beside the summary. */
+  stack: TechnologyLogoId[];
+  /** One card per client: what the work did for them, in a few keywords and a line. */
+  clientResults: ClientResult[];
+  /** What else the job involved, beyond building (one line each). */
+  responsibilities: LocalizedText[];
+}
+
+export interface ClientResult {
+  client: string;
+  /** Two or three short phrases, read before the sentence. */
+  keywords: LocalizedText[];
+  result: LocalizedText;
+  /** The case study about this client, when there is one. */
+  projectSlug?: string;
 }
 
 export interface Education {

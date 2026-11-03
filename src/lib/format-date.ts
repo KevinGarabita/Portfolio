@@ -38,3 +38,29 @@ export function formatDateRange(
   const end = range.end ? formatYearMonth(range.end, locale) : ongoingLabel;
   return `${start} – ${end}`;
 }
+
+/** Whole months of a finished period, both ends included: Dec 2025 – Nov 2026 is 12. */
+export function countMonths({ start, end }: DateRange): number | undefined {
+  if (!end) return undefined;
+  const [startYear = 0, startMonth = 0] = start.split("-").map(Number);
+  const [endYear = 0, endMonth = 0] = end.split("-").map(Number);
+  return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+}
+
+/**
+ * How far `today` is from `start` to `end`, between 0 and 1: the fill of the studies
+ * timeline. The page is built ahead of time, so "today" is the day of the last build.
+ */
+export function getPeriodProgress(
+  start: YearMonth,
+  end: YearMonth,
+  today = new Date(),
+): number {
+  const toTime = (yearMonth: YearMonth) => {
+    const [year = 0, month = 1] = yearMonth.split("-").map(Number);
+    return Date.UTC(year, month - 1, 1);
+  };
+  const progress =
+    (today.getTime() - toTime(start)) / (toTime(end) - toTime(start));
+  return Math.min(1, Math.max(0, progress));
+}

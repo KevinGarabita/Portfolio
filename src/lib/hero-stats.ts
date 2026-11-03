@@ -2,8 +2,8 @@ import { education } from "@/content/education";
 import { workExperience } from "@/content/experience";
 import { teamWhatsAppAgentCount } from "@/content/highlights";
 import type { Dictionary } from "@/i18n/dictionaries/spanish";
-import type { DateRange } from "@/types/content";
 
+import { countMonths } from "./format-date";
 import { getAllProjects } from "./projects";
 
 export interface HeroStat {
@@ -11,14 +11,6 @@ export interface HeroStat {
   value: string;
   /** What it counts, in one short line. */
   label: string;
-}
-
-/** Whole months of a finished job, both ends included: Dec 2025 – Nov 2026 is 12. */
-function countMonths({ start, end }: DateRange): number | undefined {
-  if (!end) return undefined;
-  const [startYear = 0, startMonth = 0] = start.split("-").map(Number);
-  const [endYear = 0, endMonth = 0] = end.split("-").map(Number);
-  return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
 }
 
 /**
