@@ -224,8 +224,12 @@
     }
   }
 
+  /* Browser surfaces in the palette: the scrollbar, the caret and native controls. */
   html {
     color-scheme: dark;
+    scrollbar-color: var(--color-control-border) var(--color-page);
+    caret-color: var(--color-accent);
+    accent-color: var(--color-accent-fill);
     scroll-padding-top: calc(var(--header-height) + 1rem);
   }
 

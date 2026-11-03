@@ -103,7 +103,7 @@ export async function AboutSection() {
       <h3 className="mt-20 font-display text-subtitle font-bold lg:mt-28">
         {dictionary.skills.sectionTitle}
       </h3>
-      <dl className="mt-4 border-t border-hairline">
+      <dl className="mt-4 divide-y divide-hairline border-t border-hairline">
         {technicalSkillGroups.map((group) => {
           const tools = group.items.flatMap((item) =>
             item.logo ? [{ name: item.name, logo: item.logo }] : [],
@@ -112,7 +112,7 @@ export async function AboutSection() {
           return (
             <div
               key={group.id}
-              className="grid gap-x-6 gap-y-3 border-b border-hairline py-5 sm:grid-cols-[11rem_minmax(0,1fr)]"
+              className="grid gap-x-6 gap-y-3 py-5 sm:grid-cols-[11rem_minmax(0,1fr)]"
             >
               <dt className="text-small font-bold text-muted sm:pt-2.5">
                 {localize(group.title, locale)}

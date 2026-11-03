@@ -74,7 +74,7 @@ export async function ExperienceSection() {
       title={labels.sectionTitle}
       layout="stacked"
     >
-      <ol className="border-t border-hairline">
+      <ol className="divide-y divide-hairline border-t border-hairline">
         {workExperience.map((job) => {
           const months = countMonths(job.period);
           const duration = months
@@ -89,10 +89,7 @@ export async function ExperienceSection() {
             );
 
           return (
-            <li
-              key={job.id}
-              className="ledger-row border-b border-hairline py-10 lg:py-14"
-            >
+            <li key={job.id} className="ledger-row py-10 lg:py-14">
               <LedgerPeriod
                 period={job.period}
                 locale={locale}
@@ -113,7 +110,7 @@ export async function ExperienceSection() {
                   {localize(job.location, locale)}
                 </p>
 
-                <p className="mt-8 max-w-[34ch] font-display text-title leading-tight font-bold text-heading">
+                <p className="mt-8 max-w-[34ch] font-display text-[clamp(1.25rem,0.95rem+1.1vw,1.875rem)] leading-snug font-bold text-heading">
                   {beforeHighlight}
                   <span className="text-accent">{highlight}</span>
                   {afterHighlight}
@@ -211,10 +208,7 @@ export async function ExperienceSection() {
         })}
 
         {education.map((studies) => (
-          <li
-            key={studies.id}
-            className="ledger-row border-b border-hairline py-10 lg:py-14"
-          >
+          <li key={studies.id} className="ledger-row py-10 lg:py-14">
             <LedgerPeriod
               period={
                 studies.expectedGraduation
