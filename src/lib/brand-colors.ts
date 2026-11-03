@@ -9,7 +9,7 @@ export const brandColors = {
   blackLine: "#27272b",
   grayText: "#a3a3a8",
   whiteWarm: "#f4f3ee",
-  royal: "#1a43cf",
-  royalInk: "#6b8cff",
+  royal: "#24507f",
+  royalInk: "#8fadd0",
   navy: "#0b1a3a",
 } as const;

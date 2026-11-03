@@ -131,6 +131,7 @@ export const frenchDictionary: Dictionary = {
     focusAreas: "Domaines de prédilection",
     sectionTitle: "À propos",
     facts: {
+      role: "Poste",
       languages: "Langues",
     },
   },

@@ -131,6 +131,7 @@ export const englishDictionary: Dictionary = {
     focusAreas: "Focus areas",
     sectionTitle: "About",
     facts: {
+      role: "Role",
       languages: "Languages",
     },
   },

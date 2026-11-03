@@ -21,8 +21,8 @@
  *   8. Reduced motion (prefers-reduced-motion).
  *
  * Contrast (WCAG 2.x, measured): text #f4f3ee on page 17.81:1, muted #a3a3a8 7.88:1,
- * blue text #6b8cff on page 6.43:1, white on the royal fill #1a43cf 7.64:1 (on its
- * hover #2350e6 6.25:1), #dbe4ff on royal 6.02:1. The royal fill itself is only 2.59:1
+ * blue text #8fadd0 on page 8.53:1, white on the royal fill #24507f 8.30:1 (on its
+ * hover #2d5b8a 7.06:1), #d4e0ee on royal 6.21:1. The royal fill itself is only 2.38:1
  * on the page: it fills areas with white text on them and never draws text, lines or
  * rings on black; those use the lighter blue. Navy #0b1a3a is depth only.
  * Every pair is listed with its ratio in docs/design.md.
@@ -41,7 +41,9 @@
   /* 2. Raw palette -------------------------------------------------------------- */
   /* Black, ivory and royal blue (4 November 2026): Kevin found the orange typical of
    * AI-made pages and asked for Vercel's black and white with a royal blue, mixed with
-   * The Palace Company's blue and ivory: premium and technical. Neutrals are neutral
+   * The Palace Company's blue and ivory: premium and technical. Later the same day he
+   * found the bright royal blue "muy de IA" and asked for a premium hotel blue: a deep
+   * sapphire for fills and a steel blue for text. Neutrals are neutral
    * (no warm tint); the ivory text is the one warm note. */
   --color-black-deep: #0a0a0b; /* main background */
   --color-black-surface: #121214; /* surfaces on the page */
@@ -50,10 +52,10 @@
   --color-gray-control: #6f6f76; /* control borders, 3.97:1 on the page */
   --color-gray-text: #a3a3a8; /* secondary text, 7.88:1 on the page */
   --color-white-warm: #f4f3ee; /* main text (Palace ivory), 17.81:1 on the page */
-  --color-royal: #1a43cf; /* royal blue fill, white text 7.64:1 */
-  --color-royal-light: #2350e6; /* hover of the royal fill, white text 6.25:1 */
-  --color-royal-ink: #6b8cff; /* blue text, links and lines on black, 6.43:1 */
-  --color-royal-mist: #dbe4ff; /* secondary text on the royal fill, 6.02:1 */
+  --color-royal: #24507f; /* deep sapphire fill (a hotel blue), white text 8.30:1 */
+  --color-royal-light: #2d5b8a; /* hover of the royal fill, white text 7.06:1 */
+  --color-royal-ink: #8fadd0; /* steel blue text, links and lines on black, 8.53:1 */
+  --color-royal-mist: #d4e0ee; /* secondary text on the royal fill, 6.21:1 */
   --color-navy: #0b1a3a; /* depth: the far end of blue gradients */
 
   /* Brand colours of the social networks, used only for their logos and the WhatsApp button. */
@@ -634,7 +636,7 @@
   }
 
   /* A client row: name, keywords and outcome, arrow. As a link it fills royal blue from
-   * the left on hover or keyboard focus, the text turning white (7.64:1) and the arrow
+   * the left on hover or keyboard focus, the text turning white (8.30:1) and the arrow
    * advancing: the one motion of the section. Phones stack name over text. */
   .client-row {
     position: relative;

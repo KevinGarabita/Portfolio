@@ -129,6 +129,7 @@ export const spanishDictionary = {
     focusAreas: "Áreas de enfoque",
     sectionTitle: "Sobre mí",
     facts: {
+      role: "Rol",
       languages: "Idiomas",
     },
   },

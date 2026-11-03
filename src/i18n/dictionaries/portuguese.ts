@@ -131,6 +131,7 @@ export const portugueseDictionary: Dictionary = {
     focusAreas: "Áreas de foco",
     sectionTitle: "Sobre mim",
     facts: {
+      role: "Função",
       languages: "Idiomas",
     },
   },

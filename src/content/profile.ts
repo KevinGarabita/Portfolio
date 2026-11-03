@@ -24,21 +24,29 @@ export const profile: Profile = {
     pt: "horas de trabalho",
     fr: "heures de travail",
   },
+  // Kevin's own words (4 November 2026): what drives him is solving real problems and
+  // seeing the solution in use. The first paragraph is the lead, drawn larger.
   about: [
     {
-      es: "Estudiante de 7.º semestre de Ingeniería en Desarrollo de Tecnologías y Software. Construyo aplicaciones web de punta a punta con FastAPI, React, TypeScript y Supabase, y desarrollo con Claude Code.",
-      en: "Seventh-semester Software and Technology Development Engineering student. I build web applications end to end with FastAPI, React, TypeScript, and Supabase, and I develop with Claude Code.",
-      pt: "Estudante do sétimo semestre de Engenharia em Desenvolvimento de Tecnologias e Software. Construo aplicações web de ponta a ponta com FastAPI, React, TypeScript e Supabase, e desenvolvo com o Claude Code.",
-      fr: "Étudiant en septième semestre d'ingénierie en développement de technologies et de logiciels. Je crée des applications web de bout en bout avec FastAPI, React, TypeScript et Supabase, et je développe avec Claude Code.",
+      es: "Construyo software que resuelve problemas reales.",
+      en: "I build software that solves real problems.",
+      pt: "Construo software que resolve problemas reais.",
+      fr: "Je crée des logiciels qui résolvent de vrais problèmes.",
+    },
+    {
+      es: "Lo que más me motiva es el momento en que una solución sale a producción: ver que la gente la usa todos los días y saber que de verdad le ahorra trabajo a quien me la encargó.",
+      en: "What drives me most is the moment a solution goes live: seeing people use it every day and knowing it truly saves work for whoever asked me to build it.",
+      pt: "O que mais me motiva é o momento em que uma solução entra em produção: ver as pessoas usando no dia a dia e saber que ela realmente poupa trabalho para quem me encomendou.",
+      fr: "Ce qui me motive le plus, c'est le moment où une solution passe en production : voir les gens l'utiliser chaque jour et savoir qu'elle fait vraiment gagner du temps à la personne qui me l'a confiée.",
     },
   ],
-  // The CV's role and skills, as keywords: nothing beyond them.
+  // Kevin's three areas (4 November 2026).
   focusAreas: [
     {
-      es: "APIs con FastAPI",
-      en: "APIs with FastAPI",
-      pt: "APIs com FastAPI",
-      fr: "API avec FastAPI",
+      es: "Desarrollo web",
+      en: "Web development",
+      pt: "Desenvolvimento web",
+      fr: "Développement web",
     },
     {
       es: "Agentes de IA",
@@ -47,16 +55,10 @@ export const profile: Profile = {
       fr: "Agents d'IA",
     },
     {
-      es: "Automatización con n8n",
-      en: "Automation with n8n",
-      pt: "Automação com n8n",
-      fr: "Automatisation avec n8n",
-    },
-    {
-      es: "Apps web de punta a punta",
-      en: "End-to-end web apps",
-      pt: "Apps web de ponta a ponta",
-      fr: "Applications web de bout en bout",
+      es: "Automatizaciones",
+      en: "Automation",
+      pt: "Automações",
+      fr: "Automatisations",
     },
   ],
   location: {
