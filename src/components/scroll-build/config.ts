@@ -101,7 +101,7 @@ export const RESIZE_START_SCALE = 0.3;
 
 /**
  * Safety net of the inline script in the layout: if the build has not started this many
- * ms after the HTML arrived (JavaScript failed or is very slow), the blueprint is
- * removed and the page shows as it is.
+ * ms after the HTML arrived (JavaScript failed or is very slow), the build is
+ * called off and the page shows as it is.
  */
 export const START_TIMEOUT = 8000;

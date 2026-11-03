@@ -18,7 +18,7 @@
  *      around the photo, project tiles and framed links, the header and the flow
  *      diagram.
  *   8. Reduced motion (prefers-reduced-motion).
- *   9. Scroll build: the home page's blueprint, build cursors and intro
+ *   9. Scroll build: the home page's build cursors, their selections and intro
  *      (components/scroll-build). Its colours belong to the animation, not the site.
  *
  * Contrast (WCAG 2.x, measured): text #f5f5f5 on page 18.15:1, muted #a3a3a3 7.84:1,
@@ -568,30 +568,29 @@
 }
 
 /* 9. Scroll build (components/scroll-build). On the home page a swarm of cursors builds
- * the page as the visitor scrolls: every element marked with data-build starts as a blue
- * blueprint box that keeps its real size (nothing shifts) and is revealed by its action.
- * Everything hangs from html.sb, which the inline script of the layout sets before the
- * first paint; without it (JavaScript off, reduced motion, already seen this session)
- * none of this applies. html.sb-intro adds the intro over the page.
+ * the page as the visitor scrolls: every element marked with data-build waits invisible
+ * in its real place (nothing shifts) until a cursor selects it and builds it. The only
+ * frames on screen are the cursors' selections (.sb-selection): around the element a
+ * cursor is working on, or growing as it drags out an image. Everything hangs from
+ * html.sb, which the inline script of the layout sets before the first paint; without
+ * it (JavaScript off, reduced motion, already seen this session) none of this applies.
+ * html.sb-intro adds the intro over the page.
  *
- * Element states, set by the engine: no data-build-state = blueprint; "run" = revealed
- * and being built; "done". data-build-working marks the element a cursor is on. */
+ * Element states, set by the engine: no data-build-state = waiting; "run" = revealed and
+ * being built; "done". data-build-working marks the element a cursor is on. */
 @layer base {
   :root {
     --blueprint: #3d9bff;
-    --blueprint-fill: rgb(61 155 255 / 0.06);
-    --blueprint-edge: rgb(61 155 255 / 0.5);
-    --blueprint-ink: #cfe6ff;
     --layer-build-intro: 60;
     --layer-build-selection: 65;
     --layer-build-cursor: 70;
   }
 
-  /* Anchors the blueprint's label and corners. In the base layer, so an element that
-   * positions itself with a utility (absolute chips, the menu panel) keeps its own.
-   * data-build-static opts out: an element that must never become a containing block,
-   * like a project card's title, whose link stretches over the whole card. */
-  html.sb [data-build]:not([data-build-state], [data-build-static]),
+  /* Anchors the typed copy and lifts a dragged element over its neighbours. In the base
+   * layer, so an element that positions itself with a utility (absolute chips, the menu
+   * panel) keeps its own. data-build-static opts out: an element that must never become
+   * a containing block, like a project card's title, whose link stretches over the
+   * whole card. */
   html.sb [data-build-working]:not([data-build-static]) {
     position: relative;
   }
@@ -609,78 +608,11 @@
     animation: none;
   }
 
-  /* Blueprint box: translucent blue with a 1px edge, white corners and an inspector
-   * label. The content is transparent but keeps its space; links still work. Children
-   * fade with opacity, not visibility, so screen readers still read them. */
+  /* Not built yet: invisible but in place, so nothing shifts when it appears and its
+   * links still work. Opacity, not visibility, so screen readers still read it. No box
+   * and no label: a frame shows only while a cursor has the element selected. */
   html.sb [data-build]:not([data-build-state]) {
-    color: transparent !important;
-    text-decoration-color: transparent !important;
-    background: var(--blueprint-fill) !important;
-    border-color: transparent !important;
-    box-shadow: inset 0 0 0 1px var(--blueprint-edge) !important;
-    border-radius: 2px !important;
-  }
-
-  html.sb [data-build]:not([data-build-state]) > * {
     opacity: 0 !important;
-  }
-
-  /* Screenshots clip their content; their label and corners sit outside the box. */
-  html.sb [data-build="draw"]:not([data-build-state]) {
-    overflow: visible !important;
-  }
-
-  html.sb [data-build]:not([data-build-state])::before {
-    content: "";
-    position: absolute;
-    inset: -3px;
-    z-index: 3;
-    pointer-events: none;
-    background:
-      linear-gradient(var(--blueprint-ink) 0 0) top left / 5px 5px no-repeat,
-      linear-gradient(var(--blueprint-ink) 0 0) top right / 5px 5px no-repeat,
-      linear-gradient(var(--blueprint-ink) 0 0) bottom left / 5px 5px no-repeat,
-      linear-gradient(var(--blueprint-ink) 0 0) bottom right / 5px 5px no-repeat;
-  }
-
-  html.sb [data-build]:not([data-build-state])::after {
-    content: attr(data-build-tag);
-    position: absolute;
-    top: -18px;
-    left: -1px;
-    z-index: 3;
-    padding: 3px 5px;
-    background: rgb(61 155 255 / 0.25);
-    color: #bfe0ff;
-    font: 500 10px/1 var(--font-mono);
-    letter-spacing: normal;
-    text-transform: none;
-    text-decoration: none;
-    white-space: nowrap;
-    pointer-events: none;
-  }
-
-  /* A data-build-static element has no box to anchor to: no corners, and the label
-   * sits at its static position, the start of its content, without any inset. */
-  html.sb [data-build-static]:not([data-build-state])::before {
-    content: attr(data-build-tag);
-    inset: auto;
-    margin: -18px 0 0 -1px;
-    padding: 3px 5px;
-    background: rgb(61 155 255 / 0.25);
-    color: #bfe0ff;
-    font: 500 10px/1 var(--font-mono);
-    letter-spacing: normal;
-    white-space: nowrap;
-  }
-
-  html.sb [data-build-static]:not([data-build-state])::after {
-    content: none;
-  }
-
-  html.sb [data-build-working] {
-    outline: 1.5px solid var(--build-color, var(--blueprint));
-    outline-offset: 3px;
   }
 
   html.sb [data-build-dragging] {
