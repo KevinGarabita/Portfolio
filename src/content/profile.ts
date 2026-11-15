@@ -85,6 +85,7 @@ export const profile: Profile = {
     { network: "linkedin", url: "https://www.linkedin.com/in/kevingarabita/" },
     { network: "github", url: "https://github.com/KevinGarabita" },
     { network: "instagram", url: "https://www.instagram.com/garasoftwaremx/" },
+    { network: "tiktok", url: "https://www.tiktok.com/@garasoftwaremx" },
   ],
   // Only Spanish and English exist; Portuguese and French pages get the Spanish CV.
   resumeFiles: {

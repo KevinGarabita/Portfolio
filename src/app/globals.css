@@ -67,6 +67,9 @@
   --color-instagram-orange: #fa7e1e;
   --color-instagram-pink: #d62976;
   --color-instagram-purple: #962fbf;
+  /* TikTok's official cyan and red, drawn as offset copies behind the white note (logo only) */
+  --color-tiktok-cyan: #25f4ee;
+  --color-tiktok-red: #fe2c55;
 
   /* 3. Roles ------------------------------------------------------------------- */
   --color-page: var(--color-black-deep); /* page background */

@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildProjectsPageMetadata(await getCurrentLocale());
 }
 
-const kindOrder: ProjectKind[] = ["web-app", "ai-automation"];
+const kindOrder: ProjectKind[] = ["website", "web-app", "ai-automation"];
 
 /**
  * Every project in one grid, with filters (type and technology). The home page shows

@@ -232,8 +232,8 @@ function getOrganizationId(): string {
   return toAbsoluteUrl("/#organization");
 }
 
-/** Brand profiles (Instagram) go on the Organization; Kevin's own stay on the Person. */
-const brandNetworks = new Set(["instagram"]);
+/** Brand profiles (Instagram, TikTok) go on the Organization; Kevin's own stay on the Person. */
+const brandNetworks = new Set(["instagram", "tiktok"]);
 
 /** The WebSite and the brand behind it, the same on every page. */
 function buildSiteNodes(): [WebSite, Organization] {
