@@ -137,6 +137,22 @@ interface CreativeWork {
   keywords: string[];
   image: string[];
   isPartOf: NodeReference;
+  /** Websites only: the live site the case study is about. */
+  about?: NodeReference;
+}
+
+/**
+ * A client's live website, on a website case study: made by Kevin and published by the
+ * client. The site itself declares the same creator (Kevin's Person @id) in its own
+ * JSON-LD, so search engines can tie the two pages together.
+ */
+interface ClientWebSite {
+  "@type": "WebSite";
+  "@id": string;
+  name: string;
+  url: string;
+  creator: NodeReference;
+  publisher?: { "@type": "Organization"; name: string; url: string };
 }
 
 interface Place {
@@ -200,6 +216,7 @@ export interface StructuredDataGraph {
     | PersonSummary
     | BreadcrumbList
     | CreativeWork
+    | ClientWebSite
     | ServiceNode
     | WebPage
     | CollectionPage
@@ -330,7 +347,8 @@ export function buildHomeStructuredData(locale: Locale): StructuredDataGraph {
 
 /**
  * A case study: the breadcrumb (home → projects → project) and the project as a
- * CreativeWork by Kevin, inside the WebSite. The WebSite and a short Person go in the
+ * CreativeWork by Kevin, inside the WebSite. A website case study adds the client's live
+ * site, created by Kevin, as what the CreativeWork is about. The WebSite and a short Person go in the
  * same graph so every @id reference resolves on the page itself.
  */
 export function buildProjectStructuredData(
@@ -343,6 +361,24 @@ export function buildProjectStructuredData(
   const projectName = localize(project.name, locale);
   const { siteNavigation } = dictionariesByLocale[locale];
   const kevin: NodeReference = { "@id": getPersonId() };
+  const clientWebsite: ClientWebSite | undefined = project.website
+    ? {
+        "@type": "WebSite",
+        "@id": `${project.website.url}#website`,
+        name: project.client ?? projectName,
+        url: project.website.url,
+        creator: kevin,
+        ...(project.client
+          ? {
+              publisher: {
+                "@type": "Organization",
+                name: project.client,
+                url: project.website.url,
+              },
+            }
+          : {}),
+      }
+    : undefined;
 
   const breadcrumbs: [name: string, url: string][] = [
     [siteNavigation.home, homeUrl],
@@ -395,7 +431,9 @@ export function buildProjectStructuredData(
           ...project.images.map((image) => image.src),
         ].map((path) => toAbsoluteUrl(path)),
         isPartOf: { "@id": getWebsiteId() },
+        ...(clientWebsite ? { about: { "@id": clientWebsite["@id"] } } : {}),
       },
+      ...(clientWebsite ? [clientWebsite] : []),
     ],
   };
 }
