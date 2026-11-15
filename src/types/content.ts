@@ -17,7 +17,7 @@ export interface DateRange {
 }
 
 export interface SocialProfile {
-  network: "linkedin" | "github" | "instagram";
+  network: "linkedin" | "github" | "instagram" | "tiktok";
   url: string;
 }
 
