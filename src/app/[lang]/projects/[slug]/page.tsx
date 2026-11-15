@@ -19,6 +19,7 @@ import {
   ProjectStorySection,
   ProjectTechnicalDetails,
 } from "@/components/projects/project-story-section";
+import { WebsiteCaseStudy } from "@/components/projects/website-case-study";
 import { ProjectStructuredData } from "@/components/seo/structured-data";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Container } from "@/components/ui/container";
@@ -121,6 +122,9 @@ function NeighborProjectLink({
  * The header arrives in sequence on load without fading (.entrance-slide): the one
  * motion of the page, like the hero of the home page. Everything after it is simply
  * there.
+ *
+ * A website (a project with `website`) gets its own layout, made to sell the next one:
+ * WebsiteCaseStudy. Both end with the previous/next projects.
  */
 export default async function ProjectPage({
   params,
@@ -159,240 +163,257 @@ export default async function ProjectPage({
   return (
     <Container className="pt-6 pb-20 lg:pt-10 lg:pb-28">
       <ProjectStructuredData project={project} />
-      <article>
-        <header className="grid gap-10 pb-12 lg:grid-cols-12 lg:gap-x-10 lg:pb-16">
-          <div className="lg:col-span-8">
-            <p className="entrance-slide text-small [--entrance-order:0]">
-              <Link
-                href={`/${locale}/projects`}
-                className="inline-flex min-h-11 items-center gap-2 font-bold"
-              >
-                <ArrowLeftIcon className="size-4" />
-                {projectTexts.backToProjects}
-              </Link>
-            </p>
-            {/* Who the work was for, then the status and its note. The comma is only
-                read, so the text never runs the credit into the status. */}
-            <p className="entrance-slide mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-small text-muted [--entrance-order:1] lg:mt-10">
-              <span>{projectTexts.credit[getProjectCredit(project)]}</span>
-              {project.status ? (
-                <>
-                  <span className="sr-only">, </span>
-                  <ProjectStatus
-                    status={project.status}
-                    statusNote={project.statusNote}
-                    locale={locale}
-                    dictionary={dictionary}
-                  />
-                </>
-              ) : null}
-            </p>
-            <h1 className="entrance-slide mt-4 font-display text-headline font-bold [--entrance-order:2]">
-              {projectName}
-            </h1>
-            <p className="entrance-slide mt-6 max-w-prose text-subtitle [--entrance-order:3]">
-              {localize(project.summary, locale)}
-            </p>
-          </div>
-
-          <div className="entrance-slide [--entrance-order:4] lg:col-span-4 lg:self-end">
-            <ProjectFacts
-              project={project}
-              locale={locale}
-              dictionary={dictionary}
-            />
-          </div>
-        </header>
-
-        {galleryImages.length > 0 ? (
-          <section aria-labelledby="gallery-title" className="pb-12 lg:pb-16">
-            <h2 id="gallery-title" className="sr-only">
-              {sectionTitles.gallery}
-            </h2>
-            <ProjectGallery images={galleryImages} labels={galleryLabels} />
-          </section>
-        ) : null}
-
-        {/* The case in three short parts, side by side from lg: what was wrong, what
-            was built and what changed. */}
-        <ProjectStorySection
-          id="overview"
-          title={sectionTitles.overview}
-          layout="wide"
-        >
-          <div className="grid gap-8 lg:grid-cols-3 lg:gap-10">
-            <ProjectOverviewPart title={sectionTitles.problem}>
-              <p>{localize(project.problem, locale)}</p>
-            </ProjectOverviewPart>
-            <ProjectOverviewPart title={sectionTitles.solution}>
-              <p>{localize(project.solution, locale)}</p>
-            </ProjectOverviewPart>
-            <ProjectOverviewPart title={sectionTitles.results}>
-              <ProjectStoryList items={localizeEach(project.results)} />
-            </ProjectOverviewPart>
-          </div>
-        </ProjectStorySection>
-
-        {/* The real event, only when the project has one: the photo with its credit
-            under it, and where and when beside it from lg. */}
-        {project.event ? (
-          <ProjectStorySection
-            id="event"
-            title={sectionTitles.event}
-            layout="wide"
-          >
-            <div className="grid gap-6 lg:grid-cols-12 lg:gap-10">
-              <figure className="flex flex-col gap-3 lg:col-span-8">
-                <Image
-                  src={project.event.photo.src}
-                  alt={localize(project.event.photo.alt, locale)}
-                  width={project.event.photo.width}
-                  height={project.event.photo.height}
-                  sizes="(min-width: 1800px) 880px, (min-width: 1280px) 790px, (min-width: 1024px) 66vw, 100vw"
-                  className="h-auto w-full rounded-media border border-hairline"
-                />
-                <figcaption className="text-small text-muted">
-                  {projectTexts.photoCredit(project.event.photo.credit)}
-                </figcaption>
-              </figure>
-              <p className="max-w-prose lg:col-span-4">
-                {localize(project.event.description, locale)}
-              </p>
-            </div>
-          </ProjectStorySection>
-        ) : null}
-
-        {project.flowDiagram?.length ? (
-          <ProjectStorySection
-            id="flow-diagram"
-            title={sectionTitles.flowDiagram}
-            layout="wide"
-          >
-            <FlowDiagram
-              steps={project.flowDiagram}
-              locale={locale}
-              toolLabel={projectTexts.flowStepTool}
-            />
-          </ProjectStorySection>
-        ) : null}
-
-        <ProjectStorySection id="highlights" title={sectionTitles.highlights}>
-          <ProjectKeyPoints items={localizeEach(project.highlights)} />
-        </ProjectStorySection>
-
-        {/* Before/after figures, only when the project has real ones. */}
-        {project.metrics?.length ? (
-          <ProjectStorySection id="metrics" title={sectionTitles.metrics}>
-            <ProjectMetrics
-              metrics={project.metrics}
-              locale={locale}
-              labels={dictionary.recruiter.metrics}
-            />
-          </ProjectStorySection>
-        ) : null}
-
-        {/* Full width, like the automation flow; only when the project has one. */}
-        {project.architecture ? (
-          <ProjectStorySection
-            id="architecture"
-            title={sectionTitles.architecture}
-            layout="wide"
-          >
-            <ProjectArchitecture
-              architecture={project.architecture}
-              locale={locale}
-              toolLabel={projectTexts.flowStepTool}
-            />
-          </ProjectStorySection>
-        ) : null}
-
-        <ProjectStorySection id="role" title={sectionTitles.role}>
-          <p className="max-w-prose">{localize(project.role, locale)}</p>
-        </ProjectStorySection>
-
-        {project.links.length > 0 ? (
-          <ProjectStorySection id="links" title={sectionTitles.links}>
-            <ul className="flex flex-wrap gap-3">
-              {project.links.map((projectLink) => (
-                <li key={projectLink.url}>
-                  <ButtonLink
-                    href={projectLink.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="secondary"
-                    trailingIcon={
-                      <ExternalLinkIcon className="size-4 text-accent" />
-                    }
-                  >
-                    {localize(projectLink.label, locale)}
-                    <span className="sr-only">
-                      {" "}
-                      ({dictionary.opensInNewTab})
-                    </span>
-                  </ButtonLink>
-                </li>
-              ))}
-            </ul>
-          </ProjectStorySection>
-        ) : null}
-
-        <ProjectTechnicalDetails
-          title={sectionTitles.technicalDetails}
-          hint={sectionTitles.technicalDetailsHint}
-          parts={[
-            {
-              id: "how-it-works",
-              title: sectionTitles.howItWorks,
-              paragraphs: localizeEach(project.howItWorks ?? []),
-            },
-            {
-              id: "decisions",
-              title: sectionTitles.decisions,
-              items: localizeEach(project.decisions ?? []),
-            },
-            {
-              id: "failure-handling",
-              title: sectionTitles.failureHandling,
-              items: localizeEach(project.failureHandling ?? []),
-            },
-            {
-              id: "next-steps",
-              title: sectionTitles.nextSteps,
-              paragraphs: project.nextSteps
-                ? [localize(project.nextSteps, locale)]
-                : [],
-            },
-          ]}
+      {project.website ? (
+        <WebsiteCaseStudy
+          project={project}
+          website={project.website}
+          locale={locale}
+          dictionary={dictionary}
         />
-      </article>
+      ) : (
+        <>
+          <article>
+            <header className="grid gap-10 pb-12 lg:grid-cols-12 lg:gap-x-10 lg:pb-16">
+              <div className="lg:col-span-8">
+                <p className="entrance-slide text-small [--entrance-order:0]">
+                  <Link
+                    href={`/${locale}/projects`}
+                    className="inline-flex min-h-11 items-center gap-2 font-bold"
+                  >
+                    <ArrowLeftIcon className="size-4" />
+                    {projectTexts.backToProjects}
+                  </Link>
+                </p>
+                {/* Who the work was for, then the status and its note. The comma is only
+                read, so the text never runs the credit into the status. */}
+                <p className="entrance-slide mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-small text-muted [--entrance-order:1] lg:mt-10">
+                  <span>{projectTexts.credit[getProjectCredit(project)]}</span>
+                  {project.status ? (
+                    <>
+                      <span className="sr-only">, </span>
+                      <ProjectStatus
+                        status={project.status}
+                        statusNote={project.statusNote}
+                        locale={locale}
+                        dictionary={dictionary}
+                      />
+                    </>
+                  ) : null}
+                </p>
+                <h1 className="entrance-slide mt-4 font-display text-headline font-bold [--entrance-order:2]">
+                  {projectName}
+                </h1>
+                <p className="entrance-slide mt-6 max-w-prose text-subtitle [--entrance-order:3]">
+                  {localize(project.summary, locale)}
+                </p>
+              </div>
 
-      {/* The next step for a client who has read this far, with the words and the
+              <div className="entrance-slide [--entrance-order:4] lg:col-span-4 lg:self-end">
+                <ProjectFacts
+                  project={project}
+                  locale={locale}
+                  dictionary={dictionary}
+                />
+              </div>
+            </header>
+
+            {galleryImages.length > 0 ? (
+              <section
+                aria-labelledby="gallery-title"
+                className="pb-12 lg:pb-16"
+              >
+                <h2 id="gallery-title" className="sr-only">
+                  {sectionTitles.gallery}
+                </h2>
+                <ProjectGallery images={galleryImages} labels={galleryLabels} />
+              </section>
+            ) : null}
+
+            {/* The case in three short parts, side by side from lg: what was wrong, what
+            was built and what changed. */}
+            <ProjectStorySection
+              id="overview"
+              title={sectionTitles.overview}
+              layout="wide"
+            >
+              <div className="grid gap-8 lg:grid-cols-3 lg:gap-10">
+                <ProjectOverviewPart title={sectionTitles.problem}>
+                  <p>{localize(project.problem, locale)}</p>
+                </ProjectOverviewPart>
+                <ProjectOverviewPart title={sectionTitles.solution}>
+                  <p>{localize(project.solution, locale)}</p>
+                </ProjectOverviewPart>
+                <ProjectOverviewPart title={sectionTitles.results}>
+                  <ProjectStoryList items={localizeEach(project.results)} />
+                </ProjectOverviewPart>
+              </div>
+            </ProjectStorySection>
+
+            {/* The real event, only when the project has one: the photo with its credit
+            under it, and where and when beside it from lg. */}
+            {project.event ? (
+              <ProjectStorySection
+                id="event"
+                title={sectionTitles.event}
+                layout="wide"
+              >
+                <div className="grid gap-6 lg:grid-cols-12 lg:gap-10">
+                  <figure className="flex flex-col gap-3 lg:col-span-8">
+                    <Image
+                      src={project.event.photo.src}
+                      alt={localize(project.event.photo.alt, locale)}
+                      width={project.event.photo.width}
+                      height={project.event.photo.height}
+                      sizes="(min-width: 1800px) 880px, (min-width: 1280px) 790px, (min-width: 1024px) 66vw, 100vw"
+                      className="h-auto w-full rounded-media border border-hairline"
+                    />
+                    <figcaption className="text-small text-muted">
+                      {projectTexts.photoCredit(project.event.photo.credit)}
+                    </figcaption>
+                  </figure>
+                  <p className="max-w-prose lg:col-span-4">
+                    {localize(project.event.description, locale)}
+                  </p>
+                </div>
+              </ProjectStorySection>
+            ) : null}
+
+            {project.flowDiagram?.length ? (
+              <ProjectStorySection
+                id="flow-diagram"
+                title={sectionTitles.flowDiagram}
+                layout="wide"
+              >
+                <FlowDiagram
+                  steps={project.flowDiagram}
+                  locale={locale}
+                  toolLabel={projectTexts.flowStepTool}
+                />
+              </ProjectStorySection>
+            ) : null}
+
+            <ProjectStorySection
+              id="highlights"
+              title={sectionTitles.highlights}
+            >
+              <ProjectKeyPoints items={localizeEach(project.highlights)} />
+            </ProjectStorySection>
+
+            {/* Before/after figures, only when the project has real ones. */}
+            {project.metrics?.length ? (
+              <ProjectStorySection id="metrics" title={sectionTitles.metrics}>
+                <ProjectMetrics
+                  metrics={project.metrics}
+                  locale={locale}
+                  labels={dictionary.recruiter.metrics}
+                />
+              </ProjectStorySection>
+            ) : null}
+
+            {/* Full width, like the automation flow; only when the project has one. */}
+            {project.architecture ? (
+              <ProjectStorySection
+                id="architecture"
+                title={sectionTitles.architecture}
+                layout="wide"
+              >
+                <ProjectArchitecture
+                  architecture={project.architecture}
+                  locale={locale}
+                  toolLabel={projectTexts.flowStepTool}
+                />
+              </ProjectStorySection>
+            ) : null}
+
+            <ProjectStorySection id="role" title={sectionTitles.role}>
+              <p className="max-w-prose">{localize(project.role, locale)}</p>
+            </ProjectStorySection>
+
+            {project.links.length > 0 ? (
+              <ProjectStorySection id="links" title={sectionTitles.links}>
+                <ul className="flex flex-wrap gap-3">
+                  {project.links.map((projectLink) => (
+                    <li key={projectLink.url}>
+                      <ButtonLink
+                        href={projectLink.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        variant="secondary"
+                        trailingIcon={
+                          <ExternalLinkIcon className="size-4 text-accent" />
+                        }
+                      >
+                        {localize(projectLink.label, locale)}
+                        <span className="sr-only">
+                          {" "}
+                          ({dictionary.opensInNewTab})
+                        </span>
+                      </ButtonLink>
+                    </li>
+                  ))}
+                </ul>
+              </ProjectStorySection>
+            ) : null}
+
+            <ProjectTechnicalDetails
+              title={sectionTitles.technicalDetails}
+              hint={sectionTitles.technicalDetailsHint}
+              parts={[
+                {
+                  id: "how-it-works",
+                  title: sectionTitles.howItWorks,
+                  paragraphs: localizeEach(project.howItWorks ?? []),
+                },
+                {
+                  id: "decisions",
+                  title: sectionTitles.decisions,
+                  items: localizeEach(project.decisions ?? []),
+                },
+                {
+                  id: "failure-handling",
+                  title: sectionTitles.failureHandling,
+                  items: localizeEach(project.failureHandling ?? []),
+                },
+                {
+                  id: "next-steps",
+                  title: sectionTitles.nextSteps,
+                  paragraphs: project.nextSteps
+                    ? [localize(project.nextSteps, locale)]
+                    : [],
+                },
+              ]}
+            />
+          </article>
+
+          {/* The next step for a client who has read this far, with the words and the
           action of the contact section of the home page. */}
-      <div className="border-t border-hairline py-12 lg:py-16">
-        <p className="max-w-[18em] font-display text-title font-bold text-heading">
-          {dictionary.contact.lead}
-        </p>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
-          <ButtonLink
-            href={buildWhatsAppUrl(locale)}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="whatsapp"
-            leadingIcon={<WhatsAppLogoIcon />}
-            className="max-sm:w-full"
-          >
-            {dictionary.hero.writeOnWhatsApp}
-            <span className="sr-only"> ({dictionary.opensInNewTab})</span>
-          </ButtonLink>
-          <Link
-            href={`/${locale}/services`}
-            className="group inline-flex min-h-11 items-center gap-1.5 font-bold"
-          >
-            {dictionary.contact.servicesLink}
-            <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-        </div>
-      </div>
+          <div className="border-t border-hairline py-12 lg:py-16">
+            <p className="max-w-[18em] font-display text-title font-bold text-heading">
+              {dictionary.contact.lead}
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+              <ButtonLink
+                href={buildWhatsAppUrl(locale)}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="whatsapp"
+                leadingIcon={<WhatsAppLogoIcon />}
+                className="max-sm:w-full"
+              >
+                {dictionary.hero.writeOnWhatsApp}
+                <span className="sr-only"> ({dictionary.opensInNewTab})</span>
+              </ButtonLink>
+              <Link
+                href={`/${locale}/services`}
+                className="group inline-flex min-h-11 items-center gap-1.5 font-bold"
+              >
+                {dictionary.contact.servicesLink}
+                <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
 
       <nav aria-label={projectTexts.neighborNavigation.label}>
         <ul className="grid gap-4 sm:grid-cols-2 sm:gap-6">

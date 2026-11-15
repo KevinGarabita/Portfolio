@@ -43,7 +43,7 @@ export const englishDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projects",
       description:
-        "Web apps, AI agents and automations: freelance projects and my work at Kobler y Asociados.",
+        "Websites, web apps, AI agents and automations: freelance projects and my work at Kobler y Asociados.",
     },
     filters: {
       label: "Filter projects",
@@ -51,6 +51,7 @@ export const englishDictionary: Dictionary = {
       technology: "Technology",
       all: "All",
       kinds: {
+        website: "Websites",
         "web-app": "Web applications",
         "ai-automation": "AI agents and automation",
       },
@@ -106,6 +107,29 @@ export const englishDictionary: Dictionary = {
       next: "Next image",
       position: (current: number, total: number) =>
         `Image ${current} of ${total}`,
+    },
+    website: {
+      visitSite: "Visit the site",
+      watchOn: (network: string) => `Watch on ${network}`,
+      scoresTitle: "Google Lighthouse scores",
+      scores: {
+        performance: "Performance",
+        accessibility: "Accessibility",
+        "best-practices": "Best practices",
+        seo: "SEO",
+      },
+      comparisonsTitle: "Before and after",
+      before: "Before",
+      after: "After",
+      featuresTitle: "What the site does for the business",
+      videoTitle: "Watch the video",
+      galleryTitle: "More of the site",
+      technicalDetailsHint: "How it works and technical decisions",
+      ctaTitle: "Does your business need a site like this?",
+      ctaText:
+        "Tell me what your business does and I'll tell you how I'd build it and what it would cost.",
+      ctaMessage: (client: string) =>
+        `Hi Kevin, I saw the site you built for ${client} and I'd like one for my business.`,
     },
     backToProjects: "Back to projects",
     neighborNavigation: {
