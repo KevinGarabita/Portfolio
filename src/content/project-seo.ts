@@ -27,10 +27,10 @@ export const projectSeo: Record<string, ProjectSeo> = {
       fr: "Site web de Fumigaciones Controltec · Next.js",
     },
     description: {
-      es: "Sitio en Next.js para una fumigadora de Mérida: una página por plaga, WhatsApp a un toque y Lighthouse de 96 a 100 en teléfono, servido gratis desde Cloudflare.",
-      en: "Next.js site for a pest control company in Mérida: a page per pest, WhatsApp one tap away and mobile Lighthouse scores of 96 to 100, served free by Cloudflare.",
-      pt: "Site em Next.js para uma dedetizadora de Mérida: uma página por praga, WhatsApp a um toque e Lighthouse de 96 a 100 no celular, servido grátis pela Cloudflare.",
-      fr: "Site Next.js d'un désinsectiseur de Mérida : une page par nuisible, WhatsApp en un geste et Lighthouse mobile de 96 à 100, servi gratuitement par Cloudflare.",
+      es: "Diseñé y desarrollé el sitio de Fumigaciones Controltec en Next.js: una página por plaga, WhatsApp a un toque y Lighthouse de 96 a 100 en teléfono, en Mérida.",
+      en: "I designed and built the Fumigaciones Controltec website in Next.js: a page per pest, WhatsApp one tap away and mobile Lighthouse scores of 96 to 100.",
+      pt: "Projetei e desenvolvi o site da Fumigaciones Controltec em Next.js: uma página por praga, WhatsApp a um toque e Lighthouse de 96 a 100 no celular.",
+      fr: "J'ai conçu et développé le site de Fumigaciones Controltec en Next.js : une page par nuisible, WhatsApp en un geste et Lighthouse mobile de 96 à 100.",
     },
   },
   "field-report-manager": {
