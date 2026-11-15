@@ -184,6 +184,42 @@ export function InstagramLogoIcon({
   );
 }
 
+const tikTokLogoPath =
+  "M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z";
+
+/**
+ * TikTok's note. "brand" draws it as TikTok does on dark backgrounds: a cyan copy and a
+ * red copy offset behind the white note.
+ */
+export function TikTokLogoIcon({
+  className,
+  colors = "inherit",
+}: BrandLogoProps) {
+  const isBrand = colors === "brand";
+  return (
+    <BrandLogo
+      className={joinClassNames(isBrand && "text-white-warm", className)}
+      path={tikTokLogoPath}
+      backdrop={
+        isBrand ? (
+          <>
+            <path
+              d={tikTokLogoPath}
+              transform="translate(-0.45 -0.35)"
+              fill="var(--color-tiktok-cyan)"
+            />
+            <path
+              d={tikTokLogoPath}
+              transform="translate(0.45 0.35)"
+              fill="var(--color-tiktok-red)"
+            />
+          </>
+        ) : undefined
+      }
+    />
+  );
+}
+
 export function WhatsAppLogoIcon({
   className,
   colors = "inherit",

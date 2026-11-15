@@ -2,10 +2,12 @@ import {
   GitHubLogoIcon,
   InstagramLogoIcon,
   LinkedInLogoIcon,
+  TikTokLogoIcon,
   WhatsAppLogoIcon,
 } from "./icons";
 
-export type SocialNetwork = "github" | "linkedin" | "instagram" | "whatsapp";
+export type SocialNetwork =
+  "github" | "linkedin" | "instagram" | "tiktok" | "whatsapp";
 
 const logosByNetwork: Record<
   SocialNetwork,
@@ -17,6 +19,7 @@ const logosByNetwork: Record<
   github: GitHubLogoIcon,
   linkedin: LinkedInLogoIcon,
   instagram: InstagramLogoIcon,
+  tiktok: TikTokLogoIcon,
   whatsapp: WhatsAppLogoIcon,
 };
 

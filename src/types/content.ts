@@ -17,7 +17,7 @@ export interface DateRange {
 }
 
 export interface SocialProfile {
-  network: "linkedin" | "github" | "instagram";
+  network: "linkedin" | "github" | "instagram" | "tiktok";
   url: string;
 }
 
@@ -212,7 +212,55 @@ export interface ProjectEvent {
 }
 
 /** What the project is, for the filters on the projects page. */
-export type ProjectKind = "web-app" | "ai-automation";
+export type ProjectKind = "website" | "web-app" | "ai-automation";
+
+/** A short video about the project, posted on one of Kevin's brand accounts. */
+export interface ProjectVideo {
+  network: "instagram" | "tiktok";
+  url: string;
+}
+
+/** The same part of a website before and after the redesign, as two screenshots. */
+export interface WebsiteComparison {
+  /** Which part of the page both screenshots show ("Portada", "Contacto"...). */
+  label: LocalizedText;
+  before: ProjectImage;
+  after: ProjectImage;
+}
+
+/** One thing the website does for the business, as a short title and a sentence. */
+export interface WebsiteFeature {
+  title: LocalizedText;
+  text: LocalizedText;
+}
+
+/** A Lighthouse category and its score, 0 to 100. Only measured values. */
+export interface WebsiteScore {
+  category: "performance" | "accessibility" | "best-practices" | "seo";
+  score: number;
+}
+
+/**
+ * What a website case study adds to a project: the live site, the screenshots of its
+ * hero (a browser frame and a phone side by side), the old site next to the new one,
+ * what the site does for the business, its measured scores and the videos about it.
+ * A project with `website` gets the sales layout of the case study (WebsiteCaseStudy).
+ */
+export interface WebsiteShowcase {
+  /** The live site; it is the main action of the page. */
+  url: string;
+  hero: { desktop: ProjectImage; phone: ProjectImage };
+  /** At most 4 features. */
+  features: WebsiteFeature[];
+  /** The previous site next to the new one; skipped when empty. */
+  comparisons: WebsiteComparison[];
+  scores?: { values: WebsiteScore[]; note: LocalizedText };
+  videos: ProjectVideo[];
+  /** A frame of the video, 9:16, shown beside the video links. */
+  videoCover?: ProjectImage;
+  /** What the video shows, in one sentence. */
+  videoSummary?: LocalizedText;
+}
 
 export interface Project {
   /** URL segment: /[lang]/projects/[slug]. Lowercase words joined by hyphens. */
@@ -270,6 +318,8 @@ export interface Project {
   architecture?: ProjectArchitecture;
   /** The event the project was used at; the case study shows it only when it is set. */
   event?: ProjectEvent;
+  /** Websites only: switches the case study to the website layout. */
+  website?: WebsiteShowcase;
   /** Optional details that add credibility when the information exists. */
   decisions?: LocalizedText[];
   failureHandling?: LocalizedText[];

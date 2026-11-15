@@ -5,4 +5,5 @@ export const socialNetworkNames: Record<SocialProfile["network"], string> = {
   linkedin: "LinkedIn",
   github: "GitHub",
   instagram: "Instagram",
+  tiktok: "TikTok",
 };

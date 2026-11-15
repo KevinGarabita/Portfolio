@@ -19,6 +19,20 @@ export interface ProjectSeo {
  * build when a project has no entry here or a text is out of range.
  */
 export const projectSeo: Record<string, ProjectSeo> = {
+  "fumigaciones-controltec-website": {
+    title: {
+      es: "Sitio web de Fumigaciones Controltec · Next.js",
+      en: "Fumigaciones Controltec Website · Next.js",
+      pt: "Site da Fumigaciones Controltec · Next.js",
+      fr: "Site web de Fumigaciones Controltec · Next.js",
+    },
+    description: {
+      es: "Sitio en Next.js para una fumigadora de Mérida: una página por plaga, WhatsApp a un toque y Lighthouse de 96 a 100 en teléfono, servido gratis desde Cloudflare.",
+      en: "Next.js site for a pest control company in Mérida: a page per pest, WhatsApp one tap away and mobile Lighthouse scores of 96 to 100, served free by Cloudflare.",
+      pt: "Site em Next.js para uma dedetizadora de Mérida: uma página por praga, WhatsApp a um toque e Lighthouse de 96 a 100 no celular, servido grátis pela Cloudflare.",
+      fr: "Site Next.js d'un désinsectiseur de Mérida : une page par nuisible, WhatsApp en un geste et Lighthouse mobile de 96 à 100, servi gratuitement par Cloudflare.",
+    },
+  },
   "field-report-manager": {
     title: {
       es: "Gestor de reportes de campo · FastAPI + React",

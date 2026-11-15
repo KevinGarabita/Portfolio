@@ -43,7 +43,7 @@ export const frenchDictionary: Dictionary = {
     allProjectsPage: {
       title: "Projets",
       description:
-        "Applications web, agents d'IA et automatisations : projets en freelance et mon travail chez Kobler y Asociados.",
+        "Sites web, applications web, agents d'IA et automatisations : projets en freelance et mon travail chez Kobler y Asociados.",
     },
     filters: {
       label: "Filtrer les projets",
@@ -51,6 +51,7 @@ export const frenchDictionary: Dictionary = {
       technology: "Technologie",
       all: "Tous",
       kinds: {
+        website: "Sites web",
         "web-app": "Applications web",
         "ai-automation": "Agents d'IA et automatisation",
       },
@@ -106,6 +107,29 @@ export const frenchDictionary: Dictionary = {
       next: "Image suivante",
       position: (current: number, total: number) =>
         `Image ${current} sur ${total}`,
+    },
+    website: {
+      visitSite: "Visiter le site",
+      watchOn: (network: string) => `Voir sur ${network}`,
+      scoresTitle: "Scores Google Lighthouse",
+      scores: {
+        performance: "Performance",
+        accessibility: "Accessibilité",
+        "best-practices": "Bonnes pratiques",
+        seo: "SEO",
+      },
+      comparisonsTitle: "Avant et après",
+      before: "Avant",
+      after: "Après",
+      featuresTitle: "Ce que le site apporte à l'entreprise",
+      videoTitle: "Voir la vidéo",
+      galleryTitle: "Plus du site",
+      technicalDetailsHint: "Fonctionnement et décisions techniques",
+      ctaTitle: "Votre entreprise a besoin d'un site comme celui-ci ?",
+      ctaText:
+        "Dites-moi ce que fait votre entreprise et je vous dirai comment je le construirais et combien il coûterait.",
+      ctaMessage: (client: string) =>
+        `Bonjour Kevin, j'ai vu le site que vous avez fait pour ${client} et j'en voudrais un pour mon entreprise.`,
     },
     backToProjects: "Retour aux projets",
     neighborNavigation: {
